@@ -204,7 +204,7 @@ function Navbar() {
                   key={label}
                   href={href}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   aria-label={label}
                   className={`p-2 rounded-full transition-all duration-300 hover:scale-110 ${
                     scrolled ? 'text-ink/60 hover:text-primary' : 'text-white/80 hover:text-white'
@@ -277,7 +277,7 @@ function Navbar() {
                 key={label}
                 href={href}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 aria-label={label}
                 className="p-3 rounded-full bg-divider/40 text-ink/60 hover:text-primary hover:scale-110 transition-all duration-300"
               >
@@ -977,7 +977,7 @@ function About() {
                   key={label}
                   href={href}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   className="lift-on-hover inline-flex items-center gap-2 bg-surface border border-divider text-ink px-5 py-3 rounded-full font-medium text-sm hover:border-primary/40 hover:text-primary-dark transition-colors duration-300"
                 >
                   <Icon className="h-4 w-4" strokeWidth={2} />
@@ -1555,15 +1555,19 @@ function Field({ label, name, type = 'text', required, value, onChange }) {
 
 const FORMSPREE_ENDPOINT = 'https://formspree.io/f/maqgvjbv'
 
+const MAX_FILE_SIZE = 8 * 1024 * 1024 // 8MB per file
+
 function ContactForm() {
   const [form, setForm] = useState({ name: '', email: '', company: '', projectType: '', message: '' })
   const [files, setFiles] = useState([])
   const [status, setStatus] = useState('idle')
   const dropRef = useRef(null)
+  const honeypotRef = useRef(null)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (!form.name || !form.email || !form.message) return
+    if (honeypotRef.current?.value) return // bot trap — silently drop
     setStatus('sending')
     try {
       const data = new FormData()
@@ -1586,7 +1590,8 @@ function ContactForm() {
   }
 
   const handleFiles = (newFiles) => {
-    setFiles((prev) => [...prev, ...Array.from(newFiles)].slice(0, 5))
+    const accepted = Array.from(newFiles).filter((f) => f.size <= MAX_FILE_SIZE)
+    setFiles((prev) => [...prev, ...accepted].slice(0, 5))
   }
 
   return (
@@ -1646,6 +1651,15 @@ function ContactForm() {
 
           <div className="lg:col-span-7">
             <form onSubmit={handleSubmit} className="bg-surface border border-divider rounded-5xl p-7 sm:p-10 shadow-xl shadow-primary/5">
+              <input
+                ref={honeypotRef}
+                type="text"
+                name="_gotcha"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                className="absolute -left-[9999px] h-0 w-0 opacity-0"
+              />
               {status === 'error' && (
                 <div className="mb-6 flex items-start gap-3 rounded-2xl border border-accent-dark/30 bg-accent/10 p-4">
                   <AlertCircle className="h-5 w-5 text-accent-dark shrink-0 mt-0.5" />
@@ -1851,7 +1865,7 @@ function Footer() {
                 key={label}
                 href={href}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 aria-label={label}
                 className="p-2 rounded-full text-white/50 hover:text-primary hover:scale-110 transition-all duration-300"
               >
