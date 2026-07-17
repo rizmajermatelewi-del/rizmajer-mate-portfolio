@@ -24,6 +24,7 @@ import {
   Upload,
   AlertCircle,
 } from 'lucide-react'
+import portraitSunset from './assets/portrait-sunset.jpg'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -925,14 +926,14 @@ function About() {
               visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
-            <div className="relative aspect-[4/5] rounded-6xl bg-gradient-to-br from-primary/15 via-surface to-accent/10 border border-divider flex items-center justify-center overflow-hidden">
-              <div className="absolute inset-0 grid-bg opacity-30" />
-              <span className="relative font-display font-extrabold text-[7rem] sm:text-[9rem] text-primary/25 tracking-tight">
-                RM
-              </span>
-              <span className="absolute bottom-6 left-6 font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
-                Fénykép hamarosan
-              </span>
+            <div className="relative aspect-[3/4] rounded-6xl overflow-hidden border border-divider">
+              <img
+                src={portraitSunset}
+                alt="Rizmajer Máté Levente naplementében, egy sziklán ülve"
+                className="absolute inset-0 w-full h-full object-cover"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-deep/40 via-transparent to-transparent" />
             </div>
           </div>
 
