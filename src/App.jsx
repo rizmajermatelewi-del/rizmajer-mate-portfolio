@@ -1569,11 +1569,29 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/maqgvjbv'
 const MAX_FILE_SIZE = 8 * 1024 * 1024 // 8MB per file
 
 function ContactForm() {
+  const sectionRef = useRef(null)
+  const [visible, setVisible] = useState(false)
   const [form, setForm] = useState({ name: '', email: '', company: '', projectType: '', message: '' })
   const [files, setFiles] = useState([])
   const [status, setStatus] = useState('idle')
   const dropRef = useRef(null)
   const honeypotRef = useRef(null)
+
+  useEffect(() => {
+    const el = sectionRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.1 }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -1606,10 +1624,14 @@ function ContactForm() {
   }
 
   return (
-    <section id="kapcsolat" className="relative py-24 sm:py-32 px-6 sm:px-10 lg:px-16 bg-background">
+    <section id="kapcsolat" ref={sectionRef} className="relative py-24 sm:py-32 px-6 sm:px-10 lg:px-16 bg-background">
       <div className="max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-12 gap-10 lg:gap-16">
-          <div className="lg:col-span-5">
+          <div
+            className={`lg:col-span-5 transition-all duration-1000 ease-out ${
+              visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}
+          >
             <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary-dark">╱ Kapcsolat</span>
             <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink mt-4 leading-[1.05] tracking-tight">
               Hogyan segíthetek
@@ -1660,7 +1682,11 @@ function ContactForm() {
             </div>
           </div>
 
-          <div className="lg:col-span-7">
+          <div
+            className={`lg:col-span-7 transition-all duration-1000 ease-out delay-150 ${
+              visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}
+          >
             <form onSubmit={handleSubmit} className="bg-surface border border-divider rounded-5xl p-7 sm:p-10 shadow-xl shadow-primary/5">
               <input
                 ref={honeypotRef}
@@ -1785,12 +1811,35 @@ function ContactForm() {
    Footer
 ---------------------------------------------------------------- */
 function Footer() {
+  const ref = useRef(null)
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.1 }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
   return (
-    <footer className="relative bg-deep text-white rounded-t-6xl mt-12 overflow-hidden">
+    <footer ref={ref} className="relative bg-deep text-white rounded-t-6xl mt-12 overflow-hidden">
       <div className="absolute inset-0 grid-bg opacity-15" />
       <div className="absolute -top-32 left-1/2 -translate-x-1/2 h-64 w-[40rem] rounded-full bg-primary/20 blur-3xl" />
 
-      <div className="relative px-6 sm:px-10 lg:px-16 pt-20 pb-10 max-w-7xl mx-auto">
+      <div
+        className={`relative px-6 sm:px-10 lg:px-16 pt-20 pb-10 max-w-7xl mx-auto transition-all duration-1000 ease-out ${
+          visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+        }`}
+      >
         <div className="border-b border-white/10 pb-12 mb-12">
           <h2 className="font-display font-extrabold text-5xl sm:text-7xl md:text-8xl leading-[0.92] tracking-tight">
             Weboldalakat és
