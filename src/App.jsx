@@ -1778,7 +1778,7 @@ function ContactForm() {
                   </div>
 
                   <div className="mt-7 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                    <p className="text-xs text-muted">Hamarosan válaszolok. A *-gal jelölt mezők kötelezőek.</p>
+                    <p className="text-xs text-muted">24 órán belül válaszolok. A *-gal jelölt mezők kötelezőek.</p>
                     <button
                       type="submit"
                       disabled={status === 'sending'}
