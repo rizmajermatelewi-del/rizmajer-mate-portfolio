@@ -97,22 +97,32 @@ const PRICING_TIERS = [
 
 const PROJECTS_FULL = [
   {
-    title: 'E-kereskedelmi Platform',
-    text: 'Egyedi webshop React és Node.js alapokon, kosárkezeléssel és biztonságos fizetési integrációval.',
-    tech: ['React', 'Node.js', 'PostgreSQL', 'Stripe'],
-    tone: { from: '#2A2320', to: '#17140F', accent: '#FF9142' },
+    title: 'Rétes-rendelő',
+    text: 'Online rendelés egy dabasi rétesháznak — élő menü, fiókkezelés, admin felület a háttérben.',
+    tech: ['React', 'TanStack Start', 'Supabase'],
+    label: 'Ügyfélprojekt',
+    tone: { from: '#3A2A1E', to: '#2B1B12', accent: '#C08552' },
   },
   {
-    title: 'Foglalási Rendszer Kisvállalkozásoknak',
-    text: 'Időpontfoglaló alkalmazás valós idejű naptár-szinkronizálással és automatikus emlékeztetőkkel.',
-    tech: ['Next.js', 'Supabase', 'Tailwind'],
-    tone: { from: '#241F19', to: '#17140F', accent: '#FF6A00' },
+    title: 'AB Masszázs időpontfoglaló',
+    text: 'Időpontfoglaló rendszer egy masszázsszalonnak — naptár, utalványok, külön admin és ügyfél nézet.',
+    tech: ['PHP', 'MySQL', 'Docker'],
+    label: 'Ügyfélprojekt',
+    tone: { from: '#372921', to: '#2B1B12', accent: '#A9754A' },
   },
   {
-    title: 'Belső Admin Dashboard',
-    text: 'Adatvizualizációs irányítópult üzleti KPI-k nyomon követésére, szűrhető riportokkal.',
-    tech: ['React', 'Express', 'Chart.js', 'PostgreSQL'],
-    tone: { from: '#221D19', to: '#17140F', accent: '#F2B705' },
+    title: 'Business Value Builder',
+    text: 'Saját árazási oldal egy valós esettanulmánnyal: végigmentem az inárcsi vállalkozásokon, kiszűrtem, kiknek nincs weboldaluk, és személyesen kerestem meg őket.',
+    tech: ['React', 'TanStack Start'],
+    label: 'Saját projekt',
+    tone: { from: '#332720', to: '#2B1B12', accent: '#8B5A2B' },
+  },
+  {
+    title: 'WebWise Studio',
+    text: 'Ügynökségi koncepció-oldal egyedi React/AI alapú webalkalmazásokra — saját kezdeményezésű prototípus.',
+    tech: ['React', 'Supabase', 'Framer Motion'],
+    label: 'Saját projekt',
+    tone: { from: '#2E241D', to: '#2B1B12', accent: '#6B4520' },
   },
 ]
 
@@ -839,40 +849,40 @@ function Projects() {
           <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary-dark">╱ Projektek</span>
           <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink mt-4 leading-[1.05] tracking-tight">
             Amin dolgozom.
-            <span className="block font-display font-semibold text-primary-dark mt-1">Hamarosan élesben.</span>
+            <span className="block font-display font-semibold text-primary-dark mt-1">Valós munka, nem mockup.</span>
           </h2>
           <p className="text-muted text-lg mt-6 leading-relaxed max-w-xl">
-            Ez a szekció folyamatosan bővül valós projektekkel — jelenleg helykitöltők állnak itt,
-            amíg feltöltöm a kész munkáimat.
+            Négy projekt, amit ténylegesen megépítettem — kettő élő ügyfélmunka, kettő saját
+            kezdeményezés, amivel a saját gondolkodásomat és árazási stratégiámat teszteltem.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {PROJECTS_FULL.map((p, i) => (
             <article
               key={i}
-              style={{ transitionDelay: visible ? `${i * 150}ms` : '0ms' }}
-              className={`proj-card group bg-surface border border-divider rounded-5xl overflow-hidden hover:border-primary/40 transition-all duration-700 ease-out shadow-sm hover:shadow-xl hover:shadow-primary/10 ${
+              style={{ transitionDelay: visible ? `${i * 120}ms` : '0ms' }}
+              className={`proj-card group bg-surface border border-divider rounded-4xl overflow-hidden hover:border-primary/40 transition-all duration-700 ease-out shadow-sm hover:shadow-xl hover:shadow-primary/10 ${
                 visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
               }`}
             >
               <ProjectMock tone={p.tone} />
-              <div className="p-7 sm:p-8">
+              <div className="p-5 sm:p-6">
                 <div className="flex items-center justify-between mb-3">
-                  <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary-dark bg-primary/10 px-2.5 py-1 rounded-full">
-                    Hamarosan
+                  <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-primary-dark bg-primary/10 px-2.5 py-1 rounded-full">
+                    {p.label}
                   </span>
                   <span className="font-mono text-[10px] text-muted uppercase tracking-widest">
                     {String(i + 1).padStart(2, '0')}
                   </span>
                 </div>
-                <h3 className="font-display font-bold text-2xl text-ink leading-tight">{p.title}</h3>
-                <p className="text-muted text-[15px] mt-3 leading-relaxed">{p.text}</p>
-                <div className="flex flex-wrap gap-2 mt-5">
+                <h3 className="font-display font-bold text-lg text-ink leading-tight">{p.title}</h3>
+                <p className="text-muted text-[13px] mt-2.5 leading-relaxed">{p.text}</p>
+                <div className="flex flex-wrap gap-1.5 mt-4">
                   {p.tech.map((t, ti) => (
                     <span
                       key={ti}
-                      className="font-mono text-[10px] uppercase tracking-wide text-muted bg-background border border-divider px-2.5 py-1 rounded-full"
+                      className="font-mono text-[9px] uppercase tracking-wide text-muted bg-background border border-divider px-2 py-0.5 rounded-full"
                     >
                       {t}
                     </span>
