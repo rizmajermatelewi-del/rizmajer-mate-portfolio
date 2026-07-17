@@ -4,17 +4,17 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#FF6A00',
-        'primary-dark': '#D65600',
-        'primary-light': '#FF9142',
-        accent: '#F2B705',
-        'accent-dark': '#C99400',
-        background: '#FAF8F5',
-        surface: '#FFFFFF',
-        ink: '#211E1B',
-        muted: '#6E655D',
-        divider: '#E7E1D9',
-        deep: '#17140F',
+        primary: '#8B5A2B',
+        'primary-dark': '#6B4520',
+        'primary-light': '#A9754A',
+        accent: '#C08552',
+        'accent-dark': '#A66B3D',
+        background: '#F5EDE4',
+        surface: '#FFF8F0',
+        ink: '#2B1B12',
+        muted: '#8A7566',
+        divider: '#E4D6C7',
+        deep: '#2B1B12',
       },
       fontFamily: {
         display: ['"Libre Caslon Display"', 'serif'],

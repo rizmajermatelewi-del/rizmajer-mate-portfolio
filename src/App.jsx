@@ -432,7 +432,7 @@ function StackShuffler() {
                 <span
                   key={idx}
                   className="h-1 w-1 rounded-full"
-                  style={{ background: idx < 24 - offset * 6 ? '#FF6A00' : '#E7E1D9' }}
+                  style={{ background: idx < 24 - offset * 6 ? '#8B5A2B' : '#E4D6C7' }}
                 />
               ))}
             </div>
@@ -520,14 +520,14 @@ function CodeScan() {
 
       {/* Terminal bar with commit markers */}
       <svg className="absolute left-3 right-3 top-9 h-5" viewBox="0 0 400 20" preserveAspectRatio="none">
-        <rect x="0" y="6" width="400" height="8" rx="4" fill="#FF6A00" fillOpacity="0.22" />
-        <rect x="0" y="7" width="400" height="2" fill="#D65600" fillOpacity="0.4" />
-        <rect x="0" y="4" width="6" height="12" rx="1.5" fill="#D65600" fillOpacity="0.5" />
-        <rect x="394" y="4" width="6" height="12" rx="1.5" fill="#D65600" fillOpacity="0.5" />
+        <rect x="0" y="6" width="400" height="8" rx="4" fill="#8B5A2B" fillOpacity="0.22" />
+        <rect x="0" y="7" width="400" height="2" fill="#6B4520" fillOpacity="0.4" />
+        <rect x="0" y="4" width="6" height="12" rx="1.5" fill="#6B4520" fillOpacity="0.5" />
+        <rect x="394" y="4" width="6" height="12" rx="1.5" fill="#6B4520" fillOpacity="0.5" />
         {[60, 152, 248, 340].map((x) => (
           <g key={x}>
-            <rect x={x - 3} y="2" width="6" height="6" rx="1" fill="#D65600" />
-            <rect x={x - 4} y="13" width="8" height="3" rx="1" fill="#D65600" fillOpacity="0.7" />
+            <rect x={x - 3} y="2" width="6" height="6" rx="1" fill="#6B4520" />
+            <rect x={x - 4} y="13" width="8" height="3" rx="1" fill="#6B4520" fillOpacity="0.7" />
           </g>
         ))}
       </svg>
@@ -543,20 +543,20 @@ function CodeScan() {
               width: `${d.size}px`,
               height: `${d.size}px`,
               animation: `code-fall ${d.dur} cubic-bezier(0.55,0.05,0.7,0.45) ${d.delay} infinite`,
-              filter: 'drop-shadow(0 1px 3px rgba(255,106,0,0.35))',
+              filter: 'drop-shadow(0 1px 3px rgba(139,90,43,0.35))',
               transform: 'translateX(-50%)',
             }}
             viewBox="0 0 24 24"
           >
             <defs>
               <linearGradient id={`chip-${i}`} x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#FF9142" />
-                <stop offset="50%" stopColor="#FF6A00" />
-                <stop offset="100%" stopColor="#D65600" />
+                <stop offset="0%" stopColor="#A9754A" />
+                <stop offset="50%" stopColor="#8B5A2B" />
+                <stop offset="100%" stopColor="#6B4520" />
               </linearGradient>
             </defs>
             <rect x="1" y="1" width="22" height="22" rx="6" fill={`url(#chip-${i})`} />
-            <text x="12" y="15.5" textAnchor="middle" fontFamily="'JetBrains Mono', monospace" fontSize="8.5" fontWeight="700" fill="#17140F">
+            <text x="12" y="15.5" textAnchor="middle" fontFamily="'JetBrains Mono', monospace" fontSize="8.5" fontWeight="700" fill="#2B1B12">
               {d.glyph}
             </text>
           </svg>
@@ -564,8 +564,8 @@ function CodeScan() {
       </div>
 
       <svg className="absolute bottom-9 left-3 right-3 h-3" viewBox="0 0 200 12" preserveAspectRatio="none">
-        <path d="M 0,6 Q 12.5,2 25,6 T 50,6 T 75,6 T 100,6 T 125,6 T 150,6 T 175,6 T 200,6" fill="none" stroke="#FF9142" strokeOpacity="0.4" strokeWidth="1.2" />
-        <path d="M 0,8 Q 12.5,5 25,8 T 50,8 T 75,8 T 100,8 T 125,8 T 150,8 T 175,8 T 200,8" fill="none" stroke="#FF6A00" strokeOpacity="0.22" strokeWidth="0.8" />
+        <path d="M 0,6 Q 12.5,2 25,6 T 50,6 T 75,6 T 100,6 T 125,6 T 150,6 T 175,6 T 200,6" fill="none" stroke="#A9754A" strokeOpacity="0.4" strokeWidth="1.2" />
+        <path d="M 0,8 Q 12.5,5 25,8 T 50,8 T 75,8 T 100,8 T 125,8 T 150,8 T 175,8 T 200,8" fill="none" stroke="#8B5A2B" strokeOpacity="0.22" strokeWidth="0.8" />
       </svg>
 
       <div className="absolute bottom-[34px] left-3 right-3 h-2">
@@ -681,7 +681,7 @@ function BookingScheduler() {
         style={{ left: `${cursorPos.x}px`, top: `${cursorPos.y}px`, opacity: cursorPos.opacity, transform: step === 3 ? 'scale(0.85)' : 'scale(1)' }}
       >
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-          <path d="M5 3L19 12L12 13L9 20L5 3Z" fill="#211E1B" stroke="white" strokeWidth="1.5" strokeLinejoin="round" />
+          <path d="M5 3L19 12L12 13L9 20L5 3Z" fill="#2B1B12" stroke="white" strokeWidth="1.5" strokeLinejoin="round" />
         </svg>
       </div>
     </div>
