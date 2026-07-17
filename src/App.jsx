@@ -359,8 +359,8 @@ function Hero() {
           </h1>
 
           <p className="hero-meta mx-auto max-w-xl text-white/75 text-base sm:text-lg mt-8 leading-relaxed">
-            Full-stack fejlesztő vagyok Magyarországról. React, Node.js és modern
-            web-technológiák segítségével építek gyors, megbízható digitális termékeket
+            Rizmajer Máté vagyok, full-stack fejlesztő Magyarországról. Nem sablonokat
+            másolok — megnézem, mire van tényleg szükséged, aztán megépítem
             <span className="text-white"> — ötlettől az élesítésig.</span>
           </p>
 
@@ -1638,7 +1638,8 @@ function ContactForm() {
               <span className="block font-display font-semibold text-primary-dark">a vállalkozásodnak?</span>
             </h2>
             <p className="text-muted text-lg mt-6 leading-relaxed max-w-md">
-              Írj pár mondatot arról, mire van szükséged, és hamarosan jelentkezem.
+              Írj pár sort arról, mit szeretnél megépíteni — elolvasom, és 24 órán belül
+              válaszolok, akkor is, ha csak kérdésed van.
             </p>
 
             <div className="mt-10 space-y-4">
