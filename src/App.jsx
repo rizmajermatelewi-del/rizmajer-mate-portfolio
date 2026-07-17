@@ -337,10 +337,10 @@ function Hero() {
         <div className="px-6 sm:px-10 lg:px-16 max-w-4xl">
           <h1 className="font-display font-extrabold text-white leading-[0.95] tracking-tight">
             <span className="hero-line-1 block text-4xl sm:text-5xl md:text-6xl">
-              Weboldalak és rendszerek,
+              Weboldalak és <span className="chrome-text font-bold">rendszerek</span>,
             </span>
             <span
-              className="hero-line-2 block font-serif italic font-medium text-primary text-6xl sm:text-7xl md:text-8xl lg:text-9xl mt-2"
+              className="hero-line-2 block font-display font-semibold text-primary text-6xl sm:text-7xl md:text-8xl lg:text-9xl mt-2"
               style={{ lineHeight: '0.92' }}
             >
               amik teljesítenek.
@@ -748,7 +748,7 @@ function Features() {
           </span>
           <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink mt-4 leading-[1.05] tracking-tight">
             Három pillér.
-            <span className="block font-serif italic font-medium text-primary-dark mt-1">Egy cél.</span>
+            <span className="block font-display font-semibold text-primary-dark mt-1">Egy cél.</span>
           </h2>
         </div>
 
@@ -773,7 +773,7 @@ function Features() {
 
               <div className="mt-6">
                 <h3 className="font-display font-bold text-2xl text-ink leading-tight">{card.heading}</h3>
-                <p className="font-serif italic text-primary-dark text-sm mt-1">{card.sub}</p>
+                <p className="font-display font-medium text-primary-dark text-sm mt-1">{card.sub}</p>
                 <p className="text-muted text-[15px] mt-4 leading-relaxed">{card.text}</p>
               </div>
             </article>
@@ -838,7 +838,7 @@ function Projects() {
           <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary-dark">╱ Projektek</span>
           <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink mt-4 leading-[1.05] tracking-tight">
             Amin dolgozom.
-            <span className="block font-serif italic font-medium text-primary-dark mt-1">Hamarosan élesben.</span>
+            <span className="block font-display font-semibold text-primary-dark mt-1">Hamarosan élesben.</span>
           </h2>
           <p className="text-muted text-lg mt-6 leading-relaxed max-w-xl">
             Ez a szekció folyamatosan bővül valós projektekkel — jelenleg helykitöltők állnak itt,
@@ -944,7 +944,7 @@ function About() {
             <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary-dark">╱ Rólam</span>
             <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink mt-4 leading-[1.05] tracking-tight">
               Néhány szó
-              <span className="block font-serif italic font-medium text-primary-dark">rólam.</span>
+              <span className="block font-display font-semibold text-primary-dark">rólam.</span>
             </h2>
 
             <div className="mt-6 space-y-4 text-muted text-base sm:text-lg leading-relaxed max-w-xl">
@@ -1098,7 +1098,7 @@ function Pillars() {
             </span>
             <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink leading-[1.05] tracking-tight">
               A számok
-              <span className="block font-serif italic font-medium text-primary-dark">mögöttem.</span>
+              <span className="block font-display font-semibold text-primary-dark">mögöttem.</span>
             </h2>
           </div>
           <p className="text-muted text-lg leading-relaxed max-w-md lg:text-right">
@@ -1126,7 +1126,7 @@ function Pillars() {
                 <span className="font-display font-extrabold text-[6rem] sm:text-[8rem] md:text-[9rem] leading-[0.85] text-ink tabular-nums tracking-tight">
                   <CountUp target={p.target} duration={1800 + i * 200} />
                 </span>
-                <span className="font-serif italic font-medium text-4xl sm:text-5xl md:text-6xl text-primary-dark mb-3 sm:mb-4">
+                <span className="font-display font-semibold text-4xl sm:text-5xl md:text-6xl text-primary-dark mb-3 sm:mb-4">
                   {p.suffix}
                 </span>
               </div>
@@ -1225,7 +1225,7 @@ function Protocol() {
         <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary-dark">╱ Így dolgozom</span>
         <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink mt-4 leading-[1.05] tracking-tight max-w-3xl">
           Három lépés.
-          <span className="block font-serif italic font-medium text-primary-dark">Semmi meglepetés.</span>
+          <span className="block font-display font-semibold text-primary-dark">Semmi meglepetés.</span>
         </h2>
       </div>
 
@@ -1251,7 +1251,7 @@ function Protocol() {
                   <h3 className="font-display font-bold text-4xl sm:text-5xl md:text-6xl text-ink leading-[1.02] tracking-tight">
                     {step.title}
                   </h3>
-                  <p className="font-serif italic text-primary-dark text-2xl sm:text-3xl mt-3">{step.tagline}</p>
+                  <p className="font-display font-medium text-primary-dark text-2xl sm:text-3xl mt-3">{step.tagline}</p>
                 </div>
 
                 <p className="text-muted text-base sm:text-lg leading-relaxed max-w-lg">{step.text}</p>
@@ -1310,8 +1310,8 @@ function ServicesGrid() {
           <div>
             <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary">╱ Amit tudok</span>
             <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl mt-4 leading-[1.05] tracking-tight">
-              A teljes eszköztár,
-              <span className="block font-serif italic font-medium text-primary">egy kézben.</span>
+              A teljes <span className="chrome-text font-bold">eszköztár</span>,
+              <span className="block font-display font-semibold text-primary">egy kézben.</span>
             </h2>
           </div>
           <p className="text-white/60 max-w-md text-base leading-relaxed">
@@ -1380,7 +1380,7 @@ function Pricing() {
           <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary-dark">╱ Árazás</span>
           <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink mt-4 leading-[1.05] tracking-tight">
             Egyszerű csomagok.
-            <span className="block font-serif italic font-medium text-primary-dark mt-1">Rugalmas megoldások.</span>
+            <span className="block font-display font-semibold text-primary-dark mt-1">Rugalmas megoldások.</span>
           </h2>
           <p className="text-muted text-lg mt-6 leading-relaxed">
             Az árak tájékoztató jellegűek és a projekt egyedi igényeitől függenek. Kérj
@@ -1415,7 +1415,7 @@ function Pricing() {
                   {tier.price}
                 </span>
                 {tier.priceSuffix && (
-                  <span className="font-serif italic text-primary-dark text-lg">{tier.priceSuffix}</span>
+                  <span className="font-display font-medium text-primary-dark text-lg">{tier.priceSuffix}</span>
                 )}
               </div>
 
@@ -1602,7 +1602,7 @@ function ContactForm() {
             <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary-dark">╱ Kapcsolat</span>
             <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink mt-4 leading-[1.05] tracking-tight">
               Hogyan segíthetek
-              <span className="block font-serif italic font-medium text-primary-dark">a vállalkozásodnak?</span>
+              <span className="block font-display font-semibold text-primary-dark">a vállalkozásodnak?</span>
             </h2>
             <p className="text-muted text-lg mt-6 leading-relaxed max-w-md">
               Írj pár mondatot arról, mire van szükséged, és hamarosan jelentkezem.
@@ -1783,7 +1783,7 @@ function Footer() {
         <div className="border-b border-white/10 pb-12 mb-12">
           <h2 className="font-display font-extrabold text-5xl sm:text-7xl md:text-8xl leading-[0.92] tracking-tight">
             Weboldalakat és
-            <span className="font-serif italic font-medium text-primary block">alkalmazásokat építek.</span>
+            <span className="font-display font-semibold text-primary block"><span className="chrome-text font-bold">alkalmazásokat</span> építek.</span>
           </h2>
           <div className="flex flex-col sm:flex-row sm:items-end justify-between mt-8 gap-6">
             <p className="text-white/50 max-w-md">

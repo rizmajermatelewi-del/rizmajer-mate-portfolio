@@ -34,6 +34,10 @@
     background: linear-gradient(135deg, #8B5A2B 0%, #6B4520 100%);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   }
+  .chrome-text {
+    background: linear-gradient(135deg,#E8E8E8 0%,#FFFFFF 20%,#9A9A9A 50%,#FFFFFF 70%,#C0C0C0 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
   .glass {
     background: rgba(250,248,245,0.65);
     backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);

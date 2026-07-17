@@ -17,9 +17,8 @@ export default {
         deep: '#2B1B12',
       },
       fontFamily: {
-        display: ['"Libre Caslon Display"', 'serif'],
-        serif: ['"Cormorant Garamond"', 'serif'],
-        body: ['"Lora"', 'serif'],
+        display: ['"Space Grotesk"', 'sans-serif'],
+        body: ['"General Sans"', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'monospace'],
       },
       borderRadius: {
