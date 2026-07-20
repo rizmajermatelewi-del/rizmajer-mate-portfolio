@@ -101,28 +101,28 @@ const PROJECTS_FULL = [
     text: 'Online rendelés egy dabasi rétesháznak — élő menü, fiókkezelés, admin felület a háttérben.',
     tech: ['React', 'TanStack Start', 'Supabase'],
     label: 'Ügyfélprojekt',
-    tone: { from: '#3A2A1E', to: '#2B1B12', accent: '#C08552' },
+    tone: { from: '--color-card-1', to: '--color-deep', accent: '--color-accent' },
   },
   {
     title: 'AB Masszázs időpontfoglaló',
     text: 'Időpontfoglaló rendszer egy masszázsszalonnak — naptár, utalványok, külön admin és ügyfél nézet.',
     tech: ['PHP', 'MySQL', 'Docker'],
     label: 'Ügyfélprojekt',
-    tone: { from: '#372921', to: '#2B1B12', accent: '#A9754A' },
+    tone: { from: '--color-card-2', to: '--color-deep', accent: '--color-primary-light' },
   },
   {
     title: 'Business Value Builder',
     text: 'Saját árazási oldal egy valós esettanulmánnyal: végigmentem az inárcsi vállalkozásokon, kiszűrtem, kiknek nincs weboldaluk, és személyesen kerestem meg őket.',
     tech: ['React', 'TanStack Start'],
     label: 'Saját projekt',
-    tone: { from: '#332720', to: '#2B1B12', accent: '#8B5A2B' },
+    tone: { from: '--color-card-3', to: '--color-deep', accent: '--color-primary' },
   },
   {
     title: 'WebWise Studio',
     text: 'Ügynökségi koncepció-oldal egyedi React/AI alapú webalkalmazásokra — saját kezdeményezésű prototípus.',
     tech: ['React', 'Supabase', 'Framer Motion'],
     label: 'Saját projekt',
-    tone: { from: '#2E241D', to: '#2B1B12', accent: '#6B4520' },
+    tone: { from: '--color-card-4', to: '--color-deep', accent: '--color-primary-dark' },
   },
 ]
 
@@ -443,7 +443,7 @@ function StackShuffler() {
                 <span
                   key={idx}
                   className="h-1 w-1 rounded-full"
-                  style={{ background: idx < 24 - offset * 6 ? '#8B5A2B' : '#E4D6C7' }}
+                  style={{ background: idx < 24 - offset * 6 ? 'rgb(var(--color-primary))' : 'rgb(var(--color-divider))' }}
                 />
               ))}
             </div>
@@ -505,7 +505,7 @@ function CodeScan() {
   return (
     <div
       className="relative h-44 w-full rounded-3xl overflow-hidden border border-primary/25"
-      style={{ background: 'linear-gradient(180deg, #241F19 0%, #1B170F 55%, #141110 100%)' }}
+      style={{ background: 'linear-gradient(180deg, rgb(var(--color-terminal-1)) 0%, rgb(var(--color-terminal-2)) 55%, rgb(var(--color-terminal-3)) 100%)' }}
     >
       <div className="absolute -top-8 -left-6 h-20 w-32 rounded-full bg-primary/10 blur-2xl" />
       <div className="absolute top-2 right-10 h-14 w-24 rounded-full bg-primary/10 blur-xl" />
@@ -531,14 +531,14 @@ function CodeScan() {
 
       {/* Terminal bar with commit markers */}
       <svg className="absolute left-3 right-3 top-9 h-5" viewBox="0 0 400 20" preserveAspectRatio="none">
-        <rect x="0" y="6" width="400" height="8" rx="4" fill="#8B5A2B" fillOpacity="0.22" />
-        <rect x="0" y="7" width="400" height="2" fill="#6B4520" fillOpacity="0.4" />
-        <rect x="0" y="4" width="6" height="12" rx="1.5" fill="#6B4520" fillOpacity="0.5" />
-        <rect x="394" y="4" width="6" height="12" rx="1.5" fill="#6B4520" fillOpacity="0.5" />
+        <rect x="0" y="6" width="400" height="8" rx="4" fill="rgb(var(--color-primary))" fillOpacity="0.22" />
+        <rect x="0" y="7" width="400" height="2" fill="rgb(var(--color-primary-dark))" fillOpacity="0.4" />
+        <rect x="0" y="4" width="6" height="12" rx="1.5" fill="rgb(var(--color-primary-dark))" fillOpacity="0.5" />
+        <rect x="394" y="4" width="6" height="12" rx="1.5" fill="rgb(var(--color-primary-dark))" fillOpacity="0.5" />
         {[60, 152, 248, 340].map((x) => (
           <g key={x}>
-            <rect x={x - 3} y="2" width="6" height="6" rx="1" fill="#6B4520" />
-            <rect x={x - 4} y="13" width="8" height="3" rx="1" fill="#6B4520" fillOpacity="0.7" />
+            <rect x={x - 3} y="2" width="6" height="6" rx="1" fill="rgb(var(--color-primary-dark))" />
+            <rect x={x - 4} y="13" width="8" height="3" rx="1" fill="rgb(var(--color-primary-dark))" fillOpacity="0.7" />
           </g>
         ))}
       </svg>
@@ -554,20 +554,20 @@ function CodeScan() {
               width: `${d.size}px`,
               height: `${d.size}px`,
               animation: `code-fall ${d.dur} cubic-bezier(0.55,0.05,0.7,0.45) ${d.delay} infinite`,
-              filter: 'drop-shadow(0 1px 3px rgba(139,90,43,0.35))',
+              filter: 'drop-shadow(0 1px 3px rgb(var(--color-primary) / 0.35))',
               transform: 'translateX(-50%)',
             }}
             viewBox="0 0 24 24"
           >
             <defs>
               <linearGradient id={`chip-${i}`} x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#A9754A" />
-                <stop offset="50%" stopColor="#8B5A2B" />
-                <stop offset="100%" stopColor="#6B4520" />
+                <stop offset="0%" stopColor="rgb(var(--color-primary-light))" />
+                <stop offset="50%" stopColor="rgb(var(--color-primary))" />
+                <stop offset="100%" stopColor="rgb(var(--color-primary-dark))" />
               </linearGradient>
             </defs>
             <rect x="1" y="1" width="22" height="22" rx="6" fill={`url(#chip-${i})`} />
-            <text x="12" y="15.5" textAnchor="middle" fontFamily="'JetBrains Mono', monospace" fontSize="8.5" fontWeight="700" fill="#2B1B12">
+            <text x="12" y="15.5" textAnchor="middle" fontFamily="'JetBrains Mono', monospace" fontSize="8.5" fontWeight="700" fill="rgb(var(--color-deep))">
               {d.glyph}
             </text>
           </svg>
@@ -575,8 +575,8 @@ function CodeScan() {
       </div>
 
       <svg className="absolute bottom-9 left-3 right-3 h-3" viewBox="0 0 200 12" preserveAspectRatio="none">
-        <path d="M 0,6 Q 12.5,2 25,6 T 50,6 T 75,6 T 100,6 T 125,6 T 150,6 T 175,6 T 200,6" fill="none" stroke="#A9754A" strokeOpacity="0.4" strokeWidth="1.2" />
-        <path d="M 0,8 Q 12.5,5 25,8 T 50,8 T 75,8 T 100,8 T 125,8 T 150,8 T 175,8 T 200,8" fill="none" stroke="#8B5A2B" strokeOpacity="0.22" strokeWidth="0.8" />
+        <path d="M 0,6 Q 12.5,2 25,6 T 50,6 T 75,6 T 100,6 T 125,6 T 150,6 T 175,6 T 200,6" fill="none" stroke="rgb(var(--color-primary-light))" strokeOpacity="0.4" strokeWidth="1.2" />
+        <path d="M 0,8 Q 12.5,5 25,8 T 50,8 T 75,8 T 100,8 T 125,8 T 150,8 T 175,8 T 200,8" fill="none" stroke="rgb(var(--color-primary))" strokeOpacity="0.22" strokeWidth="0.8" />
       </svg>
 
       <div className="absolute bottom-[34px] left-3 right-3 h-2">
@@ -692,7 +692,7 @@ function BookingScheduler() {
         style={{ left: `${cursorPos.x}px`, top: `${cursorPos.y}px`, opacity: cursorPos.opacity, transform: step === 3 ? 'scale(0.85)' : 'scale(1)' }}
       >
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-          <path d="M5 3L19 12L12 13L9 20L5 3Z" fill="#2B1B12" stroke="white" strokeWidth="1.5" strokeLinejoin="round" />
+          <path d="M5 3L19 12L12 13L9 20L5 3Z" fill="rgb(var(--color-deep))" stroke="white" strokeWidth="1.5" strokeLinejoin="round" />
         </svg>
       </div>
     </div>
@@ -802,7 +802,7 @@ function ProjectMock({ tone }) {
   return (
     <div
       className="relative h-48 w-full overflow-hidden"
-      style={{ background: `linear-gradient(160deg, ${tone.from} 0%, ${tone.to} 100%)` }}
+      style={{ background: `linear-gradient(160deg, rgb(var(${tone.from})) 0%, rgb(var(${tone.to})) 100%)` }}
     >
       <div className="flex items-center gap-1.5 px-4 py-3 border-b border-white/10">
         <span className="h-2.5 w-2.5 rounded-full bg-white/25" />
@@ -810,12 +810,12 @@ function ProjectMock({ tone }) {
         <span className="h-2.5 w-2.5 rounded-full bg-white/25" />
       </div>
       <div className="p-5">
-        <div className="h-3 w-2/3 rounded-full" style={{ background: `${tone.accent}55` }} />
+        <div className="h-3 w-2/3 rounded-full" style={{ background: `rgb(var(${tone.accent}) / 0.3333)` }} />
         <div className="h-3 w-1/3 rounded-full mt-2.5 bg-white/15" />
-        <div className="h-16 w-full rounded-xl mt-4 border border-white/10" style={{ background: `${tone.accent}18` }} />
+        <div className="h-16 w-full rounded-xl mt-4 border border-white/10" style={{ background: `rgb(var(${tone.accent}) / 0.0941)` }} />
         <div className="flex gap-2 mt-3">
           <div className="h-6 w-14 rounded-lg bg-white/10" />
-          <div className="h-6 w-14 rounded-lg" style={{ background: `${tone.accent}30` }} />
+          <div className="h-6 w-14 rounded-lg" style={{ background: `rgb(var(${tone.accent}) / 0.1882)` }} />
         </div>
       </div>
     </div>
