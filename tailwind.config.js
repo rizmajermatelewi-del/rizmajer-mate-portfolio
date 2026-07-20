@@ -4,17 +4,17 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#8B5A2B',
-        'primary-dark': '#6B4520',
-        'primary-light': '#A9754A',
-        accent: '#C08552',
-        'accent-dark': '#A66B3D',
-        background: '#F5EDE4',
-        surface: '#FFF8F0',
-        ink: '#2B1B12',
-        muted: '#8A7566',
-        divider: '#E4D6C7',
-        deep: '#2B1B12',
+        primary: 'rgb(var(--color-primary) / <alpha-value>)',
+        'primary-dark': 'rgb(var(--color-primary-dark) / <alpha-value>)',
+        'primary-light': 'rgb(var(--color-primary-light) / <alpha-value>)',
+        accent: 'rgb(var(--color-accent) / <alpha-value>)',
+        'accent-dark': 'rgb(var(--color-accent-dark) / <alpha-value>)',
+        background: 'rgb(var(--color-background) / <alpha-value>)',
+        surface: 'rgb(var(--color-surface) / <alpha-value>)',
+        ink: 'rgb(var(--color-ink) / <alpha-value>)',
+        muted: 'rgb(var(--color-muted) / <alpha-value>)',
+        divider: 'rgb(var(--color-divider) / <alpha-value>)',
+        deep: 'rgb(var(--color-deep) / <alpha-value>)',
       },
       fontFamily: {
         display: ['"Space Grotesk"', 'sans-serif'],
