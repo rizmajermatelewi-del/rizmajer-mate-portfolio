@@ -14,7 +14,19 @@ export default function Footer() {
   const [ref, visible] = useInView(0.1)
 
   return (
-    <footer ref={ref} className="relative rounded-t-6xl mt-12 overflow-hidden">
+    <footer ref={ref} className="card-invert relative rounded-t-6xl mt-12 overflow-hidden">
+      {/* Bookends the hero: the page opens and closes dark, with the light
+          body between. The top gradient dissolves the boundary. */}
+      <div className="absolute inset-0" aria-hidden="true">
+        <img
+          src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=2400&q=80"
+          alt=""
+          loading="lazy"
+          className="w-full h-full object-cover opacity-25"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-deep/95 via-deep/90 to-deep" />
+        <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-background to-transparent" />
+      </div>
       <div aria-hidden="true" className="section-glow" />
 
       <div
@@ -52,7 +64,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary mb-4">Készségek</p>
+            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary-dark mb-4">Készségek</p>
             <ul className="space-y-2.5">
               {SKILLS_FULL.slice(0, 4).map((s, i) => (
                 <li key={i}>
@@ -65,7 +77,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary mb-4">Rólam</p>
+            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary-dark mb-4">Rólam</p>
             <ul className="space-y-2.5">
               <li><a href="#projektek" className="text-muted hover:text-primary transition text-sm">Projektek</a></li>
               <li><a href="#rolam" className="text-muted hover:text-primary transition text-sm">Rólam</a></li>
@@ -76,7 +88,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary mb-4">Kapcsolat</p>
+            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary-dark mb-4">Kapcsolat</p>
             <ul className="space-y-2.5">
               <li>
                 <a href="mailto:rizmajermatelewi@gmail.com" className="text-muted hover:text-primary transition text-sm">

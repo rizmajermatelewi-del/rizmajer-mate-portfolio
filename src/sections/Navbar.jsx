@@ -27,15 +27,15 @@ export default function Navbar() {
         <div className="flex items-center justify-between gap-6">
           <a href="#kezdolap" className="flex items-center gap-2 group">
             <LogoMark
-              className={`h-9 w-9 shrink-0 transition-colors duration-300 group-hover:text-primary-dark ${
-                'text-ink'
+              className={`h-9 w-9 shrink-0 transition-colors duration-300 group-hover:text-primary-light ${
+                scrolled ? 'text-ink' : 'text-white'
               }`}
             />
             <ScrambleText
               text="Rizmajer Máté"
               trigger="hover"
               className={`font-display font-bold tracking-tight text-lg ${
-                'text-ink'
+                scrolled ? 'text-ink' : 'text-white'
               } transition-colors`}
             />
           </a>
@@ -46,7 +46,7 @@ export default function Navbar() {
                 key={link.href}
                 href={link.href}
                 className={`relative text-sm font-medium tracking-tight pb-0.5 transition-colors after:content-[''] after:absolute after:-bottom-0.5 after:left-0 after:h-px after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full ${
-                  'text-ink/70 hover:text-primary-dark'
+                  scrolled ? 'text-ink/70 hover:text-primary-dark' : 'text-white/90 hover:text-white'
                 }`}
               >
                 {link.label}
@@ -64,7 +64,7 @@ export default function Navbar() {
                   rel="noopener noreferrer"
                   aria-label={label}
                   className={`p-2 rounded-full transition-all duration-300 hover:scale-110 ${
-                    'text-ink/60 hover:text-primary-dark'
+                    scrolled ? 'text-ink/60 hover:text-primary-dark' : 'text-white/80 hover:text-white'
                   }`}
                 >
                   <Icon className="h-4 w-4" strokeWidth={2} />
@@ -82,7 +82,7 @@ export default function Navbar() {
 
           <button
             onClick={() => setOpen(true)}
-            className={`lg:hidden p-2 rounded-full ${'text-ink'}`}
+            className={`lg:hidden p-2 rounded-full ${scrolled ? 'text-ink' : 'text-white'}`}
             aria-label="Menü megnyitása"
           >
             <Menu className="h-5 w-5" />

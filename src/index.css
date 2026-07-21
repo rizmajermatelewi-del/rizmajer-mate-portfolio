@@ -60,17 +60,22 @@
 @layer components {
   /* One glow, one recipe. Previously six ad-hoc blobs of differing size,
      colour and position; the inconsistency read as noise rather than depth. */
+  /* A radial gradient, not a blurred box. The blurred version sat 8rem above
+     its section, and every section carrying one also has overflow:hidden —
+     which sliced the blur and left a hard horizontal seam across the top.
+     This stays inside its own bounds and fades out on its own. */
   .section-glow {
     position: absolute;
-    top: -8rem;
-    left: 50%;
-    height: 20rem;
-    width: min(48rem, 90%);
-    transform: translateX(-50%);
-    border-radius: 9999px;
-    background: rgb(var(--color-primary) / 0.10);
-    filter: blur(64px);
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 26rem;
     pointer-events: none;
+    background: radial-gradient(
+      55% 100% at 50% 0%,
+      rgb(var(--color-primary) / 0.13),
+      transparent 72%
+    );
   }
 
   .magnetic-btn { position: relative; overflow: hidden; transition: transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94); }
