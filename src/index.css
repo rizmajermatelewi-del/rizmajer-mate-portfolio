@@ -69,12 +69,16 @@
     top: 0;
     left: 0;
     right: 0;
-    height: 26rem;
+    height: 34rem;
     pointer-events: none;
+    /* Centre sits inside the element, not on its top edge. Peaking at 50% 0%
+       meant full opacity exactly at the section boundary, which rendered as a
+       hard horizontal seam. At 45% down the gradient is already transparent
+       before it reaches any edge, so nothing can show a line. */
     background: radial-gradient(
-      55% 100% at 50% 0%,
-      rgb(var(--color-primary) / 0.13),
-      transparent 72%
+      50% 50% at 50% 45%,
+      rgb(var(--color-primary) / 0.12),
+      transparent 70%
     );
   }
 

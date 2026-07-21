@@ -67,7 +67,7 @@ export default function Features() {
                 <div className="flex items-center justify-between mb-6">
                   <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">{card.eyebrow}</span>
                   <ArrowUpRight
-                    className="h-5 w-5 text-ink/30 group-hover:text-primary group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all"
+                    className="h-5 w-5 text-ink/30 group-hover:text-primary-dark group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all"
                     strokeWidth={1.8}
                   />
                 </div>

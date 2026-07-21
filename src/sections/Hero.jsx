@@ -42,7 +42,10 @@ export default function Hero() {
         <div className="absolute inset-0 bg-gradient-to-tr from-deep via-deep/60 to-primary/20" />
         {/* Fades into the light page, so the boundary is a transition
             rather than the hard seam a flat cut would leave. */}
-        <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-background via-background/70 to-transparent" />
+        {/* Linear ramp, no midpoint stop. With via-background/70 the fade was
+            already 70% opaque halfway up, which read as a white smear across
+            the lower third rather than a transition into the page. */}
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent" />
       </div>
 
       <div className="absolute inset-0 pointer-events-none">
