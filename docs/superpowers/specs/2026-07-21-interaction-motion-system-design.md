@@ -162,10 +162,10 @@ soft loop. Subtle pointer parallax on decorative background layers. The
 existing GSAP entrance timeline is retimed against `tokens.js` but its
 choreography is kept.
 
-**Skills** — Tilt on hover, animated gradient border trace, icon
-micro-animation. Click expands the card in place to reveal a longer
-description. This is the cheap and honest half of "clickable for more
-info": skills copy is easy to extend, unlike case studies.
+**Features** — The three showcase cards (`StackShuffler`, `CodeScan`,
+`BookingScheduler`) are already bespoke interactive demos. They are
+enhanced, not replaced: hover tilt on the card shell and a border trace,
+with the demos left intact.
 
 **Projects** — Tilt plus sheen. `ProjectMock` animates itself alive on
 hover: the fake UI blocks stagger in, the placeholder bars fill. Since
@@ -184,9 +184,12 @@ hovered one scales slightly. Focus-by-subtraction.
 rail. Step numbers snap as they become active. Hovering a step expands its
 detail text.
 
-**Services** — Directional fill: on hover the accent colour floods the cell
-from whichever edge the pointer crossed, computed from entry geometry.
-Arrow icon slides.
+**Services** — Renders `SKILLS_FULL` (six cards). Directional fill: on hover
+the accent colour floods the cell from whichever edge the pointer crossed,
+computed from entry geometry. Arrow icon slides. Click expands the card in
+place to reveal a longer description — this is the cheap and honest half of
+"clickable for more info", since service copy is easy to extend, unlike
+case studies.
 
 **Pricing** — Tilt on tier cards. Feature checkmarks stagger in on hover.
 The highlighted tier carries a slow animated gradient border. Price digits
