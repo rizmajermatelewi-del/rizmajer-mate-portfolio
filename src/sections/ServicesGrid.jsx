@@ -44,7 +44,6 @@ export default function ServicesGrid() {
                   e.currentTarget.style.setProperty('--fill-y', `${((e.clientY - r.top) / r.height) * 100}%`)
                 }}
                 aria-expanded={expanded === i}
-                data-cursor="link"
                 style={{ transitionDelay: visible ? `${i * 80}ms` : '0ms' }}
                 className={`svc-tile group w-full text-left bg-deep p-7 sm:p-9 hover:bg-white/[0.02] transition-all duration-700 ease-out relative ${
                   visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'

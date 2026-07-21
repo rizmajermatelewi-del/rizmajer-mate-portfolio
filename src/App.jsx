@@ -13,7 +13,6 @@ import Pricing from './sections/Pricing'
 import TrustSignals from './sections/TrustSignals'
 import ContactForm from './sections/ContactForm'
 import Footer from './sections/Footer'
-import { Cursor } from './motion/Cursor'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -33,7 +32,6 @@ export default function App() {
 
   return (
     <div className="relative">
-      <Cursor />
       <div className="noise-overlay" />
       <Navbar />
       <main>

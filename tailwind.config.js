@@ -16,10 +16,13 @@ export default {
         divider: 'rgb(var(--color-divider) / <alpha-value>)',
         deep: 'rgb(var(--color-deep) / <alpha-value>)',
       },
+      /* One family, hierarchy from weight and size. Geist is a precision
+         technical face with full latin-ext, so Hungarian ő/ű render natively
+         rather than falling back mid-word. */
       fontFamily: {
-        display: ['"Space Grotesk"', 'sans-serif'],
-        body: ['"General Sans"', 'sans-serif'],
-        mono: ['"JetBrains Mono"', 'monospace'],
+        display: ['Geist', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        body: ['Geist', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        mono: ['"Geist Mono"', 'ui-monospace', 'monospace'],
       },
       borderRadius: {
         '2.5xl': '1.25rem',

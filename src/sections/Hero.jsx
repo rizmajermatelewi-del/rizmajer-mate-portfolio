@@ -23,21 +23,7 @@ export default function Hero() {
       })
     }, heroRef)
 
-    /* Feeds the pointer's horizontal position to the CSS highlight riding
-       over the headline. Transform-free, so it never fights the timeline. */
-    const hero = heroRef.current
-    const onSweep = (e) => {
-      const el = hero.querySelector('.sweep-target')
-      if (!el) return
-      const r = el.getBoundingClientRect()
-      el.style.setProperty('--sweep-x', `${((e.clientX - r.left) / r.width) * 100}%`)
-    }
-    hero.addEventListener('pointermove', onSweep, { passive: true })
-
-    return () => {
-      hero.removeEventListener('pointermove', onSweep)
-      ctx.revert()
-    }
+    return () => ctx.revert()
   }, [])
 
   return (
@@ -62,12 +48,12 @@ export default function Hero() {
 
       <div className="relative z-10 flex min-h-[100dvh] flex-col items-center justify-center text-center">
         <div className="px-6 sm:px-10 lg:px-16 max-w-4xl">
-          <h1 className="sweep-target font-display font-extrabold text-white leading-[0.95] tracking-tight">
-            <span className="hero-line-1 block text-4xl sm:text-5xl md:text-6xl">
+          <h1 className="font-display font-extrabold text-white leading-[0.95] tracking-tight">
+            <span className="hero-line-1 block text-3xl sm:text-4xl md:text-5xl">
               Weboldalak és <span className="chrome-text font-bold">rendszerek</span>,
             </span>
             <span
-              className="hero-line-2 block font-display font-semibold text-primary text-6xl sm:text-7xl md:text-8xl lg:text-9xl mt-2"
+              className="hero-line-2 block font-display font-semibold text-primary text-5xl sm:text-6xl md:text-7xl lg:text-8xl mt-2"
               style={{ lineHeight: '0.92' }}
             >
               amik teljesítenek.
@@ -84,7 +70,6 @@ export default function Hero() {
             <Magnetic className="w-full sm:w-auto">
               <a
                 href="#kapcsolat"
-                data-cursor="link"
                 className="magnetic-btn group inline-flex w-full sm:w-auto items-center justify-center gap-2 bg-primary text-deep font-semibold px-7 py-4 rounded-full shadow-2xl shadow-primary/40"
               >
                 Kérj ajánlatot

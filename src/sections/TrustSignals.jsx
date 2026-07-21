@@ -29,7 +29,7 @@ export default function TrustSignals() {
     <section ref={ref} className="relative py-14 sm:py-20 px-6">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-8">
-          <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary-dark">╱ Miért engem válassz</span>
+          <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary-light">╱ Miért engem válassz</span>
           <h2 className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl text-ink mt-3 tracking-tight">
             Több, mint egy portfólió.
           </h2>
@@ -40,7 +40,7 @@ export default function TrustSignals() {
             <div
               key={i}
               style={{ transitionDelay: visible ? `${i * 120}ms` : '0ms' }}
-              className={`bg-white border border-divider rounded-4xl p-6 hover:border-primary/40 transition-all duration-700 ease-out shadow-sm ${
+              className={`bg-surface border border-divider rounded-4xl p-6 hover:border-primary/40 transition-all duration-700 ease-out shadow-sm ${
                 visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
               }`}
             >
@@ -54,7 +54,6 @@ export default function TrustSignals() {
         <div className="text-center">
           <a
             href="#kapcsolat"
-            data-cursor="link"
             className="magnetic-btn inline-flex items-center gap-2 bg-primary text-deep font-semibold px-7 py-3.5 rounded-full shadow-xl shadow-primary/30"
           >
             Kérj ajánlatot

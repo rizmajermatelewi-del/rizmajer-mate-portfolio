@@ -33,10 +33,10 @@ export default function StackShuffler() {
               opacity: 1 - offset * 0.25,
               transition: 'transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.6s ease',
             }}
-            className="absolute inset-0 bg-white border border-divider rounded-3xl p-5 shadow-md"
+            className="absolute inset-0 bg-surface border border-divider rounded-3xl p-5 shadow-md"
           >
             <div className="flex items-center justify-between">
-              <span className="font-mono text-[10px] uppercase tracking-widest text-primary-dark bg-primary/10 px-2 py-1 rounded-full">
+              <span className="font-mono text-[10px] uppercase tracking-widest text-primary-light bg-primary/10 px-2 py-1 rounded-full">
                 {item.tag}
               </span>
               <span className="font-mono text-xs text-muted">{item.metric}</span>

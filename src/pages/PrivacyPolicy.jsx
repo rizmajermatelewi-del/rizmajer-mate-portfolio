@@ -5,10 +5,10 @@ export default function PrivacyPolicy() {
   return (
     <div className="min-h-screen bg-background text-ink font-body px-6 sm:px-10 lg:px-16 py-16 sm:py-24">
       <div className="max-w-3xl mx-auto">
-        <Link to="/" className="inline-flex items-center gap-2 text-sm font-medium text-primary-dark lift-on-hover mb-10">
+        <Link to="/" className="inline-flex items-center gap-2 text-sm font-medium text-primary-light lift-on-hover mb-10">
           <ArrowLeft className="h-4 w-4" /> Vissza a főoldalra
         </Link>
-        <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary-dark">╱ Jogi információ</span>
+        <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary-light">╱ Jogi információ</span>
         <h1 className="font-display font-bold text-3xl sm:text-5xl text-ink mt-4 mb-10 tracking-tight">
           Adatvédelmi tájékoztató
         </h1>

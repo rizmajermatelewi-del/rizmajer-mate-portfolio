@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import { Menu, X, Hexagon, ArrowUpRight } from 'lucide-react'
+import { Menu, X, ArrowUpRight } from 'lucide-react'
+import { LogoMark } from '../components/Logo'
 import { NAV_LINKS, SOCIAL_LINKS } from '../data/nav'
 import { ScrambleText } from '../motion/ScrambleText'
 
@@ -24,11 +25,8 @@ export default function Navbar() {
         } rounded-full px-4 sm:px-6 py-2.5 w-[calc(100%-2rem)] max-w-5xl`}
       >
         <div className="flex items-center justify-between gap-6">
-          <a href="#kezdolap" data-cursor="link" className="flex items-center gap-2 group">
-            <span className="relative flex h-9 w-9 items-center justify-center rounded-full bg-primary">
-              <Hexagon className="h-5 w-5 text-deep" strokeWidth={2.4} />
-              <span className="absolute inset-0 rounded-full ring-2 ring-primary/30 group-hover:ring-primary/50 transition" />
-            </span>
+          <a href="#kezdolap" className="flex items-center gap-2 group">
+            <LogoMark className="h-8 w-8 text-primary transition-colors duration-300 group-hover:text-primary-light" />
             <ScrambleText
               text="Rizmajer Máté"
               trigger="hover"
@@ -43,7 +41,6 @@ export default function Navbar() {
               <a
                 key={link.href}
                 href={link.href}
-                data-cursor="link"
                 className={`relative text-sm font-medium tracking-tight pb-0.5 transition-colors after:content-[''] after:absolute after:-bottom-0.5 after:left-0 after:h-px after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full ${
                   scrolled ? 'text-ink/70 hover:text-primary' : 'text-white/90 hover:text-white'
                 }`}
@@ -62,7 +59,6 @@ export default function Navbar() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  data-cursor="link"
                   className={`p-2 rounded-full transition-all duration-300 hover:scale-110 ${
                     scrolled ? 'text-ink/60 hover:text-primary' : 'text-white/80 hover:text-white'
                   }`}
@@ -73,7 +69,6 @@ export default function Navbar() {
             </div>
             <a
               href="#kapcsolat"
-              data-cursor="link"
               className="magnetic-btn inline-flex items-center gap-1.5 bg-primary text-deep px-4 py-2 rounded-full text-sm font-semibold shadow-lg shadow-primary/30"
             >
               Kérj ajánlatot
@@ -83,7 +78,6 @@ export default function Navbar() {
 
           <button
             onClick={() => setOpen(true)}
-            data-cursor="link"
             className={`lg:hidden p-2 rounded-full ${scrolled ? 'text-ink' : 'text-white'}`}
             aria-label="Menü megnyitása"
           >

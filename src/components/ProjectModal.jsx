@@ -103,13 +103,12 @@ export default function ProjectModal({ project, originRect, onClose }) {
           type="button"
           onClick={onClose}
           aria-label="Bezárás"
-          data-cursor="link"
           className="absolute right-5 top-5 rounded-full p-2 text-muted transition-colors duration-200 hover:text-ink"
         >
           <X className="h-5 w-5" strokeWidth={2} />
         </button>
 
-        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary-dark">
+        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary-light">
           {project.label}
           {project.year && ` · ${project.year}`}
         </span>
@@ -167,8 +166,7 @@ export default function ProjectModal({ project, originRect, onClose }) {
                 href={project.live}
                 target="_blank"
                 rel="noopener noreferrer"
-                data-cursor="link"
-                className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-widest text-primary-dark hover:text-ink transition-colors duration-200"
+                className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-widest text-primary-light hover:text-ink transition-colors duration-200"
               >
                 Élő oldal <ArrowUpRight className="h-3.5 w-3.5" strokeWidth={2} />
               </a>
@@ -178,8 +176,7 @@ export default function ProjectModal({ project, originRect, onClose }) {
                 href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                data-cursor="link"
-                className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-widest text-primary-dark hover:text-ink transition-colors duration-200"
+                className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-widest text-primary-light hover:text-ink transition-colors duration-200"
               >
                 GitHub <ArrowUpRight className="h-3.5 w-3.5" strokeWidth={2} />
               </a>

@@ -43,12 +43,12 @@ export default function Features() {
             visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
           }`}
         >
-          <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary-dark">
+          <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary-light">
             ╱ Amiben segíthetek
           </span>
           <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink mt-4 leading-[1.05] tracking-tight">
             Három pillér.
-            <span className="block font-display font-semibold text-primary-dark mt-1">Egy cél.</span>
+            <span className="block font-display font-semibold text-primary-light mt-1">Egy cél.</span>
           </h2>
         </div>
 
@@ -76,7 +76,7 @@ export default function Features() {
 
                 <div className="mt-6">
                   <h3 className="font-display font-bold text-2xl text-ink leading-tight">{card.heading}</h3>
-                  <p className="font-display font-medium text-primary-dark text-sm mt-1">{card.sub}</p>
+                  <p className="font-display font-medium text-primary-light text-sm mt-1">{card.sub}</p>
                   <p className="text-muted text-[15px] mt-4 leading-relaxed">{card.text}</p>
                 </div>
               </TiltCard>

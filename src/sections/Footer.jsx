@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
-import { ArrowRight, Hexagon } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
+import { LogoMark } from '../components/Logo'
 import { SOCIAL_LINKS } from '../data/nav'
 import { SKILLS_FULL } from '../data/skills'
 import { useInView } from '../motion/useInView'
@@ -42,9 +43,7 @@ export default function Footer() {
         <div className="grid grid-cols-2 lg:grid-cols-5 gap-10">
           <div className="col-span-2">
             <div className="flex items-center gap-2 mb-4">
-              <span className="h-9 w-9 rounded-full bg-primary flex items-center justify-center">
-                <Hexagon className="h-5 w-5 text-deep" strokeWidth={2.4} />
-              </span>
+              <LogoMark className="h-9 w-9 text-primary" />
               <span className="font-display font-bold text-lg">Rizmajer Máté</span>
             </div>
             <p className="text-white/50 text-sm leading-relaxed max-w-xs">
@@ -58,7 +57,7 @@ export default function Footer() {
             <ul className="space-y-2.5">
               {SKILLS_FULL.slice(0, 4).map((s, i) => (
                 <li key={i}>
-                  <a href="#keszsegek" data-cursor="link" className="text-white/65 hover:text-primary transition text-sm">
+                  <a href="#keszsegek" className="text-white/65 hover:text-primary transition text-sm">
                     <ScrambleText text={s.title} trigger="hover" />
                   </a>
                 </li>
@@ -109,7 +108,6 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  data-cursor="link"
                   className="p-2 rounded-full text-white/50 hover:text-primary hover:scale-110 transition-all duration-300"
                 >
                   <Icon className="h-4 w-4" strokeWidth={2} />
@@ -119,8 +117,8 @@ export default function Footer() {
           </div>
 
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-white/50 text-xs font-mono">
-            <Link to="/adatvedelem" data-cursor="link" className="hover:text-primary transition">Adatvédelem</Link>
-            <Link to="/aszf" data-cursor="link" className="hover:text-primary transition">ÁSZF</Link>
+            <Link to="/adatvedelem" className="hover:text-primary transition">Adatvédelem</Link>
+            <Link to="/aszf" className="hover:text-primary transition">ÁSZF</Link>
             <span>© 2026 Rizmajer Máté</span>
           </div>
         </div>

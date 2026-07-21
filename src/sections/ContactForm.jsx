@@ -58,10 +58,10 @@ export default function ContactForm() {
               visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
-            <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary-dark">╱ Kapcsolat</span>
+            <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary-light">╱ Kapcsolat</span>
             <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink mt-4 leading-[1.05] tracking-tight">
               Hogyan segíthetek
-              <span className="block font-display font-semibold text-primary-dark">a vállalkozásodnak?</span>
+              <span className="block font-display font-semibold text-primary-light">a vállalkozásodnak?</span>
             </h2>
             <p className="text-muted text-lg mt-6 leading-relaxed max-w-md">
               Írj pár sort arról, mit szeretnél megépíteni — elolvasom, és 24 órán belül
@@ -101,7 +101,7 @@ export default function ContactForm() {
             </div>
 
             <div className="mt-10 p-5 rounded-3xl bg-primary/5 border border-primary/15">
-              <p className="font-mono text-[10px] uppercase tracking-widest text-primary-dark mb-2">Adatkezelés</p>
+              <p className="font-mono text-[10px] uppercase tracking-widest text-primary-light mb-2">Adatkezelés</p>
               <p className="text-sm text-muted leading-relaxed">
                 Az adataid biztonságban vannak. Kizárólag a megkeresésed kapcsán veszem fel veled a
                 kapcsolatot, harmadik féllel nem osztom meg őket.
@@ -155,7 +155,6 @@ export default function ContactForm() {
                       onChange={(e) => setForm({ ...form, message: e.target.value })}
                       required
                       rows={5}
-                      data-cursor="text"
                       placeholder="Meséld el röviden a projekted vagy az ötleted..."
                       className="w-full bg-background border border-divider rounded-2xl px-4 py-3.5 text-ink placeholder-muted/60 focus:border-primary focus:ring-4 focus:ring-primary/15 outline-none transition resize-none font-body"
                     />
@@ -185,7 +184,7 @@ export default function ContactForm() {
                       accept="image/*,.pdf,.doc,.docx"
                     />
                     <label htmlFor="file-up" className="cursor-pointer block">
-                      <Upload className="h-6 w-6 mx-auto text-primary-dark mb-2" />
+                      <Upload className="h-6 w-6 mx-auto text-primary-light mb-2" />
                       <p className="font-display font-semibold text-ink text-sm">
                         Csatolj egy briefet vagy referenciát (opcionális)
                       </p>
@@ -193,7 +192,7 @@ export default function ContactForm() {
                       {files.length > 0 && (
                         <div className="mt-4 flex flex-wrap gap-2 justify-center">
                           {files.map((f, i) => (
-                            <span key={i} className="inline-flex items-center gap-1.5 bg-primary/10 text-primary-dark text-xs px-3 py-1.5 rounded-full font-mono">
+                            <span key={i} className="inline-flex items-center gap-1.5 bg-primary/10 text-primary-light text-xs px-3 py-1.5 rounded-full font-mono">
                               <CheckCircle2 className="h-3 w-3" />
                               {f.name.length > 22 ? f.name.slice(0, 22) + '…' : f.name}
                             </span>
@@ -209,7 +208,6 @@ export default function ContactForm() {
                       <button
                         type="submit"
                         disabled={status === 'sending'}
-                        data-cursor="link"
                         className="magnetic-btn inline-flex items-center gap-2 bg-primary text-deep font-semibold px-7 py-3.5 rounded-full shadow-lg shadow-primary/30 disabled:opacity-50"
                       >
                         {status === 'sending' ? 'Küldés...' : 'Üzenet küldése'}
@@ -221,7 +219,7 @@ export default function ContactForm() {
               ) : (
                 <div className="text-center py-12">
                   <div className="h-16 w-16 mx-auto rounded-full bg-primary/15 flex items-center justify-center mb-6">
-                    <CheckCircle2 className="h-8 w-8 text-primary-dark" />
+                    <CheckCircle2 className="h-8 w-8 text-primary-light" />
                   </div>
                   <h3 className="font-display font-bold text-2xl text-ink mb-3">Köszönöm a megkeresésed</h3>
                   <p className="text-muted max-w-md mx-auto">

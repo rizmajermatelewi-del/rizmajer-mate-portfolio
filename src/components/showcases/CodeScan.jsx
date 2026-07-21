@@ -110,7 +110,7 @@ export default function CodeScan() {
               </linearGradient>
             </defs>
             <rect x="1" y="1" width="22" height="22" rx="6" fill={`url(#chip-${i})`} />
-            <text x="12" y="15.5" textAnchor="middle" fontFamily="'JetBrains Mono', monospace" fontSize="8.5" fontWeight="700" fill="rgb(var(--color-deep))">
+            <text x="12" y="15.5" textAnchor="middle" fontFamily="'Geist Mono', ui-monospace, monospace" fontSize="8.5" fontWeight="700" fill="rgb(var(--color-deep))">
               {d.glyph}
             </text>
           </svg>
