@@ -15,9 +15,15 @@ Branch `interaction-motion-system`, forked from `main` at `e9b9c6f`.
 | 5 — Extract sections, batch 2 | complete, controller-verified | `a219af0` |
 | 6 — `useInView` / `useReducedMotion` hooks | complete, in-session | `c9e527c` |
 | 7 — Replace duplicated observers | complete, in-session | `b67f89e` |
-| 8-15 | not started | — |
+| 8 — `TiltCard` | complete, 10/10 tests | `37f5cad` |
+| 9 — `Magnetic` | complete, 13/13 tests | `8686b89` |
+| 10 — `ScrambleText` | complete, 17/17 tests | `1f196a8` |
+| 11 — `Cursor` | complete, browser-verified | `5115ec3` |
+| 12-15 | not started | — |
 
-**Resume at Task 8.** Working ledger with per-task findings is at
+**Resume at Task 12.** All four motion primitives now exist and are unit- and
+browser-verified, but none are applied yet. The only visible change to the
+site so far is the cursor itself. Tasks 12-15 are the application work. Working ledger with per-task findings is at
 `.superpowers/sdd/progress.md` (git-ignored scratch — if it is gone, this
 table and `git log` are the recovery map).
 
