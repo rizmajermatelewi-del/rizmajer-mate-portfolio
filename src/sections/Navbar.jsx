@@ -26,7 +26,11 @@ export default function Navbar() {
       >
         <div className="flex items-center justify-between gap-6">
           <a href="#kezdolap" className="flex items-center gap-2 group">
-            <LogoMark className="h-8 w-8 text-primary transition-colors duration-300 group-hover:text-primary-light" />
+            <LogoMark
+              className={`h-9 w-9 shrink-0 transition-colors duration-300 group-hover:text-primary-light ${
+                scrolled ? 'text-ink' : 'text-white'
+              }`}
+            />
             <ScrambleText
               text="Rizmajer Máté"
               trigger="hover"
