@@ -14,11 +14,11 @@
 - **Palette:** Colours come from CSS variables via Tailwind tokens (`text-ink`, `bg-surface`, `border-divider`, `text-primary-dark`, `bg-deep`, `text-muted`). Never hardcode a hex or `rgb()` literal. The theme system in `src/index.css` is settled — do not modify it beyond the one addition in Task 11.
 - **Component names are preserved.** The spec's file listing used idealised names (`Skills.jsx`, `Philosophy.jsx`, `Process.jsx`, `Services.jsx`, `Trust.jsx`, `Contact.jsx`). **Ignore those.** Keep the real existing names so the refactor stays a pure move: `Features`, `Pillars`, `Protocol`, `ServicesGrid`, `TrustSignals`, `ContactForm`. Each file is named after the component it exports.
 - **`<Reveal>` is not built. `useInView` replaces it.** The spec proposed a `<Reveal>` wrapper component. A wrapper animates *itself*, but the existing sections drive staggered `transitionDelay` on their *children* from a `visible` boolean. A wrapper would therefore change behaviour, and Phase 1 must not. `useInView` is the exact-parity extraction of the duplication the spec was actually targeting. Do not add `<Reveal>` on top of it.
-- **Motion values come from `src/motion/tokens.js` only.** Never inline a duration or easing. Tilt max 8deg, magnetic max 12px, hover lift -4px.
+- **Motion values in JS come from `src/motion/tokens.js` only.** Never inline a duration or easing in a GSAP call or an inline `style` transition. Tailwind's built-in duration and delay utilities (`duration-500`, `delay-75`) remain allowed for pure-CSS transitions in classNames — Tailwind's scale is itself a constrained design system. Tilt max 8deg, magnetic max 12px, hover lift -4px.
 - **Reduced motion:** Every primitive must consult `useReducedMotion()` and degrade to a static or opacity-only state. This is not optional per-component polish.
 - **Section ids are load-bearing** — `#kezdolap`, `#projektek`, `#rolam`, `#keszsegek`, `#arak`, `#kapcsolat` are targeted by `NAV_LINKS`. Never rename them.
 - **`gsap.registerPlugin(ScrollTrigger)` runs exactly once**, in `src/App.jsx`. Section files must not call it.
-- **All GSAP work is wrapped in `gsap.context()` and reverted on unmount**, matching the existing pattern at `src/App.jsx:312`.
+- **All ScrollTrigger work is wrapped in `gsap.context()` and reverted on unmount**, matching the existing pattern at `src/App.jsx:312`. The pointer primitives (`TiltCard`, `Magnetic`, `Cursor`) are exempt: `gsap.quickTo`/`quickSetter` create no revertable tweens, so they clean up by removing their listeners and calling `gsap.set(el, { x: 0, y: 0, willChange: 'auto' })`. That is the correct pattern for setters — do not wrap them in a context.
 - **Commit after every task.** Never bundle two tasks into one commit.
 
 ## Verification model
