@@ -136,7 +136,7 @@ export default function Navbar() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={label}
-                className="p-3 rounded-full bg-divider/40 text-ink/60 hover:text-primary hover:scale-110 transition-all duration-300"
+                className="p-3 rounded-full bg-divider/40 text-ink/60 hover:text-primary-dark hover:scale-110 transition-all duration-300"
               >
                 <Icon className="h-5 w-5" strokeWidth={2} />
               </a>

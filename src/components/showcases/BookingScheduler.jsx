@@ -46,7 +46,7 @@ export default function BookingScheduler() {
                 : 'bg-background text-ink'
             }`}
           >
-            <span className="font-mono text-[9px] text-muted">{d}</span>
+            <span className="font-mono text-[9px] opacity-70">{d}</span>
             <span className="font-display font-semibold text-sm">{idx + 7}</span>
           </div>
         ))}

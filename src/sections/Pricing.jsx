@@ -35,7 +35,7 @@ export default function Pricing() {
               } ${
                 tier.highlight
                   ? `border-primary shadow-xl shadow-primary/15 ${visible ? 'lg:-translate-y-3' : ''}`
-                  : 'border-divider hover:border-primary/30 hover:shadow-lg hover:-translate-y-1'
+                  : 'border-divider hover:border-primary/60 hover:shadow-lg hover:-translate-y-1'
               }`}
             >
               {tier.highlight && (
@@ -75,7 +75,7 @@ export default function Pricing() {
                   className={`magnetic-btn inline-flex w-full items-center justify-center gap-2 px-6 py-3.5 rounded-full font-semibold transition-colors duration-300 ${
                     tier.highlight
                       ? 'bg-primary text-white shadow-lg shadow-primary/30'
-                      : 'bg-background border border-divider text-ink hover:border-primary/40 hover:text-primary-dark'
+                      : 'bg-background border border-divider text-ink hover:border-primary/60 hover:text-primary-dark'
                   }`}
                 >
                   Ajánlatkérés

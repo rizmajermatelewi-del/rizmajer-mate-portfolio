@@ -71,7 +71,7 @@ export default function ContactForm() {
             <div className="mt-10 space-y-4">
               <a href="mailto:rizmajermatelewi@gmail.com" className="lift-on-hover flex items-center gap-4 group">
                 <span className="h-12 w-12 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:bg-primary transition">
-                  <Mail className="h-5 w-5 text-primary group-hover:text-deep" />
+                  <Mail className="h-5 w-5 text-primary group-hover:text-white" />
                 </span>
                 <span>
                   <span className="block font-mono text-[10px] uppercase tracking-widest text-muted">Írj emailt</span>
@@ -172,7 +172,7 @@ export default function ContactForm() {
                       handleFiles(e.dataTransfer.files)
                     }}
                     className={`mt-5 border-2 border-dashed rounded-3xl p-6 text-center transition-colors cursor-pointer ${
-                      dragging ? 'border-primary bg-primary/5' : 'border-divider hover:border-primary/50'
+                      dragging ? 'border-primary bg-primary/5' : 'border-divider hover:border-primary/60'
                     }`}
                   >
                     <input

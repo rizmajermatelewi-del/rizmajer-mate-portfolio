@@ -16,7 +16,7 @@ export default function ServicesGrid() {
       <div className="relative max-w-7xl mx-auto">
         <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-6 mb-14">
           <div>
-            <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary">╱ Amit tudok</span>
+            <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary-dark">╱ Amit tudok</span>
             <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink mt-4 leading-[1.05] tracking-tight">
               A teljes <span className="text-primary-dark font-bold">eszköztár</span>,
               <span className="block font-display font-semibold text-primary">egy kézben.</span>
@@ -51,7 +51,7 @@ export default function ServicesGrid() {
 
                 <div className="relative flex items-start justify-between mb-6">
                   <div className="h-12 w-12 rounded-2xl bg-primary/15 border border-primary/30 flex items-center justify-center group-hover:bg-primary group-hover:scale-110 transition-all duration-500">
-                    <Icon className="h-5 w-5 text-primary group-hover:text-deep" strokeWidth={2} />
+                    <Icon className="h-5 w-5 text-primary group-hover:text-white" strokeWidth={2} />
                   </div>
                   <span className="font-mono text-[10px] text-white/30 uppercase tracking-widest">
                     {String(i + 1).padStart(2, '0')}

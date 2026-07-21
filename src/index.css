@@ -16,11 +16,13 @@
   /* Light, cool-tinted base. Card mockups and terminal panels stay dark on
      purpose — they depict screens, and a dark screen on a light page is the
      contrast that makes them read as screens. */
-  --color-background: 216 227 242;
-  --color-surface: 255 255 255;
-  --color-ink: 15 27 42;
-  --color-muted: 82 99 120;
-  --color-divider: 190 206 226;
+  /* Darker again. muted and divider move with it — on a darker base, dark
+     text loses contrast, so muted has to get darker too or it drops under AA. */
+  --color-background: 197 211 231;
+  --color-surface: 252 253 255;
+  --color-ink: 12 22 35;
+  --color-muted: 64 80 100;
+  --color-divider: 170 189 213;
   --color-deep: 11 20 33;
 
   --color-card-1: 30 41 59;

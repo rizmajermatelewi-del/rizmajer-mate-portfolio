@@ -67,7 +67,7 @@ export default function Pillars() {
               onPointerEnter={() => setFocused(i)}
               onPointerLeave={() => setFocused(null)}
               style={{ transitionDelay: visible ? `${i * 150}ms` : '0ms' }}
-              className={`pillar-card relative card-invert p-9 sm:p-12 group overflow-hidden transition-all duration-1000 ease-out ${
+              className={`pillar-card relative card-invert p-9 sm:p-12 group overflow-hidden card-motion ${
                 visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
               }`}
             >
