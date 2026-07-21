@@ -49,12 +49,12 @@ export default function Pillars() {
           }`}
         >
           <div className="max-w-2xl">
-            <span className="inline-block font-mono text-xs uppercase tracking-[0.3em] text-primary-light mb-5">
+            <span className="inline-block font-mono text-xs uppercase tracking-[0.3em] text-primary-dark mb-5">
               ╱ Számokban
             </span>
             <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink leading-[1.05] tracking-tight">
               A számok
-              <span className="block font-display font-semibold text-primary-light">mögöttem.</span>
+              <span className="block font-display font-semibold text-primary-dark">mögöttem.</span>
             </h2>
           </div>
           <p className="text-muted text-lg leading-relaxed max-w-md lg:text-right">
@@ -69,7 +69,7 @@ export default function Pillars() {
               onPointerEnter={() => setFocused(i)}
               onPointerLeave={() => setFocused(null)}
               style={{ transitionDelay: visible ? `${i * 150}ms` : '0ms' }}
-              className={`pillar-card relative bg-surface p-9 sm:p-12 group overflow-hidden transition-all duration-1000 ease-out ${
+              className={`pillar-card relative card-invert p-9 sm:p-12 group overflow-hidden transition-all duration-1000 ease-out ${
                 visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
               }`}
             >
@@ -92,12 +92,12 @@ export default function Pillars() {
                 <span className="font-display font-extrabold text-[6rem] sm:text-[8rem] md:text-[9rem] leading-[0.85] text-ink tabular-nums tracking-tight">
                   <CountUp target={p.target} duration={1800 + i * 200} />
                 </span>
-                <span className="font-display font-semibold text-4xl sm:text-5xl md:text-6xl text-primary-light mb-3 sm:mb-4">
+                <span className="font-display font-semibold text-4xl sm:text-5xl md:text-6xl text-primary-dark mb-3 sm:mb-4">
                   {p.suffix}
                 </span>
               </div>
 
-              <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-primary-light mt-5">{p.label}</p>
+              <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-primary-dark mt-5">{p.label}</p>
               <p className="text-muted text-[15px] mt-6 leading-relaxed max-w-xs">{p.desc}</p>
               </div>
 

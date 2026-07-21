@@ -36,7 +36,7 @@ export default function StackShuffler() {
             className="absolute inset-0 bg-surface border border-divider rounded-3xl p-5 shadow-md"
           >
             <div className="flex items-center justify-between">
-              <span className="font-mono text-[10px] uppercase tracking-widest text-primary-light bg-primary/10 px-2 py-1 rounded-full">
+              <span className="font-mono text-[10px] uppercase tracking-widest text-primary-dark bg-primary/10 px-2 py-1 rounded-full">
                 {item.tag}
               </span>
               <span className="font-mono text-xs text-muted">{item.metric}</span>

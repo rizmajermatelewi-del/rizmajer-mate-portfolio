@@ -108,7 +108,7 @@ export default function ProjectModal({ project, originRect, onClose }) {
           <X className="h-5 w-5" strokeWidth={2} />
         </button>
 
-        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary-light">
+        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary-dark">
           {project.label}
           {project.year && ` · ${project.year}`}
         </span>
@@ -166,7 +166,7 @@ export default function ProjectModal({ project, originRect, onClose }) {
                 href={project.live}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-widest text-primary-light hover:text-ink transition-colors duration-200"
+                className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-widest text-primary-dark hover:text-ink transition-colors duration-200"
               >
                 Élő oldal <ArrowUpRight className="h-3.5 w-3.5" strokeWidth={2} />
               </a>
@@ -176,7 +176,7 @@ export default function ProjectModal({ project, originRect, onClose }) {
                 href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-widest text-primary-light hover:text-ink transition-colors duration-200"
+                className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-widest text-primary-dark hover:text-ink transition-colors duration-200"
               >
                 GitHub <ArrowUpRight className="h-3.5 w-3.5" strokeWidth={2} />
               </a>

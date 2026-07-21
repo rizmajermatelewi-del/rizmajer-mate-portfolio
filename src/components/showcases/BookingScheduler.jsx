@@ -31,7 +31,7 @@ export default function BookingScheduler() {
     <div className="relative h-44 w-full bg-surface border border-divider rounded-3xl p-5 overflow-hidden">
       <div className="flex items-center justify-between mb-3">
         <span className="font-mono text-[10px] uppercase tracking-widest text-muted">14. hét · Július</span>
-        <span className="font-mono text-[10px] uppercase tracking-widest text-primary-light bg-primary/10 px-2 py-0.5 rounded-full">
+        <span className="font-mono text-[10px] uppercase tracking-widest text-primary-dark bg-primary/10 px-2 py-0.5 rounded-full">
           Foglalás
         </span>
       </div>

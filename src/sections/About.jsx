@@ -48,10 +48,10 @@ export default function About() {
               visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
-            <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary-light">╱ Rólam</span>
+            <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary-dark">╱ Rólam</span>
             <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink mt-4 leading-[1.05] tracking-tight">
               Néhány szó
-              <span className="block font-display font-semibold text-primary-light">rólam.</span>
+              <span className="block font-display font-semibold text-primary-dark">rólam.</span>
             </h2>
 
             <div className="mt-6 space-y-4 text-muted text-base sm:text-lg leading-relaxed max-w-xl">
@@ -80,7 +80,7 @@ export default function About() {
             <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4">
               {facts.map((f, i) => (
                 <div key={i} className="rounded-2xl border border-divider bg-surface p-4">
-                  <p className="font-mono text-[9px] uppercase tracking-widest text-primary-light">{f.label}</p>
+                  <p className="font-mono text-[9px] uppercase tracking-widest text-primary-dark">{f.label}</p>
                   <p className="font-display font-semibold text-ink text-sm mt-1">{f.value}</p>
                 </div>
               ))}
@@ -93,7 +93,7 @@ export default function About() {
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="lift-on-hover inline-flex items-center gap-2 bg-surface border border-divider text-ink px-5 py-3 rounded-full font-medium text-sm hover:border-primary/40 hover:text-primary-light transition-colors duration-300"
+                  className="lift-on-hover inline-flex items-center gap-2 bg-surface border border-divider text-ink px-5 py-3 rounded-full font-medium text-sm hover:border-primary/40 hover:text-primary-dark transition-colors duration-300"
                 >
                   <Icon className="h-4 w-4" strokeWidth={2} />
                   {label}

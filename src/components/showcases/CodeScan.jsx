@@ -41,7 +41,7 @@ export default function CodeScan() {
 
   const status = statuses[statusIdx]
   const toneText =
-    status.tone === 'emerald' ? 'text-emerald-400' : status.tone === 'accent' ? 'text-accent' : 'text-primary-light'
+    status.tone === 'emerald' ? 'text-emerald-400' : status.tone === 'accent' ? 'text-accent' : 'text-primary-dark'
   const toneDot =
     status.tone === 'emerald' ? 'bg-emerald-500' : status.tone === 'accent' ? 'bg-accent' : 'bg-primary'
 
@@ -56,11 +56,11 @@ export default function CodeScan() {
       {/* Header strip */}
       <div className="absolute top-3 left-4 right-4 flex items-center justify-between z-20">
         <div className="flex items-center gap-2">
-          <svg className="h-3.5 w-3.5 text-primary-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          <svg className="h-3.5 w-3.5 text-primary-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
             <polyline points="16 18 22 12 16 6" />
             <polyline points="8 6 2 12 8 18" />
           </svg>
-          <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-primary-light">
+          <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-primary-dark">
             Élő build
           </span>
         </div>

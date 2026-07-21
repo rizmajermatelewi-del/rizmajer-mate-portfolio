@@ -14,10 +14,10 @@ export default function Pricing() {
     <section id="arak" ref={ref} className="relative py-28 sm:py-40 px-6 sm:px-10 lg:px-16">
       <div className="max-w-7xl mx-auto">
         <div className="max-w-3xl mb-16 sm:mb-20 text-center mx-auto">
-          <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary-light">╱ Árazás</span>
+          <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary-dark">╱ Árazás</span>
           <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink mt-4 leading-[1.05] tracking-tight">
             Egyszerű csomagok.
-            <span className="block font-display font-semibold text-primary-light mt-1">Rugalmas megoldások.</span>
+            <span className="block font-display font-semibold text-primary-dark mt-1">Rugalmas megoldások.</span>
           </h2>
           <p className="text-muted text-lg mt-6 leading-relaxed">
             Az árak tájékoztató jellegűek és a projekt egyedi igényeitől függenek. Kérj
@@ -30,7 +30,7 @@ export default function Pricing() {
             <TiltCard key={i} max={5}>
             <article
               style={{ transitionDelay: visible ? `${i * 150}ms` : '0ms' }}
-              className={`pricing-card group relative bg-surface border rounded-5xl p-8 sm:p-10 transition-all duration-700 ease-out ${
+              className={`pricing-card group relative card-invert border rounded-5xl p-8 sm:p-10 transition-all duration-700 ease-out ${
                 visible ? 'opacity-100' : 'opacity-0 translate-y-10'
               } ${
                 tier.highlight
@@ -43,7 +43,7 @@ export default function Pricing() {
                   Legnépszerűbb
                 </span>
               )}
-              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary-light">{tier.eyebrow}</span>
+              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary-dark">{tier.eyebrow}</span>
               <h3 className="font-display font-bold text-2xl text-ink mt-3">{tier.name}</h3>
               <p className="text-muted text-sm mt-2 leading-relaxed">{tier.desc}</p>
 
@@ -52,7 +52,7 @@ export default function Pricing() {
                   {tier.price}
                 </span>
                 {tier.priceSuffix && (
-                  <span className="font-display font-medium text-primary-light text-lg">{tier.priceSuffix}</span>
+                  <span className="font-display font-medium text-primary-dark text-lg">{tier.priceSuffix}</span>
                 )}
               </div>
 
@@ -75,7 +75,7 @@ export default function Pricing() {
                   className={`magnetic-btn inline-flex w-full items-center justify-center gap-2 px-6 py-3.5 rounded-full font-semibold transition-colors duration-300 ${
                     tier.highlight
                       ? 'bg-primary text-deep shadow-lg shadow-primary/30'
-                      : 'bg-background border border-divider text-ink hover:border-primary/40 hover:text-primary-light'
+                      : 'bg-background border border-divider text-ink hover:border-primary/40 hover:text-primary-dark'
                   }`}
                 >
                   Ajánlatkérés
