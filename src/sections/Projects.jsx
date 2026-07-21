@@ -1,10 +1,24 @@
+import { useState } from 'react'
 import { PROJECTS_FULL } from '../data/projects'
 import ProjectMock from '../components/ProjectMock'
+import ProjectModal from '../components/ProjectModal'
 import { useInView } from '../motion/useInView'
 import { TiltCard } from '../motion/TiltCard'
 
 export default function Projects() {
   const [sectionRef, visible] = useInView(0.1)
+  const [openIndex, setOpenIndex] = useState(null)
+  const [originRect, setOriginRect] = useState(null)
+
+  const openProject = (i, e) => {
+    setOriginRect(e.currentTarget.getBoundingClientRect())
+    setOpenIndex(i)
+  }
+
+  const closeProject = () => {
+    setOpenIndex(null)
+    setOriginRect(null)
+  }
 
   return (
     <section id="projektek" ref={sectionRef} className="relative py-28 sm:py-40 px-6 sm:px-10 lg:px-16">
@@ -23,12 +37,15 @@ export default function Projects() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {PROJECTS_FULL.map((p, i) => (
-            <article
+            <button
               key={i}
+              type="button"
+              onClick={(e) => openProject(i, e)}
+              aria-label={`${p.title} — részletek`}
               data-cursor="card"
               data-cursor-label="Részletek"
               style={{ transitionDelay: visible ? `${i * 120}ms` : '0ms' }}
-              className={`proj-card group bg-surface border border-divider rounded-4xl overflow-hidden hover:border-primary/40 transition-all duration-700 ease-out shadow-sm hover:shadow-xl hover:shadow-primary/10 ${
+              className={`proj-card group w-full text-left bg-surface border border-divider rounded-4xl overflow-hidden hover:border-primary/40 transition-all duration-700 ease-out shadow-sm hover:shadow-xl hover:shadow-primary/10 ${
                 visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
               }`}
             >
@@ -57,10 +74,16 @@ export default function Projects() {
                   </div>
                 </div>
               </TiltCard>
-            </article>
+            </button>
           ))}
         </div>
       </div>
+
+      <ProjectModal
+        project={openIndex === null ? null : PROJECTS_FULL[openIndex]}
+        originRect={originRect}
+        onClose={closeProject}
+      />
     </section>
   )
 }
