@@ -1,0 +1,30 @@
+export const PROJECTS_FULL = [
+  {
+    title: 'Rétes-rendelő',
+    text: 'Online rendelés egy dabasi rétesháznak — élő menü, fiókkezelés, admin felület a háttérben.',
+    tech: ['React', 'TanStack Start', 'Supabase'],
+    label: 'Ügyfélprojekt',
+    tone: { from: '--color-card-1', to: '--color-deep', accent: '--color-accent' },
+  },
+  {
+    title: 'AB Masszázs időpontfoglaló',
+    text: 'Időpontfoglaló rendszer egy masszázsszalonnak — naptár, utalványok, külön admin és ügyfél nézet.',
+    tech: ['PHP', 'MySQL', 'Docker'],
+    label: 'Ügyfélprojekt',
+    tone: { from: '--color-card-2', to: '--color-deep', accent: '--color-primary-light' },
+  },
+  {
+    title: 'Business Value Builder',
+    text: 'Saját árazási oldal egy valós esettanulmánnyal: végigmentem az inárcsi vállalkozásokon, kiszűrtem, kiknek nincs weboldaluk, és személyesen kerestem meg őket.',
+    tech: ['React', 'TanStack Start'],
+    label: 'Saját projekt',
+    tone: { from: '--color-card-3', to: '--color-deep', accent: '--color-primary' },
+  },
+  {
+    title: 'WebWise Studio',
+    text: 'Ügynökségi koncepció-oldal egyedi React/AI alapú webalkalmazásokra — saját kezdeményezésű prototípus.',
+    tech: ['React', 'Supabase', 'Framer Motion'],
+    label: 'Saját projekt',
+    tone: { from: '--color-card-4', to: '--color-deep', accent: '--color-primary-dark' },
+  },
+]
