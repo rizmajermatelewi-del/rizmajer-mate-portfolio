@@ -21,10 +21,13 @@ Branch `interaction-motion-system`, forked from `main` at `e9b9c6f`.
 | 11 — `Cursor` | complete, browser-verified | `5115ec3` |
 | 12 — Apply: Navbar, Hero, Projects, Features | complete, browser-verified | `b0da1e6` |
 | 13 — Apply: remaining sections | complete, browser-verified | `f207989` |
-| 14-15 | not started | — |
+| 14 — Extend project data | complete, TDD, 21 tests | `8d6d2b5` |
+| 15 — `ProjectModal` | complete, browser-verified | `9e5924a` |
 
-**Resume at Task 14.** Phase 2 is done — every section now responds to the
-pointer. Two things need a human before ship, neither of which blocks Task 14:
+**All 15 tasks complete.** Final gate passed: build succeeds, lint clean apart
+from the pre-existing `CodeScan.jsx:18` warning, 21/21 tests.
+
+Two things need a human before ship:
 
 1. **TrustSignals Step 7 was not implemented.** It assumes a compact row of
    signals to loop; the section is three cards each carrying a full paragraph,
