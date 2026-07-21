@@ -30,8 +30,7 @@ export default function Hero() {
 
   return (
     <section id="kezdolap" ref={heroRef} className="relative min-h-[100dvh] w-full overflow-hidden">
-      <div className="absolute inset-0 grid-bg opacity-40" />
-      <div className="absolute -top-32 left-1/2 -translate-x-1/2 h-[26rem] w-[52rem] rounded-full bg-primary/10 blur-3xl pointer-events-none" />
+      <div aria-hidden="true" className="section-glow" />
 
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/4 right-[18%] h-2 w-2 rounded-full bg-primary/50 animate-float" style={{ animationDelay: '0s' }} />

@@ -26,7 +26,7 @@ export default function TrustSignals() {
   ]
 
   return (
-    <section ref={ref} className="relative py-14 sm:py-20 px-6">
+    <section ref={ref} className="relative py-28 sm:py-40 px-6">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-8">
           <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary-dark">╱ Miért engem válassz</span>

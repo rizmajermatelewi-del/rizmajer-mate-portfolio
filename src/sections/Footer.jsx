@@ -15,8 +15,7 @@ export default function Footer() {
 
   return (
     <footer ref={ref} className="relative rounded-t-6xl mt-12 overflow-hidden">
-      <div className="absolute inset-0 grid-bg opacity-15" />
-      <div className="absolute -top-32 left-1/2 -translate-x-1/2 h-64 w-[40rem] rounded-full bg-primary/20 blur-3xl" />
+      <div aria-hidden="true" className="section-glow" />
 
       <div
         className={`relative px-6 sm:px-10 lg:px-16 pt-20 pb-10 max-w-7xl mx-auto transition-all duration-1000 ease-out ${

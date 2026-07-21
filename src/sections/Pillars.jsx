@@ -38,9 +38,7 @@ export default function Pillars() {
 
   return (
     <section id="filozofia" ref={ref} className="relative py-28 sm:py-40 px-6 sm:px-10 lg:px-16 overflow-hidden">
-      <div className="absolute inset-0 grid-bg opacity-60" />
-      <div className="absolute -top-32 left-1/2 -translate-x-1/2 h-64 w-[44rem] rounded-full bg-primary/15 blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 right-0 h-72 w-72 rounded-full bg-accent/10 blur-3xl pointer-events-none" />
+      <div aria-hidden="true" className="section-glow" />
 
       <div className="relative max-w-7xl mx-auto">
         <div

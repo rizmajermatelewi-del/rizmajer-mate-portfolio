@@ -72,7 +72,7 @@ export default function Protocol() {
   ]
 
   return (
-    <section id="folyamat" ref={containerRef} className="relative px-4 sm:px-6 py-20">
+    <section id="folyamat" ref={containerRef} className="relative px-4 sm:px-6 py-28 sm:py-40">
       <div aria-hidden="true" className="absolute left-0 top-0 h-full w-px bg-divider">
         <div className="progress-rail h-full w-full origin-top scale-y-0 bg-primary" />
       </div>

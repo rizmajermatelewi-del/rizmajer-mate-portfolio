@@ -32,7 +32,6 @@ export default function App() {
 
   return (
     <div className="relative">
-      <div className="noise-overlay" />
       <Navbar />
       <main>
         <Hero />

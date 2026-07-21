@@ -24,7 +24,6 @@ export default function About() {
 
   return (
     <section id="rolam" ref={ref} className="relative py-28 sm:py-40 px-6 sm:px-10 lg:px-16 overflow-hidden">
-      <div className="absolute inset-0 grid-bg opacity-40" />
       <div className="relative max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           <div
