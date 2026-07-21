@@ -2,6 +2,38 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
+## Execution status (paused 2026-07-21)
+
+Branch `interaction-motion-system`, forked from `main` at `e9b9c6f`.
+
+| Task | Status | Commit |
+| --- | --- | --- |
+| 1 — Test harness and motion tokens | complete, reviewed clean | `0876a99` |
+| 2 — Extract data constants and brand icons | complete, reviewed clean | `ae6300e` |
+| 3 — Extract leaf and showcase components | complete, reviewed clean | `8282ef0` |
+| 4 — Extract sections, batch 1 | complete, controller-verified | `d2de51f` |
+| 5 — Extract sections, batch 2 | complete, controller-verified | `a219af0` |
+| 6-15 | not started | — |
+
+**Resume at Task 6.** Working ledger with per-task findings is at
+`.superpowers/sdd/progress.md` (git-ignored scratch — if it is gone, this
+table and `git log` are the recovery map).
+
+Two open items carried forward:
+
+1. **Visual parity is unverified.** Tasks 3-5 had no browser tooling
+   available, so the restructure has only been proven by byte-identical
+   diffs, a green build, lint, and 4/4 tests. The Phase 1 gate after Task 7
+   must include a real browser pass before any new motion is added.
+2. **Cost decision in force:** pure-move tasks run on a cheap model and are
+   verified by controller diff; tasks with real logic (6, 8-15) get the full
+   implementer plus independent reviewer gate.
+
+`App.jsx` went from 1985 lines to 52 lines of pure composition across
+Tasks 2-5. No behaviour was intentionally changed.
+
+---
+
 **Goal:** Give every meaningful element on the portfolio site an expressive pointer response, and add a click-through detail layer for projects and services.
 
 **Architecture:** Split the 1985-line `src/App.jsx` into `sections/`, `data/`, and `components/`, then build a reusable `src/motion/` layer (tokens, `useInView`, `Cursor`, `Magnetic`, `TiltCard`, `ScrambleText`) that every section imports. Applied in three phases: restructure with zero visual change, then apply motion section by section, then the project modal.
