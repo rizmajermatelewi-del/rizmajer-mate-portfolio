@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { SKILLS_FULL } from '../data/skills'
 import { useInView } from '../motion/useInView'
 
@@ -6,6 +7,7 @@ import { useInView } from '../motion/useInView'
 ---------------------------------------------------------------- */
 export default function ServicesGrid() {
   const [ref, visible] = useInView(0.1)
+  const [expanded, setExpanded] = useState(null)
 
   return (
     <section ref={ref} className="relative py-24 px-6 sm:px-10 lg:px-16 bg-deep text-white overflow-hidden rounded-t-6xl">
@@ -32,14 +34,30 @@ export default function ServicesGrid() {
           {SKILLS_FULL.map((svc, i) => {
             const Icon = svc.icon
             return (
-              <div
+              <button
                 key={i}
+                type="button"
+                onClick={() => setExpanded(expanded === i ? null : i)}
+                onPointerEnter={(e) => {
+                  const r = e.currentTarget.getBoundingClientRect()
+                  e.currentTarget.style.setProperty('--fill-x', `${((e.clientX - r.left) / r.width) * 100}%`)
+                  e.currentTarget.style.setProperty('--fill-y', `${((e.clientY - r.top) / r.height) * 100}%`)
+                }}
+                aria-expanded={expanded === i}
+                data-cursor="link"
                 style={{ transitionDelay: visible ? `${i * 80}ms` : '0ms' }}
-                className={`svc-tile group bg-deep p-7 sm:p-9 hover:bg-white/[0.02] transition-all duration-700 ease-out relative ${
+                className={`svc-tile group w-full text-left bg-deep p-7 sm:p-9 hover:bg-white/[0.02] transition-all duration-700 ease-out relative ${
                   visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
                 }`}
               >
-                <div className="flex items-start justify-between mb-6">
+                {/* Floods from wherever the pointer crossed the edge. */}
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-0 rounded-[inherit] scale-0 opacity-0 bg-primary/15 transition-[transform,opacity] duration-500 ease-out group-hover:scale-100 group-hover:opacity-100"
+                  style={{ transformOrigin: 'var(--fill-x, 50%) var(--fill-y, 50%)' }}
+                />
+
+                <div className="relative flex items-start justify-between mb-6">
                   <div className="h-12 w-12 rounded-2xl bg-primary/15 border border-primary/30 flex items-center justify-center group-hover:bg-primary group-hover:scale-110 transition-all duration-500">
                     <Icon className="h-5 w-5 text-primary group-hover:text-deep" strokeWidth={2} />
                   </div>
@@ -47,9 +65,19 @@ export default function ServicesGrid() {
                     {String(i + 1).padStart(2, '0')}
                   </span>
                 </div>
-                <h3 className="font-display font-bold text-xl sm:text-2xl mb-3">{svc.title}</h3>
-                <p className="text-white/55 text-sm leading-relaxed">{svc.text}</p>
-              </div>
+                <h3 className="relative font-display font-bold text-xl sm:text-2xl mb-3">{svc.title}</h3>
+                <p className="relative text-white/55 text-sm leading-relaxed">{svc.text}</p>
+
+                <div
+                  className={`relative grid transition-[grid-template-rows] duration-300 ease-out ${
+                    expanded === i ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+                  }`}
+                >
+                  <div className="overflow-hidden">
+                    <p className="text-white/45 text-sm leading-relaxed pt-3">{svc.detail}</p>
+                  </div>
+                </div>
+              </button>
             )
           })}
         </div>

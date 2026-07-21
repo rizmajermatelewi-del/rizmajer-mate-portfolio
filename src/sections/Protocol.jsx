@@ -26,6 +26,17 @@ export default function Protocol() {
           ease: 'none',
         })
       })
+
+      gsap.to('.progress-rail', {
+        scaleY: 1,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: 'top center',
+          end: 'bottom center',
+          scrub: true,
+        },
+      })
     }, containerRef)
     return () => ctx.revert()
   }, [])
@@ -62,6 +73,10 @@ export default function Protocol() {
 
   return (
     <section id="folyamat" ref={containerRef} className="relative px-4 sm:px-6 py-20">
+      <div aria-hidden="true" className="absolute left-0 top-0 h-full w-px bg-divider">
+        <div className="progress-rail h-full w-full origin-top scale-y-0 bg-primary" />
+      </div>
+
       <div className="max-w-7xl mx-auto mb-16 px-2 sm:px-10">
         <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary-dark">╱ Így dolgozom</span>
         <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink mt-4 leading-[1.05] tracking-tight max-w-3xl">
@@ -74,6 +89,7 @@ export default function Protocol() {
         {steps.map((step, idx) => (
           <article
             key={idx}
+            data-cursor="link"
             className="protocol-card sticky top-24 sm:top-28 mx-auto max-w-6xl bg-gradient-to-br from-surface to-background border border-divider rounded-6xl overflow-hidden shadow-2xl shadow-primary/5"
           >
             <div className="grid lg:grid-cols-5 gap-0 min-h-[60vh] lg:min-h-[70vh]">

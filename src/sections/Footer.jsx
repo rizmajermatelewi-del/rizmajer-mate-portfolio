@@ -3,6 +3,8 @@ import { ArrowRight, Hexagon } from 'lucide-react'
 import { SOCIAL_LINKS } from '../data/nav'
 import { SKILLS_FULL } from '../data/skills'
 import { useInView } from '../motion/useInView'
+import { ScrambleText } from '../motion/ScrambleText'
+import { Magnetic } from '../motion/Magnetic'
 
 /* ----------------------------------------------------------------
    Footer
@@ -56,8 +58,8 @@ export default function Footer() {
             <ul className="space-y-2.5">
               {SKILLS_FULL.slice(0, 4).map((s, i) => (
                 <li key={i}>
-                  <a href="#keszsegek" className="text-white/65 hover:text-primary transition text-sm">
-                    {s.title}
+                  <a href="#keszsegek" data-cursor="link" className="text-white/65 hover:text-primary transition text-sm">
+                    <ScrambleText text={s.title} trigger="hover" />
                   </a>
                 </li>
               ))}
@@ -101,22 +103,24 @@ export default function Footer() {
 
           <div className="flex items-center gap-1.5">
             {SOCIAL_LINKS.map(({ Icon, href, label }) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={label}
-                className="p-2 rounded-full text-white/50 hover:text-primary hover:scale-110 transition-all duration-300"
-              >
-                <Icon className="h-4 w-4" strokeWidth={2} />
-              </a>
+              <Magnetic key={label}>
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  data-cursor="link"
+                  className="p-2 rounded-full text-white/50 hover:text-primary hover:scale-110 transition-all duration-300"
+                >
+                  <Icon className="h-4 w-4" strokeWidth={2} />
+                </a>
+              </Magnetic>
             ))}
           </div>
 
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-white/50 text-xs font-mono">
-            <Link to="/adatvedelem" className="hover:text-primary transition">Adatvédelem</Link>
-            <Link to="/aszf" className="hover:text-primary transition">ÁSZF</Link>
+            <Link to="/adatvedelem" data-cursor="link" className="hover:text-primary transition">Adatvédelem</Link>
+            <Link to="/aszf" data-cursor="link" className="hover:text-primary transition">ÁSZF</Link>
             <span>© 2026 Rizmajer Máté</span>
           </div>
         </div>

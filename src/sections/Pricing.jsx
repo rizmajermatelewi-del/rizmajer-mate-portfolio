@@ -1,6 +1,8 @@
 import { Check, ArrowRight } from 'lucide-react'
 import { PRICING_TIERS } from '../data/pricing'
 import { useInView } from '../motion/useInView'
+import { TiltCard } from '../motion/TiltCard'
+import { Magnetic } from '../motion/Magnetic'
 
 /* ----------------------------------------------------------------
    Pricing
@@ -25,10 +27,10 @@ export default function Pricing() {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 items-start">
           {PRICING_TIERS.map((tier, i) => (
+            <TiltCard key={i} max={5}>
             <article
-              key={i}
               style={{ transitionDelay: visible ? `${i * 150}ms` : '0ms' }}
-              className={`pricing-card relative bg-surface border rounded-5xl p-8 sm:p-10 transition-all duration-700 ease-out ${
+              className={`pricing-card group relative bg-surface border rounded-5xl p-8 sm:p-10 transition-all duration-700 ease-out ${
                 visible ? 'opacity-100' : 'opacity-0 translate-y-10'
               } ${
                 tier.highlight
@@ -56,25 +58,33 @@ export default function Pricing() {
 
               <ul className="mt-7 space-y-3">
                 {tier.features.map((f, fi) => (
-                  <li key={fi} className="flex items-start gap-2.5 text-sm text-muted">
+                  <li
+                    key={fi}
+                    style={{ transitionDelay: `${fi * 40}ms` }}
+                    className="flex items-start gap-2.5 text-sm text-muted transition-transform duration-200 group-hover:translate-x-1"
+                  >
                     <Check className="h-4 w-4 text-primary mt-0.5 shrink-0" strokeWidth={2.5} />
                     {f}
                   </li>
                 ))}
               </ul>
 
-              <a
-                href="#kapcsolat"
-                className={`magnetic-btn mt-8 inline-flex w-full items-center justify-center gap-2 px-6 py-3.5 rounded-full font-semibold transition-colors duration-300 ${
-                  tier.highlight
-                    ? 'bg-primary text-deep shadow-lg shadow-primary/30'
-                    : 'bg-background border border-divider text-ink hover:border-primary/40 hover:text-primary-dark'
-                }`}
-              >
-                Ajánlatkérés
-                <ArrowRight className="h-4 w-4" />
-              </a>
+              <Magnetic block className="mt-8">
+                <a
+                  href="#kapcsolat"
+                  data-cursor="link"
+                  className={`magnetic-btn inline-flex w-full items-center justify-center gap-2 px-6 py-3.5 rounded-full font-semibold transition-colors duration-300 ${
+                    tier.highlight
+                      ? 'bg-primary text-deep shadow-lg shadow-primary/30'
+                      : 'bg-background border border-divider text-ink hover:border-primary/40 hover:text-primary-dark'
+                  }`}
+                >
+                  Ajánlatkérés
+                  <ArrowRight className="h-4 w-4" />
+                </a>
+              </Magnetic>
             </article>
+            </TiltCard>
           ))}
         </div>
       </div>

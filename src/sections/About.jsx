@@ -5,6 +5,14 @@ import { useInView } from '../motion/useInView'
 /* ----------------------------------------------------------------
    About — placeholder bio, replaced with the real story over time
 ---------------------------------------------------------------- */
+/* Split out of the JSX so the word-stagger below can map over it without the
+   paragraphs being retyped. Word index runs across both, so the fade reads as
+   one continuous sentence rather than two separate reveals. */
+const BIO_PARAGRAPHS = [
+  'Rizmajer Máté Levente vagyok, nemrég végzett full-stack fejlesztő Magyarországról. Már az egyetem alatt is éles projekteken dolgoztam, mert a gyakorlatból tanulok a legjobban — a kód akkor válik igazán érthetővé, amikor egy valódi probléma megoldásához használom.',
+  'Szeretem, ha egy weboldal vagy alkalmazás nemcsak jól néz ki, hanem tényleg működik: gyors, stabil és a felhasználó számára egyértelmű. Szívesen dolgozom együtt kis- és középvállalkozásokkal, akik szeretnék digitalizálni vagy megújítani az online jelenlétüket.',
+]
+
 export default function About() {
   const [ref, visible] = useInView(0.2)
 
@@ -24,11 +32,11 @@ export default function About() {
               visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
-            <div className="relative aspect-[3/4] rounded-6xl overflow-hidden border border-divider">
+            <div className="group relative aspect-[3/4] rounded-6xl overflow-hidden border border-divider">
               <img
                 src={portraitSunset}
                 alt="Rizmajer Máté Levente naplementében, egy sziklán ülve"
-                className="absolute inset-0 w-full h-full object-cover"
+                className="absolute inset-0 w-full h-full object-cover grayscale-[0.4] sepia-[0.15] transition-[filter,transform] duration-700 ease-out group-hover:grayscale-0 group-hover:sepia-0 group-hover:scale-[1.02]"
                 loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-deep/40 via-transparent to-transparent" />
@@ -47,18 +55,26 @@ export default function About() {
             </h2>
 
             <div className="mt-6 space-y-4 text-muted text-base sm:text-lg leading-relaxed max-w-xl">
-              <p>
-                Rizmajer Máté Levente vagyok, nemrég végzett full-stack fejlesztő
-                Magyarországról. Már az egyetem alatt is éles projekteken dolgoztam, mert a
-                gyakorlatból tanulok a legjobban — a kód akkor válik igazán érthetővé, amikor egy
-                valódi probléma megoldásához használom.
-              </p>
-              <p>
-                Szeretem, ha egy weboldal vagy alkalmazás nemcsak jól néz ki, hanem tényleg
-                működik: gyors, stabil és a felhasználó számára egyértelmű. Szívesen dolgozom
-                együtt kis- és középvállalkozásokkal, akik szeretnék digitalizálni vagy megújítani
-                az online jelenlétüket.
-              </p>
+              {(() => {
+                let w = 0
+                return BIO_PARAGRAPHS.map((para, pi) => (
+                  <p key={pi}>
+                    {para.split(' ').map((word, i) => (
+                      <span
+                        key={i}
+                        className="inline-block transition-all duration-500 ease-out motion-reduce:transition-none"
+                        style={{
+                          transitionDelay: visible ? `${w++ * 18}ms` : '0ms',
+                          opacity: visible ? 1 : 0,
+                          transform: visible ? 'translateY(0)' : 'translateY(6px)',
+                        }}
+                      >
+                        {word}&nbsp;
+                      </span>
+                    ))}
+                  </p>
+                ))
+              })()}
             </div>
 
             <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4">

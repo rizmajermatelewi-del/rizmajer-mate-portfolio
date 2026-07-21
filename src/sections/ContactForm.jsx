@@ -2,6 +2,7 @@ import { useRef, useState } from 'react'
 import { ArrowRight, AlertCircle, CheckCircle2, Upload, Mail, MapPin, Clock } from 'lucide-react'
 import Field from '../components/Field'
 import { useInView } from '../motion/useInView'
+import { Magnetic } from '../motion/Magnetic'
 
 /* ----------------------------------------------------------------
    Contact Form
@@ -15,7 +16,7 @@ export default function ContactForm() {
   const [form, setForm] = useState({ name: '', email: '', company: '', projectType: '', message: '' })
   const [files, setFiles] = useState([])
   const [status, setStatus] = useState('idle')
-  const dropRef = useRef(null)
+  const [dragging, setDragging] = useState(false)
   const honeypotRef = useRef(null)
 
   const handleSubmit = async (e) => {
@@ -154,26 +155,26 @@ export default function ContactForm() {
                       onChange={(e) => setForm({ ...form, message: e.target.value })}
                       required
                       rows={5}
+                      data-cursor="text"
                       placeholder="Meséld el röviden a projekted vagy az ötleted..."
                       className="w-full bg-background border border-divider rounded-2xl px-4 py-3.5 text-ink placeholder-muted/60 focus:border-primary focus:ring-4 focus:ring-primary/15 outline-none transition resize-none font-body"
                     />
                   </div>
 
                   <div
-                    ref={dropRef}
                     onDragOver={(e) => {
                       e.preventDefault()
-                      dropRef.current?.classList.add('!border-primary', '!bg-primary/5')
+                      setDragging(true)
                     }}
-                    onDragLeave={() => {
-                      dropRef.current?.classList.remove('!border-primary', '!bg-primary/5')
-                    }}
+                    onDragLeave={() => setDragging(false)}
                     onDrop={(e) => {
                       e.preventDefault()
-                      dropRef.current?.classList.remove('!border-primary', '!bg-primary/5')
+                      setDragging(false)
                       handleFiles(e.dataTransfer.files)
                     }}
-                    className="mt-5 border-2 border-dashed border-divider rounded-3xl p-6 text-center hover:border-primary/50 transition-colors cursor-pointer"
+                    className={`mt-5 border-2 border-dashed rounded-3xl p-6 text-center transition-colors cursor-pointer ${
+                      dragging ? 'border-primary bg-primary/5' : 'border-divider hover:border-primary/50'
+                    }`}
                   >
                     <input
                       type="file"
@@ -204,14 +205,17 @@ export default function ContactForm() {
 
                   <div className="mt-7 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                     <p className="text-xs text-muted">24 órán belül válaszolok. A *-gal jelölt mezők kötelezőek.</p>
-                    <button
-                      type="submit"
-                      disabled={status === 'sending'}
-                      className="magnetic-btn inline-flex items-center gap-2 bg-primary text-deep font-semibold px-7 py-3.5 rounded-full shadow-lg shadow-primary/30 disabled:opacity-50"
-                    >
-                      {status === 'sending' ? 'Küldés...' : 'Üzenet küldése'}
-                      <ArrowRight className="h-4 w-4" />
-                    </button>
+                    <Magnetic>
+                      <button
+                        type="submit"
+                        disabled={status === 'sending'}
+                        data-cursor="link"
+                        className="magnetic-btn inline-flex items-center gap-2 bg-primary text-deep font-semibold px-7 py-3.5 rounded-full shadow-lg shadow-primary/30 disabled:opacity-50"
+                      >
+                        {status === 'sending' ? 'Küldés...' : 'Üzenet küldése'}
+                        <ArrowRight className="h-4 w-4" />
+                      </button>
+                    </Magnetic>
                   </div>
                 </>
               ) : (

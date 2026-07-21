@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import CountUp from '../components/CountUp'
 import { useInView } from '../motion/useInView'
 
@@ -6,6 +7,7 @@ import { useInView } from '../motion/useInView'
 ---------------------------------------------------------------- */
 export default function Pillars() {
   const [ref, visible] = useInView(0.15)
+  const [focused, setFocused] = useState(null)
 
   const pillars = [
     {
@@ -64,11 +66,21 @@ export default function Pillars() {
           {pillars.map((p, i) => (
             <article
               key={i}
+              onPointerEnter={() => setFocused(i)}
+              onPointerLeave={() => setFocused(null)}
               style={{ transitionDelay: visible ? `${i * 150}ms` : '0ms' }}
               className={`pillar-card relative bg-surface p-9 sm:p-12 group overflow-hidden transition-all duration-1000 ease-out ${
                 visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
               }`}
             >
+              {/* Wraps only the flow content, never the two absolutely
+                  positioned decorations below — a transform here would make
+                  this div their containing block and shift them inward. */}
+              <div
+                className={`transition-all duration-300 ease-out ${
+                  focused !== null && focused !== i ? 'opacity-40 scale-[0.98]' : 'opacity-100 scale-100'
+                }`}
+              >
               <div className="flex items-center justify-between mb-10">
                 <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-muted">
                   {p.n} / {p.title}
@@ -87,6 +99,7 @@ export default function Pillars() {
 
               <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-primary-dark mt-5">{p.label}</p>
               <p className="text-muted text-[15px] mt-6 leading-relaxed max-w-xs">{p.desc}</p>
+              </div>
 
               <div className="absolute bottom-0 left-9 right-9 sm:left-12 sm:right-12 h-px bg-divider overflow-hidden">
                 <div

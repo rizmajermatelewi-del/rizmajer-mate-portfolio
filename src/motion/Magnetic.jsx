@@ -9,7 +9,10 @@ const PAD = 16
 /* Pulls its child toward the pointer and springs back on leave. The
    negative-margin padded wrapper widens the hit area so the pull engages
    just before visual contact, without a document-level listener. */
-export function Magnetic({ children, className = '', strength = 0.35 }) {
+/* `block` exists because the wrapper is inline-block by default, which
+   shrink-wraps a w-full child down to its content width. Full-bleed CTAs
+   need the wrapper to fill its column instead. */
+export function Magnetic({ children, className = '', strength = 0.35, block = false }) {
   const ref = useRef(null)
   const rectRef = useRef(null)
   const quick = useRef(null)
@@ -55,16 +58,18 @@ export function Magnetic({ children, className = '', strength = 0.35 }) {
     el.style.willChange = 'auto'
   }, [])
 
-  if (!active) return <span className={className}>{children}</span>
+  const display = block ? 'block' : 'inline-block'
+
+  if (!active) return <span className={`${display} ${className}`}>{children}</span>
 
   return (
     <span
-      style={{ padding: PAD, margin: -PAD, display: 'inline-block' }}
+      style={{ padding: PAD, margin: -PAD, display }}
       onPointerEnter={onEnter}
       onPointerMove={onMove}
       onPointerLeave={onLeave}
     >
-      <span ref={ref} className={`inline-block ${className}`}>
+      <span ref={ref} className={`${display} ${className}`}>
         {children}
       </span>
     </span>
