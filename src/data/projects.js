@@ -1,3 +1,7 @@
+/* The case-study fields below are intentionally empty. ProjectModal renders
+   each one only when it is non-empty, so filling them in later is a data edit
+   rather than a code change, and a half-filled project degrades to a short
+   clean panel instead of a page of empty headings. */
 export const PROJECTS_FULL = [
   {
     title: 'Rétes-rendelő',
@@ -5,6 +9,13 @@ export const PROJECTS_FULL = [
     tech: ['React', 'TanStack Start', 'Supabase'],
     label: 'Ügyfélprojekt',
     tone: { from: '--color-card-1', to: '--color-deep', accent: '--color-accent' },
+    year: '',
+    role: '',
+    problem: '',
+    solution: '',
+    gallery: [],
+    github: '#',
+    live: '',
   },
   {
     title: 'AB Masszázs időpontfoglaló',
@@ -12,6 +23,13 @@ export const PROJECTS_FULL = [
     tech: ['PHP', 'MySQL', 'Docker'],
     label: 'Ügyfélprojekt',
     tone: { from: '--color-card-2', to: '--color-deep', accent: '--color-primary-light' },
+    year: '',
+    role: '',
+    problem: '',
+    solution: '',
+    gallery: [],
+    github: '#',
+    live: '',
   },
   {
     title: 'Business Value Builder',
@@ -19,6 +37,13 @@ export const PROJECTS_FULL = [
     tech: ['React', 'TanStack Start'],
     label: 'Saját projekt',
     tone: { from: '--color-card-3', to: '--color-deep', accent: '--color-primary' },
+    year: '',
+    role: '',
+    problem: '',
+    solution: '',
+    gallery: [],
+    github: '#',
+    live: '',
   },
   {
     title: 'WebWise Studio',
@@ -26,5 +51,12 @@ export const PROJECTS_FULL = [
     tech: ['React', 'Supabase', 'Framer Motion'],
     label: 'Saját projekt',
     tone: { from: '--color-card-4', to: '--color-deep', accent: '--color-primary-dark' },
+    year: '',
+    role: '',
+    problem: '',
+    solution: '',
+    gallery: [],
+    github: '#',
+    live: '',
   },
 ]
