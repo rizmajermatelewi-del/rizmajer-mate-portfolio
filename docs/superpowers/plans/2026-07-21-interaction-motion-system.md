@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-## Execution status (paused 2026-07-21)
+## Execution status (PHASE 1 COMPLETE 2026-07-21)
 
 Branch `interaction-motion-system`, forked from `main` at `e9b9c6f`.
 
@@ -13,24 +13,35 @@ Branch `interaction-motion-system`, forked from `main` at `e9b9c6f`.
 | 3 — Extract leaf and showcase components | complete, reviewed clean | `8282ef0` |
 | 4 — Extract sections, batch 1 | complete, controller-verified | `d2de51f` |
 | 5 — Extract sections, batch 2 | complete, controller-verified | `a219af0` |
-| 6-15 | not started | — |
+| 6 — `useInView` / `useReducedMotion` hooks | complete, in-session | `c9e527c` |
+| 7 — Replace duplicated observers | complete, in-session | `b67f89e` |
+| 8-15 | not started | — |
 
-**Resume at Task 6.** Working ledger with per-task findings is at
+**Resume at Task 8.** Working ledger with per-task findings is at
 `.superpowers/sdd/progress.md` (git-ignored scratch — if it is gone, this
 table and `git log` are the recovery map).
 
-Two open items carried forward:
+**PHASE 1 GATE: PASSED.** A full browser pass via Chrome DevTools confirmed
+all 11 sections still reveal on scroll at their original thresholds, the
+Protocol scrub, the CountUp stats, all three Features showcases, the contact
+form, both legal routes, the mobile menu, and a clean console at desktop and
+mobile widths. This closes the visual-parity item that was open since Task 3.
 
-1. **Visual parity is unverified.** Tasks 3-5 had no browser tooling
-   available, so the restructure has only been proven by byte-identical
-   diffs, a green build, lint, and 4/4 tests. The Phase 1 gate after Task 7
-   must include a real browser pass before any new motion is added.
+Two notes carried forward:
+
+1. **Two plan inaccuracies corrected during execution**, both recorded in the
+   ledger: the Task 6 `useInView` test as written cannot pass (`renderHook`
+   never attaches the ref, so no observer is constructed) and was replaced
+   with a probe component; and Task 7's "10 observers in the section files"
+   is really 9 — the tenth is in `CountUp.jsx` and is a different pattern
+   that must not be converted.
 2. **Cost decision in force:** pure-move tasks run on a cheap model and are
-   verified by controller diff; tasks with real logic (6, 8-15) get the full
+   verified by controller diff; tasks with real logic (8-15) get the full
    implementer plus independent reviewer gate.
 
 `App.jsx` went from 1985 lines to 52 lines of pure composition across
-Tasks 2-5. No behaviour was intentionally changed.
+Tasks 2-5, and Task 7 removed a further 152 lines of duplication. Phase 1
+produced zero visible change, as required.
 
 ---
 
