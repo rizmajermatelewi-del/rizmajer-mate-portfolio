@@ -104,7 +104,7 @@ export default function Navbar() {
         >
           <div className="flex items-center justify-between mb-10">
             <span className="font-display font-bold text-xl text-ink">Rizmajer Máté</span>
-            <button onClick={() => setOpen(false)} className="p-2 rounded-full bg-divider/40">
+            <button onClick={() => setOpen(false)} aria-label="Menü bezárása" className="p-2 rounded-full bg-divider/40">
               <X className="h-5 w-5" />
             </button>
           </div>

@@ -53,6 +53,18 @@
     background-size: 40px 40px;
   }
   ::selection { background-color: rgb(var(--color-primary)); color: rgb(var(--color-background)); }
+
+  /* The browser default is a 1px near-black ring, which all but disappears
+     against the dark cards. Keyboard users get a real one. */
+  :focus-visible {
+    outline: 2px solid rgb(var(--color-primary));
+    outline-offset: 2px;
+  }
+  /* Inside a dark card the ring is drawn on near-black, so it flips to the
+     light indigo that card-invert already maps primary-dark to. */
+  .card-invert :focus-visible {
+    outline-color: rgb(var(--color-primary-dark));
+  }
   ::-webkit-scrollbar { width: 10px; }
   ::-webkit-scrollbar-track { background: rgb(var(--color-background)); }
   ::-webkit-scrollbar-thumb { background: rgb(var(--color-primary-light)); border-radius: 10px; }

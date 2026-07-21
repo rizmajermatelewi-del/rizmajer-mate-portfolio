@@ -68,7 +68,7 @@ export default function Footer() {
             <ul className="space-y-2.5">
               {SKILLS_FULL.slice(0, 4).map((s, i) => (
                 <li key={i}>
-                  <a href="#keszsegek" className="text-muted hover:text-primary-dark transition text-sm">
+                  <a href="#keszsegek" className="inline-block py-1 text-muted hover:text-primary-dark transition text-sm">
                     <ScrambleText text={s.title} trigger="hover" />
                   </a>
                 </li>
@@ -79,11 +79,11 @@ export default function Footer() {
           <div>
             <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary-dark mb-4">Rólam</p>
             <ul className="space-y-2.5">
-              <li><a href="#projektek" className="text-muted hover:text-primary-dark transition text-sm">Projektek</a></li>
-              <li><a href="#rolam" className="text-muted hover:text-primary-dark transition text-sm">Rólam</a></li>
-              <li><a href="#folyamat" className="text-muted hover:text-primary-dark transition text-sm">Folyamat</a></li>
-              <li><a href="#arak" className="text-muted hover:text-primary-dark transition text-sm">Árak</a></li>
-              <li><a href="#kapcsolat" className="text-muted hover:text-primary-dark transition text-sm">Kapcsolat</a></li>
+              <li><a href="#projektek" className="inline-block py-1 text-muted hover:text-primary-dark transition text-sm">Projektek</a></li>
+              <li><a href="#rolam" className="inline-block py-1 text-muted hover:text-primary-dark transition text-sm">Rólam</a></li>
+              <li><a href="#folyamat" className="inline-block py-1 text-muted hover:text-primary-dark transition text-sm">Folyamat</a></li>
+              <li><a href="#arak" className="inline-block py-1 text-muted hover:text-primary-dark transition text-sm">Árak</a></li>
+              <li><a href="#kapcsolat" className="inline-block py-1 text-muted hover:text-primary-dark transition text-sm">Kapcsolat</a></li>
             </ul>
           </div>
 
@@ -91,7 +91,7 @@ export default function Footer() {
             <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary-dark mb-4">Kapcsolat</p>
             <ul className="space-y-2.5">
               <li>
-                <a href="mailto:rizmajermatelewi@gmail.com" className="text-muted hover:text-primary-dark transition text-sm">
+                <a href="mailto:rizmajermatelewi@gmail.com" className="inline-block py-1 text-muted hover:text-primary-dark transition text-sm">
                   rizmajermatelewi@gmail.com
                 </a>
               </li>
@@ -128,8 +128,8 @@ export default function Footer() {
           </div>
 
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-muted text-xs font-mono">
-            <Link to="/adatvedelem" className="hover:text-primary-dark transition">Adatvédelem</Link>
-            <Link to="/aszf" className="hover:text-primary-dark transition">ÁSZF</Link>
+            <Link to="/adatvedelem" className="inline-block py-1 hover:text-primary-dark transition">Adatvédelem</Link>
+            <Link to="/aszf" className="inline-block py-1 hover:text-primary-dark transition">ÁSZF</Link>
             <span>© 2026 Rizmajer Máté</span>
           </div>
         </div>
