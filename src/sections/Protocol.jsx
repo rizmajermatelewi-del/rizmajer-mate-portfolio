@@ -89,7 +89,7 @@ export default function Protocol() {
         {steps.map((step, idx) => (
           <article
             key={idx}
-            className="protocol-card sticky top-24 sm:top-28 mx-auto max-w-6xl card-invert border border-divider rounded-6xl overflow-hidden shadow-2xl shadow-primary/5"
+            className="protocol-card sticky top-24 sm:top-28 mx-auto max-w-6xl card-invert border border-divider rounded-6xl overflow-hidden shadow-e3"
           >
             <div className="grid lg:grid-cols-5 gap-0 min-h-[60vh] lg:min-h-[70vh]">
               <div className="lg:col-span-3 p-8 sm:p-12 lg:p-16 flex flex-col justify-between">

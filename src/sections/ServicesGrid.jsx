@@ -28,7 +28,7 @@ export default function ServicesGrid() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-divider rounded-4xl overflow-hidden">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-divider rounded-4xl overflow-hidden shadow-e2">
           {SKILLS_FULL.map((svc, i) => {
             const Icon = svc.icon
             return (
@@ -38,23 +38,36 @@ export default function ServicesGrid() {
                 onClick={() => setExpanded(expanded === i ? null : i)}
                 aria-expanded={expanded === i}
                 style={{ transitionDelay: visible ? `${i * 80}ms` : '0ms' }}
-                className={`svc-tile group w-full text-left card-invert p-7 sm:p-9 relative card-motion hover:bg-white/[0.04] ${
+                className={`svc-tile group w-full text-left card-invert p-7 sm:p-9 relative card-motion ${
                   visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
                 }`}
               >
-                {/* Uniform wash, not a pointer-origin flood — the hover state
-                    should not track where the cursor happens to be. */}
+                {/* One wash only. This previously ran a white/[0.04] hover on
+                    the button AND this overlay at the same time, which muddied
+                    into an indeterminate grey. */}
                 <span
                   aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 bg-primary/10 transition-opacity duration-300 ease-out group-hover:opacity-100"
+                  className="pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 bg-primary/10 transition-opacity duration-200 ease-out group-hover:opacity-100"
+                />
+                {/* Left edge marks the active tile — a definite signal rather
+                    than a wash you have to squint at. */}
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute left-0 top-0 h-full w-[3px] origin-top scale-y-0 bg-primary transition-transform duration-200 ease-out group-hover:scale-y-100"
                 />
 
                 <div className="relative flex items-start justify-between mb-6">
-                  <div className="h-12 w-12 rounded-2xl bg-primary/15 border border-primary/30 flex items-center justify-center group-hover:bg-primary group-hover:scale-110 transition-all duration-500">
-                    <Icon className="h-5 w-5 text-primary group-hover:text-white" strokeWidth={2} />
+                  <div className="h-12 w-12 rounded-2xl bg-primary/15 border border-primary/30 flex items-center justify-center transition-all duration-200 ease-out group-hover:bg-primary group-hover:border-primary group-hover:scale-105">
+                    <Icon className="h-5 w-5 text-primary transition-colors duration-200 group-hover:text-white" strokeWidth={2} />
                   </div>
-                  <span className="font-mono text-[10px] text-white/30 uppercase tracking-widest">
-                    {String(i + 1).padStart(2, '0')}
+                  {/* These tiles expand on click, so say so. */}
+                  <span
+                    aria-hidden="true"
+                    className={`font-mono text-lg leading-none text-white/40 transition-transform duration-300 ease-out group-hover:text-primary-dark ${
+                      expanded === i ? 'rotate-45' : ''
+                    }`}
+                  >
+                    +
                   </span>
                 </div>
                 <h3 className="relative font-display font-bold text-xl sm:text-2xl mb-3">{svc.title}</h3>

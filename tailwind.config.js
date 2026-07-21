@@ -24,6 +24,16 @@ export default {
         body: ['Geist', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         mono: ['"Geist Mono"', 'ui-monospace', 'monospace'],
       },
+      /* One elevation scale instead of ad-hoc shadow-sm/xl/2xl. Tinted with
+         the ink colour rather than pure black, so shadows sit in the palette
+         instead of greying it out. Two layers each: a tight contact shadow
+         plus a wide ambient one. */
+      boxShadow: {
+        e1: '0 1px 2px rgb(12 22 35 / 0.05), 0 2px 8px rgb(12 22 35 / 0.05)',
+        e2: '0 2px 4px rgb(12 22 35 / 0.06), 0 8px 20px rgb(12 22 35 / 0.09)',
+        e3: '0 6px 12px rgb(12 22 35 / 0.09), 0 18px 40px rgb(12 22 35 / 0.14)',
+        e4: '0 12px 24px rgb(12 22 35 / 0.12), 0 32px 64px rgb(12 22 35 / 0.20)',
+      },
       borderRadius: {
         '2.5xl': '1.25rem',
         '4xl': '2rem',

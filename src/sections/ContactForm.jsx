@@ -114,7 +114,7 @@ export default function ContactForm() {
               visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
-            <form onSubmit={handleSubmit} className="card-invert border border-divider rounded-5xl p-7 sm:p-10 shadow-xl shadow-primary/10">
+            <form onSubmit={handleSubmit} className="card-invert border border-divider rounded-5xl p-7 sm:p-10 shadow-e3">
               <input
                 ref={honeypotRef}
                 type="text"

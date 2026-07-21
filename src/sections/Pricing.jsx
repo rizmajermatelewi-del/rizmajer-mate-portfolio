@@ -20,8 +20,8 @@ export default function Pricing() {
             <span className="block font-display font-semibold text-primary-dark mt-1">Rugalmas megoldások.</span>
           </h2>
           <p className="text-muted text-lg mt-6 leading-relaxed">
-            Az árak tájékoztató jellegűek és a projekt egyedi igényeitől függenek. Kérj
-            személyre szabott ajánlatot — nincsenek rejtett költségek.
+            Minden projekt más, ezért az árat a terjedelem ismeretében, egyeztetés után
+            adom meg — és írásban is megkapod. Nincsenek rejtett költségek.
           </p>
         </div>
 
@@ -34,8 +34,8 @@ export default function Pricing() {
                 visible ? 'opacity-100' : 'opacity-0 translate-y-10'
               } ${
                 tier.highlight
-                  ? `border-primary shadow-xl shadow-primary/15 ${visible ? 'lg:-translate-y-3' : ''}`
-                  : 'border-divider hover:border-primary/60 hover:shadow-lg hover:-translate-y-1'
+                  ? `border-primary shadow-e3 ${visible ? 'lg:-translate-y-3' : ''}`
+                  : 'border-divider hover:border-primary/60 hover:shadow-e4 hover:-translate-y-1.5'
               }`}
             >
               {tier.highlight && (
@@ -47,13 +47,11 @@ export default function Pricing() {
               <h3 className="font-display font-bold text-2xl text-ink mt-3">{tier.name}</h3>
               <p className="text-muted text-sm mt-2 leading-relaxed">{tier.desc}</p>
 
-              <div className="mt-6 flex items-baseline gap-1.5">
-                <span className="font-display font-extrabold text-3xl sm:text-4xl text-ink tracking-tight">
-                  {tier.price}
-                </span>
-                {tier.priceSuffix && (
-                  <span className="font-display font-medium text-primary-dark text-lg">{tier.priceSuffix}</span>
-                )}
+              <div className="mt-6 pt-5 border-t border-divider">
+                <p className="font-display font-semibold text-xl text-ink">{tier.priceNote}</p>
+                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary-dark mt-1.5">
+                  {tier.scope}
+                </p>
               </div>
 
               <ul className="mt-7 space-y-3">

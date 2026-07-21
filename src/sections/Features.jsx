@@ -57,7 +57,7 @@ export default function Features() {
             <article
               key={idx}
               style={{ transitionDelay: visible ? `${idx * 150}ms` : '0ms' }}
-              className={`feature-card group relative card-invert border border-divider rounded-5xl p-7 card-motion shadow-sm hover:border-primary/60 hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary/20 ${
+              className={`feature-card group relative card-invert border border-divider rounded-5xl p-7 card-motion shadow-e2 hover:border-primary/60 hover:-translate-y-1.5 hover:shadow-e4 ${
                 visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
               }`}
             >
