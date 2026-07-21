@@ -4,12 +4,12 @@ import { duration, ease, limit } from './tokens'
 import { tiltFromPointer } from './tilt'
 import { useReducedMotion, useFinePointer } from './useReducedMotion'
 
-/* 3D tilt with a specular sheen that tracks the pointer. Writes only
-   transforms via gsap.quickTo, and never reads layout inside the frame
-   loop — the rect is measured once on pointer enter. */
-export function TiltCard({ children, className = '', sheen = true, max = limit.tilt, ...rest }) {
+/* 3D tilt only. Writes transforms via gsap.quickTo and never reads layout
+   inside the frame loop — the rect is measured once on pointer enter.
+   The pointer-tracked specular sheen this used to carry was removed: any
+   highlight that follows the cursor was unwanted. */
+export function TiltCard({ children, className = '', max = limit.tilt, ...rest }) {
   const ref = useRef(null)
-  const sheenRef = useRef(null)
   const rectRef = useRef(null)
   const quick = useRef(null)
 
@@ -48,11 +48,6 @@ export function TiltCard({ children, className = '', sheen = true, max = limit.t
     const t = tiltFromPointer(rect, e.clientX, e.clientY, max)
     quick.current.rx(t.rotateX)
     quick.current.ry(t.rotateY)
-    if (sheenRef.current) {
-      sheenRef.current.style.setProperty('--sheen-x', `${t.px}%`)
-      sheenRef.current.style.setProperty('--sheen-y', `${t.py}%`)
-      sheenRef.current.style.opacity = '1'
-    }
   }, [max])
 
   const onLeave = useCallback(() => {
@@ -62,7 +57,6 @@ export function TiltCard({ children, className = '', sheen = true, max = limit.t
       quick.current.rx(0)
       quick.current.ry(0)
     }
-    if (sheenRef.current) sheenRef.current.style.opacity = '0'
     el.style.willChange = 'auto'
   }, [])
 
@@ -77,17 +71,6 @@ export function TiltCard({ children, className = '', sheen = true, max = limit.t
       {...rest}
     >
       {children}
-      {active && sheen && (
-        <span
-          ref={sheenRef}
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 transition-opacity duration-200"
-          style={{
-            background:
-              'radial-gradient(320px circle at var(--sheen-x, 50%) var(--sheen-y, 50%), rgb(255 255 255 / 0.10), transparent 60%)',
-          }}
-        />
-      )}
     </div>
   )
 }

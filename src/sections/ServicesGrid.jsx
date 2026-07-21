@@ -38,22 +38,17 @@ export default function ServicesGrid() {
                 key={i}
                 type="button"
                 onClick={() => setExpanded(expanded === i ? null : i)}
-                onPointerEnter={(e) => {
-                  const r = e.currentTarget.getBoundingClientRect()
-                  e.currentTarget.style.setProperty('--fill-x', `${((e.clientX - r.left) / r.width) * 100}%`)
-                  e.currentTarget.style.setProperty('--fill-y', `${((e.clientY - r.top) / r.height) * 100}%`)
-                }}
                 aria-expanded={expanded === i}
                 style={{ transitionDelay: visible ? `${i * 80}ms` : '0ms' }}
                 className={`svc-tile group w-full text-left bg-deep p-7 sm:p-9 hover:bg-white/[0.02] transition-all duration-700 ease-out relative ${
                   visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
                 }`}
               >
-                {/* Floods from wherever the pointer crossed the edge. */}
+                {/* Uniform wash, not a pointer-origin flood — the hover state
+                    should not track where the cursor happens to be. */}
                 <span
                   aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 rounded-[inherit] scale-0 opacity-0 bg-primary/15 transition-[transform,opacity] duration-500 ease-out group-hover:scale-100 group-hover:opacity-100"
-                  style={{ transformOrigin: 'var(--fill-x, 50%) var(--fill-y, 50%)' }}
+                  className="pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 bg-primary/10 transition-opacity duration-300 ease-out group-hover:opacity-100"
                 />
 
                 <div className="relative flex items-start justify-between mb-6">
