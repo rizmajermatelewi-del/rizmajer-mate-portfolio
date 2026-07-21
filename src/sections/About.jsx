@@ -1,29 +1,12 @@
-import { useRef, useState, useEffect } from 'react'
 import portraitSunset from '../assets/portrait-sunset.jpg'
 import { SOCIAL_LINKS } from '../data/nav'
+import { useInView } from '../motion/useInView'
 
 /* ----------------------------------------------------------------
    About — placeholder bio, replaced with the real story over time
 ---------------------------------------------------------------- */
 export default function About() {
-  const ref = useRef(null)
-  const [visible, setVisible] = useState(false)
-
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true)
-          observer.disconnect()
-        }
-      },
-      { threshold: 0.2 }
-    )
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [])
+  const [ref, visible] = useInView(0.2)
 
   const facts = [
     { label: 'Székhely', value: 'Magyarország' },

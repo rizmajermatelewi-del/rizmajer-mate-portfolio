@@ -1,28 +1,11 @@
-import { useRef, useState, useEffect } from 'react'
 import { SKILLS_FULL } from '../data/skills'
+import { useInView } from '../motion/useInView'
 
 /* ----------------------------------------------------------------
    ServicesGrid
 ---------------------------------------------------------------- */
 export default function ServicesGrid() {
-  const ref = useRef(null)
-  const [visible, setVisible] = useState(false)
-
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true)
-          observer.disconnect()
-        }
-      },
-      { threshold: 0.1 }
-    )
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [])
+  const [ref, visible] = useInView(0.1)
 
   return (
     <section ref={ref} className="relative py-24 px-6 sm:px-10 lg:px-16 bg-deep text-white overflow-hidden rounded-t-6xl">

@@ -1,29 +1,12 @@
-import { useRef, useState, useEffect } from 'react'
 import { Check, ArrowRight } from 'lucide-react'
 import { PRICING_TIERS } from '../data/pricing'
+import { useInView } from '../motion/useInView'
 
 /* ----------------------------------------------------------------
    Pricing
 ---------------------------------------------------------------- */
 export default function Pricing() {
-  const ref = useRef(null)
-  const [visible, setVisible] = useState(false)
-
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true)
-          observer.disconnect()
-        }
-      },
-      { threshold: 0.1 }
-    )
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [])
+  const [ref, visible] = useInView(0.1)
 
   return (
     <section id="arak" ref={ref} className="relative py-28 sm:py-40 px-6 sm:px-10 lg:px-16">

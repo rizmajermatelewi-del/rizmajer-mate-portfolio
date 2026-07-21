@@ -1,31 +1,14 @@
-import { useRef, useState, useEffect } from 'react'
 import { ArrowUpRight } from 'lucide-react'
 import StackShuffler from '../components/showcases/StackShuffler'
 import CodeScan from '../components/showcases/CodeScan'
 import BookingScheduler from '../components/showcases/BookingScheduler'
+import { useInView } from '../motion/useInView'
 
 /* ----------------------------------------------------------------
    Features Section
 ---------------------------------------------------------------- */
 export default function Features() {
-  const sectionRef = useRef(null)
-  const [visible, setVisible] = useState(false)
-
-  useEffect(() => {
-    const el = sectionRef.current
-    if (!el) return
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true)
-          observer.disconnect()
-        }
-      },
-      { threshold: 0.15 }
-    )
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [])
+  const [sectionRef, visible] = useInView(0.15)
 
   const cards = [
     {

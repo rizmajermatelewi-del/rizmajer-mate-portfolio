@@ -1,31 +1,14 @@
-import { useRef, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Hexagon } from 'lucide-react'
 import { SOCIAL_LINKS } from '../data/nav'
 import { SKILLS_FULL } from '../data/skills'
+import { useInView } from '../motion/useInView'
 
 /* ----------------------------------------------------------------
    Footer
 ---------------------------------------------------------------- */
 export default function Footer() {
-  const ref = useRef(null)
-  const [visible, setVisible] = useState(false)
-
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true)
-          observer.disconnect()
-        }
-      },
-      { threshold: 0.1 }
-    )
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [])
+  const [ref, visible] = useInView(0.1)
 
   return (
     <footer ref={ref} className="relative bg-deep text-white rounded-t-6xl mt-12 overflow-hidden">

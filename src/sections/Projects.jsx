@@ -1,26 +1,9 @@
-import { useRef, useState, useEffect } from 'react'
 import { PROJECTS_FULL } from '../data/projects'
 import ProjectMock from '../components/ProjectMock'
+import { useInView } from '../motion/useInView'
 
 export default function Projects() {
-  const sectionRef = useRef(null)
-  const [visible, setVisible] = useState(false)
-
-  useEffect(() => {
-    const el = sectionRef.current
-    if (!el) return
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true)
-          observer.disconnect()
-        }
-      },
-      { threshold: 0.1 }
-    )
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [])
+  const [sectionRef, visible] = useInView(0.1)
 
   return (
     <section id="projektek" ref={sectionRef} className="relative py-28 sm:py-40 px-6 sm:px-10 lg:px-16">

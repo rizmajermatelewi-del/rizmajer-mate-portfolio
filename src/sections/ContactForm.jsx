@@ -1,6 +1,7 @@
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState } from 'react'
 import { ArrowRight, AlertCircle, CheckCircle2, Upload, Mail, MapPin, Clock } from 'lucide-react'
 import Field from '../components/Field'
+import { useInView } from '../motion/useInView'
 
 /* ----------------------------------------------------------------
    Contact Form
@@ -10,29 +11,12 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/maqgvjbv'
 const MAX_FILE_SIZE = 8 * 1024 * 1024 // 8MB per file
 
 export default function ContactForm() {
-  const sectionRef = useRef(null)
-  const [visible, setVisible] = useState(false)
+  const [sectionRef, visible] = useInView(0.1)
   const [form, setForm] = useState({ name: '', email: '', company: '', projectType: '', message: '' })
   const [files, setFiles] = useState([])
   const [status, setStatus] = useState('idle')
   const dropRef = useRef(null)
   const honeypotRef = useRef(null)
-
-  useEffect(() => {
-    const el = sectionRef.current
-    if (!el) return
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true)
-          observer.disconnect()
-        }
-      },
-      { threshold: 0.1 }
-    )
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
