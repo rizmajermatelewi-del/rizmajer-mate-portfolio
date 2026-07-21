@@ -2,6 +2,77 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
+## Execution status (PHASE 1 COMPLETE 2026-07-21)
+
+Branch `interaction-motion-system`, forked from `main` at `e9b9c6f`.
+
+| Task | Status | Commit |
+| --- | --- | --- |
+| 1 — Test harness and motion tokens | complete, reviewed clean | `0876a99` |
+| 2 — Extract data constants and brand icons | complete, reviewed clean | `ae6300e` |
+| 3 — Extract leaf and showcase components | complete, reviewed clean | `8282ef0` |
+| 4 — Extract sections, batch 1 | complete, controller-verified | `d2de51f` |
+| 5 — Extract sections, batch 2 | complete, controller-verified | `a219af0` |
+| 6 — `useInView` / `useReducedMotion` hooks | complete, in-session | `c9e527c` |
+| 7 — Replace duplicated observers | complete, in-session | `b67f89e` |
+| 8 — `TiltCard` | complete, 10/10 tests | `37f5cad` |
+| 9 — `Magnetic` | complete, 13/13 tests | `8686b89` |
+| 10 — `ScrambleText` | complete, 17/17 tests | `1f196a8` |
+| 11 — `Cursor` | complete, browser-verified | `5115ec3` |
+| 12 — Apply: Navbar, Hero, Projects, Features | complete, browser-verified | `b0da1e6` |
+| 13 — Apply: remaining sections | complete, browser-verified | `f207989` |
+| 14 — Extend project data | complete, TDD, 21 tests | `8d6d2b5` |
+| 15 — `ProjectModal` | complete, browser-verified | `9e5924a` |
+
+**All 15 tasks complete.** Final gate passed: build succeeds, lint clean apart
+from the pre-existing `CodeScan.jsx:18` warning, 21/21 tests.
+
+Two things need a human before ship:
+
+1. **TrustSignals Step 7 was not implemented.** It assumes a compact row of
+   signals to loop; the section is three cards each carrying a full paragraph,
+   and scrolling those makes the copy unreadable. The Tailwind keyframes are
+   in place, so it is one edit away if a logo strip ever exists.
+2. **The six `detail` strings in `src/data/skills.js` are unreviewed.** I wrote
+   them; they make concrete technical claims (React 19, JWT, PostgreSQL,
+   GitHub Actions, Vercel, Lighthouse) that must be true of the actual work.
+
+Also still open: `prefers-reduced-motion` has never been directly emulated and
+now gates six separate effects. Needs one manual OS-level pass.
+
+Task 12 found a real defect the unit tests missed: `TiltCard` used
+`gsap.quickTo(el, 'rotateX')`, which silently no-ops because GSAP's
+`rotateX -> rotationX` alias is not applied on the `quickTo`/`resetTo` path.
+Treat "primitive has passing tests" as weaker evidence than a browser check
+for anything that writes a transform.
+Working ledger with per-task findings is at
+`.superpowers/sdd/progress.md` (git-ignored scratch — if it is gone, this
+table and `git log` are the recovery map).
+
+**PHASE 1 GATE: PASSED.** A full browser pass via Chrome DevTools confirmed
+all 11 sections still reveal on scroll at their original thresholds, the
+Protocol scrub, the CountUp stats, all three Features showcases, the contact
+form, both legal routes, the mobile menu, and a clean console at desktop and
+mobile widths. This closes the visual-parity item that was open since Task 3.
+
+Two notes carried forward:
+
+1. **Two plan inaccuracies corrected during execution**, both recorded in the
+   ledger: the Task 6 `useInView` test as written cannot pass (`renderHook`
+   never attaches the ref, so no observer is constructed) and was replaced
+   with a probe component; and Task 7's "10 observers in the section files"
+   is really 9 — the tenth is in `CountUp.jsx` and is a different pattern
+   that must not be converted.
+2. **Cost decision in force:** pure-move tasks run on a cheap model and are
+   verified by controller diff; tasks with real logic (8-15) get the full
+   implementer plus independent reviewer gate.
+
+`App.jsx` went from 1985 lines to 52 lines of pure composition across
+Tasks 2-5, and Task 7 removed a further 152 lines of duplication. Phase 1
+produced zero visible change, as required.
+
+---
+
 **Goal:** Give every meaningful element on the portfolio site an expressive pointer response, and add a click-through detail layer for projects and services.
 
 **Architecture:** Split the 1985-line `src/App.jsx` into `sections/`, `data/`, and `components/`, then build a reusable `src/motion/` layer (tokens, `useInView`, `Cursor`, `Magnetic`, `TiltCard`, `ScrambleText`) that every section imports. Applied in three phases: restructure with zero visual change, then apply motion section by section, then the project modal.
@@ -14,11 +85,11 @@
 - **Palette:** Colours come from CSS variables via Tailwind tokens (`text-ink`, `bg-surface`, `border-divider`, `text-primary-dark`, `bg-deep`, `text-muted`). Never hardcode a hex or `rgb()` literal. The theme system in `src/index.css` is settled — do not modify it beyond the one addition in Task 11.
 - **Component names are preserved.** The spec's file listing used idealised names (`Skills.jsx`, `Philosophy.jsx`, `Process.jsx`, `Services.jsx`, `Trust.jsx`, `Contact.jsx`). **Ignore those.** Keep the real existing names so the refactor stays a pure move: `Features`, `Pillars`, `Protocol`, `ServicesGrid`, `TrustSignals`, `ContactForm`. Each file is named after the component it exports.
 - **`<Reveal>` is not built. `useInView` replaces it.** The spec proposed a `<Reveal>` wrapper component. A wrapper animates *itself*, but the existing sections drive staggered `transitionDelay` on their *children* from a `visible` boolean. A wrapper would therefore change behaviour, and Phase 1 must not. `useInView` is the exact-parity extraction of the duplication the spec was actually targeting. Do not add `<Reveal>` on top of it.
-- **Motion values come from `src/motion/tokens.js` only.** Never inline a duration or easing. Tilt max 8deg, magnetic max 12px, hover lift -4px.
+- **Motion values in JS come from `src/motion/tokens.js` only.** Never inline a duration or easing in a GSAP call or an inline `style` transition. Tailwind's built-in duration and delay utilities (`duration-500`, `delay-75`) remain allowed for pure-CSS transitions in classNames — Tailwind's scale is itself a constrained design system. Tilt max 8deg, magnetic max 12px, hover lift -4px.
 - **Reduced motion:** Every primitive must consult `useReducedMotion()` and degrade to a static or opacity-only state. This is not optional per-component polish.
 - **Section ids are load-bearing** — `#kezdolap`, `#projektek`, `#rolam`, `#keszsegek`, `#arak`, `#kapcsolat` are targeted by `NAV_LINKS`. Never rename them.
 - **`gsap.registerPlugin(ScrollTrigger)` runs exactly once**, in `src/App.jsx`. Section files must not call it.
-- **All GSAP work is wrapped in `gsap.context()` and reverted on unmount**, matching the existing pattern at `src/App.jsx:312`.
+- **All ScrollTrigger work is wrapped in `gsap.context()` and reverted on unmount**, matching the existing pattern at `src/App.jsx:312`. The pointer primitives (`TiltCard`, `Magnetic`, `Cursor`) are exempt: `gsap.quickTo`/`quickSetter` create no revertable tweens, so they clean up by removing their listeners and calling `gsap.set(el, { x: 0, y: 0, willChange: 'auto' })`. That is the correct pattern for setters — do not wrap them in a context.
 - **Commit after every task.** Never bundle two tasks into one commit.
 
 ## Verification model
