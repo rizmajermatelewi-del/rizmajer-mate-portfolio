@@ -9,8 +9,8 @@ import { useInView } from '../motion/useInView'
    paragraphs being retyped. Word index runs across both, so the fade reads as
    one continuous sentence rather than two separate reveals. */
 const BIO_PARAGRAPHS = [
-  'Rizmajer Máté Levente vagyok, nemrég végzett full-stack fejlesztő Magyarországról. Már az egyetem alatt is éles projekteken dolgoztam, mert a gyakorlatból tanulok a legjobban — a kód akkor válik igazán érthetővé, amikor egy valódi probléma megoldásához használom.',
-  'Szeretem, ha egy weboldal vagy alkalmazás nemcsak jól néz ki, hanem tényleg működik: gyors, stabil és a felhasználó számára egyértelmű. Szívesen dolgozom együtt kis- és középvállalkozásokkal, akik szeretnék digitalizálni vagy megújítani az online jelenlétüket.',
+  'Rizmajer Máté Levente vagyok, full-stack fejlesztő. Szoftverfejlesztő végzettséget szereztem, de a gyakorlat nagyját nem az iskolapadban gyűjtöttem: már a tanulmányaim alatt éles projekteken dolgoztam. A kód akkor válik igazán érthetővé, amikor egy valódi probléma megoldásához használom — nem akkor, amikor egy feladatlapon szerepel.',
+  'Olyan weboldalakat és rendszereket építek, amik nem csak jól néznek ki, hanem használhatók is: gyorsak, stabilak, és az ügyfeleid is eligazodnak rajtuk. Leginkább kis- és középvállalkozásokkal dolgozom, [KITÖLTENDŐ: milyen iparágakban, és mi az a probléma, amivel a leggyakrabban megkeresnek].',
 ]
 
 export default function About() {

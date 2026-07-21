@@ -10,18 +10,18 @@ export default function TrustSignals() {
   const badges = [
     {
       Icon: GraduationCap,
-      title: 'Frissen végzett, gyakorlott fejlesztő',
-      text: 'Programozói végzettséggel és három év valós projekt-tapasztalattal a háttérben — elmélet és gyakorlat együtt.',
+      title: 'Végzettség és éles gyakorlat',
+      text: 'Szoftverfejlesztő végzettség, mellette valós, fizető ügyfeleknek szállított munka. A kettő együtt ér valamit.',
     },
     {
       Icon: Code2,
-      title: 'Valódi, működő projektek',
-      text: 'Nem csak tanulói feladatok — olyan alkalmazásokat mutatok, amik éles környezetben is megállják a helyüket.',
+      title: 'Megnyitható, működő munkák',
+      text: 'Nem képernyőképeket mutatok. [KITÖLTENDŐ: erősítsd meg, hogy minden projekthez felkerül élő link vagy repó — enélkül ez az állítás nem igaz]',
     },
     {
       Icon: Clock,
-      title: 'Gyors, rugalmas kommunikáció',
-      text: 'Rövid határidőn belül válaszolok, és rugalmasan alkalmazkodom a projekted ütemezéséhez.',
+      title: 'Egy munkanapon belüli válasz',
+      text: 'Megkeresésre 24 órán belül válaszolok, és a projekt alatt is elérhető maradok — nem kell utánam telefonálgatni.',
     },
   ]
 

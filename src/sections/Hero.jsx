@@ -61,9 +61,9 @@ export default function Hero() {
           </h1>
 
           <p className="hero-meta mx-auto max-w-xl text-white/75 text-base sm:text-lg mt-8 leading-relaxed">
-            Rizmajer Máté vagyok, full-stack fejlesztő Magyarországról. Nem sablonokat
-            másolok — megnézem, mire van tényleg szükséged, aztán megépítem
-            <span className="text-white"> — ötlettől az élesítésig.</span>
+            Rizmajer Máté vagyok, full-stack fejlesztő. Kis- és középvállalkozásoknak
+            építek weboldalakat és belső rendszereket — olyanokat, amiket utána te is
+            tudsz kezelni<span className="text-white">, az egyeztetéstől az élesítésig.</span>
           </p>
 
           <div className="hero-cta mt-10 flex flex-col sm:flex-row gap-4 justify-center">
