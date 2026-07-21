@@ -20,14 +20,28 @@ Branch `interaction-motion-system`, forked from `main` at `e9b9c6f`.
 | 10 — `ScrambleText` | complete, 17/17 tests | `1f196a8` |
 | 11 — `Cursor` | complete, browser-verified | `5115ec3` |
 | 12 — Apply: Navbar, Hero, Projects, Features | complete, browser-verified | `b0da1e6` |
-| 13-15 | not started | — |
+| 13 — Apply: remaining sections | complete, browser-verified | `f207989` |
+| 14-15 | not started | — |
 
-**Resume at Task 13.** The site now visibly responds to the pointer in its
-first four sections. Task 12 found a real defect the unit tests missed:
-`TiltCard` used `gsap.quickTo(el, 'rotateX')`, which silently no-ops because
-GSAP's `rotateX -> rotationX` alias is not applied on the `quickTo`/`resetTo`
-path. Fixed to `rotationX`/`rotationY`. Treat "primitive has passing tests" as
-weaker evidence than a browser check for anything that writes a transform.
+**Resume at Task 14.** Phase 2 is done — every section now responds to the
+pointer. Two things need a human before ship, neither of which blocks Task 14:
+
+1. **TrustSignals Step 7 was not implemented.** It assumes a compact row of
+   signals to loop; the section is three cards each carrying a full paragraph,
+   and scrolling those makes the copy unreadable. The Tailwind keyframes are
+   in place, so it is one edit away if a logo strip ever exists.
+2. **The six `detail` strings in `src/data/skills.js` are unreviewed.** I wrote
+   them; they make concrete technical claims (React 19, JWT, PostgreSQL,
+   GitHub Actions, Vercel, Lighthouse) that must be true of the actual work.
+
+Also still open: `prefers-reduced-motion` has never been directly emulated and
+now gates six separate effects. Needs one manual OS-level pass.
+
+Task 12 found a real defect the unit tests missed: `TiltCard` used
+`gsap.quickTo(el, 'rotateX')`, which silently no-ops because GSAP's
+`rotateX -> rotationX` alias is not applied on the `quickTo`/`resetTo` path.
+Treat "primitive has passing tests" as weaker evidence than a browser check
+for anything that writes a transform.
 Working ledger with per-task findings is at
 `.superpowers/sdd/progress.md` (git-ignored scratch — if it is gone, this
 table and `git log` are the recovery map).
