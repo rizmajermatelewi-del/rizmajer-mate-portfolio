@@ -30,7 +30,7 @@ export default function Pricing() {
             <TiltCard key={i} max={5}>
             <article
               style={{ transitionDelay: visible ? `${i * 150}ms` : '0ms' }}
-              className={`pricing-card group relative card-invert border rounded-5xl p-8 sm:p-10 transition-all duration-700 ease-out ${
+              className={`pricing-card group relative card-invert border rounded-5xl p-8 sm:p-10 card-motion ${
                 visible ? 'opacity-100' : 'opacity-0 translate-y-10'
               } ${
                 tier.highlight

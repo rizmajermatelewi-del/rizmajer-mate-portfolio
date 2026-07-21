@@ -43,7 +43,7 @@ export default function Projects() {
               onClick={(e) => openProject(i, e)}
               aria-label={`${p.title} — részletek`}
               style={{ transitionDelay: visible ? `${i * 120}ms` : '0ms' }}
-              className={`proj-card group w-full text-left card-invert border border-divider rounded-4xl overflow-hidden hover:border-primary/40 transition-all duration-700 ease-out shadow-sm hover:shadow-xl hover:shadow-primary/10 ${
+              className={`proj-card group w-full text-left card-invert border border-divider rounded-4xl overflow-hidden card-motion shadow-sm hover:border-primary/60 hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary/20 ${
                 visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
               }`}
             >

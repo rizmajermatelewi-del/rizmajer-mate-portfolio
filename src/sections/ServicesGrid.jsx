@@ -38,7 +38,7 @@ export default function ServicesGrid() {
                 onClick={() => setExpanded(expanded === i ? null : i)}
                 aria-expanded={expanded === i}
                 style={{ transitionDelay: visible ? `${i * 80}ms` : '0ms' }}
-                className={`svc-tile group w-full text-left card-invert p-7 sm:p-9 hover:bg-white/[0.02] transition-all duration-700 ease-out relative ${
+                className={`svc-tile group w-full text-left card-invert p-7 sm:p-9 relative card-motion hover:bg-white/[0.04] ${
                   visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
                 }`}
               >
