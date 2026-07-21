@@ -1,6 +1,7 @@
 import { useRef, useEffect } from 'react'
 import { gsap } from 'gsap'
 import { ArrowRight, Mail } from 'lucide-react'
+import { Magnetic } from '../motion/Magnetic'
 
 /* ----------------------------------------------------------------
    Hero
@@ -21,7 +22,22 @@ export default function Hero() {
         stagger: 0.12,
       })
     }, heroRef)
-    return () => ctx.revert()
+
+    /* Feeds the pointer's horizontal position to the CSS highlight riding
+       over the headline. Transform-free, so it never fights the timeline. */
+    const hero = heroRef.current
+    const onSweep = (e) => {
+      const el = hero.querySelector('.sweep-target')
+      if (!el) return
+      const r = el.getBoundingClientRect()
+      el.style.setProperty('--sweep-x', `${((e.clientX - r.left) / r.width) * 100}%`)
+    }
+    hero.addEventListener('pointermove', onSweep, { passive: true })
+
+    return () => {
+      hero.removeEventListener('pointermove', onSweep)
+      ctx.revert()
+    }
   }, [])
 
   return (
@@ -46,7 +62,7 @@ export default function Hero() {
 
       <div className="relative z-10 flex min-h-[100dvh] flex-col items-center justify-center text-center">
         <div className="px-6 sm:px-10 lg:px-16 max-w-4xl">
-          <h1 className="font-display font-extrabold text-white leading-[0.95] tracking-tight">
+          <h1 className="sweep-target font-display font-extrabold text-white leading-[0.95] tracking-tight">
             <span className="hero-line-1 block text-4xl sm:text-5xl md:text-6xl">
               Weboldalak és <span className="chrome-text font-bold">rendszerek</span>,
             </span>
@@ -65,13 +81,16 @@ export default function Hero() {
           </p>
 
           <div className="hero-cta mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="#kapcsolat"
-              className="magnetic-btn group inline-flex items-center justify-center gap-2 bg-primary text-deep font-semibold px-7 py-4 rounded-full shadow-2xl shadow-primary/40"
-            >
-              Kérj ajánlatot
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-            </a>
+            <Magnetic className="w-full sm:w-auto">
+              <a
+                href="#kapcsolat"
+                data-cursor="link"
+                className="magnetic-btn group inline-flex w-full sm:w-auto items-center justify-center gap-2 bg-primary text-deep font-semibold px-7 py-4 rounded-full shadow-2xl shadow-primary/40"
+              >
+                Kérj ajánlatot
+                <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+              </a>
+            </Magnetic>
             <a
               href="mailto:rizmajermatelewi@gmail.com"
               className="lift-on-hover inline-flex items-center justify-center gap-2 bg-white/10 backdrop-blur-md text-white border border-white/20 font-medium px-7 py-4 rounded-full"

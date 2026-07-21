@@ -166,3 +166,24 @@
 .has-custom-cursor select {
   cursor: auto;
 }
+
+/* Pointer-tracked highlight riding over the chrome headline. */
+.sweep-target {
+  position: relative;
+}
+
+.sweep-target::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    280px circle at var(--sweep-x, 50%) 50%,
+    rgb(255 255 255 / 0.18),
+    transparent 70%
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sweep-target::after { display: none; }
+}

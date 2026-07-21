@@ -21,13 +21,16 @@ export function TiltCard({ children, className = '', sheen = true, max = limit.t
     const el = ref.current
     if (!el || !active) return
 
+    /* rotationX/rotationY, not rotateX/rotateY. GSAP aliases the latter, but
+       only for ordinary tweens — quickTo resolves through _ptLookup, which is
+       keyed on the resolved name, so the alias silently no-ops. */
     quick.current = {
-      rx: gsap.quickTo(el, 'rotateX', { duration: duration.base, ease: ease.out }),
-      ry: gsap.quickTo(el, 'rotateY', { duration: duration.base, ease: ease.out }),
+      rx: gsap.quickTo(el, 'rotationX', { duration: duration.base, ease: ease.out }),
+      ry: gsap.quickTo(el, 'rotationY', { duration: duration.base, ease: ease.out }),
     }
 
     return () => {
-      gsap.set(el, { rotateX: 0, rotateY: 0, willChange: 'auto' })
+      gsap.set(el, { rotationX: 0, rotationY: 0, willChange: 'auto' })
       quick.current = null
     }
   }, [active])

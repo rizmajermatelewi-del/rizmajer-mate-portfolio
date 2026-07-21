@@ -1,6 +1,7 @@
 import { PROJECTS_FULL } from '../data/projects'
 import ProjectMock from '../components/ProjectMock'
 import { useInView } from '../motion/useInView'
+import { TiltCard } from '../motion/TiltCard'
 
 export default function Projects() {
   const [sectionRef, visible] = useInView(0.1)
@@ -24,34 +25,38 @@ export default function Projects() {
           {PROJECTS_FULL.map((p, i) => (
             <article
               key={i}
+              data-cursor="card"
+              data-cursor-label="Részletek"
               style={{ transitionDelay: visible ? `${i * 120}ms` : '0ms' }}
               className={`proj-card group bg-surface border border-divider rounded-4xl overflow-hidden hover:border-primary/40 transition-all duration-700 ease-out shadow-sm hover:shadow-xl hover:shadow-primary/10 ${
                 visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
               }`}
             >
-              <ProjectMock tone={p.tone} />
-              <div className="p-5 sm:p-6">
-                <div className="flex items-center justify-between mb-3">
-                  <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-primary-dark bg-primary/10 px-2.5 py-1 rounded-full">
-                    {p.label}
-                  </span>
-                  <span className="font-mono text-[10px] text-muted uppercase tracking-widest">
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
-                </div>
-                <h3 className="font-display font-bold text-lg text-ink leading-tight">{p.title}</h3>
-                <p className="text-muted text-[13px] mt-2.5 leading-relaxed">{p.text}</p>
-                <div className="flex flex-wrap gap-1.5 mt-4">
-                  {p.tech.map((t, ti) => (
-                    <span
-                      key={ti}
-                      className="font-mono text-[9px] uppercase tracking-wide text-muted bg-background border border-divider px-2 py-0.5 rounded-full"
-                    >
-                      {t}
+              <TiltCard className="h-full">
+                <ProjectMock tone={p.tone} />
+                <div className="p-5 sm:p-6">
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-primary-dark bg-primary/10 px-2.5 py-1 rounded-full">
+                      {p.label}
                     </span>
-                  ))}
+                    <span className="font-mono text-[10px] text-muted uppercase tracking-widest">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                  </div>
+                  <h3 className="font-display font-bold text-lg text-ink leading-tight">{p.title}</h3>
+                  <p className="text-muted text-[13px] mt-2.5 leading-relaxed">{p.text}</p>
+                  <div className="flex flex-wrap gap-1.5 mt-4">
+                    {p.tech.map((t, ti) => (
+                      <span
+                        key={ti}
+                        className="font-mono text-[9px] uppercase tracking-wide text-muted bg-background border border-divider px-2 py-0.5 rounded-full"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              </TiltCard>
             </article>
           ))}
         </div>

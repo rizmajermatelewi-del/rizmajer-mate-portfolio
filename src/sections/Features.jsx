@@ -3,6 +3,7 @@ import StackShuffler from '../components/showcases/StackShuffler'
 import CodeScan from '../components/showcases/CodeScan'
 import BookingScheduler from '../components/showcases/BookingScheduler'
 import { useInView } from '../motion/useInView'
+import { TiltCard } from '../motion/TiltCard'
 
 /* ----------------------------------------------------------------
    Features Section
@@ -60,21 +61,25 @@ export default function Features() {
                 visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
               }`}
             >
-              <div className="flex items-center justify-between mb-6">
-                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">{card.eyebrow}</span>
-                <ArrowUpRight
-                  className="h-5 w-5 text-ink/30 group-hover:text-primary group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all"
-                  strokeWidth={1.8}
-                />
-              </div>
+              {/* max={4}: these cards run their own demos, and the default
+                  8deg tilt fights the motion already happening inside them. */}
+              <TiltCard max={4}>
+                <div className="flex items-center justify-between mb-6">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">{card.eyebrow}</span>
+                  <ArrowUpRight
+                    className="h-5 w-5 text-ink/30 group-hover:text-primary group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all"
+                    strokeWidth={1.8}
+                  />
+                </div>
 
-              <card.Component />
+                <card.Component />
 
-              <div className="mt-6">
-                <h3 className="font-display font-bold text-2xl text-ink leading-tight">{card.heading}</h3>
-                <p className="font-display font-medium text-primary-dark text-sm mt-1">{card.sub}</p>
-                <p className="text-muted text-[15px] mt-4 leading-relaxed">{card.text}</p>
-              </div>
+                <div className="mt-6">
+                  <h3 className="font-display font-bold text-2xl text-ink leading-tight">{card.heading}</h3>
+                  <p className="font-display font-medium text-primary-dark text-sm mt-1">{card.sub}</p>
+                  <p className="text-muted text-[15px] mt-4 leading-relaxed">{card.text}</p>
+                </div>
+              </TiltCard>
             </article>
           ))}
         </div>
