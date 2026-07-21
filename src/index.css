@@ -152,3 +152,17 @@
   .preserve-3d { transform-style: preserve-3d; }
   .clip-wave { clip-path: polygon(0 0, 100% 0, 100% 88%, 50% 100%, 0 88%); }
 }
+
+/* The custom cursor replaces the native one only on fine pointers. Text
+   inputs keep their native caret so typing stays legible. */
+.has-custom-cursor,
+.has-custom-cursor a,
+.has-custom-cursor button {
+  cursor: none;
+}
+
+.has-custom-cursor input,
+.has-custom-cursor textarea,
+.has-custom-cursor select {
+  cursor: auto;
+}
