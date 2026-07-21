@@ -10,7 +10,8 @@ import Pillars from './sections/Pillars'
 import Protocol from './sections/Protocol'
 import ServicesGrid from './sections/ServicesGrid'
 import Pricing from './sections/Pricing'
-import TrustSignals from './sections/TrustSignals'
+import Faq from './sections/Faq'
+import Testimonial from './sections/Testimonial'
 import ContactForm from './sections/ContactForm'
 import Footer from './sections/Footer'
 
@@ -36,13 +37,14 @@ export default function App() {
       <main>
         <Hero />
         <Projects />
+        <Testimonial />
         <About />
         <Features />
         <Pillars />
         <Protocol />
         <ServicesGrid />
         <Pricing />
-        <TrustSignals />
+        <Faq />
         <ContactForm />
       </main>
       <Footer />
