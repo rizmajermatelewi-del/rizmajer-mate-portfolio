@@ -6,8 +6,9 @@
    a shipped site only needs the one it actually uses.
 --------------------------------------------------------------------- */
 :root {
-  --color-primary: 99 102 241;
-  --color-primary-dark: 79 70 229;
+  /* indigo-600, not 500: white on 500 measures 4.47:1, just under AA. */
+  --color-primary: 79 70 229;
+  --color-primary-dark: 67 56 202;
   --color-primary-light: 129 140 248;
   --color-accent: 167 139 250;
   --color-accent-dark: 139 92 246;
@@ -68,10 +69,6 @@
     background: linear-gradient(135deg, rgb(var(--color-primary)) 0%, rgb(var(--color-primary-dark)) 100%);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   }
-  .chrome-text {
-    background: linear-gradient(135deg,#E8E8E8 0%,#FFFFFF 20%,#9A9A9A 50%,#FFFFFF 70%,#C0C0C0 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  }
   .glass {
     background: rgb(var(--color-background) / 0.65);
     backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
@@ -103,8 +100,15 @@
     --color-muted: 154 160 180;
     --color-divider: 46 58 78;
     --color-surface: 28 40 58;
-    --color-primary-dark: 129 140 248;
+    /* background must flip too: the tech chips fill with bg-background, and
+       leaving it light put light muted text on a light chip at 2.3:1. */
+    --color-background: 20 30 46;
+    --color-primary-dark: 165 180 252;
     background-color: rgb(var(--color-deep));
+    /* Set colour too, not just the token. Elements with no colour class
+       inherit from body, which resolved dark before this override existed —
+       that put 1.07:1 dark-on-dark titles inside these cards. */
+    color: rgb(var(--color-ink));
   }
 
   .text-balance { text-wrap: balance; }

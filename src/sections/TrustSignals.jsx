@@ -54,7 +54,7 @@ export default function TrustSignals() {
         <div className="text-center">
           <a
             href="#kapcsolat"
-            className="magnetic-btn inline-flex items-center gap-2 bg-primary text-deep font-semibold px-7 py-3.5 rounded-full shadow-xl shadow-primary/30"
+            className="magnetic-btn inline-flex items-center gap-2 bg-primary text-white font-semibold px-7 py-3.5 rounded-full shadow-xl shadow-primary/30"
           >
             Kérj ajánlatot
             <ArrowRight className="h-4 w-4" />

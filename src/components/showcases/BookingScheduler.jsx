@@ -42,7 +42,7 @@ export default function BookingScheduler() {
             key={idx}
             className={`flex flex-col items-center justify-center h-9 rounded-xl text-xs font-medium transition-all duration-300 ${
               step >= 3 && idx === activeDay
-                ? 'bg-primary text-deep scale-110 shadow-lg shadow-primary/30'
+                ? 'bg-primary text-white scale-110 shadow-lg shadow-primary/30'
                 : 'bg-background text-ink'
             }`}
           >

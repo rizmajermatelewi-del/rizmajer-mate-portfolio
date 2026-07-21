@@ -28,14 +28,14 @@ export default function Navbar() {
           <a href="#kezdolap" className="flex items-center gap-2 group">
             <LogoMark
               className={`h-9 w-9 shrink-0 transition-colors duration-300 group-hover:text-primary-dark ${
-                scrolled ? 'text-ink' : 'text-white'
+                'text-ink'
               }`}
             />
             <ScrambleText
               text="Rizmajer Máté"
               trigger="hover"
               className={`font-display font-bold tracking-tight text-lg ${
-                scrolled ? 'text-ink' : 'text-white'
+                'text-ink'
               } transition-colors`}
             />
           </a>
@@ -46,7 +46,7 @@ export default function Navbar() {
                 key={link.href}
                 href={link.href}
                 className={`relative text-sm font-medium tracking-tight pb-0.5 transition-colors after:content-[''] after:absolute after:-bottom-0.5 after:left-0 after:h-px after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full ${
-                  scrolled ? 'text-ink/70 hover:text-primary' : 'text-white/90 hover:text-white'
+                  'text-ink/70 hover:text-primary-dark'
                 }`}
               >
                 {link.label}
@@ -64,7 +64,7 @@ export default function Navbar() {
                   rel="noopener noreferrer"
                   aria-label={label}
                   className={`p-2 rounded-full transition-all duration-300 hover:scale-110 ${
-                    scrolled ? 'text-ink/60 hover:text-primary' : 'text-white/80 hover:text-white'
+                    'text-ink/60 hover:text-primary-dark'
                   }`}
                 >
                   <Icon className="h-4 w-4" strokeWidth={2} />
@@ -73,7 +73,7 @@ export default function Navbar() {
             </div>
             <a
               href="#kapcsolat"
-              className="magnetic-btn inline-flex items-center gap-1.5 bg-primary text-deep px-4 py-2 rounded-full text-sm font-semibold shadow-lg shadow-primary/30"
+              className="magnetic-btn inline-flex items-center gap-1.5 bg-primary text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg shadow-primary/30"
             >
               Kérj ajánlatot
               <ArrowUpRight className="h-4 w-4" strokeWidth={2.5} />
@@ -82,7 +82,7 @@ export default function Navbar() {
 
           <button
             onClick={() => setOpen(true)}
-            className={`lg:hidden p-2 rounded-full ${scrolled ? 'text-ink' : 'text-white'}`}
+            className={`lg:hidden p-2 rounded-full ${'text-ink'}`}
             aria-label="Menü megnyitása"
           >
             <Menu className="h-5 w-5" />
@@ -123,7 +123,7 @@ export default function Navbar() {
           <a
             href="#kapcsolat"
             onClick={() => setOpen(false)}
-            className="mt-8 magnetic-btn flex items-center justify-center gap-2 bg-primary text-deep px-6 py-4 rounded-full font-semibold w-full"
+            className="mt-8 magnetic-btn flex items-center justify-center gap-2 bg-primary text-white px-6 py-4 rounded-full font-semibold w-full"
           >
             Kérj ajánlatot
             <ArrowUpRight className="h-4 w-4" />

@@ -208,7 +208,7 @@ export default function ContactForm() {
                       <button
                         type="submit"
                         disabled={status === 'sending'}
-                        className="magnetic-btn inline-flex items-center gap-2 bg-primary text-deep font-semibold px-7 py-3.5 rounded-full shadow-lg shadow-primary/30 disabled:opacity-50"
+                        className="magnetic-btn inline-flex items-center gap-2 bg-primary text-white font-semibold px-7 py-3.5 rounded-full shadow-lg shadow-primary/30 disabled:opacity-50"
                       >
                         {status === 'sending' ? 'Küldés...' : 'Üzenet küldése'}
                         <ArrowRight className="h-4 w-4" />

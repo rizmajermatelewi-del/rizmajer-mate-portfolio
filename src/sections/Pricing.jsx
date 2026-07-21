@@ -39,7 +39,7 @@ export default function Pricing() {
               }`}
             >
               {tier.highlight && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 font-mono text-[10px] uppercase tracking-widest bg-primary text-deep px-3 py-1 rounded-full shadow-md">
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 font-mono text-[10px] uppercase tracking-widest bg-primary text-white px-3 py-1 rounded-full shadow-md">
                   Legnépszerűbb
                 </span>
               )}
@@ -74,7 +74,7 @@ export default function Pricing() {
                   href="#kapcsolat"
                   className={`magnetic-btn inline-flex w-full items-center justify-center gap-2 px-6 py-3.5 rounded-full font-semibold transition-colors duration-300 ${
                     tier.highlight
-                      ? 'bg-primary text-deep shadow-lg shadow-primary/30'
+                      ? 'bg-primary text-white shadow-lg shadow-primary/30'
                       : 'bg-background border border-divider text-ink hover:border-primary/40 hover:text-primary-dark'
                   }`}
                 >
