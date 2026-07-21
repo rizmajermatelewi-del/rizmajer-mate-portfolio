@@ -10,7 +10,7 @@ export default function ServicesGrid() {
   const [expanded, setExpanded] = useState(null)
 
   return (
-    <section ref={ref} className="relative py-24 px-6 sm:px-10 lg:px-16 bg-deep text-white overflow-hidden rounded-t-6xl">
+    <section ref={ref} className="relative py-24 px-6 sm:px-10 lg:px-16 overflow-hidden">
       <div className="absolute inset-0 grid-bg opacity-20" />
       <div className="absolute -top-20 -right-20 h-96 w-96 rounded-full bg-primary/20 blur-3xl" />
       <div className="absolute bottom-0 -left-20 h-72 w-72 rounded-full bg-accent/15 blur-3xl" />
@@ -19,18 +19,18 @@ export default function ServicesGrid() {
         <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-6 mb-14">
           <div>
             <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary">╱ Amit tudok</span>
-            <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl mt-4 leading-[1.05] tracking-tight">
+            <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink mt-4 leading-[1.05] tracking-tight">
               A teljes <span className="chrome-text font-bold">eszköztár</span>,
               <span className="block font-display font-semibold text-primary">egy kézben.</span>
             </h2>
           </div>
-          <p className="text-white/60 max-w-md text-base leading-relaxed">
+          <p className="text-muted max-w-md text-base leading-relaxed">
             Önállóan viszem végig a projekteket az ötlettől az élesítésig — kis- és
             középvállalkozásoknak Magyarországon.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-white/10 rounded-4xl overflow-hidden">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-divider rounded-4xl overflow-hidden">
           {SKILLS_FULL.map((svc, i) => {
             const Icon = svc.icon
             return (
@@ -40,7 +40,7 @@ export default function ServicesGrid() {
                 onClick={() => setExpanded(expanded === i ? null : i)}
                 aria-expanded={expanded === i}
                 style={{ transitionDelay: visible ? `${i * 80}ms` : '0ms' }}
-                className={`svc-tile group w-full text-left bg-deep p-7 sm:p-9 hover:bg-white/[0.02] transition-all duration-700 ease-out relative ${
+                className={`svc-tile group w-full text-left card-invert p-7 sm:p-9 hover:bg-white/[0.02] transition-all duration-700 ease-out relative ${
                   visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
                 }`}
               >

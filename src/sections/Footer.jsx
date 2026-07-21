@@ -14,7 +14,7 @@ export default function Footer() {
   const [ref, visible] = useInView(0.1)
 
   return (
-    <footer ref={ref} className="relative bg-deep text-white rounded-t-6xl mt-12 overflow-hidden">
+    <footer ref={ref} className="relative rounded-t-6xl mt-12 overflow-hidden">
       <div className="absolute inset-0 grid-bg opacity-15" />
       <div className="absolute -top-32 left-1/2 -translate-x-1/2 h-64 w-[40rem] rounded-full bg-primary/20 blur-3xl" />
 
@@ -23,13 +23,13 @@ export default function Footer() {
           visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`}
       >
-        <div className="border-b border-white/10 pb-12 mb-12">
+        <div className="border-b border-divider pb-12 mb-12">
           <h2 className="font-display font-extrabold text-5xl sm:text-7xl md:text-8xl leading-[0.92] tracking-tight">
             Weboldalakat és
             <span className="font-display font-semibold text-primary block"><span className="chrome-text font-bold">alkalmazásokat</span> építek.</span>
           </h2>
           <div className="flex flex-col sm:flex-row sm:items-end justify-between mt-8 gap-6">
-            <p className="text-white/50 max-w-md">
+            <p className="text-muted max-w-md">
               Rizmajer Máté — full-stack fejlesztő Magyarországról, elérhető távoli és helyi
               projektekre egyaránt.
             </p>
@@ -46,7 +46,7 @@ export default function Footer() {
               <LogoMark className="h-9 w-9 text-primary" />
               <span className="font-display font-bold text-lg">Rizmajer Máté</span>
             </div>
-            <p className="text-white/50 text-sm leading-relaxed max-w-xs">
+            <p className="text-muted text-sm leading-relaxed max-w-xs">
               Full-stack fejlesztő React, Node.js és modern web-technológiák szakértelmével.
               Ötlettől a működő termékig.
             </p>
@@ -57,7 +57,7 @@ export default function Footer() {
             <ul className="space-y-2.5">
               {SKILLS_FULL.slice(0, 4).map((s, i) => (
                 <li key={i}>
-                  <a href="#keszsegek" className="text-white/65 hover:text-primary transition text-sm">
+                  <a href="#keszsegek" className="text-muted hover:text-primary transition text-sm">
                     <ScrambleText text={s.title} trigger="hover" />
                   </a>
                 </li>
@@ -68,11 +68,11 @@ export default function Footer() {
           <div>
             <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary mb-4">Rólam</p>
             <ul className="space-y-2.5">
-              <li><a href="#projektek" className="text-white/65 hover:text-primary transition text-sm">Projektek</a></li>
-              <li><a href="#rolam" className="text-white/65 hover:text-primary transition text-sm">Rólam</a></li>
-              <li><a href="#folyamat" className="text-white/65 hover:text-primary transition text-sm">Folyamat</a></li>
-              <li><a href="#arak" className="text-white/65 hover:text-primary transition text-sm">Árak</a></li>
-              <li><a href="#kapcsolat" className="text-white/65 hover:text-primary transition text-sm">Kapcsolat</a></li>
+              <li><a href="#projektek" className="text-muted hover:text-primary transition text-sm">Projektek</a></li>
+              <li><a href="#rolam" className="text-muted hover:text-primary transition text-sm">Rólam</a></li>
+              <li><a href="#folyamat" className="text-muted hover:text-primary transition text-sm">Folyamat</a></li>
+              <li><a href="#arak" className="text-muted hover:text-primary transition text-sm">Árak</a></li>
+              <li><a href="#kapcsolat" className="text-muted hover:text-primary transition text-sm">Kapcsolat</a></li>
             </ul>
           </div>
 
@@ -80,22 +80,22 @@ export default function Footer() {
             <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary mb-4">Kapcsolat</p>
             <ul className="space-y-2.5">
               <li>
-                <a href="mailto:rizmajermatelewi@gmail.com" className="text-white/65 hover:text-primary transition text-sm">
+                <a href="mailto:rizmajermatelewi@gmail.com" className="text-muted hover:text-primary transition text-sm">
                   rizmajermatelewi@gmail.com
                 </a>
               </li>
-              <li className="text-white/65 text-sm">Magyarország</li>
+              <li className="text-muted text-sm">Magyarország</li>
             </ul>
           </div>
         </div>
 
-        <div className="mt-14 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+        <div className="mt-14 pt-8 border-t border-divider flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
           <div className="flex items-center gap-2.5">
             <span className="relative flex h-2 w-2">
               <span className="absolute inset-0 rounded-full bg-emerald-400 animate-ping" />
               <span className="relative h-2 w-2 rounded-full bg-emerald-400" />
             </span>
-            <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/60">
+            <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-muted">
               Elérhető új projektekre
             </span>
           </div>
@@ -108,7 +108,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="p-2 rounded-full text-white/50 hover:text-primary hover:scale-110 transition-all duration-300"
+                  className="p-2 rounded-full text-muted hover:text-primary hover:scale-110 transition-all duration-300"
                 >
                   <Icon className="h-4 w-4" strokeWidth={2} />
                 </a>
@@ -116,7 +116,7 @@ export default function Footer() {
             ))}
           </div>
 
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-white/50 text-xs font-mono">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-muted text-xs font-mono">
             <Link to="/adatvedelem" className="hover:text-primary transition">Adatvédelem</Link>
             <Link to="/aszf" className="hover:text-primary transition">ÁSZF</Link>
             <span>© 2026 Rizmajer Máté</span>
