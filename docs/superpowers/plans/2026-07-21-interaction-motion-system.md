@@ -19,11 +19,16 @@ Branch `interaction-motion-system`, forked from `main` at `e9b9c6f`.
 | 9 — `Magnetic` | complete, 13/13 tests | `8686b89` |
 | 10 — `ScrambleText` | complete, 17/17 tests | `1f196a8` |
 | 11 — `Cursor` | complete, browser-verified | `5115ec3` |
-| 12-15 | not started | — |
+| 12 — Apply: Navbar, Hero, Projects, Features | complete, browser-verified | `b0da1e6` |
+| 13-15 | not started | — |
 
-**Resume at Task 12.** All four motion primitives now exist and are unit- and
-browser-verified, but none are applied yet. The only visible change to the
-site so far is the cursor itself. Tasks 12-15 are the application work. Working ledger with per-task findings is at
+**Resume at Task 13.** The site now visibly responds to the pointer in its
+first four sections. Task 12 found a real defect the unit tests missed:
+`TiltCard` used `gsap.quickTo(el, 'rotateX')`, which silently no-ops because
+GSAP's `rotateX -> rotationX` alias is not applied on the `quickTo`/`resetTo`
+path. Fixed to `rotationX`/`rotationY`. Treat "primitive has passing tests" as
+weaker evidence than a browser check for anything that writes a transform.
+Working ledger with per-task findings is at
 `.superpowers/sdd/progress.md` (git-ignored scratch — if it is gone, this
 table and `git log` are the recovery map).
 
