@@ -97,7 +97,7 @@ export default function ProjectModal({ project, originRect, onClose }) {
 
       <div
         ref={panelRef}
-        className="relative max-h-[85vh] w-full max-w-2xl overflow-y-auto rounded-4xl border border-divider card-invert p-6 sm:p-10 shadow-e4"
+        className="relative max-h-viewport w-full max-w-2xl overflow-y-auto overscroll-contain rounded-4xl border border-divider card-invert p-6 sm:p-10 shadow-e4"
       >
         <button
           type="button"

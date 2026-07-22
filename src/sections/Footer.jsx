@@ -36,8 +36,8 @@ export default function Footer() {
       >
         <div className="border-b border-divider pb-12 mb-12">
           <h2 className="font-display font-extrabold text-5xl sm:text-7xl md:text-8xl leading-[0.92] tracking-tight">
-            Weboldalakat és
-            <span className="font-display font-semibold text-primary block"><span className="text-primary-dark font-bold">alkalmazásokat</span> építek.</span>
+            Beszéljük meg,
+            <span className="font-display font-semibold text-primary block">mi <span className="text-primary-dark font-bold">vinné el</span> a munkát.</span>
           </h2>
           <div className="flex flex-col sm:flex-row sm:items-end justify-between mt-8 gap-6">
             <p className="text-muted max-w-md">

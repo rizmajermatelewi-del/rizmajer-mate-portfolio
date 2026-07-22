@@ -46,7 +46,7 @@ export default function Protocol() {
       num: '01',
       title: 'Egyeztetés',
       tagline: 'Először meghallgatlak.',
-      text: 'Megbeszéljük az elképzelésed és a céljaidat. Nincsenek rejtett költségek — csak világos elvárások, mielőtt bármi elkezdődne.',
+      text: 'Végigvesszük, mi az, ami ma kézzel megy, és mennyi időt visz el. Ebből írásos terjedelem és fix ár lesz — mielőtt bármit elkezdenék, tudod, mit kapsz és mennyiért.',
       image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80',
       alt: 'Fejlesztő laptop előtt kódot néz',
       meta: 'Lépés 1 / Listen',
@@ -54,8 +54,8 @@ export default function Protocol() {
     {
       num: '02',
       title: 'Tervezés & Fejlesztés',
-      tagline: 'Megtalálom a legjobb utat.',
-      text: 'Kiválasztom a feladathoz illő technológiákat, és iteratívan építem fel a terméket — folyamatos visszajelzés mellett.',
+      tagline: 'Menet közben látod, hol tart.',
+      text: 'Kapsz egy linket, amin az épülő oldal végig megnézhető. Nem a végén szembesülsz az eredménnyel: amíg alakul, olcsó változtatni rajta.',
       image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1200&q=80',
       alt: 'Kód íródik egy szerkesztőben',
       meta: 'Lépés 2 / Build',
@@ -64,7 +64,7 @@ export default function Protocol() {
       num: '03',
       title: 'Átadás & Támogatás',
       tagline: 'A leadás után sem tűnök el.',
-      text: 'Élesítés, tesztelés, dokumentáció — és elérhető maradok, ha kérdés vagy bővítés merül fel.',
+      text: 'Élesítés előtt telefonon, tableten és több böngészőben is végigmegyek rajta. Átadom a hozzáféréseket, megmutatom, hogyan kezeld — a domain és a kód a tiéd marad.',
       image: 'https://images.unsplash.com/photo-1516116216624-53e697fedbea?auto=format&fit=crop&w=1200&q=80',
       alt: 'Rendezett fejlesztői munkaállomás',
       meta: 'Lépés 3 / Support',
@@ -72,7 +72,7 @@ export default function Protocol() {
   ]
 
   return (
-    <section id="folyamat" ref={containerRef} className="relative px-4 sm:px-6 py-28 sm:py-40">
+    <section id="folyamat" ref={containerRef} className="relative px-4 sm:px-6 py-20 sm:py-28">
       <div aria-hidden="true" className="absolute left-0 top-0 h-full w-px bg-divider">
         <div className="progress-rail h-full w-full origin-top scale-y-0 bg-primary" />
       </div>

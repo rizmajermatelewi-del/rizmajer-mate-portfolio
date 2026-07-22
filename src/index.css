@@ -121,6 +121,15 @@
     background: rgb(var(--color-deep) / 0.75);
     backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
   }
+  /* Both glass recipes lean on the blur to separate the navbar from whatever
+     scrolls under it. Where backdrop-filter isn't available — older Firefox,
+     some Android WebViews, or anyone running with hardware acceleration off —
+     the blur silently does nothing and the bar becomes page text layered over
+     page text. Opacity carries it instead in that case. */
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .glass { background: rgb(var(--color-background) / 0.97); }
+    .glass-dark { background: rgb(var(--color-deep) / 0.97); }
+  }
   .ring-pulse { box-shadow: 0 0 0 0 rgb(var(--color-primary) / 0.6); animation: ring-pulse 2s infinite; }
   @keyframes ring-pulse {
     0%   { box-shadow: 0 0 0 0 rgb(var(--color-primary) / 0.6); }
@@ -175,5 +184,32 @@
   .perspective { perspective: 1200px; }
   .preserve-3d { transform-style: preserve-3d; }
   .clip-wave { clip-path: polygon(0 0, 100% 0, 100% 88%, 50% 100%, 0 88%); }
+
+  /* Viewport height with a fallback, in that order. dvh is what we want on
+     mobile — it tracks the browser chrome instead of measuring the tallest
+     possible viewport and hiding the bottom of the hero behind the URL bar.
+     But a browser that doesn't know dvh drops the whole declaration, and a
+     bare min-h-[100dvh] would then collapse to content height. Declaring vh
+     first means old browsers keep a full-height hero and new ones override
+     it. Written here rather than as two Tailwind classes because the cascade
+     has to be ordered, and utility order in the generated sheet isn't ours
+     to guarantee. */
+  .min-h-viewport { min-height: 100vh; min-height: 100dvh; }
+  .max-h-viewport { max-height: 85vh; max-height: 85dvh; }
+}
+
+/* Honour the OS "reduce motion" setting for everything CSS drives. The JS
+   effects already check it via useReducedMotion, but the scroll-behavior,
+   the keyframe animations and every transition utility are declared in CSS
+   and were ignoring it. !important is warranted: this has to beat utility
+   classes it can't know the names of. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 

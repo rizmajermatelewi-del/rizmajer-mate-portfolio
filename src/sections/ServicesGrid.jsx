@@ -10,7 +10,7 @@ export default function ServicesGrid() {
   const [expanded, setExpanded] = useState(null)
 
   return (
-    <section ref={ref} className="relative py-28 sm:py-40 px-6 sm:px-10 lg:px-16 overflow-hidden">
+    <section ref={ref} className="relative py-20 sm:py-28 px-6 sm:px-10 lg:px-16 overflow-hidden">
       <div aria-hidden="true" className="section-glow" />
 
       <div className="relative max-w-7xl mx-auto">

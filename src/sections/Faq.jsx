@@ -3,13 +3,21 @@ import { useInView } from '../motion/useInView'
 
 /* ----------------------------------------------------------------
    FAQ — the objections an SME actually raises before hiring.
-   This matters more now that no prices are published: something has to
-   answer "mennyibe kerül" before the visitor reaches the contact form.
+   Sits after the contact form: the visitor who is ready just writes,
+   the one still hesitating finds the "mennyibe kerül" answer right below.
 ---------------------------------------------------------------- */
 const QUESTIONS = [
   {
     q: 'Mennyibe kerül egy weboldal?',
-    a: 'Az árat a terjedelem ismeretében adom meg, egy rövid egyeztetés után — így nem fizetsz olyanért, amire nincs szükséged. [KITÖLTENDŐ: add meg a tipikus tartományt, pl. „a legtöbb bemutatkozó oldal X és Y között van", hogy a látogató tudjon tájékozódni.]',
+    a: 'Az árat a terjedelem ismeretében adom meg, egy rövid egyeztetés után — így nem fizetsz olyanért, amire nincs szükséged. Írd meg, mire gondolsz, és konkrét ajánlattal jelentkezem.',
+  },
+  {
+    q: 'Mi kerül még pénzbe a fejlesztésen túl?',
+    a: 'A domain és a tárhely éves díja — ezek nem nálam futnak, hanem a te nevedre regisztráljuk, így pontosan látod, mit fizetsz és kinek. Ezen felül csak akkor van további költség, ha kérsz karbantartást vagy új funkciót. Az ajánlatban ezt előre tételesen leírom, hogy ne utólag derüljön ki.',
+  },
+  {
+    q: 'WordPress vagy egyedi fejlesztés legyen?',
+    a: 'Attól függ, mit csinál az oldal. Ha bemutatkozásról és néhány aloldalról van szó, egy kész rendszer olcsóbb és gyorsabb — ilyenkor nincs értelme egyedit építeni. Ha viszont foglalni, rendelni vagy belső folyamatot kezelni kell, ott a kész bővítmények általában vagy nem azt tudják, ami kell, vagy havidíjasak. Az első egyeztetésen megmondom, melyik éri meg neked — akkor is, ha az a kevesebb munka nekem.',
   },
   {
     q: 'Mennyi idő alatt készül el?',
@@ -17,11 +25,15 @@ const QUESTIONS = [
   },
   {
     q: 'Mi történik, ha nem tetszik, amit csinálsz?',
-    a: 'Nem a végén látod először. Menet közben folyamatosan megmutatom, hol tart, így a korrekció olcsó marad ahelyett, hogy a leadáskor derülne ki. [KITÖLTENDŐ: hány egyeztetési kör van benne, és mi történik, ha a projekt félbeszakad.]',
+    a: 'Nem a végén látod először. Menet közben folyamatosan megmutatom, hol tart, így a korrekció olcsó marad ahelyett, hogy a leadáskor derülne ki. Az egyeztetési körök számát és a félbeszakadás feltételeit az ajánlatban rögzítjük, hogy egyikünket se érje meglepetés.',
   },
   {
     q: 'Ki tartja karban az oldalt utána?',
-    a: 'Ahogy megbeszéljük. Az oldalt úgy építem, hogy a tartalmat magad is tudd kezelni, és az átadáskor megmutatom, hogyan. Ha inkább rám bíznád, arra is van lehetőség. [KITÖLTENDŐ: van-e havidíjas karbantartási konstrukció, és mi tartozik bele.]',
+    a: 'Ahogy megbeszéljük. Az oldalt úgy építem, hogy a tartalmat magad is tudd kezelni, és az átadáskor megmutatom, hogyan. Ha inkább rám bíznád a karbantartást, arra is van lehetőség — a részleteket az igényeid alapján beszéljük meg.',
+  },
+  {
+    q: 'Mobilon is jól fog működni?',
+    a: 'Igen, és ezt nem utólag ragasztom rá. A látogatók nagyobb része telefonon érkezik, ezért a mobil nézet ugyanolyan súllyal készül, mint az asztali. Ide tartozik az is, hogy billentyűzettel és képernyőolvasóval is használható legyen — webshopoknál és bizonyos szolgáltatásoknál ez ma már uniós előírás, máshol pedig egyszerűen több elérhető ügyfelet jelent.',
   },
   {
     q: 'Kié lesz a kód és a domain?',
@@ -33,8 +45,12 @@ export default function Faq() {
   const [ref, visible] = useInView(0.1)
   const [open, setOpen] = useState(0)
 
+  // Asymmetric padding on purpose. The FAQ reads as a continuation of the
+  // contact block above it, so the top gap is roughly half a normal section
+  // break — two full paddings back to back left ~245px of dead page here.
+  // The bottom keeps the standard rhythm, since the footer follows.
   return (
-    <section id="gyik" ref={ref} className="relative py-28 sm:py-40 px-6 sm:px-10 lg:px-16">
+    <section id="gyik" ref={ref} className="relative pt-10 sm:pt-14 pb-20 sm:pb-28 px-6 sm:px-10 lg:px-16">
       <div className="max-w-3xl mx-auto">
         <div
           className={`mb-14 transition-all duration-700 ease-out ${

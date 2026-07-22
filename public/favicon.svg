@@ -1,10 +1,19 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <!-- Mirrors LogoMark in src/components/Logo.jsx; kept in sync by hand.
+       The whole mark is rotated, circle included — the arc gaps have to stay
+       lined up with the blade, otherwise the point crosses the ring instead
+       of passing through the opening. -->
   <rect width="48" height="48" rx="11" fill="#08080C"/>
-  <g fill="none" stroke="#818CF8" stroke-width="2" stroke-linecap="round">
+  <g fill="none" stroke="#818CF8" stroke-width="2" stroke-linecap="round" transform="rotate(38 24 24)">
     <path d="M32 8.4a18 18 0 0 1 0 31.2"/>
     <path d="M16 39.6a18 18 0 0 1 0-31.2"/>
-    <path d="M24 6.5v10.2" stroke-width="3.2"/>
-    <path d="M20 16.7h8" stroke-width="2.2"/>
-    <path d="M24 18.6v22.9" stroke-width="2.8"/>
+    <path d="M21.6 7.4h4.8" stroke-width="2.2"/>
+    <path d="M24 8.7v8" stroke-width="3.4"/>
+    <path d="M22.1 11.7l3.8-1.6" stroke-width="1.1"/>
+    <path d="M22.1 14.7l3.8-1.6" stroke-width="1.1"/>
+    <path d="M20 17h8" stroke-width="2.2"/>
+    <path d="M24 18.8v18.4" stroke-width="2.8" stroke-linecap="butt"/>
+    <path d="M25.2 20.2v15.2" stroke-width="0.8"/>
+    <path d="M22.6 37.1h2.8l-1.4 4.7z" fill="#818CF8" stroke="none"/>
   </g>
 </svg>

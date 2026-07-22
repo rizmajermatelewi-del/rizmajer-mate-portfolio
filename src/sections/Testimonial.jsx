@@ -13,7 +13,7 @@ export default function Testimonial() {
   if (TESTIMONIALS.length === 0) return null
 
   return (
-    <section ref={ref} className="relative py-28 sm:py-40 px-6 sm:px-10 lg:px-16">
+    <section ref={ref} className="relative py-20 sm:py-28 px-6 sm:px-10 lg:px-16">
       <div className="max-w-4xl mx-auto">
         {TESTIMONIALS.map((t, i) => (
           <figure

@@ -50,7 +50,7 @@ export default function ContactForm() {
   }
 
   return (
-    <section id="kapcsolat" ref={sectionRef} className="relative py-28 sm:py-40 px-6 sm:px-10 lg:px-16">
+    <section id="kapcsolat" ref={sectionRef} className="relative py-20 sm:py-28 px-6 sm:px-10 lg:px-16">
       <div className="max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-12 gap-10 lg:gap-16">
           <div
@@ -64,8 +64,9 @@ export default function ContactForm() {
               <span className="block font-display font-semibold text-primary-dark">a vállalkozásodnak?</span>
             </h2>
             <p className="text-muted text-lg mt-6 leading-relaxed max-w-md">
-              Írj pár sort arról, mit szeretnél megépíteni — elolvasom, és 24 órán belül
-              válaszolok, akkor is, ha csak kérdésed van.
+              Nem kell kész tervvel érkezned. Elég, ha leírod, mi az, ami ma nehézkesen
+              megy — a többit kitaláljuk. 24 órán belül válaszolok, akkor is, ha végül
+              nem én leszek a jó választás.
             </p>
 
             <div className="mt-10 space-y-4">

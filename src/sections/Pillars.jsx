@@ -24,7 +24,7 @@ export default function Pillars() {
       target: 2,
       suffix: '',
       label: 'fizető ügyfél',
-      desc: 'Két magyar vállalkozás, akiknek a rendszere ma is élesben fut. [KITÖLTENDŐ: mióta működik, és mi változott náluk azóta]',
+      desc: 'Két magyar vállalkozás, akiknek a rendszere ma is élesben fut.',
     },
     {
       n: '03',
@@ -37,7 +37,7 @@ export default function Pillars() {
   ]
 
   return (
-    <section id="filozofia" ref={ref} className="relative py-28 sm:py-40 px-6 sm:px-10 lg:px-16 overflow-hidden">
+    <section id="filozofia" ref={ref} className="relative py-20 sm:py-28 px-6 sm:px-10 lg:px-16 overflow-hidden">
       <div aria-hidden="true" className="section-glow" />
 
       <div className="relative max-w-7xl mx-auto">

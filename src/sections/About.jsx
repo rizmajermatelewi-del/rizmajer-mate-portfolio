@@ -10,7 +10,7 @@ import { useInView } from '../motion/useInView'
    one continuous sentence rather than two separate reveals. */
 const BIO_PARAGRAPHS = [
   'Rizmajer Máté Levente vagyok, full-stack fejlesztő. Szoftverfejlesztő végzettséget szereztem, de a gyakorlat nagyját nem az iskolapadban gyűjtöttem: már a tanulmányaim alatt éles projekteken dolgoztam. A kód akkor válik igazán érthetővé, amikor egy valódi probléma megoldásához használom — nem akkor, amikor egy feladatlapon szerepel.',
-  'Olyan weboldalakat és rendszereket építek, amik nem csak jól néznek ki, hanem használhatók is: gyorsak, stabilak, és az ügyfeleid is eligazodnak rajtuk. Leginkább kis- és középvállalkozásokkal dolgozom, [KITÖLTENDŐ: milyen iparágakban, és mi az a probléma, amivel a leggyakrabban megkeresnek].',
+  'Leginkább kis- és középvállalkozásokkal dolgozom, és a megkeresések nagy része ugyanarról szól: a foglalás, a rendelés vagy az ügyfelek nyilvántartása telefonon, üzenetben és táblázatban megy, ez pedig napi szinten visz el időt. Ilyenkor nem egy szebb weboldal a megoldás, hanem az, hogy a folyamat magától működjön. Olyat építek, ami gyors, stabil, és amin az ügyfeled is eligazodik — utána pedig te is tudod kezelni.',
 ]
 
 export default function About() {
@@ -23,7 +23,7 @@ export default function About() {
   ]
 
   return (
-    <section id="rolam" ref={ref} className="relative py-28 sm:py-40 px-6 sm:px-10 lg:px-16 overflow-hidden">
+    <section id="rolam" ref={ref} className="relative py-20 sm:py-28 px-6 sm:px-10 lg:px-16 overflow-hidden">
       <div className="relative max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           <div

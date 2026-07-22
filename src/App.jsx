@@ -44,8 +44,8 @@ export default function App() {
         <Protocol />
         <ServicesGrid />
         <Pricing />
-        <Faq />
         <ContactForm />
+        <Faq />
       </main>
       <Footer />
     </div>

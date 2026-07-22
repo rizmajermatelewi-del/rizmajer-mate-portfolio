@@ -82,7 +82,7 @@ export default function Navbar() {
 
           <button
             onClick={() => setOpen(true)}
-            className={`lg:hidden p-2 rounded-full ${scrolled ? 'text-ink' : 'text-white'}`}
+            className={`lg:hidden inline-flex h-11 w-11 items-center justify-center rounded-full ${scrolled ? 'text-ink' : 'text-white'}`}
             aria-label="Menü megnyitása"
           >
             <Menu className="h-5 w-5" />
@@ -104,7 +104,7 @@ export default function Navbar() {
         >
           <div className="flex items-center justify-between mb-10">
             <span className="font-display font-bold text-xl text-ink">Rizmajer Máté</span>
-            <button onClick={() => setOpen(false)} aria-label="Menü bezárása" className="p-2 rounded-full bg-divider/40">
+            <button onClick={() => setOpen(false)} aria-label="Menü bezárása" className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-divider/40">
               <X className="h-5 w-5" />
             </button>
           </div>

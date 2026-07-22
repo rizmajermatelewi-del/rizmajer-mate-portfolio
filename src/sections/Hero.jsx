@@ -29,7 +29,7 @@ export default function Hero() {
   }, [])
 
   return (
-    <section id="kezdolap" ref={heroRef} className="relative min-h-[100dvh] w-full overflow-hidden">
+    <section id="kezdolap" ref={heroRef} className="relative min-h-viewport w-full overflow-hidden">
       <div className="absolute inset-0">
         <img
           src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=2400&q=80"
@@ -54,24 +54,24 @@ export default function Hero() {
         <div className="absolute top-[40%] right-[26%] h-1 w-1 rounded-full bg-primary-light/60 animate-float" style={{ animationDelay: '3s' }} />
       </div>
 
-      <div className="relative z-10 flex min-h-[100dvh] flex-col items-center justify-center text-center">
+      <div className="relative z-10 flex min-h-viewport flex-col items-center justify-center text-center">
         <div className="px-6 sm:px-10 lg:px-16 max-w-4xl">
           <h1 className="font-display font-extrabold text-white leading-[0.95] tracking-tight">
             <span className="hero-line-1 block text-3xl sm:text-4xl md:text-5xl">
-              Weboldalak és rendszerek,
+              Weboldal, amit megtalálnak.
             </span>
             <span
               className="hero-line-2 block font-display font-semibold text-primary-light text-5xl sm:text-6xl md:text-7xl lg:text-8xl mt-2"
               style={{ lineHeight: '0.92' }}
             >
-              amik teljesítenek.
+              Rendszer, ami dolgozik.
             </span>
           </h1>
 
           <p className="hero-meta mx-auto max-w-xl text-white/75 text-base sm:text-lg mt-8 leading-relaxed">
             Rizmajer Máté vagyok, full-stack fejlesztő. Kis- és középvállalkozásoknak
             építek weboldalakat és belső rendszereket — olyanokat, amiket utána te is
-            tudsz kezelni<span className="text-white">, az egyeztetéstől az élesítésig.</span>
+            tudsz kezelni<span className="text-white">, az első egyeztetéstől az élesítésig.</span>
           </p>
 
           <div className="hero-cta mt-10 flex flex-col sm:flex-row gap-4 justify-center">

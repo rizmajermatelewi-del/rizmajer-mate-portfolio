@@ -31,6 +31,53 @@
          Fonts GDPR question for EU visitors. -->
     <link rel="preload" href="/fonts/geist-400-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/geist-600-latin.woff2" as="font" type="font/woff2" crossorigin />
+
+    <!-- Structured data. A ld+json block is a CSP "data block", not an
+         executable script, so script-src 'self' does not block it and no
+         'unsafe-inline' is needed. Only verifiable facts go in here: no
+         address, phone, priceRange, rating or founding date, because
+         schema.org markup that contradicts the page is worse than none —
+         search engines treat it as a spam signal, not a bonus. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": "https://rizmajer-mate-portfolio.vercel.app/#person",
+          "name": "Rizmajer Máté",
+          "jobTitle": "Full-stack fejlesztő",
+          "email": "rizmajermatelewi@gmail.com",
+          "url": "https://rizmajer-mate-portfolio.vercel.app/",
+          "sameAs": [
+            "https://github.com/rizmajermatelewi-del",
+            "https://www.linkedin.com/in/rizmajer-mate/"
+          ],
+          "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "HU"
+          },
+          "knowsLanguage": ["hu", "en"],
+          "knowsAbout": [
+            "Webfejlesztés",
+            "React",
+            "Node.js",
+            "Időpontfoglaló rendszerek",
+            "Online rendelési rendszerek",
+            "Egyedi ügyviteli rendszerek"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://rizmajer-mate-portfolio.vercel.app/#website",
+          "url": "https://rizmajer-mate-portfolio.vercel.app/",
+          "name": "Rizmajer Máté — Full-Stack Fejlesztő",
+          "inLanguage": "hu-HU",
+          "publisher": { "@id": "https://rizmajer-mate-portfolio.vercel.app/#person" }
+        }
+      ]
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>
