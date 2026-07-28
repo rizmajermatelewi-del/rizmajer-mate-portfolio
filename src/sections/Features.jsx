@@ -47,8 +47,7 @@ export default function Features() {
             ╱ Amiben segíthetek
           </span>
           <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink mt-4 leading-[1.05] tracking-tight">
-            Három pillér.
-            <span className="block font-display font-semibold text-primary-dark mt-1">Egy cél.</span>
+            Három pillér, egy <span className="text-primary-dark font-semibold">cél</span>.
           </h2>
         </div>
 

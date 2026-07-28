@@ -49,8 +49,7 @@ export default function About() {
           >
             <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary-dark">╱ Rólam</span>
             <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink mt-4 leading-[1.05] tracking-tight">
-              Néhány szó
-              <span className="block font-display font-semibold text-primary-dark">rólam.</span>
+              Néhány szó <span className="text-primary-dark font-semibold">rólam</span>.
             </h2>
 
             <div className="mt-6 space-y-4 text-muted text-base sm:text-lg leading-relaxed max-w-xl">

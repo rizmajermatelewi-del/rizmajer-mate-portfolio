@@ -16,8 +16,7 @@ export default function Pricing() {
         <div className="max-w-3xl mb-16 sm:mb-20 text-center mx-auto">
           <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary-dark">╱ Árazás</span>
           <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink mt-4 leading-[1.05] tracking-tight">
-            Egyszerű csomagok.
-            <span className="block font-display font-semibold text-primary-dark mt-1">Rugalmas megoldások.</span>
+            Egyszerű csomagok, <span className="text-primary-dark font-semibold">rugalmas</span> megoldások.
           </h2>
           <p className="text-muted text-lg mt-6 leading-relaxed">
             Minden projekt más, ezért az árat a terjedelem ismeretében, egyeztetés után

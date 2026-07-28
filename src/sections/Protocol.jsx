@@ -74,8 +74,7 @@ export default function Protocol() {
       <div className="max-w-7xl mx-auto mb-16 px-2 sm:px-10">
         <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary-dark">╱ Így dolgozom</span>
         <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink mt-4 leading-[1.05] tracking-tight max-w-3xl">
-          Három lépés.
-          <span className="block font-display font-semibold text-primary-dark">Semmi meglepetés.</span>
+          Három lépés, semmi <span className="text-primary-dark font-semibold">meglepetés</span>.
         </h2>
       </div>
 

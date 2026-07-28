@@ -51,8 +51,7 @@ export default function Pillars() {
               ╱ Számokban
             </span>
             <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink leading-[1.05] tracking-tight">
-              A számok
-              <span className="block font-display font-semibold text-primary-dark">mögöttem.</span>
+              A számok <span className="text-primary-dark font-semibold">mögöttem</span>.
             </h2>
           </div>
           <p className="text-muted text-lg leading-relaxed max-w-md lg:text-right">

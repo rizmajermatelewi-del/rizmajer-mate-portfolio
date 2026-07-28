@@ -18,8 +18,7 @@ export default function ServicesGrid() {
           <div>
             <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary-dark">╱ Amit tudok</span>
             <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink mt-4 leading-[1.05] tracking-tight">
-              A teljes <span className="text-primary-dark font-bold">eszköztár</span>,
-              <span className="block font-display font-semibold text-primary">egy kézben.</span>
+              A teljes <span className="text-primary-dark font-bold">eszköztár</span>, egy kézben.
             </h2>
           </div>
           <p className="text-muted max-w-md text-base leading-relaxed">
