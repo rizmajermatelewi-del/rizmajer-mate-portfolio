@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { createElement } from 'react'
-import { render, cleanup, act } from '@testing-library/react'
+import { render, cleanup, act, renderHook } from '@testing-library/react'
 import { useInView } from './useInView'
 
 let triggerIntersect
@@ -40,5 +40,16 @@ describe('useInView', () => {
     expect(latest).toBe(true)
     act(() => triggerIntersect([{ isIntersecting: false }]))
     expect(latest).toBe(true)
+  })
+
+  it('starts visible when IntersectionObserver is unavailable', () => {
+    const original = globalThis.IntersectionObserver
+    delete globalThis.IntersectionObserver
+    try {
+      const { result } = renderHook(() => useInView(0.15))
+      expect(result.current[1]).toBe(true)
+    } finally {
+      globalThis.IntersectionObserver = original
+    }
   })
 })
