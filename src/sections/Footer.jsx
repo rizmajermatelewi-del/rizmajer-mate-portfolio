@@ -37,8 +37,10 @@ export default function Footer() {
       >
         <div className="border-b border-divider pb-12 mb-12">
           <h2 className="font-display font-extrabold text-5xl sm:text-7xl md:text-8xl leading-[0.92] tracking-tight">
-            Beszéljük meg,
-            <span className="font-display font-semibold text-primary block">mi <span className="text-primary-dark font-bold">vinné el</span> a munkát.</span>
+            {/* whitespace-nowrap keeps the two-word accent from splitting across
+                the wrap at text-8xl — without it the break lands between "vinné"
+                and "el", leaving the emphasis in two disconnected halves. */}
+            Beszéljük meg, mi <span className="text-primary-dark font-bold whitespace-nowrap">vinné el</span> a munkát.
           </h2>
           <div className="flex flex-col sm:flex-row sm:items-end justify-between mt-8 gap-6">
             <p className="text-muted max-w-md">
