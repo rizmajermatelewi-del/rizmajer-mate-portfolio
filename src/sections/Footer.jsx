@@ -6,6 +6,7 @@ import { SKILLS_FULL } from '../data/skills'
 import { useInView } from '../motion/useInView'
 import { ScrambleText } from '../motion/ScrambleText'
 import { Magnetic } from '../motion/Magnetic'
+import footerBackdrop from '../assets/portrait-sunset.jpg'
 
 /* ----------------------------------------------------------------
    Footer
@@ -19,7 +20,7 @@ export default function Footer() {
           body between. The top gradient dissolves the boundary. */}
       <div className="absolute inset-0" aria-hidden="true">
         <img
-          src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=2400&q=80"
+          src={footerBackdrop}
           alt=""
           loading="lazy"
           className="w-full h-full object-cover opacity-25"

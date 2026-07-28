@@ -47,8 +47,6 @@ export default function Protocol() {
       title: 'Egyeztetés',
       tagline: 'Először meghallgatlak.',
       text: 'Végigvesszük, mi az, ami ma kézzel megy, és mennyi időt visz el. Ebből írásos terjedelem és fix ár lesz — mielőtt bármit elkezdenék, tudod, mit kapsz és mennyiért.',
-      image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80',
-      alt: 'Fejlesztő laptop előtt kódot néz',
       meta: 'Lépés 1 / Listen',
     },
     {
@@ -56,8 +54,6 @@ export default function Protocol() {
       title: 'Tervezés & Fejlesztés',
       tagline: 'Menet közben látod, hol tart.',
       text: 'Kapsz egy linket, amin az épülő oldal végig megnézhető. Nem a végén szembesülsz az eredménnyel: amíg alakul, olcsó változtatni rajta.',
-      image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1200&q=80',
-      alt: 'Kód íródik egy szerkesztőben',
       meta: 'Lépés 2 / Build',
     },
     {
@@ -65,8 +61,6 @@ export default function Protocol() {
       title: 'Átadás & Támogatás',
       tagline: 'A leadás után sem tűnök el.',
       text: 'Élesítés előtt telefonon, tableten és több böngészőben is végigmegyek rajta. Átadom a hozzáféréseket, megmutatom, hogyan kezeld — a domain és a kód a tiéd marad.',
-      image: 'https://images.unsplash.com/photo-1516116216624-53e697fedbea?auto=format&fit=crop&w=1200&q=80',
-      alt: 'Rendezett fejlesztői munkaállomás',
       meta: 'Lépés 3 / Support',
     },
   ]
@@ -113,9 +107,13 @@ export default function Protocol() {
                 <p className="text-muted text-base sm:text-lg leading-relaxed max-w-lg">{step.text}</p>
               </div>
 
+              {/* Panel, not a photo. The three stock shots that used to sit here
+                  were generic third-party "developer at a laptop" images — the
+                  same visual any template ships with, loaded from an outside
+                  host. There is no owned photography for these steps yet, so the
+                  panel carries the step marker alone rather than borrowed stock. */}
               <div className="lg:col-span-2 relative overflow-hidden min-h-[300px] lg:min-h-full bg-deep">
-                <img src={step.image} alt={step.alt} loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-deep/60 via-transparent to-deep/15" />
+                <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-deep/60 via-transparent to-deep/15" />
                 <div className="absolute top-5 left-5 flex items-center gap-2 bg-surface/90 backdrop-blur-sm rounded-full pl-3 pr-4 py-1.5 shadow-lg">
                   <span className="h-1.5 w-1.5 rounded-full bg-primary" />
                   <span className="font-mono text-[10px] uppercase tracking-widest text-ink">Lépés {step.num}</span>
