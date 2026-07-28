@@ -2,11 +2,16 @@ import { useRef, useEffect } from 'react'
 import { gsap } from 'gsap'
 import { ArrowRight, Mail } from 'lucide-react'
 import { Magnetic } from '../motion/Magnetic'
+import heroBackdrop from '../assets/portrait-sunset.jpg'
 
 /* ----------------------------------------------------------------
-   Hero — typographic, on the same background as the rest of the page.
-   The stock photo and its dark gradients are gone: they made the page
-   open dark and turn light, which broke the single-background rule.
+   Hero.
+
+   The backdrop is an owned local photo, not a remote stock shot. It used
+   to be a hotlinked stock URL of PHP on a monitor — a third-party runtime
+   request in a codebase that self-hosts its fonts precisely to avoid
+   those, showing a language this site does not sell. Bundling the asset
+   also lets img-src drop the extra host from the CSP.
 ---------------------------------------------------------------- */
 export default function Hero() {
   const heroRef = useRef(null)
@@ -32,8 +37,8 @@ export default function Hero() {
     <section id="kezdolap" ref={heroRef} className="relative min-h-viewport w-full overflow-hidden">
       <div className="absolute inset-0">
         <img
-          src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=2400&q=80"
-          alt="Kód egy monitoron"
+          src={heroBackdrop}
+          alt="Rizmajer Máté Levente naplementében, egy sziklán ülve"
           className="w-full h-full object-cover"
         />
         {/* Flat scrim first, then a directional tint. One gradient alone left

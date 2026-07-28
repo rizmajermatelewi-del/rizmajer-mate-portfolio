@@ -59,8 +59,7 @@ export default function Faq() {
         >
           <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary-dark">╱ Gyakori kérdések</span>
           <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink mt-4 leading-[1.05] tracking-tight">
-            Amit meg szoktak
-            <span className="block font-display font-semibold text-primary-dark">kérdezni.</span>
+            Amit meg szoktak <span className="text-primary-dark font-semibold">kérdezni</span>.
           </h2>
         </div>
 

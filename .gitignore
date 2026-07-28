@@ -31,3 +31,9 @@ dist-ssr
 
 # Superpowers brainstorming visual companion
 .superpowers/
+
+# Downloaded Claude skills collection — not part of the site source.
+# Ignored so oxlint stops scanning its reference .jsx/.js files, which
+# produced warnings unrelated to anything in src/.
+Claude Skills/
+.claude/
