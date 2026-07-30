@@ -4,6 +4,7 @@ export const NAV_LINKS = [
   { label: 'Projektek', href: '#projektek' },
   { label: 'Rólam', href: '#rolam' },
   { label: 'Készségek', href: '#keszsegek' },
+  { label: 'AI', href: '#ai' },
   { label: 'Árak', href: '#arak' },
   { label: 'Kapcsolat', href: '#kapcsolat' },
   { label: 'GYIK', href: '#gyik' },

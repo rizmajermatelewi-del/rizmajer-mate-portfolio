@@ -1,23 +1,27 @@
 import { useEffect, useState } from 'react'
 
+/* The status line names the stage, nothing more. It used to read
+   "Hiba észlelve · #482. sor" and "Javítás fut · 12 mp" beside a build
+   counter ticking up from 12 — a line number, a duration and a daily total
+   invented to look like telemetry from a system that does not exist. The
+   loop still tells the same story (run, catch, fix, ship) without claiming
+   numbers nothing measured. */
+/* Hoisted out of the component so the interval effect can close over a stable
+   reference instead of a fresh array every render, which is what the
+   exhaustive-deps warning was pointing at. */
+const STATUSES = [
+  { text: 'Tesztek futnak', label: 'Ellenőrzés', tone: 'primary' },
+  { text: 'Hiba a futtatásban', label: 'Elakadás', tone: 'accent' },
+  { text: 'Javítva, újra fut', label: 'Javítás', tone: 'primary' },
+  { text: 'Mehet élesbe', label: 'Kész', tone: 'emerald' },
+]
+
 export default function CodeScan() {
   const [statusIdx, setStatusIdx] = useState(0)
-  const [count, setCount] = useState(12)
-
-  const statuses = [
-    { text: 'Minden zöld · figyelek', label: 'Stabil', tone: 'emerald' },
-    { text: 'Hiba észlelve · #482. sor', label: 'Debug', tone: 'accent' },
-    { text: 'Javítás fut · 12 mp', label: 'Fordítás', tone: 'primary' },
-    { text: 'Build sikeres · élesben', label: 'Kész', tone: 'emerald' },
-  ]
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setStatusIdx((idx) => {
-        const next = (idx + 1) % statuses.length
-        if (statuses[next].label === 'Kész') setCount((c) => c + 1)
-        return next
-      })
+      setStatusIdx((idx) => (idx + 1) % STATUSES.length)
     }, 2300)
     return () => clearInterval(interval)
   }, [])
@@ -39,7 +43,7 @@ export default function CodeScan() {
     { left: '76%', delay: '1.8s' },
   ]
 
-  const status = statuses[statusIdx]
+  const status = STATUSES[statusIdx]
   const toneText =
     status.tone === 'emerald' ? 'text-emerald-400' : status.tone === 'accent' ? 'text-accent' : 'text-primary-dark'
   const toneDot =
@@ -63,12 +67,6 @@ export default function CodeScan() {
           <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-primary-dark">
             Élő build
           </span>
-        </div>
-        <div className="flex items-baseline gap-1">
-          <span className="font-display font-bold text-sm text-white tabular-nums">
-            {String(count).padStart(2, '0')}
-          </span>
-          <span className="font-mono text-[9px] uppercase tracking-widest text-white/40">ma</span>
         </div>
       </div>
 

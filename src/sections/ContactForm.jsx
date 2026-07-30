@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { ArrowRight, AlertCircle, CheckCircle2, Upload, Mail, MapPin, Clock } from 'lucide-react'
 import Field from '../components/Field'
 import { useInView } from '../motion/useInView'
@@ -17,11 +18,12 @@ export default function ContactForm() {
   const [files, setFiles] = useState([])
   const [status, setStatus] = useState('idle')
   const [dragging, setDragging] = useState(false)
+  const [consent, setConsent] = useState(false)
   const honeypotRef = useRef(null)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if (!form.name || !form.email || !form.message) return
+    if (!form.name || !form.email || !form.message || !consent) return
     if (honeypotRef.current?.value) return // bot trap — silently drop
     setStatus('sending')
     try {
@@ -58,14 +60,17 @@ export default function ContactForm() {
               visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
-            <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary-dark">╱ Kapcsolat</span>
-            <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink mt-4 leading-[1.05] tracking-tight">
+            <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink leading-[1.05] tracking-tight">
               Hogyan segíthetek a <span className="text-primary-dark font-semibold">vállalkozásodnak</span>?
             </h2>
+            {/* The response-time promise is stated once, in the contact tile
+                below. It used to run here, in that tile, and again under the
+                submit button: the same sentence three times inside one
+                viewport. */}
             <p className="text-muted text-lg mt-6 leading-relaxed max-w-md">
               Nem kell kész tervvel érkezned. Elég, ha leírod, mi az, ami ma nehézkesen
-              megy — a többit kitaláljuk. 24 órán belül válaszolok, akkor is, ha végül
-              nem én leszek a jó választás.
+              megy, a többit kitaláljuk. Akkor is válaszolok, ha végül nem én leszek
+              a jó választás.
             </p>
 
             <div className="mt-10 space-y-4">
@@ -146,7 +151,9 @@ export default function ContactForm() {
                   </div>
 
                   <div className="mt-5">
-                    <label htmlFor="message" className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted mb-2 block">Üzeneted *</label>
+                    <label htmlFor="message" className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink/80 mb-2 block">
+                      Üzeneted <span aria-hidden="true">*</span>
+                    </label>
                     <textarea
                       id="message"
                       name="message"
@@ -155,8 +162,8 @@ export default function ContactForm() {
                       onChange={(e) => setForm({ ...form, message: e.target.value })}
                       required
                       rows={5}
-                      placeholder="Meséld el röviden a projekted vagy az ötleted..."
-                      className="w-full bg-background border border-divider rounded-2xl px-4 py-3.5 text-ink placeholder-muted/60 focus:border-primary focus:ring-4 focus:ring-primary/15 outline-none transition resize-none font-body"
+                      placeholder="Meséld el röviden a projekted vagy az ötleted"
+                      className="input-edge w-full bg-background rounded-2xl px-4 py-3.5 text-ink placeholder-ink/55 focus:border-primary focus:ring-4 focus:ring-primary/15 outline-none transition resize-none font-body"
                     />
                   </div>
 
@@ -172,7 +179,7 @@ export default function ContactForm() {
                       handleFiles(e.dataTransfer.files)
                     }}
                     className={`mt-5 border-2 border-dashed rounded-3xl p-6 text-center transition-colors cursor-pointer ${
-                      dragging ? 'border-primary bg-primary/5' : 'border-divider hover:border-primary/60'
+                      dragging ? 'border-primary bg-primary/5' : 'border-ink/25 hover:border-primary/60'
                     }`}
                   >
                     <input
@@ -202,13 +209,37 @@ export default function ContactForm() {
                     </label>
                   </div>
 
+                  {/* Explicit consent, not an assurance box off to one side.
+                      The form collects a name and an email address from
+                      visitors in the EU, so the visitor ticks the box and the
+                      policy is one click away at the moment of submission.
+                      Not posted as a field: it gates the submit button, and
+                      the record of consent is the message itself. */}
+                  <div className="mt-6 flex items-start gap-3">
+                    <input
+                      id="consent"
+                      type="checkbox"
+                      checked={consent}
+                      onChange={(e) => setConsent(e.target.checked)}
+                      required
+                      className="input-edge mt-0.5 h-5 w-5 shrink-0 rounded-md bg-background accent-primary focus:ring-4 focus:ring-primary/15 outline-none"
+                    />
+                    <label htmlFor="consent" className="text-sm text-muted leading-relaxed">
+                      Hozzájárulok, hogy a megadott adataimat a megkeresésem megválaszolása
+                      céljából kezeld.{' '}
+                      <Link to="/adatvedelem" className="text-primary-dark underline underline-offset-2">
+                        Adatkezelési tájékoztató
+                      </Link>
+                    </label>
+                  </div>
+
                   <div className="mt-7 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                    <p className="text-xs text-muted">24 órán belül válaszolok. A *-gal jelölt mezők kötelezőek.</p>
+                    <p className="text-xs text-muted">A *-gal jelölt mezők kötelezőek.</p>
                     <Magnetic>
                       <button
                         type="submit"
-                        disabled={status === 'sending'}
-                        className="magnetic-btn inline-flex items-center gap-2 bg-primary text-white font-semibold px-7 py-3.5 rounded-full shadow-lg shadow-primary/30 disabled:opacity-50"
+                        disabled={status === 'sending' || !consent}
+                        className="magnetic-btn inline-flex items-center gap-2 bg-primary text-white font-semibold px-7 py-3.5 rounded-full shadow-lg shadow-primary/30 disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         {status === 'sending' ? 'Küldés...' : 'Üzenet küldése'}
                         <ArrowRight className="h-4 w-4" />

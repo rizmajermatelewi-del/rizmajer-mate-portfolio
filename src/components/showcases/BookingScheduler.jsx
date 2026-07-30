@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react'
 
+/* No drawn cursor. A fake pointer gliding across a fake calendar is the
+   clearest "this is a simulation" tell there is, and it fights the real
+   pointer the visitor is already moving. The day-tile highlight and the
+   button state carry the same sequence on their own. */
 export default function BookingScheduler() {
   const days = ['H', 'K', 'Sze', 'Cs', 'P', 'Szo', 'V']
   const [step, setStep] = useState(0)
@@ -9,23 +13,6 @@ export default function BookingScheduler() {
     const interval = setInterval(() => setStep((prev) => (prev + 1) % 5), 1400)
     return () => clearInterval(interval)
   }, [])
-
-  const cursorPos = (() => {
-    switch (step) {
-      case 0:
-        return { x: 8, y: 110, opacity: 0 }
-      case 1:
-        return { x: 60, y: 60, opacity: 1 }
-      case 2:
-        return { x: 60 + activeDay * 36, y: 60, opacity: 1 }
-      case 3:
-        return { x: 60 + activeDay * 36, y: 60, opacity: 1 }
-      case 4:
-        return { x: 130, y: 130, opacity: 1 }
-      default:
-        return { x: 8, y: 110, opacity: 0 }
-    }
-  })()
 
   return (
     <div className="relative h-44 w-full bg-surface border border-divider rounded-3xl p-5 overflow-hidden">
@@ -59,15 +46,6 @@ export default function BookingScheduler() {
       >
         {step >= 3 ? '✓ Időpont lefoglalva' : 'Válassz egy napot'}
       </button>
-
-      <div
-        className="absolute pointer-events-none transition-all duration-500 ease-out"
-        style={{ left: `${cursorPos.x}px`, top: `${cursorPos.y}px`, opacity: cursorPos.opacity, transform: step === 3 ? 'scale(0.85)' : 'scale(1)' }}
-      >
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-          <path d="M5 3L19 12L12 13L9 20L5 3Z" fill="rgb(var(--color-deep))" stroke="white" strokeWidth="1.5" strokeLinejoin="round" />
-        </svg>
-      </div>
     </div>
   )
 }

@@ -9,7 +9,7 @@ import { useInView } from '../motion/useInView'
 const QUESTIONS = [
   {
     q: 'Mennyibe kerül egy weboldal?',
-    a: 'Az árat a terjedelem ismeretében adom meg, egy rövid egyeztetés után — így nem fizetsz olyanért, amire nincs szükséged. Írd meg, mire gondolsz, és konkrét ajánlattal jelentkezem.',
+    a: 'Egy bemutatkozó oldal 180 000 Ft-tól, egy foglalási vagy rendelési rendszer 450 000 Ft-tól, egy belső rendszer 1 200 000 Ft-tól indul. Ezek indulóárak: a pontosat egy rövid egyeztetés után, írásban és tételesen kapod meg, és utólag nem jön hozzá semmi.',
   },
   {
     q: 'Mi kerül még pénzbe a fejlesztésen túl?',
@@ -29,7 +29,7 @@ const QUESTIONS = [
   },
   {
     q: 'Ki tartja karban az oldalt utána?',
-    a: 'Ahogy megbeszéljük. Az oldalt úgy építem, hogy a tartalmat magad is tudd kezelni, és az átadáskor megmutatom, hogyan. Ha inkább rám bíznád a karbantartást, arra is van lehetőség — a részleteket az igényeid alapján beszéljük meg.',
+    a: 'Ahogy megbeszéljük. Az oldalt úgy építem, hogy a tartalmat magad is tudd kezelni, és az átadáskor megmutatom, hogyan. Ha inkább rám bíznád, az üzemeltetés 25 000 Ft/hó: frissítések, biztonsági mentés, havi egy óra apró módosítás, és ha leáll, én veszem észre, nem te. Nincs hűségidő, hónapra felmondható. Ha nem kéred, akkor sem tűnök el — kérdésre és hibára egy munkanapon belül válaszolok, ez nem havidíjas.',
   },
   {
     q: 'Mobilon is jól fog működni?',
@@ -45,20 +45,21 @@ export default function Faq() {
   const [ref, visible] = useInView(0.1)
   const [open, setOpen] = useState(0)
 
-  // Asymmetric padding on purpose. The FAQ reads as a continuation of the
-  // contact block above it, so the top gap is roughly half a normal section
-  // break — two full paddings back to back left ~245px of dead page here.
-  // The bottom keeps the standard rhythm, since the footer follows.
+  // Standard section rhythm again. The padding was asymmetric while this sat
+  // directly under the contact form and read as a continuation of it; now it
+  // stands between the AI section and the prices, so it needs a full break on
+  // both sides like every other band.
   return (
-    <section id="gyik" ref={ref} className="relative pt-10 sm:pt-14 pb-20 sm:pb-28 px-6 sm:px-10 lg:px-16">
+    <section id="gyik" ref={ref} className="relative py-20 sm:py-28 px-6 sm:px-10 lg:px-16">
       <div className="max-w-3xl mx-auto">
         <div
           className={`mb-14 transition-all duration-700 ease-out ${
             visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
           }`}
         >
-          <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary-dark">╱ Gyakori kérdések</span>
-          <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink mt-4 leading-[1.05] tracking-tight">
+          {/* No eyebrow: "╱ Gyakori kérdések" sitting above "Amit meg szoktak
+              kérdezni" is the same sentence twice in two registers. */}
+          <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink leading-[1.05] tracking-tight">
             Amit meg szoktak <span className="text-primary-dark font-semibold">kérdezni</span>.
           </h2>
         </div>

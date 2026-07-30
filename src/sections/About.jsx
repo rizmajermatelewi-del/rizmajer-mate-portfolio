@@ -47,8 +47,9 @@ export default function About() {
               visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
-            <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary-dark">╱ Rólam</span>
-            <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink mt-4 leading-[1.05] tracking-tight">
+            {/* No eyebrow. It read "╱ Rólam" directly above a headline ending
+                in the word "rólam", announcing the section twice. */}
+            <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink leading-[1.05] tracking-tight">
               Néhány szó <span className="text-primary-dark font-semibold">rólam</span>.
             </h2>
 

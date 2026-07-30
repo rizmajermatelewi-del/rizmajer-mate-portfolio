@@ -6,7 +6,6 @@ import { SKILLS_FULL } from '../data/skills'
 import { useInView } from '../motion/useInView'
 import { ScrambleText } from '../motion/ScrambleText'
 import { Magnetic } from '../motion/Magnetic'
-import footerBackdrop from '../assets/portrait-sunset.jpg'
 
 /* ----------------------------------------------------------------
    Footer
@@ -17,14 +16,13 @@ export default function Footer() {
   return (
     <footer ref={ref} className="card-invert relative rounded-t-6xl mt-12 overflow-hidden">
       {/* Bookends the hero: the page opens and closes dark, with the light
-          body between. The top gradient dissolves the boundary. */}
+          body between. The top gradient dissolves the boundary.
+
+          No photograph here. The hero image used to repeat at opacity-25
+          under a deep/95-to-deep gradient, which rendered it invisible while
+          still costing a full-size JPEG on the longest section of the page.
+          The gradient alone gives the identical result. */}
       <div className="absolute inset-0" aria-hidden="true">
-        <img
-          src={footerBackdrop}
-          alt=""
-          loading="lazy"
-          className="w-full h-full object-cover opacity-25"
-        />
         <div className="absolute inset-0 bg-gradient-to-b from-deep/95 via-deep/90 to-deep" />
         <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-background to-transparent" />
       </div>
@@ -36,11 +34,14 @@ export default function Footer() {
         }`}
       >
         <div className="border-b border-divider pb-12 mb-12">
+          {/* whitespace-nowrap keeps the two-word accent from splitting across
+              the wrap at text-8xl. Without it the break lands mid-phrase and
+              leaves the emphasis in two disconnected halves.
+
+              The old line read "Beszéljük meg, mi vinné el a munkát", which
+              parses several ways and lands on none of them cleanly. */}
           <h2 className="font-display font-extrabold text-5xl sm:text-7xl md:text-8xl leading-[0.92] tracking-tight">
-            {/* whitespace-nowrap keeps the two-word accent from splitting across
-                the wrap at text-8xl — without it the break lands between "vinné"
-                and "el", leaving the emphasis in two disconnected halves. */}
-            Beszéljük meg, mi <span className="text-primary-dark font-bold whitespace-nowrap">vinné el</span> a munkát.
+            Mondd el, mi <span className="text-primary-dark font-bold whitespace-nowrap">viszi el</span> a legtöbb időd.
           </h2>
           <div className="flex flex-col sm:flex-row sm:items-end justify-between mt-8 gap-6">
             <p className="text-muted max-w-md">
@@ -80,7 +81,9 @@ export default function Footer() {
           </div>
 
           <div>
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary-dark mb-4">Rólam</p>
+            {/* "Oldalak", not "Rólam". The group used to be named after one of
+                its own five items, which made the label useless as a heading. */}
+            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary-dark mb-4">Oldalak</p>
             <ul className="space-y-2.5">
               <li><a href="#projektek" className="inline-block py-1 text-muted hover:text-primary-dark transition text-sm">Projektek</a></li>
               <li><a href="#rolam" className="inline-block py-1 text-muted hover:text-primary-dark transition text-sm">Rólam</a></li>
@@ -104,11 +107,12 @@ export default function Footer() {
         </div>
 
         <div className="mt-14 pt-8 border-t border-divider flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+          {/* Indigo, not emerald, and no ping. The site runs one accent colour
+              start to finish; a green pulsing dot in the footer was the only
+              place it broke, and the infinite animation drew the eye to a
+              status that never changes. */}
           <div className="flex items-center gap-2.5">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inset-0 rounded-full bg-emerald-400 animate-ping" />
-              <span className="relative h-2 w-2 rounded-full bg-emerald-400" />
-            </span>
+            <span className="h-1.5 w-1.5 rounded-full bg-primary-dark" />
             <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-muted">
               Elérhető új projektekre
             </span>

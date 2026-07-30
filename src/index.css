@@ -112,10 +112,33 @@
     background: linear-gradient(135deg, rgb(var(--color-primary)) 0%, rgb(var(--color-primary-dark)) 100%);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   }
+  /* 0.88, not 0.65. At 65% the display headings scrolling underneath read
+     straight through the bar — "A számok mögöttem" was legible on top of the
+     nav links. Blur alone does not separate two layers of large dark type. */
   .glass {
-    background: rgb(var(--color-background) / 0.65);
+    background: rgb(var(--color-background) / 0.88);
     backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgb(var(--color-primary) / 0.18);
+  }
+
+  /* Control boundaries need 3:1 against their own background under WCAG 2.2
+     SC 1.4.11, which --color-divider does not reach in either context: it is
+     tuned for hairlines between blocks, not for the edge of something you
+     are meant to click into. Declared once so inputs, the textarea and the
+     dropzone share one edge.
+
+     The alphas are solved, not guessed. --color-ink at 0.28 composited over
+     the field fill lands at about 2.4:1 on the dark card and 1.8:1 on the
+     light page: still short. 0.38 and 0.55 are the points where each context
+     clears 3:1. */
+  .input-edge {
+    border: 1px solid rgb(var(--color-ink) / 0.55);
+  }
+  .card-invert .input-edge {
+    border-color: rgb(var(--color-ink) / 0.38);
+  }
+  .input-edge:hover {
+    border-color: rgb(var(--color-primary) / 0.7);
   }
   .glass-dark {
     background: rgb(var(--color-deep) / 0.75);
