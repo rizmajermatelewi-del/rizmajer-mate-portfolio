@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Star, Check } from 'lucide-react'
 import { PROJECTS_FULL } from '../data/projects'
 import ProjectMock from '../components/ProjectMock'
 import ProjectModal from '../components/ProjectModal'
@@ -53,18 +54,51 @@ export default function Projects() {
             >
               <TiltCard className="h-full">
                 <ProjectMock tone={p.tone} image={p.image} alt={p.imageAlt} />
-                <div className="p-5 sm:p-6">
+                <div className="p-6">
                   {/* The "01 / 02 / 03 / 04" counter that sat opposite the
                       label is gone. Four cards in a row are already countable
                       and the number carried no other meaning. */}
-                  <div className="mb-3">
+                  <div className="mb-3.5 flex flex-wrap items-center gap-1.5">
                     <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-primary-dark bg-primary/10 px-2.5 py-1 rounded-full">
                       {p.label}
                     </span>
+                    {/* Only when a project has actually earned it — see the
+                        note in projects.js on why all four are false today. */}
+                    {p.featured && (
+                      <span className="inline-flex items-center gap-1 font-mono text-[9px] uppercase tracking-[0.2em] text-white bg-primary px-2.5 py-1 rounded-full">
+                        <Star className="h-2.5 w-2.5" strokeWidth={2.5} />
+                        Kiemelt projekt
+                      </span>
+                    )}
                   </div>
-                  <h3 className="font-display font-bold text-lg text-ink leading-tight">{p.title}</h3>
-                  <p className="text-muted text-[13px] mt-2.5 leading-relaxed">{p.text}</p>
-                  <div className="flex flex-wrap gap-1.5 mt-4">
+                  <h3 className="font-display font-bold text-lg text-ink leading-snug tracking-tight">{p.title}</h3>
+                  {/* 13px of muted grey is below where this stays comfortable
+                      on a phone, and the phone is the primary viewport. 14px at
+                      the same line height costs one wrapped line at most. */}
+                  <p className="text-muted text-sm mt-2.5 leading-relaxed">{p.text}</p>
+
+                  {/* Renders only when filled, like every other case-study
+                      field. An "Amit tud" heading standing over nothing would
+                      be the same empty-proof problem this section already had
+                      once. */}
+                  {p.features.length > 0 && (
+                    <div className="mt-5">
+                      <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-primary-dark">Amit tud</p>
+                      <ul className="mt-2 space-y-1.5">
+                        {p.features.map((f, fi) => (
+                          <li key={fi} className="flex gap-2 text-muted text-[13px] leading-relaxed">
+                            <Check className="h-3.5 w-3.5 shrink-0 mt-[3px] text-primary" strokeWidth={2.5} />
+                            <span>{f}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {/* Hairline above the stack chips separates what the project
+                      does from what it is built with, which are two different
+                      questions asked by two different readers. */}
+                  <div className="flex flex-wrap gap-1.5 mt-5 pt-4 border-t border-divider">
                     {p.tech.map((t, ti) => (
                       <span
                         key={ti}

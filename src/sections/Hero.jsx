@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react'
 import { gsap } from 'gsap'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, ArrowDown } from 'lucide-react'
 import { Magnetic } from '../motion/Magnetic'
 import { useReducedMotion } from '../motion/useReducedMotion'
 import heroBackdrop from '../assets/portrait-sunset.jpg'
@@ -108,9 +108,20 @@ export default function Hero() {
           right half of the frame. */}
       <div className="relative z-10 flex min-h-viewport flex-col justify-center px-6 sm:px-10 lg:px-16">
         <div className="hero-copy w-full max-w-4xl will-change-transform">
+          {/* One sentence across two lines, not two separate promises. It used
+              to read "Weboldal, amit megtalálnak." / "Rendszer, ami dolgozik."
+              — two claims competing for the same glance, neither finishing the
+              other. Naming both halves of the work in the small line and
+              landing the benefit in the big one says what I build and what it
+              is for in a single read.
+
+              Deliberately not a stack list like "React & Next.js fejlesztő":
+              the person paying for this runs a bakery, and an h1 written for a
+              recruiter is written for someone who is not on this page. There is
+              also no Next.js in this project. */}
           <h1 className="font-display font-extrabold text-white leading-[0.95] tracking-tight">
             <span className="hero-line-1 block text-3xl sm:text-4xl">
-              Weboldal, amit megtalálnak.
+              Weboldal és rendszer,
             </span>
             {/* Capped at 6xl so the line holds on one row at desktop. At 8xl
                 it wrapped, which made the headline three lines tall and
@@ -119,13 +130,21 @@ export default function Hero() {
               className="hero-line-2 block font-display font-semibold text-primary-light text-4xl sm:text-5xl md:text-6xl mt-2"
               style={{ lineHeight: '0.95' }}
             >
-              Rendszer, ami dolgozik.
+              ami helyetted dolgozik.
             </span>
           </h1>
 
+          {/* The brief's English version of this line was "fast, responsive,
+              and user-friendly web applications with clean code and modern
+              technologies" — five adjectives no competitor would claim the
+              opposite of, which makes them worth nothing. Speed and mobile stay
+              because they are checkable; "clean code" and "modern
+              technologies" go, because the buyer cannot verify either and the
+              developer who can is reading the repo, not the hero. */}
           <p className="hero-meta max-w-lg text-white/80 text-base sm:text-lg mt-7 leading-relaxed">
-            Kis- és középvállalkozásoknak építek weboldalakat és belső rendszereket,
-            amiket utána <span className="text-white">te is tudsz kezelni</span>.
+            Kis- és középvállalkozásoknak építek weboldalakat és belső rendszereket:
+            gyorsan betöltő, mobilon is használható felületeket, amiket utána{' '}
+            <span className="text-white">te is tudsz kezelni</span>.
           </p>
 
           {/* Two CTAs, two intents. The secondary used to be the email address
@@ -137,17 +156,23 @@ export default function Hero() {
             <Magnetic className="w-full sm:w-auto">
               <a
                 href="#kapcsolat"
-                className="magnetic-btn group inline-flex w-full sm:w-auto items-center justify-center gap-2 bg-primary text-white font-semibold px-7 py-4 rounded-full shadow-2xl shadow-primary/30"
+                className="magnetic-btn group inline-flex w-full sm:w-auto items-center justify-center gap-2 bg-primary text-white font-semibold px-7 py-4 rounded-full shadow-2xl shadow-primary/30 transition-shadow duration-300 hover:shadow-primary/50"
               >
                 Kérj ajánlatot
                 <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
               </a>
             </Magnetic>
+            {/* Was content-width while the primary beside it was full-width, so
+                on a phone the two buttons were visibly different sizes in the
+                same stack. The arrow is a down-arrow, not a right-arrow: this
+                one scrolls to a section further down the same page, and it
+                should not mimic the primary action's gesture. */}
             <a
               href="#projektek"
-              className="lift-on-hover inline-flex items-center justify-center gap-2 bg-white/10 backdrop-blur-md text-white border border-white/25 font-medium px-7 py-4 rounded-full"
+              className="lift-on-hover group inline-flex w-full sm:w-auto items-center justify-center gap-2 bg-white/10 backdrop-blur-md text-white border border-white/25 font-medium px-7 py-4 rounded-full transition-colors duration-300 hover:bg-white/[0.18] hover:border-white/45"
             >
               Munkáim
+              <ArrowDown className="h-4 w-4 transition-transform duration-200 group-hover:translate-y-0.5" />
             </a>
           </div>
         </div>

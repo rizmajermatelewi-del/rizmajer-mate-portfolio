@@ -261,6 +261,28 @@ export default function ContactForm() {
             </form>
           </div>
         </div>
+
+        {/* Closing line, under both columns rather than beside one, so it reads
+            as the page signing off instead of as another form label. "Amazing"
+            from the brief's English version is the one word this site's voice
+            never uses: every other claim on the page is checkable and that one
+            is not. It echoes the hero's "helyetted dolgozik" instead, closing
+            the loop the first screen opened.
+
+            Full-stack, so not "frontend fejlesztőt" — the visitor who reaches
+            this line has just read a page about booking and ordering systems. */}
+        <div
+          className={`mt-16 sm:mt-20 pt-10 border-t border-divider text-center transition-all duration-1000 ease-out delay-300 ${
+            visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+          }`}
+        >
+          <p className="font-display font-extrabold text-2xl sm:text-3xl text-ink tracking-tight">
+            Fejlesztőt keresel?
+          </p>
+          <p className="font-display font-semibold text-2xl sm:text-3xl text-primary-dark tracking-tight mt-1">
+            Építsünk valamit, ami tényleg dolgozik.
+          </p>
+        </div>
       </div>
     </section>
   )

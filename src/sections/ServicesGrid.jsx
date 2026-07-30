@@ -1,6 +1,16 @@
 import { useState } from 'react'
-import { SKILLS_FULL } from '../data/skills'
+import { SKILLS_FULL, SKILL_CATEGORIES } from '../data/skills'
 import { useInView } from '../motion/useInView'
+
+/* Grouped by category, but still one seamless mosaic rather than four separate
+   labelled blocks. Splitting six tiles into four sections would have left two
+   of them a single orphan tile, roughly doubled the section's height, and broken
+   the gap-px hairline grid that ties this section to Pillars. Sorting so a
+   category's tiles sit adjacent, and naming the category on each tile, groups
+   them without paying any of that. */
+const ORDERED_SKILLS = SKILL_CATEGORIES.flatMap((category) =>
+  SKILLS_FULL.filter((skill) => skill.category === category),
+)
 
 /* ----------------------------------------------------------------
    ServicesGrid
@@ -36,7 +46,7 @@ export default function ServicesGrid() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-divider rounded-4xl overflow-hidden shadow-e2">
-          {SKILLS_FULL.map((svc, i) => {
+          {ORDERED_SKILLS.map((svc, i) => {
             const Icon = svc.icon
             return (
               <button
@@ -77,6 +87,9 @@ export default function ServicesGrid() {
                     +
                   </span>
                 </div>
+                <p className="relative font-mono text-[9px] uppercase tracking-[0.22em] text-primary-dark mb-2">
+                  {svc.category}
+                </p>
                 <h3 className="relative font-display font-bold text-xl sm:text-2xl mb-3">{svc.title}</h3>
                 <p className="relative text-white/55 text-sm leading-relaxed">{svc.text}</p>
 

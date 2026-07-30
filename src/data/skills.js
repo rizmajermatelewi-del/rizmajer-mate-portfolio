@@ -7,9 +7,16 @@ import { Code, Terminal, Database, Cloud, GitBranch, Cpu } from 'lucide-react'
    checking whether I actually know the stack. Writing both for the same
    reader lost one of them; the earlier `text` led with "Node.js és Express
    alapú API-k", which means nothing to a bakery owner. */
+/* Display order for the grid. The six tiles used to sit in authoring order,
+   which read as a flat list of six equal things; grouping them shows how far
+   the work reaches without adding a word of copy. Four buckets, matching the
+   four a client actually distinguishes between. */
+export const SKILL_CATEGORIES = ['Frontend', 'Backend', 'Adatbázis', 'Eszközök']
+
 export const SKILLS_FULL = [
   {
     icon: Code,
+    category: 'Frontend',
     title: 'Frontend fejlesztés',
     text: 'Amit az ügyfeled lát és használ. Telefonon ugyanúgy, mint gépen — mert a látogatók nagyobb része onnan érkezik.',
     detail:
@@ -17,6 +24,7 @@ export const SKILLS_FULL = [
   },
   {
     icon: Terminal,
+    category: 'Backend',
     title: 'Backend fejlesztés',
     text: 'Ami a felület mögött dolgozik: a foglalás tényleg lefoglal, a rendelés megérkezik, és csak az lát adatot, akinek szabad.',
     detail:
@@ -24,6 +32,7 @@ export const SKILLS_FULL = [
   },
   {
     icon: Database,
+    category: 'Adatbázis',
     title: 'Adatbázis tervezés',
     text: 'Az ügyfeleid, foglalásaid és rendeléseid úgy tárolva, hogy évek múlva is meg lehessen találni bennük bármit.',
     detail:
@@ -31,6 +40,7 @@ export const SKILLS_FULL = [
   },
   {
     icon: Cloud,
+    category: 'Eszközök',
     title: 'Felhő és üzemeltetés',
     text: 'Az oldal akkor is fut, amikor én nem ülök gép előtt. Ha egy frissítés mégis elrontana valamit, percek alatt visszaáll.',
     detail:
@@ -38,6 +48,7 @@ export const SKILLS_FULL = [
   },
   {
     icon: GitBranch,
+    category: 'Eszközök',
     title: 'Verziókezelés és átadás',
     text: 'Nem kerülsz függő helyzetbe. A munka dokumentálva van, így ha egyszer más viszi tovább, nem kell elölről kezdenie.',
     detail:
@@ -45,6 +56,7 @@ export const SKILLS_FULL = [
   },
   {
     icon: Cpu,
+    category: 'Frontend',
     title: 'Teljesítmény és sebesség',
     text: 'A lassú oldalról a látogató visszalép, mielőtt bármit látna. A sebességet ezért mérem, nem érzésre állítom be.',
     detail:

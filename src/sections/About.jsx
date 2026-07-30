@@ -3,14 +3,18 @@ import { SOCIAL_LINKS } from '../data/nav'
 import { useInView } from '../motion/useInView'
 
 /* ----------------------------------------------------------------
-   About — placeholder bio, replaced with the real story over time
+   About
 ---------------------------------------------------------------- */
 /* Split out of the JSX so the word-stagger below can map over it without the
    paragraphs being retyped. Word index runs across both, so the fade reads as
    one continuous sentence rather than two separate reveals. */
+/* Tightened from two long paragraphs to two shorter ones. The word-stagger
+   below animates one span per word, so length here is not free: every word
+   added pushes the last one further behind the reveal, and the old version ran
+   long enough that its closing promise arrived after the reader had moved on. */
 const BIO_PARAGRAPHS = [
-  'Rizmajer Máté Levente vagyok, full-stack fejlesztő. Szoftverfejlesztő végzettséget szereztem, de a gyakorlat nagyját nem az iskolapadban gyűjtöttem: már a tanulmányaim alatt éles projekteken dolgoztam. A kód akkor válik igazán érthetővé, amikor egy valódi probléma megoldásához használom — nem akkor, amikor egy feladatlapon szerepel.',
-  'Leginkább kis- és középvállalkozásokkal dolgozom, és a megkeresések nagy része ugyanarról szól: a foglalás, a rendelés vagy az ügyfelek nyilvántartása telefonon, üzenetben és táblázatban megy, ez pedig napi szinten visz el időt. Ilyenkor nem egy szebb weboldal a megoldás, hanem az, hogy a folyamat magától működjön. Olyat építek, ami gyors, stabil, és amin az ügyfeled is eligazodik — utána pedig te is tudod kezelni.',
+  'Rizmajer Máté Levente vagyok, full-stack fejlesztő. Szoftverfejlesztő végzettséget szereztem, de a gyakorlatot éles projekteken gyűjtöttem: a kód akkor állt össze a fejemben, amikor egy valódi problémát kellett megoldanom vele, nem amikor egy feladatlapon szerepelt.',
+  'Kis- és középvállalkozásokkal dolgozom, és a megkeresések nagy része ugyanarról szól: a foglalás, a rendelés vagy az ügyfelek nyilvántartása telefonon és táblázatban megy, ez pedig minden nap elvisz egy órát. Ilyenkor nem szebb weboldal kell, hanem folyamat, ami magától működik — gyors, mobilon is használható, és utána te is tudod kezelni.',
 ]
 
 export default function About() {
