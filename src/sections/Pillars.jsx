@@ -9,6 +9,10 @@ export default function Pillars() {
   const [ref, visible] = useInView(0.15)
   const [focused, setFocused] = useState(null)
 
+  /* Back to the card layout. It was briefly rewritten as hairline rows to
+     break up the run of card grids in the middle of the page; the rows were
+     more restrained but the three big numerals lost the weight that made
+     this section land, so the original wins on the thing that matters. */
   const pillars = [
     {
       n: '01',
@@ -16,7 +20,7 @@ export default function Pillars() {
       target: 4,
       suffix: '',
       label: 'megépített projekt',
-      desc: 'Négy befejezett projekt — kettő fizető ügyfélnek, kettő saját kezdeményezés. Mindegyik megnyitható és kipróbálható.',
+      desc: 'Négy befejezett projekt: kettő fizető ügyfélnek, kettő saját kezdeményezés. Mindegyik megnyitható és kipróbálható.',
     },
     {
       n: '02',
@@ -41,21 +45,23 @@ export default function Pillars() {
       <div aria-hidden="true" className="section-glow" />
 
       <div className="relative max-w-7xl mx-auto">
+        {/* Headline and explainer stack vertically. They used to sit in a
+            split header with the paragraph floating right-aligned in the
+            opposite corner, anchored to nothing, and the same shape appeared
+            again two sections later. */}
         <div
-          className={`flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-16 sm:mb-24 transition-all duration-1000 ease-out ${
+          className={`max-w-2xl mb-16 sm:mb-24 transition-all duration-1000 ease-out ${
             visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
           }`}
         >
-          <div className="max-w-2xl">
-            <span className="inline-block font-mono text-xs uppercase tracking-[0.3em] text-primary-dark mb-5">
-              ╱ Számokban
-            </span>
-            <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink leading-[1.05] tracking-tight">
-              A számok <span className="text-primary-dark font-semibold">mögöttem</span>.
-            </h2>
-          </div>
-          <p className="text-muted text-lg leading-relaxed max-w-md lg:text-right">
-            Nem marketingszöveg — csak amit ténylegesen leteszek az asztalra minden projektnél.
+          <span className="inline-block font-mono text-xs uppercase tracking-[0.3em] text-primary-dark mb-5">
+            ╱ Számokban
+          </span>
+          <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink leading-[1.05] tracking-tight">
+            A számok <span className="text-primary-dark font-semibold">mögöttem</span>.
+          </h2>
+          <p className="text-muted text-lg leading-relaxed mt-6">
+            Nem kerekítek felfelé. Ennyi van mögöttem, se több, se kevesebb.
           </p>
         </div>
 
@@ -70,44 +76,44 @@ export default function Pillars() {
                 visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
               }`}
             >
-              {/* Wraps only the flow content, never the two absolutely
-                  positioned decorations below — a transform here would make
-                  this div their containing block and shift them inward. */}
+              {/* Wraps only the flow content, never the absolutely positioned
+                  sweep below: a transform here would make this div its
+                  containing block and shift it inward. */}
               <div
                 className={`transition-all duration-300 ease-out ${
                   focused !== null && focused !== i ? 'opacity-40 scale-[0.98]' : 'opacity-100 scale-100'
                 }`}
               >
-              <div className="flex items-center justify-between mb-10">
-                <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-muted">
-                  {p.n} / {p.title}
-                </span>
-                <span className="h-1.5 w-1.5 rounded-full bg-primary/40 group-hover:bg-primary group-hover:scale-150 transition-all duration-500" />
+                <div className="flex items-center justify-between mb-10">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-muted">
+                    {p.n} / {p.title}
+                  </span>
+                  <span className="h-1.5 w-1.5 rounded-full bg-primary/40 group-hover:bg-primary group-hover:scale-150 transition-all duration-500" />
+                </div>
+
+                <div className="flex items-end gap-1 leading-none">
+                  <span className="font-display font-extrabold text-[6rem] sm:text-[8rem] md:text-[9rem] leading-[0.85] text-ink tabular-nums tracking-tight">
+                    <CountUp target={p.target} duration={1800 + i * 200} />
+                  </span>
+                  <span className="font-display font-semibold text-4xl sm:text-5xl md:text-6xl text-primary-dark mb-3 sm:mb-4">
+                    {p.suffix}
+                  </span>
+                </div>
+
+                <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-primary-dark mt-5">{p.label}</p>
+                <p className="text-muted text-[15px] mt-6 leading-relaxed max-w-xs">{p.desc}</p>
               </div>
 
-              <div className="flex items-end gap-1 leading-none">
-                <span className="font-display font-extrabold text-[6rem] sm:text-[8rem] md:text-[9rem] leading-[0.85] text-ink tabular-nums tracking-tight">
-                  <CountUp target={p.target} duration={1800 + i * 200} />
-                </span>
-                <span className="font-display font-semibold text-4xl sm:text-5xl md:text-6xl text-primary-dark mb-3 sm:mb-4">
-                  {p.suffix}
-                </span>
-              </div>
-
-              <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-primary-dark mt-5">{p.label}</p>
-              <p className="text-muted text-[15px] mt-6 leading-relaxed max-w-xs">{p.desc}</p>
-              </div>
-
+              {/* The one thing not restored is the "01.dev" corner stamp. It
+                  rendered at text-primary/30 on near-black, about 1.4:1, so
+                  it was decoration nobody could actually read. Everything
+                  else here is the original. */}
               <div className="absolute bottom-0 left-9 right-9 sm:left-12 sm:right-12 h-px bg-divider overflow-hidden">
                 <div
                   className="h-full bg-gradient-to-r from-transparent via-primary to-transparent"
                   style={{ animation: `pillar-sweep 4s ease-in-out ${i * 0.4}s infinite` }}
                 />
               </div>
-
-              <span className="absolute top-9 right-9 sm:top-12 sm:right-12 font-mono text-[9px] uppercase tracking-widest text-primary/30">
-                {p.n}.dev
-              </span>
             </article>
           ))}
         </div>

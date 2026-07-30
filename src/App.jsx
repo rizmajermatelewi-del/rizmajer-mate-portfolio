@@ -9,6 +9,7 @@ import Features from './sections/Features'
 import Pillars from './sections/Pillars'
 import Protocol from './sections/Protocol'
 import ServicesGrid from './sections/ServicesGrid'
+import AiServices from './sections/AiServices'
 import Pricing from './sections/Pricing'
 import Faq from './sections/Faq'
 import Testimonial from './sections/Testimonial'
@@ -43,9 +44,15 @@ export default function App() {
         <Pillars />
         <Protocol />
         <ServicesGrid />
+        <AiServices />
+        {/* Objections, then price, then the form. The price used to come
+            before the FAQ, which meant the number landed while "mennyibe
+            kerül", "mennyi idő" and "kié lesz a kód" were still open
+            questions. Answering those first gives the figure something to
+            stand on, and it pushes the price further down the page. */}
+        <Faq />
         <Pricing />
         <ContactForm />
-        <Faq />
       </main>
       <Footer />
     </div>

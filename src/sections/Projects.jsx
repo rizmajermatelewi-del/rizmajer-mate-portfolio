@@ -26,11 +26,15 @@ export default function Projects() {
         <div className="max-w-3xl mb-16 sm:mb-20">
           <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary-dark">╱ Projektek</span>
           <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink mt-4 leading-[1.05] tracking-tight">
+            {/* "Valós munka, nem mockup" used a word the buyer does not have.
+                "Mockup" is a designer's term; a rétesház owner reads past it.
+                The split of client work versus own work is the actual point
+                and needs no jargon to say. */}
             Amin dolgozom.
-            <span className="block font-display font-semibold text-primary-dark mt-1">Valós munka, nem mockup.</span>
+            <span className="block font-display font-semibold text-primary-dark mt-1">Kettő ügyfélnek, kettő magamnak.</span>
           </h2>
           <p className="text-muted text-lg mt-6 leading-relaxed max-w-xl">
-            Négy projekt, amit ténylegesen megépítettem — kettő élő ügyfélmunka, kettő saját
+            Négy projekt, amit ténylegesen megépítettem: kettő élő ügyfélmunka, kettő saját
             kezdeményezés, amivel a saját gondolkodásomat és árazási stratégiámat teszteltem.
           </p>
         </div>
@@ -48,14 +52,14 @@ export default function Projects() {
               }`}
             >
               <TiltCard className="h-full">
-                <ProjectMock tone={p.tone} />
+                <ProjectMock tone={p.tone} image={p.image} alt={p.imageAlt} />
                 <div className="p-5 sm:p-6">
-                  <div className="flex items-center justify-between mb-3">
+                  {/* The "01 / 02 / 03 / 04" counter that sat opposite the
+                      label is gone. Four cards in a row are already countable
+                      and the number carried no other meaning. */}
+                  <div className="mb-3">
                     <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-primary-dark bg-primary/10 px-2.5 py-1 rounded-full">
                       {p.label}
-                    </span>
-                    <span className="font-mono text-[10px] text-muted uppercase tracking-widest">
-                      {String(i + 1).padStart(2, '0')}
                     </span>
                   </div>
                   <h3 className="font-display font-bold text-lg text-ink leading-tight">{p.title}</h3>

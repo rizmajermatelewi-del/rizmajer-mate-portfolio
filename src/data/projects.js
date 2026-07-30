@@ -1,7 +1,22 @@
 /* The case-study fields below are intentionally empty. ProjectModal renders
    each one only when it is non-empty, so filling them in later is a data edit
    rather than a code change, and a half-filled project degrades to a short
-   clean panel instead of a page of empty headings. */
+   clean panel instead of a page of empty headings.
+
+   `image` / `imageAlt` are the card screenshots. Empty means ProjectMock
+   draws a labelled empty frame instead, which is the honest state: this
+   section's headline promises "valós munka, nem mockup", so a fabricated
+   preview here would contradict the page in the one place it can least
+   afford to. To fill one, put the file in src/assets, import it at the top
+   of this file, and set both fields. Nothing else needs touching.
+
+   Wanted, in priority order:
+     1. Rétes-rendelő      - the live ordering screen, 1200x750 or wider
+     2. AB Masszázs        - the booking calendar view
+     3. Business Value Builder - the pricing page
+     4. WebWise Studio     - the landing hero
+   `github` stays '#' until there are real repository URLs; projects.test.js
+   asserts that, so it fails loudly rather than shipping dead links. */
 export const PROJECTS_FULL = [
   {
     title: 'Rétes-rendelő',
@@ -9,6 +24,8 @@ export const PROJECTS_FULL = [
     tech: ['React', 'TanStack Start', 'Supabase'],
     label: 'Ügyfélprojekt',
     tone: { from: '--color-card-1', to: '--color-deep', accent: '--color-accent' },
+    image: '',
+    imageAlt: '',
     year: '',
     role: '',
     problem: '',
@@ -23,6 +40,8 @@ export const PROJECTS_FULL = [
     tech: ['PHP', 'MySQL', 'Docker'],
     label: 'Ügyfélprojekt',
     tone: { from: '--color-card-2', to: '--color-deep', accent: '--color-primary-light' },
+    image: '',
+    imageAlt: '',
     year: '',
     role: '',
     problem: '',
@@ -37,6 +56,8 @@ export const PROJECTS_FULL = [
     tech: ['React', 'TanStack Start'],
     label: 'Saját projekt',
     tone: { from: '--color-card-3', to: '--color-deep', accent: '--color-primary' },
+    image: '',
+    imageAlt: '',
     year: '',
     role: '',
     problem: '',
@@ -51,6 +72,8 @@ export const PROJECTS_FULL = [
     tech: ['React', 'Supabase', 'Framer Motion'],
     label: 'Saját projekt',
     tone: { from: '--color-card-4', to: '--color-deep', accent: '--color-primary-dark' },
+    image: '',
+    imageAlt: '',
     year: '',
     role: '',
     problem: '',

@@ -10,20 +10,28 @@ export default function ServicesGrid() {
   const [expanded, setExpanded] = useState(null)
 
   return (
-    <section ref={ref} className="relative py-20 sm:py-28 px-6 sm:px-10 lg:px-16 overflow-hidden">
+    /* This section renders SKILLS_FULL, and both the navbar and the footer
+       link to "Készségek". The id used to sit on Features instead, so every
+       one of those links scrolled the visitor to the wrong section. */
+    <section id="keszsegek" ref={ref} className="relative py-20 sm:py-28 px-6 sm:px-10 lg:px-16 overflow-hidden">
       <div aria-hidden="true" className="section-glow" />
 
       <div className="relative max-w-7xl mx-auto">
-        <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-6 mb-14">
-          <div>
-            <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary-dark">╱ Amit tudok</span>
-            <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink mt-4 leading-[1.05] tracking-tight">
-              A teljes <span className="text-primary-dark font-bold">eszköztár</span>, egy kézben.
-            </h2>
-          </div>
-          <p className="text-muted max-w-md text-base leading-relaxed">
-            Önállóan viszem végig a projekteket az ötlettől az élesítésig — kis- és
-            középvállalkozásoknak Magyarországon.
+        {/* Stacked header. The explainer used to float in the opposite corner,
+            right-aligned against nothing, mirroring the same split shape that
+            Pillars used two sections earlier. */}
+        <div className="max-w-2xl mb-14">
+          {/* "A teljes eszköztár, egy kézben" is agency phrasing: it flatters
+              the supplier, not the buyer. The thing worth saying is what the
+              arrangement means for the client, which is that there is nobody
+              to be passed along to. */}
+          <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink leading-[1.05] tracking-tight">
+            Egy ember csinálja, <span className="text-primary-dark font-bold">elejétől a végéig</span>.
+          </h2>
+          <p className="text-muted text-base leading-relaxed mt-6">
+            Nincs alvállalkozó és nincs projektmenedzser kettőnk közé ékelve. Akitől
+            kérdezel, az ugyanaz, aki megépíti, és ugyanaz, aki fél év múlva felveszi
+            a telefont.
           </p>
         </div>
 

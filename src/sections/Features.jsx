@@ -11,43 +11,57 @@ import { TiltCard } from '../motion/TiltCard'
 export default function Features() {
   const [sectionRef, visible] = useInView(0.15)
 
+  /* Sentence case, not Title Case. Hungarian does not capitalise every word
+     in a heading; "Modern Tech Stack" and "Tiszta, Tesztelt Kód" read as
+     English headings wearing Hungarian words, which is the loudest
+     translated-from-English signal a Hungarian visitor picks up.
+     The numbered eyebrows went for the same reason as the ones in Pillars:
+     three cards side by side do not need to be counted for the reader. */
+  /* Rewritten for the person paying, not the person hiring. The old headings
+     were "Modern eszközkészlet / Frontendtől backendig", "Tiszta, tesztelt
+     kód / Buildről buildre" and "Az ötlettől a kódig" — three developer
+     phrases in a row on a page whose buyer runs a bakery. Every line here
+     now names a consequence the owner can feel; the stack names moved into
+     the expandable detail in skills.js, where whoever cares can find them. */
   const cards = [
     {
-      eyebrow: '01 / Szakterület',
-      heading: 'Modern Tech Stack',
-      sub: 'Frontendtől backendig',
-      text: 'React, Node.js és felhő-natív eszközök. Olyan rendszereket építek, amik gyorsak, skálázhatók és könnyen karbantarthatók.',
+      eyebrow: 'Amit kapsz',
+      heading: 'Gyors marad',
+      sub: 'Nem sablonra épül',
+      text: 'Az oldalad nem egy megvásárolt sablon, amit még ezren használnak. Ezért gyors, és később bővíteni lehet ahelyett, hogy elölről kellene kezdeni.',
       Component: StackShuffler,
     },
     {
-      eyebrow: '02 / Megbízhatóság',
-      heading: 'Tiszta, Tesztelt Kód',
-      sub: 'Build-ről build-re',
-      text: 'Verziókezelés, automatizált tesztek és folyamatos integráció. A hibákat még élesítés előtt elkapom, nem utána.',
+      eyebrow: 'Amire számíthatsz',
+      heading: 'Tesztelve adom ki',
+      sub: 'Nem a vevőd találja meg a hibát',
+      text: 'Minden változtatás után automatikusan lefutnak az ellenőrzések. Ha valami elromlik, az nálam derül ki, nem akkor, amikor egy vevőd épp fizetne.',
       Component: CodeScan,
     },
     {
-      eyebrow: '03 / Együttműködés',
-      heading: 'Egyeztetés & Indítás',
-      sub: 'Az ötlettől a kódig',
-      text: 'Foglalj egy rövid egyeztetést, ahol átbeszéljük az elképzelésed. Átlátható folyamat, egyértelmű mérföldkövek.',
+      eyebrow: 'Ahogy kezdünk',
+      heading: 'Előbb beszéljünk',
+      sub: 'Kötelezettség nélkül',
+      text: 'Elmondod, mi a gond, én megmondom, mennyi munka és mennyibe kerül. Ha kiderül, hogy nem éri meg neked, azt is megmondom.',
       Component: BookingScheduler,
     },
   ]
 
   return (
-    <section id="keszsegek" ref={sectionRef} className="relative py-20 sm:py-28 px-6 sm:px-10 lg:px-16">
+    /* The "keszsegek" id moved to ServicesGrid, which is the section that
+       actually lists the skills the navbar and footer links name. */
+    <section ref={sectionRef} className="relative py-20 sm:py-28 px-6 sm:px-10 lg:px-16">
       <div className="max-w-7xl mx-auto">
         <div
           className={`feature-heading max-w-3xl mb-16 sm:mb-24 transition-all duration-1000 ease-out ${
             visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
           }`}
         >
-          <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary-dark">
-            ╱ Amiben segíthetek
-          </span>
-          <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink mt-4 leading-[1.05] tracking-tight">
-            Három pillér, egy <span className="text-primary-dark font-semibold">cél</span>.
+          {/* "Három pillér, egy cél" was a headline shape with no content in
+              it: it could sit on any page in any industry. This one states
+              what the three cards below actually promise. */}
+          <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink leading-[1.05] tracking-tight">
+            Három dolog, amit <span className="text-primary-dark font-semibold">elvárhatsz</span>.
           </h2>
         </div>
 

@@ -1,10 +1,14 @@
 import { useEffect, useState } from 'react'
 
+/* No metric badges. These used to carry "98/100", "<100ms" and "99.9%" —
+   invented figures reading as a Lighthouse score, a response time and an
+   uptime SLA, none of which anything here measures. Faking engineering
+   precision the work does not claim costs more trust than the badge buys. */
 export default function StackShuffler() {
   const items = [
-    { tag: 'Frontend', label: 'React & Tailwind alapú modern felületek', metric: '98/100' },
-    { tag: 'Backend', label: 'Node.js & Express API fejlesztés', metric: '<100ms' },
-    { tag: 'DevOps', label: 'CI/CD és felhő alapú deployment', metric: '99.9%' },
+    { tag: 'Frontend', label: 'React és Tailwind alapú felületek' },
+    { tag: 'Backend', label: 'Node.js és Express API-k' },
+    { tag: 'DevOps', label: 'CI/CD és felhő alapú élesítés' },
   ]
   const [stack, setStack] = useState(items)
 
@@ -39,7 +43,6 @@ export default function StackShuffler() {
               <span className="font-mono text-[10px] uppercase tracking-widest text-primary-dark bg-primary/10 px-2 py-1 rounded-full">
                 {item.tag}
               </span>
-              <span className="font-mono text-xs text-muted">{item.metric}</span>
             </div>
             <div className="mt-4 font-display text-lg font-semibold text-ink leading-tight">
               {item.label}

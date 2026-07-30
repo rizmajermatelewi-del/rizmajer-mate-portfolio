@@ -11,10 +11,35 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
 
+  /* A sentinel plus an observer, not a scroll handler. The old version ran a
+     callback on every scroll frame to recompute one boolean; the browser can
+     watch an 80px-tall element cross the top of the viewport instead and
+     report back only on the two frames where the answer changes.
+     The sentinel is created here rather than placed in the markup so nothing
+     downstream can style, move or reorder it. */
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 80)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+    const sentinel = document.createElement('div')
+    sentinel.setAttribute('aria-hidden', 'true')
+    Object.assign(sentinel.style, {
+      position: 'absolute',
+      top: '0',
+      left: '0',
+      width: '1px',
+      height: '80px',
+      pointerEvents: 'none',
+    })
+    document.body.prepend(sentinel)
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setScrolled(!entry.isIntersecting),
+      { threshold: 0 },
+    )
+    observer.observe(sentinel)
+
+    return () => {
+      observer.disconnect()
+      sentinel.remove()
+    }
   }, [])
 
   return (

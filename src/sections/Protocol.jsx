@@ -41,27 +41,42 @@ export default function Protocol() {
     return () => ctx.revert()
   }, [])
 
+  /* `meta` is gone. It read "Lépés 1 / Listen" — Hungarian and English in
+     one label, on a page that is otherwise entirely Hungarian.
+
+     `image` / `imageAlt` bring back the right-hand panel. It was originally
+     three stock "developer at a laptop" shots, then an empty frame after
+     those were pulled, and now it is a real slot: give it a file and it
+     shows the photograph, leave it empty and it draws a labelled blueprint
+     frame instead of pretending. Drop files in src/assets, import them at
+     the top of this file, and set the fields.
+
+     Wanted: 01 a real meeting or notes shot, 02 the build in progress on a
+     screen, 03 the handover. Anything genuinely yours beats stock here. */
   const steps = [
     {
       num: '01',
       title: 'Egyeztetés',
       tagline: 'Először meghallgatlak.',
-      text: 'Végigvesszük, mi az, ami ma kézzel megy, és mennyi időt visz el. Ebből írásos terjedelem és fix ár lesz — mielőtt bármit elkezdenék, tudod, mit kapsz és mennyiért.',
-      meta: 'Lépés 1 / Listen',
+      text: 'Végigvesszük, mi az, ami ma kézzel megy, és mennyi időt visz el. Ebből írásos terjedelem és fix ár lesz: mielőtt bármit elkezdenék, tudod, mit kapsz és mennyiért.',
+      image: '',
+      imageAlt: '',
     },
     {
       num: '02',
-      title: 'Tervezés & Fejlesztés',
+      title: 'Tervezés és fejlesztés',
       tagline: 'Menet közben látod, hol tart.',
       text: 'Kapsz egy linket, amin az épülő oldal végig megnézhető. Nem a végén szembesülsz az eredménnyel: amíg alakul, olcsó változtatni rajta.',
-      meta: 'Lépés 2 / Build',
+      image: '',
+      imageAlt: '',
     },
     {
       num: '03',
-      title: 'Átadás & Támogatás',
+      title: 'Átadás és támogatás',
       tagline: 'A leadás után sem tűnök el.',
-      text: 'Élesítés előtt telefonon, tableten és több böngészőben is végigmegyek rajta. Átadom a hozzáféréseket, megmutatom, hogyan kezeld — a domain és a kód a tiéd marad.',
-      meta: 'Lépés 3 / Support',
+      text: 'Élesítés előtt telefonon, tableten és több böngészőben is végigmegyek rajta. Átadom a hozzáféréseket, és megmutatom, hogyan kezeld. A domain és a kód a tiéd marad.',
+      image: '',
+      imageAlt: '',
     },
   ]
 
@@ -72,8 +87,7 @@ export default function Protocol() {
       </div>
 
       <div className="max-w-7xl mx-auto mb-16 px-2 sm:px-10">
-        <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary-dark">╱ Így dolgozom</span>
-        <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink mt-4 leading-[1.05] tracking-tight max-w-3xl">
+        <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink leading-[1.05] tracking-tight max-w-3xl">
           Három lépés, semmi <span className="text-primary-dark font-semibold">meglepetés</span>.
         </h2>
       </div>
@@ -84,42 +98,70 @@ export default function Protocol() {
             key={idx}
             className="protocol-card sticky top-24 sm:top-28 mx-auto max-w-6xl card-invert border border-divider rounded-6xl overflow-hidden shadow-e3"
           >
-            <div className="grid lg:grid-cols-5 gap-0 min-h-[60vh] lg:min-h-[70vh]">
-              <div className="lg:col-span-3 p-8 sm:p-12 lg:p-16 flex flex-col justify-between">
-                <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs uppercase tracking-[0.25em] text-muted">{step.meta}</span>
-                  <span className="font-mono text-[10px] uppercase tracking-widest text-primary-dark bg-primary/10 px-2.5 py-1 rounded-full">
-                    RM Protokoll
-                  </span>
-                </div>
-
-                <div className="my-12">
-                  <span className="font-display font-extrabold text-[7rem] sm:text-[10rem] leading-none text-primary/15 -mb-4 block">
-                    {step.num}
-                  </span>
-                  <h3 className="font-display font-bold text-4xl sm:text-5xl md:text-6xl text-ink leading-[1.02] tracking-tight">
-                    {step.title}
-                  </h3>
-                  <p className="font-display font-medium text-primary-dark text-2xl sm:text-3xl mt-3">{step.tagline}</p>
-                </div>
-
-                <p className="text-muted text-base sm:text-lg leading-relaxed max-w-lg">{step.text}</p>
+            {/* Text left, visual right. The panel is full-bleed to the card
+                edge, so the padding lives on the text column rather than on
+                the grid, and the image runs all the way into the corner
+                radius instead of floating in a padded box. */}
+            <div className="grid lg:grid-cols-12">
+              <div className="lg:col-span-7 p-8 sm:p-12 lg:p-16">
+                {/* The 6-8rem watermark numeral is gone. It was the only thing
+                    keeping Lighthouse accessibility off 100, at
+                    text-primary/15 — and clearing the 3:1 large-text bar would
+                    have meant roughly tripling its opacity, turning a faint
+                    watermark into a dominant element. Design principle 6
+                    settles it rather than the contrast rule: decorative
+                    numerals are the visual inflation this brand is positioned
+                    against, and the order of the steps already carries the
+                    sequence. */}
+                <h3 className="font-display font-bold text-4xl sm:text-5xl md:text-6xl text-ink leading-[1.02] tracking-tight mt-6">
+                  {step.title}
+                </h3>
+                <p className="font-display font-medium text-primary-dark text-2xl sm:text-3xl mt-3">{step.tagline}</p>
+                <p className="text-muted text-base sm:text-lg leading-relaxed max-w-lg border-t border-divider mt-8 pt-6">
+                  {step.text}
+                </p>
               </div>
 
-              {/* Panel, not a photo. The three stock shots that used to sit here
-                  were generic third-party "developer at a laptop" images — the
-                  same visual any template ships with, loaded from an outside
-                  host. There is no owned photography for these steps yet, so the
-                  panel carries the step marker alone rather than borrowed stock. */}
-              <div className="lg:col-span-2 relative overflow-hidden min-h-[300px] lg:min-h-full bg-deep">
-                <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-deep/60 via-transparent to-deep/15" />
-                <div className="absolute top-5 left-5 flex items-center gap-2 bg-surface/90 backdrop-blur-sm rounded-full pl-3 pr-4 py-1.5 shadow-lg">
-                  <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-                  <span className="font-mono text-[10px] uppercase tracking-widest text-ink">Lépés {step.num}</span>
-                </div>
-                <div className="absolute bottom-4 right-4 font-mono text-[10px] uppercase tracking-widest text-white/70">
-                  {step.num} / Rizmajer Máté
-                </div>
+              {/* One step lighter than the card, not the same fill. At bg-deep
+                  the panel was invisible: an empty area the same colour as
+                  everything around it, so the dashed frame looked like a
+                  stray border rather than a slot waiting for a picture. The
+                  tonal step is what makes it read as its own surface, which
+                  is also how the card steps in projects.js work. */}
+              <div
+                className="lg:col-span-5 relative overflow-hidden min-h-[240px] lg:min-h-full"
+                style={{ backgroundColor: 'rgb(var(--color-card-1))' }}
+              >
+                {step.image ? (
+                  <img
+                    src={step.image}
+                    alt={step.imageAlt}
+                    loading="lazy"
+                    decoding="async"
+                    className="absolute inset-0 h-full w-full object-cover"
+                  />
+                ) : (
+                  <>
+                    <span
+                      aria-hidden="true"
+                      className="absolute inset-0"
+                      style={{
+                        backgroundImage:
+                          'linear-gradient(rgb(var(--color-primary-light) / 0.10) 1px, transparent 1px), linear-gradient(90deg, rgb(var(--color-primary-light) / 0.10) 1px, transparent 1px)',
+                        backgroundSize: '32px 32px',
+                      }}
+                    />
+                    <span
+                      aria-hidden="true"
+                      className="absolute inset-6 rounded-3xl border border-dashed border-primary-light/25"
+                    />
+                    <span className="absolute inset-0 flex items-center justify-center px-6 text-center">
+                      <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-primary-light/60">
+                        Kép hamarosan
+                      </span>
+                    </span>
+                  </>
+                )}
               </div>
             </div>
           </article>
