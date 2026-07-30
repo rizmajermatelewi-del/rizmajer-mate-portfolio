@@ -21,9 +21,15 @@
    None is needed: `main.jsx` uses `createRoot`, so React discards this
    markup and renders fresh on mount.
 
-   Vercel serves these files before the `/(.*) -> /index.html` rewrite —
-   rewrites are only consulted after the filesystem check — so the
-   catch-all stays intact for unknown paths.
+   These files are the whole routing story. vercel.json used to carry a
+   `/(.*) -> /index.html` catch-all so a deep link survived client-side
+   routing; with every route in ROUTE_PATHS written to disk here, that
+   rewrite only ever caught paths the app does not answer — and turned them
+   into HTTP 200 replies serving the entire ~146 kB homepage. Measured:
+   /llms.txt and /nem-letezo-oldal-12345 both returned 200 with the full
+   home page. That is a soft 404, and it invites crawlers to index unlimited
+   URLs carrying duplicate content — undoing the SEO work this script exists
+   to do. The rewrite is gone, so unknown paths 404 for real.
 --------------------------------------------------------------------- */
 
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
