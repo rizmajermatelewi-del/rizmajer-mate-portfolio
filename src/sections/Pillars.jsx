@@ -20,7 +20,11 @@ export default function Pillars() {
       target: 4,
       suffix: '',
       label: 'megépített projekt',
-      desc: 'Négy befejezett projekt: kettő fizető ügyfélnek, kettő saját kezdeményezés. Mindegyik megnyitható és kipróbálható.',
+      /* The third sentence used to read "Mindegyik megnyitható és
+         kipróbálható." Nothing on the site is: every `live` field in
+         projects.js is empty and every `github` is '#'. It stays out until
+         there are real links behind the project cards. */
+      desc: 'Négy befejezett projekt: kettő fizető ügyfélnek, kettő saját kezdeményezés.',
     },
     {
       n: '02',
