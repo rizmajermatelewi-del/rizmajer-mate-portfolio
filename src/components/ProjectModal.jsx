@@ -142,8 +142,17 @@ export default function ProjectModal({ project, originRect, onClose }) {
 
         {project.gallery.length > 0 && (
           <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {project.gallery.map((src, i) => (
-              <img key={i} src={src} alt="" className="rounded-2xl border border-divider w-full" />
+            {project.gallery.map((g, i) => (
+              <img
+                key={i}
+                src={g.src}
+                alt={g.alt}
+                width={g.width}
+                height={g.height}
+                loading="lazy"
+                decoding="async"
+                className="rounded-2xl border border-divider w-full h-auto"
+              />
             ))}
           </div>
         )}
