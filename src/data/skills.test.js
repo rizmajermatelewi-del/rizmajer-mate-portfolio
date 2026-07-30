@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { SKILLS_FULL, SKILL_CATEGORIES } from './skills'
+import { SKILLS_FULL, SKILL_CATEGORIES, ORDERED_SKILLS } from './skills'
 
 describe('SKILLS_FULL', () => {
   it('gives every skill one of the declared categories', () => {
@@ -8,13 +8,20 @@ describe('SKILLS_FULL', () => {
     }
   })
 
-  /* ServicesGrid builds its display order with
-     SKILL_CATEGORIES.flatMap(c => SKILLS_FULL.filter(s => s.category === c)).
-     A typo in either list drops the affected tile from the grid with no error
-     anywhere — it just stops being on the page. This is the guard for that. */
+  /* ORDERED_SKILLS filters by category, so a typo in either list drops the
+     affected tile from the grid and from the footer with no error anywhere — it
+     just stops being on the page. Asserted against the real export rather than
+     a copy of its logic, so the test fails if the derivation itself breaks. */
   it('loses no skill when grouped into categories', () => {
-    const grouped = SKILL_CATEGORIES.flatMap((c) => SKILLS_FULL.filter((s) => s.category === c))
-    expect(grouped).toHaveLength(SKILLS_FULL.length)
+    expect(ORDERED_SKILLS).toHaveLength(SKILLS_FULL.length)
+  })
+
+  it('orders skills so a category never appears twice in the list', () => {
+    const seen = ORDERED_SKILLS.map((s) => s.category)
+    const firstIndexes = seen.map((c) => seen.indexOf(c))
+    expect(firstIndexes, 'a category is split across the list, so grouping is broken').toEqual(
+      [...firstIndexes].sort((a, b) => a - b),
+    )
   })
 
   it('leaves no declared category without a skill in it', () => {

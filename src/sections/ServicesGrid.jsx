@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { SKILLS_FULL, SKILL_CATEGORIES } from '../data/skills'
+import { ORDERED_SKILLS } from '../data/skills'
 import { useInView } from '../motion/useInView'
 
 /* Grouped by category, but still one seamless mosaic rather than four separate
@@ -7,10 +7,10 @@ import { useInView } from '../motion/useInView'
    of them a single orphan tile, roughly doubled the section's height, and broken
    the gap-px hairline grid that ties this section to Pillars. Sorting so a
    category's tiles sit adjacent, and naming the category on each tile, groups
-   them without paying any of that. */
-const ORDERED_SKILLS = SKILL_CATEGORIES.flatMap((category) =>
-  SKILLS_FULL.filter((skill) => skill.category === category),
-)
+   them without paying any of that.
+
+   The order itself lives in skills.js so the footer's short list cannot drift
+   out of step with this grid. */
 
 /* ----------------------------------------------------------------
    ServicesGrid

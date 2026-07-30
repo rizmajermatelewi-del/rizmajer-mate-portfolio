@@ -42,6 +42,18 @@ export default function Navbar() {
     }
   }, [])
 
+  /* Escape closes the mobile menu, matching ProjectModal, which is the only
+     other thing on this site that covers the page. A panel you can open with
+     the keyboard and not close with it is a dead end. */
+  useEffect(() => {
+    if (!open) return
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') setOpen(false)
+    }
+    document.addEventListener('keydown', onKeyDown)
+    return () => document.removeEventListener('keydown', onKeyDown)
+  }, [open])
+
   return (
     <>
       <nav
@@ -115,8 +127,19 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile menu */}
+      {/* Mobile menu.
+
+          `inert` is what keeps this out of the tab order while it is closed.
+          opacity-0 and pointer-events-none hide it from the eye and from the
+          mouse but do neither for the keyboard: below lg this panel stays in the
+          document, so a keyboard user tabbing off the hamburger used to walk
+          through seven invisible nav links, the CTA and two social links before
+          reaching the page. Lighthouse scores 100 either way — axe treats
+          hidden-content focus order as a manual check — so nothing but reading
+          it catches this. */}
       <div
+        inert={!open}
+        aria-hidden={!open}
         className={`fixed inset-0 z-[60] transition-all duration-500 lg:hidden ${
           open ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}

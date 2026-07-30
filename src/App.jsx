@@ -37,11 +37,22 @@ export default function App() {
       <Navbar />
       <main>
         <Hero />
-        <Projects />
         <Testimonial />
         <About />
         <Features />
         <Pillars />
+        {/* Projects used to sit directly under the hero, which meant the second
+            thing anyone saw was four empty frames reading "Képernyőkép
+            hamarosan" under a headline claiming four built projects. Leading
+            with the section that has the least to show is the worst available
+            order while the demo screenshots do not exist.
+
+            It lands after Pillars on purpose: that section states the count, so
+            the cards now arrive as the thing the number refers to. Move it back
+            up once the demos are deployed and the cards carry screenshots, live
+            links and repos — at that point it is the strongest section on the
+            page and belongs near the top. */}
+        <Projects />
         <Protocol />
         <ServicesGrid />
         <AiServices />

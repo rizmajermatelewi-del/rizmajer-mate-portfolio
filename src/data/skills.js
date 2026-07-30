@@ -63,3 +63,11 @@ export const SKILLS_FULL = [
       'Lighthouse és a hálózati panel alapján dolgozom, nem tippre. Képoptimalizálás, kódfelosztás és a felesleges újrarenderelések kiszűrése — a cél, hogy a mobil betöltés is a másodperc alatti tartományban maradjon.',
   },
 ]
+
+/* Display order, derived once and exported, because two places render it:
+   ServicesGrid draws the full grid and Footer lists the first four. Those two
+   read the same list in different orders as long as each derives its own, so a
+   visitor comparing the footer against the section sees them disagree. */
+export const ORDERED_SKILLS = SKILL_CATEGORIES.flatMap((category) =>
+  SKILLS_FULL.filter((skill) => skill.category === category),
+)

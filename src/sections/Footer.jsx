@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 import { LogoMark } from '../components/Logo'
 import { SOCIAL_LINKS } from '../data/nav'
-import { SKILLS_FULL } from '../data/skills'
+import { ORDERED_SKILLS } from '../data/skills'
 import { useInView } from '../motion/useInView'
 import { ScrambleText } from '../motion/ScrambleText'
 import { Magnetic } from '../motion/Magnetic'
@@ -61,8 +61,11 @@ export default function Footer() {
               <LogoMark className="h-9 w-9 text-primary" />
               <span className="font-display font-bold text-lg">Rizmajer Máté</span>
             </div>
+            {/* "szakértelmével" is gone. Expertise is not something you award
+                yourself in your own footer, and this page argues everywhere else
+                that a claim needs something behind it. */}
             <p className="text-muted text-sm leading-relaxed max-w-xs">
-              Full-stack fejlesztő React, Node.js és modern web-technológiák szakértelmével.
+              Full-stack fejlesztő. React, Node.js és modern web-technológiák.
               Ötlettől a működő termékig.
             </p>
           </div>
@@ -70,7 +73,9 @@ export default function Footer() {
           <div>
             <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary-dark mb-4">Készségek</p>
             <ul className="space-y-2.5">
-              {SKILLS_FULL.slice(0, 4).map((s, i) => (
+              {/* Same order as the Készségek section, not authoring order, so
+                  the two lists cannot disagree about what comes first. */}
+              {ORDERED_SKILLS.slice(0, 4).map((s, i) => (
                 <li key={i}>
                   <a href="#keszsegek" className="inline-block py-1 text-muted hover:text-primary-dark transition text-sm">
                     <ScrambleText text={s.title} trigger="hover" />
