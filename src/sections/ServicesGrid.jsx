@@ -50,7 +50,7 @@ export default function ServicesGrid() {
             const Icon = svc.icon
             return (
               <button
-                key={i}
+                key={svc.title}
                 type="button"
                 onClick={() => setExpanded(expanded === i ? null : i)}
                 aria-expanded={expanded === i}

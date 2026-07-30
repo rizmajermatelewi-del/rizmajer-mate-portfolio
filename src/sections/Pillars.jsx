@@ -72,7 +72,7 @@ export default function Pillars() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-divider rounded-5xl overflow-hidden border border-divider shadow-xl shadow-primary/5">
           {pillars.map((p, i) => (
             <article
-              key={i}
+              key={p.n}
               onPointerEnter={() => setFocused(i)}
               onPointerLeave={() => setFocused(null)}
               style={{ transitionDelay: visible ? `${i * 150}ms` : '0ms' }}

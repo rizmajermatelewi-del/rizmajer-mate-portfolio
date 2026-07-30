@@ -1,10 +1,21 @@
-import { useState } from 'react'
+import { useState, lazy, Suspense } from 'react'
 import { Star, Check } from 'lucide-react'
 import { PROJECTS_FULL } from '../data/projects'
 import ProjectMock from '../components/ProjectMock'
-import ProjectModal from '../components/ProjectModal'
 import { useInView } from '../motion/useInView'
 import { TiltCard } from '../motion/TiltCard'
+
+/* The modal is the one part of this page that can be deferred without cost to
+   the prerender: it returns null until a card is clicked and portals itself out
+   of this tree, so it contributes nothing to dist/index.html either way.
+
+   Below-fold *sections* deliberately are not lazy. renderToString cannot wait on
+   a lazy component, so it would emit Suspense fallbacks instead of markup and
+   the prerendered HTML — the entire reason scripts/prerender.mjs exists — would
+   lose most of its content. Worse, prerender.mjs only fails on sections left at
+   opacity-0, so missing content would ship silently. */
+const ProjectModal = lazy(() => import('../components/ProjectModal'))
+const preloadModal = () => import('../components/ProjectModal')
 
 export default function Projects() {
   const [sectionRef, visible] = useInView(0.1)
@@ -43,9 +54,14 @@ export default function Projects() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {PROJECTS_FULL.map((p, i) => (
             <button
-              key={i}
+              key={p.title}
               type="button"
               onClick={(e) => openProject(i, e)}
+              /* Fetches the modal chunk on intent rather than on click, so the
+                 panel still opens instantly despite being a separate chunk.
+                 Focus counts as intent too — keyboard users never hover. */
+              onPointerEnter={preloadModal}
+              onFocus={preloadModal}
               aria-label={`${p.title} — részletek`}
               style={{ transitionDelay: visible ? `${i * 120}ms` : '0ms' }}
               className={`proj-card group w-full text-left card-invert border border-divider rounded-4xl overflow-hidden card-motion shadow-e2 hover:border-primary/60 hover:-translate-y-1.5 hover:shadow-e4 ${
@@ -85,8 +101,8 @@ export default function Projects() {
                     <div className="mt-5">
                       <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-primary-dark">Amit tud</p>
                       <ul className="mt-2 space-y-1.5">
-                        {p.features.map((f, fi) => (
-                          <li key={fi} className="flex gap-2 text-muted text-[13px] leading-relaxed">
+                        {p.features.map((f) => (
+                          <li key={f} className="flex gap-2 text-muted text-[13px] leading-relaxed">
                             <Check className="h-3.5 w-3.5 shrink-0 mt-[3px] text-primary" strokeWidth={2.5} />
                             <span>{f}</span>
                           </li>
@@ -99,9 +115,9 @@ export default function Projects() {
                       does from what it is built with, which are two different
                       questions asked by two different readers. */}
                   <div className="flex flex-wrap gap-1.5 mt-5 pt-4 border-t border-divider">
-                    {p.tech.map((t, ti) => (
+                    {p.tech.map((t) => (
                       <span
-                        key={ti}
+                        key={t}
                         className="font-mono text-[9px] uppercase tracking-wide text-muted bg-background border border-divider px-2 py-0.5 rounded-full"
                       >
                         {t}
@@ -115,11 +131,15 @@ export default function Projects() {
         </div>
       </div>
 
-      <ProjectModal
-        project={openIndex === null ? null : PROJECTS_FULL[openIndex]}
-        originRect={originRect}
-        onClose={closeProject}
-      />
+      {/* Mounted only while open. ProjectModal already returns null without a
+          project, so this changes nothing visually — it just keeps the lazy
+          import from resolving during the prerender, where a suspended
+          component would render its fallback instead. */}
+      {openIndex !== null && (
+        <Suspense fallback={null}>
+          <ProjectModal project={PROJECTS_FULL[openIndex]} originRect={originRect} onClose={closeProject} />
+        </Suspense>
+      )}
     </section>
   )
 }

@@ -75,8 +75,8 @@ export default function Footer() {
             <ul className="space-y-2.5">
               {/* Same order as the Készségek section, not authoring order, so
                   the two lists cannot disagree about what comes first. */}
-              {ORDERED_SKILLS.slice(0, 4).map((s, i) => (
-                <li key={i}>
+              {ORDERED_SKILLS.slice(0, 4).map((s) => (
+                <li key={s.title}>
                   <a href="#keszsegek" className="inline-block py-1 text-muted hover:text-primary-dark transition text-sm">
                     <ScrambleText text={s.title} trigger="hover" />
                   </a>
