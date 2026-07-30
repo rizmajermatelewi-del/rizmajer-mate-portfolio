@@ -3,6 +3,18 @@ import { PROJECTS_FULL } from './projects'
 
 const CASE_FIELDS = ['year', 'role', 'problem', 'solution', 'gallery', 'github', 'live']
 
+/* Pulled out of the loop below so the negative case can call the real
+   assertions instead of restating them. Every `gallery` is still `[]`, so the
+   loop has nothing to walk; without this the guard could not fail today and
+   would reach Task 2 — where it becomes load-bearing — unproven. */
+function assertGalleryItemShape(g, label) {
+  expect(typeof g, `${label} gallery item must be an object, not a bare string`).toBe('object')
+  expect(g.src, `${label} gallery item is missing src`).toBeTruthy()
+  expect(g.alt, `${label} gallery item needs Hungarian alt text, not ''`).toBeTruthy()
+  expect(g.width, `${label} gallery item needs a width`).toBeGreaterThan(0)
+  expect(g.height, `${label} gallery item needs a height`).toBeGreaterThan(0)
+}
+
 describe('PROJECTS_FULL', () => {
   it('still has four projects', () => {
     expect(PROJECTS_FULL).toHaveLength(4)
@@ -31,20 +43,18 @@ describe('PROJECTS_FULL', () => {
   it('gives every gallery item a src, real alt text, and intrinsic dimensions', () => {
     for (const p of PROJECTS_FULL) {
       for (const g of p.gallery) {
-        expect(typeof g, `${p.title} gallery item must be an object, not a bare string`).toBe('object')
-        expect(g.src, `${p.title} gallery item is missing src`).toBeTruthy()
-        expect(g.alt, `${p.title} gallery item needs Hungarian alt text, not ''`).toBeTruthy()
-        expect(g.width, `${p.title} gallery item needs a width`).toBeGreaterThan(0)
-        expect(g.height, `${p.title} gallery item needs a height`).toBeGreaterThan(0)
+        assertGalleryItemShape(g, p.title)
       }
     }
   })
 
-  it('rejects a bare-string gallery item and accepts a well-formed one', () => {
-    const badItem = 'foo.webp'
-    const goodItem = { src: 'foo.webp', alt: 'Képernyőkép a felületről', width: 800, height: 600 }
+  it('fails on a gallery item that is missing alt text or dimensions', () => {
+    const good = { src: 'foo.webp', alt: 'Képernyőkép a felületről', width: 800, height: 600 }
 
-    expect(typeof badItem).not.toBe('object')
-    expect(typeof goodItem).toBe('object')
+    expect(() => assertGalleryItemShape(good, 'good')).not.toThrow()
+    expect(() => assertGalleryItemShape('foo.webp', 'bare string')).toThrow()
+    expect(() => assertGalleryItemShape({ ...good, alt: '' }, 'empty alt')).toThrow()
+    expect(() => assertGalleryItemShape({ ...good, width: undefined }, 'no width')).toThrow()
+    expect(() => assertGalleryItemShape({ ...good, height: 0 }, 'zero height')).toThrow()
   })
 })
