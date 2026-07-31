@@ -24,60 +24,92 @@ export default function Protocol() {
   const containerRef = useRef(null)
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      const cards = gsap.utils.toArray('.protocol-card')
-      cards.forEach((card, i) => {
-        if (i === cards.length - 1) return
-        /* fromTo, not to, and the `from` matters more than anything else here.
+    /* matchMedia rather than a plain context, for two reasons. The recede is
+       tuned differently on a phone than on a desktop, and GSAP re-evaluates
+       and cleans up the right one on rotation or resize by itself. It also
+       gives prefers-reduced-motion a branch, which this section never had:
+       every other animation on the site honours the flag, and a scrubbed blur
+       and scale is exactly the kind of thing it exists for. */
+    const mm = gsap.matchMedia(containerRef)
 
-           This was a `gsap.to` whose target filter was `blur() saturate()`
-           while the card's computed filter was `none`. GSAP parses `none` by
-           filling in the missing functions with zero, so `saturate` tweened
-           from 0 — fully greyscale — up to the target. The colour did not
-           drain as the card receded; it was gone on the first pixel of scroll
-           and slowly came back. Measured mid-scroll: saturate(0.0002) at a
-           quarter of the way through, still 0.057 at the end.
+    mm.add(
+      {
+        small: '(max-width: 1023px) and (prefers-reduced-motion: no-preference)',
+        large: '(min-width: 1024px) and (prefers-reduced-motion: no-preference)',
+        reduced: '(prefers-reduced-motion: reduce)',
+      },
+      (self) => {
+        const { small, reduced } = self.conditions
 
-           Naming the start explicitly is the fix: saturate(1) is the neutral
-           value, and 0px blur is the neutral blur.
+        /* Reduced motion still gets the progress rail filled, so the section
+           does not look like it failed to load — it just does not move. */
+        if (reduced) {
+          gsap.set('.progress-rail', { scaleY: 1 })
+          return
+        }
 
-           The end values are also softer than before. A stacked card should
-           read as stepped back, not switched off: saturate .7 -> .88,
-           opacity .5 -> .7, blur 6 -> 4. `power2.in` holds it near full
-           strength through the first half and does the work late, once the
-           next card is genuinely covering it. Scale is untouched — that one
-           was already doing its job. */
-        gsap.fromTo(
-          card,
-          { filter: 'blur(0px) saturate(1)' },
-          {
-            scrollTrigger: {
-              trigger: card,
-              start: 'top top+=100',
-              endTrigger: cards[cards.length - 1],
-              end: 'top top+=120',
-              scrub: 1,
+        /* No blur below lg. It is the most expensive filter on a phone GPU,
+           it is doing the least there — a card 390px wide reads as muddy
+           rather than distant — and the stack is a single column anyway, so
+           depth is carried by scale and the card edge. The colour barely
+           moves on mobile for the same reason: at this size a desaturated
+           card just looks broken. */
+        const recede = small
+          ? { from: 'saturate(1)', to: 'saturate(0.94)', scale: 0.96, opacity: 0.85 }
+          : { from: 'blur(0px) saturate(1)', to: 'blur(4px) saturate(0.88)', scale: 0.92, opacity: 0.7 }
+
+        const cards = gsap.utils.toArray('.protocol-card')
+        cards.forEach((card, i) => {
+          if (i === cards.length - 1) return
+          /* fromTo, not to, and the `from` matters more than anything else.
+
+             This was a `gsap.to` whose target filter was `blur() saturate()`
+             while the card's computed filter was `none`. GSAP parses `none`
+             by filling the missing functions with zero, so saturate tweened
+             from 0 — fully greyscale — upward. The colour did not drain as
+             the card receded; it was gone on the first pixel of scroll and
+             crept back. Measured before the fix: saturate(0.0002) a fifth of
+             the way through, still 0.057 near the end.
+
+             Naming the start explicitly is the fix, because 1 is the neutral
+             saturation and GSAP had no way to infer it.
+
+             `power2.in` holds the card near full strength through the first
+             half and does the work late, once the next card is actually
+             covering it, rather than linearly from the moment it sticks. */
+          gsap.fromTo(
+            card,
+            { filter: recede.from },
+            {
+              scrollTrigger: {
+                trigger: card,
+                start: 'top top+=100',
+                endTrigger: cards[cards.length - 1],
+                end: 'top top+=120',
+                scrub: 1,
+              },
+              scale: recede.scale,
+              filter: recede.to,
+              opacity: recede.opacity,
+              ease: 'power2.in',
             },
-            scale: 0.92,
-            filter: 'blur(4px) saturate(0.88)',
-            opacity: 0.7,
-            ease: 'power2.in',
-          },
-        )
-      })
+          )
+        })
 
-      gsap.to('.progress-rail', {
-        scaleY: 1,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: 'top center',
-          end: 'bottom center',
-          scrub: true,
-        },
-      })
-    }, containerRef)
-    return () => ctx.revert()
+        gsap.to('.progress-rail', {
+          scaleY: 1,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: 'top center',
+            end: 'bottom center',
+            scrub: true,
+          },
+        })
+      },
+    )
+
+    return () => mm.revert()
   }, [])
 
   /* `meta` is gone. It read "Lépés 1 / Listen" — Hungarian and English in
@@ -129,29 +161,29 @@ export default function Protocol() {
   ]
 
   return (
-    <section id="folyamat" ref={containerRef} className="relative px-4 sm:px-6 py-20 sm:py-28">
+    <section id="folyamat" ref={containerRef} className="relative px-4 sm:px-6 py-14 sm:py-24 lg:py-28">
       <div aria-hidden="true" className="absolute left-0 top-0 h-full w-px bg-divider">
         <div className="progress-rail h-full w-full origin-top scale-y-0 bg-primary" />
       </div>
 
-      <div className="max-w-7xl mx-auto mb-16 px-2 sm:px-10">
+      <div className="max-w-7xl mx-auto mb-10 sm:mb-16 px-2 sm:px-10">
         <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink leading-[1.05] tracking-tight max-w-3xl">
           Három lépés, semmi <span className="text-primary-dark font-semibold">meglepetés</span>.
         </h2>
       </div>
 
-      <div className="space-y-8">
+      <div className="space-y-6 sm:space-y-8">
         {steps.map((step, idx) => (
           <article
             key={idx}
-            className="protocol-card sticky top-24 sm:top-28 mx-auto max-w-6xl card-invert border border-divider rounded-6xl overflow-hidden shadow-e3"
+            className="protocol-card sticky top-20 sm:top-28 mx-auto max-w-6xl card-invert border border-divider rounded-6xl overflow-hidden shadow-e3"
           >
             {/* Text left, visual right. The panel is full-bleed to the card
                 edge, so the padding lives on the text column rather than on
                 the grid, and the image runs all the way into the corner
                 radius instead of floating in a padded box. */}
             <div className="grid lg:grid-cols-12">
-              <div className="lg:col-span-7 p-8 sm:p-12 lg:p-16">
+              <div className="lg:col-span-7 p-6 sm:p-10 lg:p-16">
                 {/* The 6-8rem watermark numeral is gone. It was the only thing
                     keeping Lighthouse accessibility off 100, at
                     text-primary/15 — and clearing the 3:1 large-text bar would
@@ -176,8 +208,12 @@ export default function Protocol() {
                   stray border rather than a slot waiting for a picture. The
                   tonal step is what makes it read as its own surface, which
                   is also how the card steps in projects.js work. */}
+              {/* 240px on a 390px-wide phone was 40% of the card given over to
+                  a decorative photograph, which pushed the step's actual text
+                  most of a screen further down. 150px still reads as a
+                  photograph and gives the text back the room. */}
               <div
-                className="lg:col-span-5 relative overflow-hidden min-h-[240px] lg:min-h-full"
+                className="lg:col-span-5 relative overflow-hidden min-h-[150px] sm:min-h-[210px] lg:min-h-full"
                 style={{ backgroundColor: 'rgb(var(--color-card-1))' }}
               >
                 {step.image ? (
