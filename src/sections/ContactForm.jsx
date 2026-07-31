@@ -11,6 +11,24 @@ import { Magnetic } from '../motion/Magnetic'
 const FORMSPREE_ENDPOINT = 'https://formspree.io/f/maqgvjbv'
 
 const MAX_FILE_SIZE = 8 * 1024 * 1024 // 8MB per file
+const MAX_FILES = 5
+
+/* Mirrors the `accept` attribute on the file input, because that attribute
+   only filters the picker dialog. The drop zone below hands
+   `e.dataTransfer.files` straight to handleFiles, so dragging a file in
+   bypassed `accept` entirely and only the size check applied — any file type
+   at all could be attached and forwarded.
+
+   Worth being honest about what this is: a client-side control, and the MIME
+   type is the browser's guess from the extension. It is not a security
+   boundary — Formspree and the mail client are. It stops the accidental and
+   the casual, and it makes the form enforce the rule it already advertised. */
+const ALLOWED_TYPES = [
+  'application/pdf',
+  'application/msword',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+]
+const isAllowedType = (file) => file.type.startsWith('image/') || ALLOWED_TYPES.includes(file.type)
 
 export default function ContactForm() {
   const [sectionRef, visible] = useInView(0.1)
@@ -19,6 +37,7 @@ export default function ContactForm() {
   const [status, setStatus] = useState('idle')
   const [dragging, setDragging] = useState(false)
   const [consent, setConsent] = useState(false)
+  const [fileNotice, setFileNotice] = useState('')
   const honeypotRef = useRef(null)
 
   const handleSubmit = async (e) => {
@@ -46,9 +65,29 @@ export default function ContactForm() {
     }
   }
 
+  /* Rejections used to be silent: an oversized file, and now a disallowed one,
+     was filtered out and nothing said so, while the chip list showed only what
+     survived. Someone attaching a 20MB PDF watched it vanish and submitted
+     believing it was on the message. The same went for the sixth file, which
+     `.slice` dropped without a word. Say what was refused and why. */
   const handleFiles = (newFiles) => {
-    const accepted = Array.from(newFiles).filter((f) => f.size <= MAX_FILE_SIZE)
-    setFiles((prev) => [...prev, ...accepted].slice(0, 5))
+    const incoming = Array.from(newFiles)
+    const tooBig = incoming.filter((f) => f.size > MAX_FILE_SIZE)
+    const wrongType = incoming.filter((f) => f.size <= MAX_FILE_SIZE && !isAllowedType(f))
+    const accepted = incoming.filter((f) => f.size <= MAX_FILE_SIZE && isAllowedType(f))
+
+    let overflow = 0
+    setFiles((prev) => {
+      const merged = [...prev, ...accepted]
+      overflow = Math.max(0, merged.length - MAX_FILES)
+      return merged.slice(0, MAX_FILES)
+    })
+
+    const reasons = []
+    if (wrongType.length) reasons.push(`${wrongType.length} fájl típusa nem támogatott (kép, PDF vagy Word megy)`)
+    if (tooBig.length) reasons.push(`${tooBig.length} fájl nagyobb 8 MB-nál`)
+    if (overflow) reasons.push(`${overflow} fájl nem fért bele az ${MAX_FILES}-ös keretbe`)
+    setFileNotice(reasons.length ? `Nem csatoltam: ${reasons.join('; ')}.` : '')
   }
 
   return (
@@ -195,7 +234,18 @@ export default function ContactForm() {
                       <p className="font-display font-semibold text-ink text-sm">
                         Csatolj egy briefet vagy referenciát (opcionális)
                       </p>
-                      <p className="text-xs text-muted mt-1">Kattints vagy húzd ide a fájlokat (max 5 fájl)</p>
+                      {/* The limits were enforced but never stated. Someone
+                          only found out about them by having a file quietly
+                          disappear. */}
+                      <p className="text-xs text-muted mt-1">
+                        Kattints vagy húzd ide a fájlokat — legfeljebb {MAX_FILES} db, egyenként 8 MB.
+                        Kép, PDF vagy Word.
+                      </p>
+                      {fileNotice && (
+                        <p role="status" className="text-xs text-primary-dark font-medium mt-2">
+                          {fileNotice}
+                        </p>
+                      )}
                       {files.length > 0 && (
                         <div className="mt-4 flex flex-wrap gap-2 justify-center">
                           {files.map((f, i) => (
