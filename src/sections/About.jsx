@@ -3,15 +3,28 @@ import { SOCIAL_LINKS } from '../data/nav'
 import { useInView } from '../motion/useInView'
 
 /* ----------------------------------------------------------------
-   About — placeholder bio, replaced with the real story over time
+   About
 ---------------------------------------------------------------- */
 /* Split out of the JSX so the word-stagger below can map over it without the
    paragraphs being retyped. Word index runs across both, so the fade reads as
    one continuous sentence rather than two separate reveals. */
+/* Tightened from two long paragraphs to two shorter ones. The word-stagger
+   below animates one span per word, so length here is not free: every word
+   added pushes the last one further behind the reveal, and the old version ran
+   long enough that its closing promise arrived after the reader had moved on. */
 const BIO_PARAGRAPHS = [
-  'Rizmajer Máté Levente vagyok, full-stack fejlesztő. Szoftverfejlesztő végzettséget szereztem, de a gyakorlat nagyját nem az iskolapadban gyűjtöttem: már a tanulmányaim alatt éles projekteken dolgoztam. A kód akkor válik igazán érthetővé, amikor egy valódi probléma megoldásához használom — nem akkor, amikor egy feladatlapon szerepel.',
-  'Leginkább kis- és középvállalkozásokkal dolgozom, és a megkeresések nagy része ugyanarról szól: a foglalás, a rendelés vagy az ügyfelek nyilvántartása telefonon, üzenetben és táblázatban megy, ez pedig napi szinten visz el időt. Ilyenkor nem egy szebb weboldal a megoldás, hanem az, hogy a folyamat magától működjön. Olyat építek, ami gyors, stabil, és amin az ügyfeled is eligazodik — utána pedig te is tudod kezelni.',
+  'Rizmajer Máté Levente vagyok, full-stack fejlesztő. Szoftverfejlesztő végzettséget szereztem, de a gyakorlatot éles projekteken gyűjtöttem: a kód akkor állt össze a fejemben, amikor egy valódi problémát kellett megoldanom vele, nem amikor egy feladatlapon szerepelt.',
+  'Kis- és középvállalkozásokkal dolgozom, és a megkeresések nagy része ugyanarról szól: a foglalás, a rendelés vagy az ügyfelek nyilvántartása telefonon és táblázatban megy, ez pedig minden nap elvisz egy órát. Ilyenkor nem szebb weboldal kell, hanem folyamat, ami magától működik — gyors, mobilon is használható, és utána te is tudod kezelni.',
 ]
+
+/* The running word index used to be produced by an IIFE with a mutable counter
+   inside the JSX, which recomputed the same split on every render and put the
+   counter somewhere a reader has to unpick it. It depends only on
+   BIO_PARAGRAPHS, so it is derived once, here. */
+const BIO_WORDS = (() => {
+  let index = 0
+  return BIO_PARAGRAPHS.map((para) => para.split(' ').map((word) => ({ word, index: index++ })))
+})()
 
 export default function About() {
   const [ref, visible] = useInView(0.2)
@@ -54,26 +67,23 @@ export default function About() {
             </h2>
 
             <div className="mt-6 space-y-4 text-muted text-base sm:text-lg leading-relaxed max-w-xl">
-              {(() => {
-                let w = 0
-                return BIO_PARAGRAPHS.map((para, pi) => (
-                  <p key={pi}>
-                    {para.split(' ').map((word, i) => (
-                      <span
-                        key={i}
-                        className="inline-block transition-all duration-500 ease-out motion-reduce:transition-none"
-                        style={{
-                          transitionDelay: visible ? `${w++ * 18}ms` : '0ms',
-                          opacity: visible ? 1 : 0,
-                          transform: visible ? 'translateY(0)' : 'translateY(6px)',
-                        }}
-                      >
-                        {word}&nbsp;
-                      </span>
-                    ))}
-                  </p>
-                ))
-              })()}
+              {BIO_WORDS.map((words, pi) => (
+                <p key={pi}>
+                  {words.map(({ word, index }) => (
+                    <span
+                      key={index}
+                      className="inline-block transition-all duration-500 ease-out motion-reduce:transition-none"
+                      style={{
+                        transitionDelay: visible ? `${index * 18}ms` : '0ms',
+                        opacity: visible ? 1 : 0,
+                        transform: visible ? 'translateY(0)' : 'translateY(6px)',
+                      }}
+                    >
+                      {word}&nbsp;
+                    </span>
+                  ))}
+                </p>
+              ))}
             </div>
 
             <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4">

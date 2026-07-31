@@ -16,12 +16,23 @@
      3. Business Value Builder - the pricing page
      4. WebWise Studio     - the landing hero
    `github` stays '#' until there are real repository URLs; projects.test.js
-   asserts that, so it fails loudly rather than shipping dead links. */
+   asserts that, so it fails loudly rather than shipping dead links.
+
+   `features` and `featured` follow the same empty-by-default rule as the
+   case-study fields above. `features` is the card's "Amit tud" list and renders
+   only when non-empty; `featured` draws a "Kiemelt projekt" badge and is false
+   on all four on purpose. Nothing here has a screenshot, a live URL or a repo
+   yet, so there is no defensible basis for calling one of them the strongest —
+   a badge handed out arbitrarily is decoration, and this section's whole claim
+   is that it does not decorate. Set it on the one project that earns it once
+   the demos are deployed. */
 export const PROJECTS_FULL = [
   {
     title: 'Rétes-rendelő',
     text: 'Online rendelés egy dabasi rétesháznak — élő menü, fiókkezelés, admin felület a háttérben.',
     tech: ['React', 'TanStack Start', 'Supabase'],
+    features: [],
+    featured: false,
     label: 'Ügyfélprojekt',
     tone: { from: '--color-card-1', to: '--color-deep', accent: '--color-accent' },
     image: '',
@@ -38,6 +49,8 @@ export const PROJECTS_FULL = [
     title: 'AB Masszázs időpontfoglaló',
     text: 'Időpontfoglaló rendszer egy masszázsszalonnak — naptár, utalványok, külön admin és ügyfél nézet.',
     tech: ['PHP', 'MySQL', 'Docker'],
+    features: [],
+    featured: false,
     label: 'Ügyfélprojekt',
     tone: { from: '--color-card-2', to: '--color-deep', accent: '--color-primary-light' },
     image: '',
@@ -54,6 +67,8 @@ export const PROJECTS_FULL = [
     title: 'Business Value Builder',
     text: 'Saját árazási oldal egy valós esettanulmánnyal: végigmentem az inárcsi vállalkozásokon, kiszűrtem, kiknek nincs weboldaluk, és személyesen kerestem meg őket.',
     tech: ['React', 'TanStack Start'],
+    features: [],
+    featured: false,
     label: 'Saját projekt',
     tone: { from: '--color-card-3', to: '--color-deep', accent: '--color-primary' },
     image: '',
@@ -70,6 +85,8 @@ export const PROJECTS_FULL = [
     title: 'WebWise Studio',
     text: 'Ügynökségi koncepció-oldal egyedi React/AI alapú webalkalmazásokra — saját kezdeményezésű prototípus.',
     tech: ['React', 'Supabase', 'Framer Motion'],
+    features: [],
+    featured: false,
     label: 'Saját projekt',
     tone: { from: '--color-card-4', to: '--color-deep', accent: '--color-primary-dark' },
     image: '',

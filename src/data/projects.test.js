@@ -57,4 +57,20 @@ describe('PROJECTS_FULL', () => {
     expect(() => assertGalleryItemShape({ ...good, width: undefined }, 'no width')).toThrow()
     expect(() => assertGalleryItemShape({ ...good, height: 0 }, 'zero height')).toThrow()
   })
+
+  it('keeps features an array so the card can map over it safely', () => {
+    for (const p of PROJECTS_FULL) {
+      expect(Array.isArray(p.features), `${p.title} features must be an array`).toBe(true)
+    }
+  })
+
+  /* The badge means "this is the strongest one". Two of them means it means
+     nothing, and the card renders it from a plain boolean per project, so
+     nothing in the component itself would stop a second one appearing. */
+  it('never marks more than one project as featured', () => {
+    for (const p of PROJECTS_FULL) {
+      expect(typeof p.featured, `${p.title} featured must be a boolean`).toBe('boolean')
+    }
+    expect(PROJECTS_FULL.filter((p) => p.featured).length).toBeLessThanOrEqual(1)
+  })
 })
