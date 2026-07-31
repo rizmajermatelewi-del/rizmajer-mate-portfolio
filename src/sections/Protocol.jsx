@@ -28,19 +28,42 @@ export default function Protocol() {
       const cards = gsap.utils.toArray('.protocol-card')
       cards.forEach((card, i) => {
         if (i === cards.length - 1) return
-        gsap.to(card, {
-          scrollTrigger: {
-            trigger: card,
-            start: 'top top+=100',
-            endTrigger: cards[cards.length - 1],
-            end: 'top top+=120',
-            scrub: 1,
+        /* fromTo, not to, and the `from` matters more than anything else here.
+
+           This was a `gsap.to` whose target filter was `blur() saturate()`
+           while the card's computed filter was `none`. GSAP parses `none` by
+           filling in the missing functions with zero, so `saturate` tweened
+           from 0 — fully greyscale — up to the target. The colour did not
+           drain as the card receded; it was gone on the first pixel of scroll
+           and slowly came back. Measured mid-scroll: saturate(0.0002) at a
+           quarter of the way through, still 0.057 at the end.
+
+           Naming the start explicitly is the fix: saturate(1) is the neutral
+           value, and 0px blur is the neutral blur.
+
+           The end values are also softer than before. A stacked card should
+           read as stepped back, not switched off: saturate .7 -> .88,
+           opacity .5 -> .7, blur 6 -> 4. `power2.in` holds it near full
+           strength through the first half and does the work late, once the
+           next card is genuinely covering it. Scale is untouched — that one
+           was already doing its job. */
+        gsap.fromTo(
+          card,
+          { filter: 'blur(0px) saturate(1)' },
+          {
+            scrollTrigger: {
+              trigger: card,
+              start: 'top top+=100',
+              endTrigger: cards[cards.length - 1],
+              end: 'top top+=120',
+              scrub: 1,
+            },
+            scale: 0.92,
+            filter: 'blur(4px) saturate(0.88)',
+            opacity: 0.7,
+            ease: 'power2.in',
           },
-          scale: 0.92,
-          filter: 'blur(6px) saturate(0.7)',
-          opacity: 0.5,
-          ease: 'none',
-        })
+        )
       })
 
       gsap.to('.progress-rail', {
