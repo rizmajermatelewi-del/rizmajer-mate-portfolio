@@ -3,10 +3,19 @@ import { gsap } from 'gsap'
 /* Downloaded, not hotlinked. The CSP in vercel.json is `img-src 'self' data:`,
    so an images.unsplash.com URL is blocked in production — and blocked only
    there, because `vite preview` does not apply vercel.json headers. Importing
-   the files means Vite hashes them and they load as first-party assets. */
-import protocolEgyeztetes from '../assets/protocol-01-egyeztetes.jpg'
-import protocolFejlesztes from '../assets/protocol-02-fejlesztes.jpg'
-import protocolAtadas from '../assets/protocol-03-atadas.jpg'
+   the files means Vite hashes them and they load as first-party assets.
+
+   WebP, converted once from the downloaded JPEGs: 315 kB became 141 kB at the
+   same visual quality. No <picture> fallback: build.target in vite.config.js
+   is chrome87/edge88/firefox78/safari14, and WebP has been supported since
+   Chrome 32, Edge 18, Firefox 65 and Safari 14, so nothing that can parse this
+   bundle can fail to decode these. (browserslist reaches further back than
+   that — ios_saf 11, kaios 2.5 — but the build target is the real floor.)
+   They are decorative in any case: a browser that failed to decode them would
+   lose atmosphere, not information. */
+import protocolEgyeztetes from '../assets/protocol-01-egyeztetes.webp'
+import protocolFejlesztes from '../assets/protocol-02-fejlesztes.webp'
+import protocolAtadas from '../assets/protocol-03-atadas.webp'
 
 /* ----------------------------------------------------------------
    Protocol — Sticky Stacking Cards
