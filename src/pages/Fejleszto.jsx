@@ -12,12 +12,19 @@ import { SOCIAL_LINKS } from '../data/nav'
    this person build". One page cannot do both, so this one drops the pricing,
    the terms and the form entirely and keeps what a technical reader wants.
 
-   Deliberately not linked from the main site's nav or footer. A prospective
-   client landing on a page that says its author is open to employment reads
-   the freelance business as a stopgap, which is the opposite of what `/` is
-   arguing. This is a URL to paste into an application, not a section of the
-   sales site. Linking it, or adding it to sitemap.xml, is a one-line change if
-   that trade stops being worth it.
+   In sitemap.xml, but deliberately not in the nav or the footer. Those are two
+   different decisions and they were made separately.
+
+   The sitemap entry is there so a recruiter searching can actually arrive:
+   a page nobody can find only works if you paste the URL into every
+   application yourself. The nav and footer stay clear of it because a
+   prospective client who follows a link to a page saying its author wants a
+   job reads the freelance business as a stopgap — the opposite of what `/`
+   argues. Search reaches people looking for a developer; the sales site's own
+   navigation reaches people looking to buy, and only the first should land
+   here.
+
+   Both halves are one-line changes if the trade stops being worth it.
 
    Everything here reads from the same data the main page uses, so when the
    demos land and projects.js gains real `live` and `github` values, both pages
