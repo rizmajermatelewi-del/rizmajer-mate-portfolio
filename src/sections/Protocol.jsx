@@ -1,5 +1,12 @@
 import { useRef, useEffect } from 'react'
 import { gsap } from 'gsap'
+/* Downloaded, not hotlinked. The CSP in vercel.json is `img-src 'self' data:`,
+   so an images.unsplash.com URL is blocked in production — and blocked only
+   there, because `vite preview` does not apply vercel.json headers. Importing
+   the files means Vite hashes them and they load as first-party assets. */
+import protocolEgyeztetes from '../assets/protocol-01-egyeztetes.jpg'
+import protocolFejlesztes from '../assets/protocol-02-fejlesztes.jpg'
+import protocolAtadas from '../assets/protocol-03-atadas.jpg'
 
 /* ----------------------------------------------------------------
    Protocol — Sticky Stacking Cards
@@ -52,14 +59,23 @@ export default function Protocol() {
      the top of this file, and set the fields.
 
      Wanted: 01 a real meeting or notes shot, 02 the build in progress on a
-     screen, 03 the handover. Anything genuinely yours beats stock here. */
+     screen, 03 the handover. Anything genuinely yours beats stock here.
+
+     TEMPORARY: those three slots currently hold Unsplash photographs, put
+     back deliberately and knowing they were pulled once before. They are
+     atmosphere, not evidence — nothing here is presented as a shot of a real
+     project, which is why every `imageAlt` is '' and the images render as
+     decorative. Replace them with your own photographs of an actual
+     consultation, an actual build and an actual handover the moment you have
+     any; a real one is worth more than all three of these. Deleting a file
+     and blanking its two fields restores the blueprint frame. */
   const steps = [
     {
       num: '01',
       title: 'Egyeztetés',
       tagline: 'Először meghallgatlak.',
       text: 'Végigvesszük, mi az, ami ma kézzel megy, és mennyi időt visz el. Ebből írásos terjedelem és fix ár lesz: mielőtt bármit elkezdenék, tudod, mit kapsz és mennyiért.',
-      image: '',
+      image: protocolEgyeztetes,
       imageAlt: '',
     },
     {
@@ -67,7 +83,7 @@ export default function Protocol() {
       title: 'Tervezés és fejlesztés',
       tagline: 'Menet közben látod, hol tart.',
       text: 'Kapsz egy linket, amin az épülő oldal végig megnézhető. Nem a végén szembesülsz az eredménnyel: amíg alakul, olcsó változtatni rajta.',
-      image: '',
+      image: protocolFejlesztes,
       imageAlt: '',
     },
     {
@@ -75,7 +91,7 @@ export default function Protocol() {
       title: 'Átadás és támogatás',
       tagline: 'A leadás után sem tűnök el.',
       text: 'Élesítés előtt telefonon, tableten és több böngészőben is végigmegyek rajta. Átadom a hozzáféréseket, és megmutatom, hogyan kezeld. A domain és a kód a tiéd marad.',
-      image: '',
+      image: protocolAtadas,
       imageAlt: '',
     },
   ]
