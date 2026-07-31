@@ -1,0 +1,197 @@
+import { Link } from 'react-router-dom'
+import { ArrowLeft, ArrowUpRight, Mail } from 'lucide-react'
+import { ORDERED_SKILLS } from '../data/skills'
+import { PROJECTS_FULL } from '../data/projects'
+import { SOCIAL_LINKS } from '../data/nav'
+
+/* The second entry point.
+
+   `/` sells a service to a business owner: it prices the work, links the ÁSZF
+   and ends in a quote form. None of that helps someone assessing a developer
+   for a role — it answers "what does this cost" when the question is "what can
+   this person build". One page cannot do both, so this one drops the pricing,
+   the terms and the form entirely and keeps what a technical reader wants.
+
+   Deliberately not linked from the main site's nav or footer. A prospective
+   client landing on a page that says its author is open to employment reads
+   the freelance business as a stopgap, which is the opposite of what `/` is
+   arguing. This is a URL to paste into an application, not a section of the
+   sales site. Linking it, or adding it to sitemap.xml, is a one-line change if
+   that trade stops being worth it.
+
+   Everything here reads from the same data the main page uses, so when the
+   demos land and projects.js gains real `live` and `github` values, both pages
+   gain them at once and neither can drift from the other. */
+
+/* SKILLS_FULL carries two registers: `text` for the business owner and
+   `detail` for whoever is checking the stack. `/` shows `text` and hides
+   `detail` behind a click. Here it is the other way round — this reader is
+   the one the technical copy was written for, so it leads. */
+export default function Fejleszto() {
+  const linkedProjects = PROJECTS_FULL.filter((p) => p.live || p.github !== '#')
+
+  return (
+    <div className="min-h-screen bg-background text-ink font-body px-6 sm:px-10 lg:px-16 py-16 sm:py-24">
+      <div className="max-w-4xl mx-auto">
+        {/* flex w-fit, not inline-flex — see the same note in Terms.jsx: as an
+            inline box the eyebrow below shared this link's line. */}
+        <Link to="/" className="flex w-fit items-center gap-2 text-sm font-medium text-primary-dark lift-on-hover mb-10">
+          <ArrowLeft className="h-4 w-4" /> Vissza a főoldalra
+        </Link>
+
+        <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary-dark">╱ Fejlesztői profil</span>
+        <h1 className="font-display font-extrabold text-4xl sm:text-6xl text-ink mt-4 leading-[1.05] tracking-tight">
+          Rizmajer Máté Levente
+        </h1>
+        <p className="font-display font-semibold text-xl sm:text-2xl text-primary-dark mt-3">
+          Full-stack fejlesztő — React és Node.js
+        </p>
+
+        <div className="mt-8 space-y-4 text-muted text-base sm:text-lg leading-relaxed max-w-2xl">
+          <p>
+            Szoftverfejlesztő végzettséget szereztem, a gyakorlatot pedig éles projekteken
+            gyűjtöttem: működő rendszereket építettem valódi felhasználóknak, nem feladatlapra.
+            A munkáim nagyobb része full-stack — a felülettől az adatbázisig ugyanaz a kéz
+            viszi végig.
+          </p>
+          <p>
+            Nyitott vagyok fejlesztői pozícióra, alkalmazottként és szerződéses formában
+            egyaránt. Ha technikai részlet érdekel, amit itt nem találsz, írj — konkrét
+            kérdésre konkrétan válaszolok.
+          </p>
+        </div>
+
+        {/* ---------------- Stack ---------------- */}
+        <h2 className="font-display font-bold text-2xl sm:text-3xl text-ink mt-16 tracking-tight">
+          Amivel dolgozom
+        </h2>
+        <div className="mt-8 space-y-8">
+          {ORDERED_SKILLS.map((skill) => {
+            const Icon = skill.icon
+            return (
+              <div key={skill.title} className="border-t border-divider pt-6">
+                <div className="flex items-start gap-4">
+                  <span className="h-10 w-10 shrink-0 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center">
+                    <Icon className="h-4 w-4 text-primary-dark" strokeWidth={2} />
+                  </span>
+                  <div>
+                    <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-primary-dark">
+                      {skill.category}
+                    </p>
+                    <h3 className="font-display font-semibold text-lg text-ink mt-1">{skill.title}</h3>
+                    {/* `detail`, not `text` — see the note above. */}
+                    <p className="text-muted leading-relaxed mt-2">{skill.detail}</p>
+                  </div>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+
+        {/* ---------------- Projects ---------------- */}
+        <h2 className="font-display font-bold text-2xl sm:text-3xl text-ink mt-16 tracking-tight">
+          Projektek
+        </h2>
+        <div className="mt-8 grid sm:grid-cols-2 gap-5">
+          {PROJECTS_FULL.map((p) => (
+            <article key={p.title} className="rounded-3xl border border-divider bg-surface p-6">
+              {p.label && (
+                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-primary-dark">
+                  {p.label}
+                </p>
+              )}
+              <h3 className="font-display font-semibold text-lg text-ink mt-2">{p.title}</h3>
+              <p className="text-muted text-sm leading-relaxed mt-2">{p.text}</p>
+
+              {/* Every field below renders only when it holds something. year,
+                  role, problem and solution are all '' today and all four
+                  github values are '#', so nothing here invents a link or a
+                  date that does not exist. */}
+              {p.role && <p className="text-muted text-sm mt-3">{p.role}</p>}
+
+              {p.tech?.length > 0 && (
+                <ul className="flex flex-wrap gap-1.5 mt-4">
+                  {p.tech.map((t) => (
+                    <li
+                      key={t}
+                      className="font-mono text-[10px] uppercase tracking-wider text-muted border border-divider rounded-full px-2.5 py-1"
+                    >
+                      {t}
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+              {(p.live || p.github !== '#') && (
+                <div className="flex flex-wrap gap-3 mt-4">
+                  {p.live && (
+                    <a
+                      href={p.live}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-sm font-medium text-primary-dark"
+                    >
+                      Megnyitom <ArrowUpRight className="h-3.5 w-3.5" strokeWidth={2} />
+                    </a>
+                  )}
+                  {p.github !== '#' && (
+                    <a
+                      href={p.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-sm font-medium text-primary-dark"
+                    >
+                      GitHub <ArrowUpRight className="h-3.5 w-3.5" strokeWidth={2} />
+                    </a>
+                  )}
+                </div>
+              )}
+            </article>
+          ))}
+        </div>
+
+        {/* Says the thing the cards cannot say for themselves. Without it a
+            technical reader sees link-less cards and reads them as claims with
+            nothing behind them — which is what they are today.
+
+            No counts in the sentence on purpose. "Két ügyfélprojekt" would be
+            another place stating a number that projects.js owns, and this repo
+            has already been bitten once by the four-projects fact living in
+            four places until it rotted into a false claim. */}
+        {linkedProjects.length === 0 && (
+          <p className="text-muted text-sm leading-relaxed mt-5">
+            Az ügyfélprojektekhez nyilvános linket és repót nem tudok adni: éles rendszerek,
+            valódi ügyféladatokkal. A saját projektekhez demókat építek, amiket bárki
+            megnyithat. Kódot szívesen mutatok személyesen.
+          </p>
+        )}
+
+        {/* ---------------- Contact ---------------- */}
+        <h2 className="font-display font-bold text-2xl sm:text-3xl text-ink mt-16 tracking-tight">
+          Kapcsolat
+        </h2>
+        <div className="mt-6 flex flex-wrap gap-3">
+          <a
+            href="mailto:rizmajermatelewi@gmail.com"
+            className="inline-flex items-center gap-2 bg-primary text-white font-semibold px-6 py-3.5 rounded-full shadow-lg shadow-primary/30"
+          >
+            <Mail className="h-4 w-4" strokeWidth={2} />
+            rizmajermatelewi@gmail.com
+          </a>
+          {SOCIAL_LINKS.map(({ Icon, href, label }) => (
+            <a
+              key={label}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="lift-on-hover inline-flex items-center gap-2 bg-surface border border-divider text-ink px-6 py-3.5 rounded-full font-medium text-sm hover:border-primary/60 hover:text-primary-dark transition-colors duration-300"
+            >
+              <Icon className="h-4 w-4" strokeWidth={2} />
+              {label}
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}

@@ -3,4 +3,4 @@
    decide which HTML files to write into `dist/`. A route added to one and
    not the other would ship without prerendered HTML, so they read the
    same source. */
-export const ROUTE_PATHS = ['/', '/adatvedelem', '/aszf']
+export const ROUTE_PATHS = ['/', '/adatvedelem', '/aszf', '/fejleszto']
