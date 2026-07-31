@@ -96,6 +96,26 @@ const replaceMeta = (html, attr, name, value) =>
 const replaceCanonical = (html, value) =>
   html.replace(/(<link\s+rel="canonical"\s+href=")[^"]*(")/i, `$1${escapeAttr(value)}$2`)
 
+/* Drops the FAQPage node from the JSON-LD graph, leaving Person and WebSite.
+   Parses rather than pattern-matches, because a regex over JSON would break
+   the moment a node gains a nested object — and it throws instead of silently
+   passing the block through, since a graph that stopped being parseable is a
+   build problem worth stopping for. */
+function withoutFaqSchema(html) {
+  return html.replace(
+    /(<script type="application\/ld\+json">)([\s\S]*?)(<\/script>)/i,
+    (whole, open, body, close) => {
+      const data = JSON.parse(body)
+      if (!Array.isArray(data['@graph'])) return whole
+
+      const kept = data['@graph'].filter((node) => node['@type'] !== 'FAQPage')
+      if (kept.length === data['@graph'].length) return whole
+
+      return `${open}${JSON.stringify({ ...data, '@graph': kept }, null, 2)}${close}`
+    }
+  )
+}
+
 async function main() {
   const template = await readFile(path.join(distDir, 'index.html'), 'utf8')
 
@@ -139,7 +159,12 @@ async function main() {
       const siteName = template.match(/<meta\s+property="og:site_name"\s+content="([^"]+)"/i)?.[1]
 
       if (heading) {
-        const title = siteName ? `${heading} — ${decode(siteName)}` : heading
+        /* Suffixing the site name onto a heading that already contains it
+           produced "Rizmajer Máté Levente — Rizmajer Máté" on the developer
+           profile, whose h1 is the full name. Suffix only when it adds
+           something. */
+        const site = siteName ? decode(siteName) : ''
+        const title = site && !heading.includes(site) ? `${heading} — ${site}` : heading
         page = replaceTitle(page, title)
         page = replaceMeta(page, 'property', 'og:title', title)
         page = replaceMeta(page, 'name', 'twitter:title', title)
@@ -150,6 +175,15 @@ async function main() {
         page = replaceMeta(page, 'property', 'og:description', description)
         page = replaceMeta(page, 'name', 'twitter:description', description)
       }
+
+      /* The template's JSON-LD graph is Person + WebSite + FAQPage. The first
+         two stay true on every route; FAQPage does not. It was being copied
+         onto /adatvedelem, /aszf and /fejleszto — pages with no FAQ on them —
+         and it carries the pricing answers, so a developer profile was
+         publishing price structured data it does not display. Structured data
+         is supposed to describe the page it sits on, so the node comes out
+         everywhere except the page that actually renders the questions. */
+      page = withoutFaqSchema(page)
     }
 
     const outFile =

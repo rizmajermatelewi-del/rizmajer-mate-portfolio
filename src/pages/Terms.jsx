@@ -5,7 +5,10 @@ export default function Terms() {
   return (
     <div className="min-h-screen bg-background text-ink font-body px-6 sm:px-10 lg:px-16 py-16 sm:py-24">
       <div className="max-w-3xl mx-auto">
-        <Link to="/" className="inline-flex items-center gap-2 text-sm font-medium text-primary-dark lift-on-hover mb-10">
+        {/* flex w-fit, not inline-flex: as an inline box the eyebrow below sat
+            on the same line as this link, so the page opened with "Vissza a
+            főoldalra╱ Jogi információ" run together. */}
+        <Link to="/" className="flex w-fit items-center gap-2 text-sm font-medium text-primary-dark lift-on-hover mb-10">
           <ArrowLeft className="h-4 w-4" /> Vissza a főoldalra
         </Link>
         <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary-dark">╱ Jogi információ</span>
