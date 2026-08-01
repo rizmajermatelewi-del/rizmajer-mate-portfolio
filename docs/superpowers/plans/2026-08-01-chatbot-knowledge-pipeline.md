@@ -570,9 +570,13 @@ Open the live site and check the GYIK section still lists 8 questions and the Fo
 
 This is the check spec §9 requires before the chatbot's cost plan can be trusted. Prompt caching on `claude-haiku-4-5` needs a **4096-token** prefix; below that it silently does not cache.
 
+Run it with `npx -p`, which makes the SDK available for one command without
+installing it. **Do not `npm i` the SDK into this repo** — the portfolio is a
+static site and has no business carrying a model client in its dependency tree
+just to take one measurement.
+
 ```bash
-npm i -D @anthropic-ai/sdk
-node --input-type=module -e "
+npx -y -p @anthropic-ai/sdk node --input-type=module -e "
 import Anthropic from '@anthropic-ai/sdk'
 const k = await (await fetch('https://rizmajer-mate-portfolio.vercel.app/knowledge.json')).json()
 const r = await new Anthropic().messages.countTokens({
@@ -583,7 +587,13 @@ console.log(r.input_tokens, 'tokens —', r.input_tokens >= 4096 ? 'CACHEABLE' :
 "
 ```
 
-Requires `ANTHROPIC_API_KEY` in the environment. Record the number: it decides whether Plan B budgets for cached or uncached input. It does not block Plan B either way.
+Requires `ANTHROPIC_API_KEY` in the environment. If it is not set, skip this step
+and record that it is outstanding — the measurement can also be taken from Plan B's
+repo, where the SDK is a genuine dependency. Record the number either way: it decides
+whether Plan B budgets for cached or uncached input. It does not block Plan B.
+
+Afterwards, confirm the repo is unpolluted: `git status --short` must show no change
+to `package.json` or `package-lock.json`.
 
 - [ ] **Step 8: Report**
 
