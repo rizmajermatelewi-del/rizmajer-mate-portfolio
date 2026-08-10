@@ -96,6 +96,35 @@ const replaceMeta = (html, attr, name, value) =>
 const replaceCanonical = (html, value) =>
   html.replace(/(<link\s+rel="canonical"\s+href=")[^"]*(")/i, `$1${escapeAttr(value)}$2`)
 
+/* index.html hardcodes lang="hu", which would otherwise be copied onto the
+   English pages verbatim — telling a screen reader to pronounce English with
+   Hungarian phonemes, and telling Google the page is Hungarian while it reads
+   as English. */
+const replaceLang = (html, locale) =>
+  html.replace(/(<html\b[^>]*\blang=")[^"]*(")/i, `$1${escapeAttr(locale)}$2`)
+
+/* Declares the translations of a page to each other.
+   Emitted only for routes that actually have a twin: /adatvedelem and /aszf
+   are Hungarian-only by design, and an hreflang pointing at a URL that 404s is
+   worse than none — Google drops the whole cluster when one side is broken.
+   x-default points at the Hungarian version of this same page, because that is
+   the one to serve a reader whose language we have no better guess for. */
+function withAlternates(html, route, origin, locales, defaultLocale, withLocale, routePaths) {
+  const twins = locales
+    .map((locale) => [locale, withLocale(route, locale)])
+    .filter(([, target]) => routePaths.includes(target))
+
+  if (twins.length < 2) return html
+
+  const href = (target) => escapeAttr(target === '/' ? `${origin}/` : `${origin}${target}`)
+  const tags = twins
+    .map(([locale, target]) => `\n    <link rel="alternate" hreflang="${locale}" href="${href(target)}" />`)
+    .join('')
+  const fallback = `\n    <link rel="alternate" hreflang="x-default" href="${href(withLocale(route, defaultLocale))}" />`
+
+  return html.replace(/(<link\s+rel="canonical"[^>]*>)/i, `$1${tags}${fallback}`)
+}
+
 /* Drops the FAQPage node from the JSON-LD graph, leaving Person and WebSite.
    Parses rather than pattern-matches, because a regex over JSON would break
    the moment a node gains a nested object — and it throws instead of silently
@@ -132,6 +161,11 @@ async function main() {
   // Plain ESM with no JSX, so Node reads the route list straight from
   // source rather than from the SSR bundle.
   const { ROUTE_PATHS } = await import(pathToFileURL(path.join(root, 'src', 'routePaths.js')).href)
+  /* Same trick, same reason: locales.js is deliberately free of JSX and of any
+     React import so it can be read here as plain ESM. */
+  const { LOCALES, DEFAULT_LOCALE, localeFromPath, withLocale } = await import(
+    pathToFileURL(path.join(root, 'src', 'i18n', 'locales.js')).href
+  )
   const { render } = await import(pathToFileURL(ssrEntry).href)
 
   for (const route of ROUTE_PATHS) {
@@ -149,6 +183,8 @@ async function main() {
     const url = route === '/' ? `${origin}/` : `${origin}${route}`
     page = replaceCanonical(page, url)
     page = replaceMeta(page, 'property', 'og:url', url)
+    page = replaceLang(page, localeFromPath(route))
+    page = withAlternates(page, route, origin, LOCALES, DEFAULT_LOCALE, withLocale, ROUTE_PATHS)
 
     /* The homepage keeps the hand-written title and description in
        index.html. Subroutes would otherwise inherit them verbatim, so

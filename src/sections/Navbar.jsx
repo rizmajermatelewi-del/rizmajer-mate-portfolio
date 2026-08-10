@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { Menu, X, ArrowUpRight } from 'lucide-react'
 import { LogoMark } from '../components/Logo'
 import { NAV_LINKS, SOCIAL_LINKS } from '../data/nav'
-import { ScrambleText } from '../motion/ScrambleText'
+import { useLocale } from '../i18n/useLocale'
+import { withLocale } from '../i18n/locales'
 
 /* ----------------------------------------------------------------
    Navbar
@@ -10,6 +12,14 @@ import { ScrambleText } from '../motion/ScrambleText'
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+
+  /* The toggle is a link to this same page under the other prefix, not a
+     setter. That is the whole benefit of deriving locale from the URL: the
+     switch is shareable, back-navigable and crawlable, and there is no state
+     to keep in sync. */
+  const { pathname } = useLocation()
+  const locale = useLocale()
+  const otherLocale = locale === 'hu' ? 'en' : 'hu'
 
   /* A sentinel plus an observer, not a scroll handler. The old version ran a
      callback on every scroll frame to recompute one boolean; the browser can
@@ -62,18 +72,22 @@ export default function Navbar() {
         } rounded-full px-4 sm:px-6 py-2.5 w-[calc(100%-2rem)] max-w-5xl`}
       >
         <div className="flex items-center justify-between gap-6">
-          <a href="#kezdolap" className="flex items-center gap-2 group">
+          {/* The mark stands alone here, so the link carries the accessible
+              name the removed wordmark used to give it. */}
+          <a href="#kezdolap" className="flex items-center group" aria-label="Rizmajer Máté — kezdőlap">
+            {/* Inverts on scroll: unscrolled the pill is transparent over the
+                dark hero, scrolled it is glass over the light page.
+
+                On hover a highlight sweeps through the brush strokes — that
+                lives in `.logo-sheen` in index.css, masked to the artwork.
+                The scale is dialled back to 6% because it is now the quiet half
+                of the effect rather than the whole of it, and it stays
+                `motion-safe`: a logo that jumps is exactly what a
+                vestibular-motion setting asks us not to do. The filter
+                transition moved into Logo.jsx, which now owns the invert. */}
             <LogoMark
-              className={`h-9 w-9 shrink-0 transition-colors duration-300 group-hover:text-primary-light ${
-                scrolled ? 'text-ink' : 'text-white'
-              }`}
-            />
-            <ScrambleText
-              text="Rizmajer Máté"
-              trigger="hover"
-              className={`font-display font-bold tracking-tight text-lg ${
-                scrolled ? 'text-ink' : 'text-white'
-              } transition-colors`}
+              className="h-8 w-auto shrink-0 transition-transform duration-700 motion-safe:group-hover:scale-[1.06]"
+              inverted={scrolled}
             />
           </a>
 
@@ -92,6 +106,23 @@ export default function Navbar() {
           </div>
 
           <div className="hidden lg:flex items-center gap-4">
+            {/* Labelled with the language it switches *to*, in that language —
+                "EN" is legible to someone who cannot read the Hungarian around
+                it, which is the entire audience for this control. The
+                aria-label is written in the target language for the same
+                reason, and hrefLang tells assistive tech the destination
+                changes language. */}
+            <Link
+              to={withLocale(pathname, otherLocale)}
+              hrefLang={otherLocale}
+              lang={otherLocale}
+              aria-label={otherLocale === 'en' ? 'Switch to English' : 'Váltás magyar nyelvre'}
+              className={`font-mono text-xs font-semibold tracking-widest px-2 py-1 rounded-full transition-colors duration-300 ${
+                scrolled ? 'text-ink/60 hover:text-primary-dark' : 'text-white/80 hover:text-white'
+              }`}
+            >
+              {otherLocale.toUpperCase()}
+            </Link>
             <div className="flex items-center gap-1">
               {SOCIAL_LINKS.map(({ Icon, href, label }) => (
                 <a
@@ -177,6 +208,16 @@ export default function Navbar() {
             <ArrowUpRight className="h-4 w-4" />
           </a>
           <div className="mt-6 flex items-center justify-center gap-3">
+            <Link
+              to={withLocale(pathname, otherLocale)}
+              onClick={() => setOpen(false)}
+              hrefLang={otherLocale}
+              lang={otherLocale}
+              aria-label={otherLocale === 'en' ? 'Switch to English' : 'Váltás magyar nyelvre'}
+              className="px-4 py-3 rounded-full bg-divider/40 font-mono text-xs font-semibold tracking-widest text-ink/60 hover:text-primary-dark transition-all duration-300"
+            >
+              {otherLocale.toUpperCase()}
+            </Link>
             {SOCIAL_LINKS.map(({ Icon, href, label }) => (
               <a
                 key={label}
