@@ -734,7 +734,10 @@ describe('Services', () => {
     render(<Services />)
     expect(screen.getByText('Svédmasszázs')).toBeTruthy()
     expect(screen.getByText('60 perc')).toBeTruthy()
-    expect(screen.getByText('9\u00a0000\u00a0Ft')).toBeTruthy()
+    /* normalizer disabled for this one: testing-library's default collapses
+       every \s -- which includes U+00A0 -- in the node text but not in the
+       matcher, so an NBSP matcher can otherwise never match. */
+    expect(screen.getByText('9\u00a0000\u00a0Ft', { normalizer: (text) => text })).toBeTruthy()
     expect(screen.getByText('Frissítő')).toBeTruthy()
   })
 })
@@ -755,9 +758,14 @@ Create `src/lib/format.js`:
 
    Every separator is non-breaking: "9 000 Ft" breaking across two lines as "9"
    and "000 Ft" happens on a 360px phone, and it reads as a different price for
-   the half-second before the eye recovers. */
+   the half-second before the eye recovers.
+
+   useGrouping: 'always' because hu-HU's CLDR data only groups from five
+   digits: 10 000 groups, 9000 does not, which fails the test above. */
 export function formatPrice(huf) {
-  const grouped = huf.toLocaleString('hu-HU').replace(/[\s\u202f]/g, '\u00a0')
+  const grouped = huf
+    .toLocaleString('hu-HU', { useGrouping: 'always' })
+    .replace(/[\s\u202f]/g, '\u00a0')
   return `${grouped}\u00a0Ft`
 }
 
