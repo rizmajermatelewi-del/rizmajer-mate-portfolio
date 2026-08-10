@@ -16,6 +16,7 @@ import { gsap } from 'gsap'
 import protocolEgyeztetes from '../assets/protocol-01-egyeztetes.webp'
 import protocolFejlesztes from '../assets/protocol-02-fejlesztes.webp'
 import protocolAtadas from '../assets/protocol-03-atadas.webp'
+import { PROTOCOL_STEPS } from '../data/protocol'
 
 /* ----------------------------------------------------------------
    Protocol — Sticky Stacking Cards
@@ -133,32 +134,12 @@ export default function Protocol() {
      consultation, an actual build and an actual handover the moment you have
      any; a real one is worth more than all three of these. Deleting a file
      and blanking its two fields restores the blueprint frame. */
-  const steps = [
-    {
-      num: '01',
-      title: 'Egyeztetés',
-      tagline: 'Először meghallgatlak.',
-      text: 'Végigvesszük, mi az, ami ma kézzel megy, és mennyi időt visz el. Ebből írásos terjedelem és fix ár lesz: mielőtt bármit elkezdenék, tudod, mit kapsz és mennyiért.',
-      image: protocolEgyeztetes,
-      imageAlt: '',
-    },
-    {
-      num: '02',
-      title: 'Tervezés és fejlesztés',
-      tagline: 'Menet közben látod, hol tart.',
-      text: 'Kapsz egy linket, amin az épülő oldal végig megnézhető. Nem a végén szembesülsz az eredménnyel: amíg alakul, olcsó változtatni rajta.',
-      image: protocolFejlesztes,
-      imageAlt: '',
-    },
-    {
-      num: '03',
-      title: 'Átadás és támogatás',
-      tagline: 'A leadás után sem tűnök el.',
-      text: 'Élesítés előtt telefonon, tableten és több böngészőben is végigmegyek rajta. Átadom a hozzáféréseket, és megmutatom, hogyan kezeld. A domain és a kód a tiéd marad.',
-      image: protocolAtadas,
-      imageAlt: '',
-    },
-  ]
+  const stepImages = [protocolEgyeztetes, protocolFejlesztes, protocolAtadas]
+  const steps = PROTOCOL_STEPS.map((step, i) => ({
+    ...step,
+    image: stepImages[i],
+    imageAlt: '',
+  }))
 
   return (
     <section id="folyamat" ref={containerRef} className="relative px-4 sm:px-6 py-14 sm:py-24 lg:py-28">
