@@ -47,8 +47,20 @@ export const PRICING_TIERS = [
   },
   {
     eyebrow: 'Egyedi',
-    name: 'Belső rendszer',
-    desc: 'Ha a munka ma táblázatban vagy papíron van, és már senki nem találja benne, amit keres.',
+    /* Was "Belső rendszer". Same slot, same price, same anchoring job — but
+       that version was the one claim on the site with nothing behind it: no
+       internal system has been built for anyone, so a yes to it would have
+       been a seven-figure quote for a category never delivered.
+
+       Connecting existing tools is the honest version of the same tier. It is
+       also the one thing a SaaS cannot take: a booking product serves every
+       salon identically, which is why the Salonic-shaped competitor exists,
+       but no product knows that this client's számlázó has to talk to that
+       client's naptár. And it ladders directly up from the 90 000 Ft
+       single-process offer below, so the cheapest and the dearest thing on the
+       page are now the same promise at two sizes. */
+    name: 'Rendszerek összekötése',
+    desc: 'Ha már több program fut nálad, és a köztük lévő átmásolgatás viszi el a napodat.',
     priceNote: '1 200 000 Ft-tól',
     scope: 'Ütemezés a terjedelemtől függ',
     /* Was "Adatok kiajánlása", "Több modul, több jogosultsági szint" and the
@@ -57,10 +69,40 @@ export const PRICING_TIERS = [
        person shift read as a slip rather than as a deliberate address to a
        team. Written for the person paying, in the second person singular the
        rest of the site uses. */
-    features: ['A te folyamataidra szabva', 'Te állítod be, ki mit láthat belőle', 'Az adataidat bármikor kiviheted Excelbe', 'Együtt nő a céggel'],
+    features: ['A te folyamataidra szabva', 'Amit ma kézzel másolsz át, magától megy', 'Az adataidat bármikor kiviheted Excelbe', 'Együtt nő a céggel'],
     highlight: false,
   },
 ]
+
+/* The only offer on the page for someone who already has a site.
+   Every tier above assumes the visitor is buying a thing they do not have yet,
+   which excludes the largest group in the catchment by far: businesses whose
+   site exists and is slow, broken on a phone, or unusable with a keyboard.
+   They are also the only group a stranger can be told something specific and
+   true about before the first call, which is what makes this the door-opener
+   rather than a discount.
+
+   Fixed price, not "-tól" — the whole point is that it is a small, bounded yes,
+   and a "-tól" reintroduces the open-ended risk it exists to remove. 45 000 Ft
+   is about three hours at the 16 000 Ft/hour the tiers above are derived from,
+   which is a real audit plus a written report and no more.
+
+   Crediting it against the fix is what stops this being a dead end: it turns an
+   audit into the first invoice of a project without discounting the project.
+
+   Not sold as a legal obligation. The Hungarian accessibility rules that took
+   effect on 2025-06-28 exempt micro-enterprises (under 10 staff and under €2M
+   turnover) and never covered informational sites that conclude no contract
+   online — which is nearly every local business worth calling. Sold as reach,
+   the way the FAQ already puts it, because that claim is true for all of them. */
+export const PRICING_AUDIT = {
+  eyebrow: 'Ha már van oldalad',
+  name: 'Átvilágítás és javaslat',
+  priceNote: '45 000 Ft',
+  desc: 'Végigmérem a meglévő oldaladat telefonon és gépen: mitől lassú, hol akad el a látogató, mi az, amit egy fogyatékkal élő vagy idősebb vásárló nem tud használni. Írásban kapod meg, magyarul, fontossági sorrendben — akkor is, ha utána nem velem csináltatod meg. Ha mégis velem, az árát beszámítom a javításba.',
+  href: '#kapcsolat',
+  linkLabel: 'Kérj ajánlatot',
+}
 
 /* The smallest yes on the page, and the reason it sits here rather than only
    in the AI section: read in page order, a visitor met 90 000 Ft first — the
@@ -90,6 +132,49 @@ export const PRICING_ENTRY = {
   href: '#kapcsolat',
   linkLabel: 'Kérj ajánlatot',
 }
+
+/* The cheapest real yes on the page, and the one most of the outbound list
+   actually needs first. A local business that is missing from Google Maps, or
+   listed with a dead phone number and last year's opening hours, is losing
+   walk-ins today — and unlike a redesign, this is checkable from the outside
+   before the first call, which makes it the only offer here that can open a
+   conversation with a stranger.
+
+   Cheap because it is genuinely a couple of hours, and priced as a flat fee for
+   the same reason the audit is: a small number with no "-tól" is a decision
+   somebody can make on the spot. */
+export const PRICING_GOOGLE = {
+  eyebrow: 'A leggyorsabb',
+  name: 'Google-megjelenés beállítása',
+  priceNote: '60 000 Ft',
+  desc: 'Hogy amikor valaki a környéken rád keres, meg is találjon: cégprofil, térkép, nyitvatartás, telefonszám, képek — kitöltve és rendben tartva. Ha még nincs profilod, létrehozom; ha van, de elavult, rendbe rakom.',
+  href: '#kapcsolat',
+  linkLabel: 'Kérj ajánlatot',
+}
+
+/* The other half of the audit. Without it the 45 000 Ft ends in a written
+   report and a quote invented on the spot every time, which is both slower for
+   the client and the point where most of these conversations die. With it the
+   audit has an obvious next step at a published price, and the credit note on
+   the audit makes taking it the cheaper path. */
+export const PRICING_REFRESH = {
+  eyebrow: 'A következő lépés',
+  name: 'Meglévő oldal felújítása',
+  priceNote: '120 000 Ft-tól',
+  desc: 'A meglévő oldalad marad, csak működni fog: mobilon is használható, gyorsan betölt, és a fontos gomb ott lesz, ahol keresik. Akkor éri meg, ha a tartalom és a megjelenés alapvetően jó — ha nem, azt az átvilágításban megmondom, és inkább újat javaslok.',
+  href: '#kapcsolat',
+  linkLabel: 'Kérj ajánlatot',
+}
+
+/* Ascending by price, which is also ascending by commitment. Exported as one
+   list so a new offer is a data change and never a JSX change — the section
+   maps whatever is in here. */
+export const PRICING_SMALL_OFFERS = [
+  PRICING_AUDIT,
+  PRICING_GOOGLE,
+  PRICING_ENTRY,
+  PRICING_REFRESH,
+]
 
 /* Written out because the site already promised it twice without a number
    ("üzemeltetés havidíjas", "a részleteket megbeszéljük"), and an unpriced

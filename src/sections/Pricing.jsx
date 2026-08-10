@@ -1,5 +1,5 @@
 import { Check, ArrowRight } from 'lucide-react'
-import { PRICING_TIERS, PRICING_ENTRY, PRICING_RETAINER } from '../data/pricing'
+import { PRICING_TIERS, PRICING_SMALL_OFFERS, PRICING_RETAINER } from '../data/pricing'
 import { useInView } from '../motion/useInView'
 import { TiltCard } from '../motion/TiltCard'
 import { Magnetic } from '../motion/Magnetic'
@@ -108,24 +108,37 @@ export default function Pricing() {
             visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
           }`}
         >
-          <div className="rounded-5xl border border-divider p-6 sm:p-8 flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between sm:gap-8">
-            <div className="max-w-2xl">
-              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary-dark">
-                {PRICING_ENTRY.eyebrow}
-              </span>
-              <div className="mt-2 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                <h3 className="font-display font-bold text-xl text-ink">{PRICING_ENTRY.name}</h3>
-                <p className="font-display font-semibold text-lg text-primary-dark">{PRICING_ENTRY.priceNote}</p>
+          {/* Two columns, not four stacked strips. At full width each of these
+              read as a fourth tier competing with the grid above; in a tighter
+              two-up they read as a menu of smaller things, which is what they
+              are. The order is ascending price, set in pricing.js. */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-5">
+            {PRICING_SMALL_OFFERS.map((offer) => (
+              <div
+                key={offer.name}
+                className="rounded-5xl border border-divider p-6 sm:p-8 flex flex-col gap-5 hover:border-primary/60 transition-colors duration-300"
+              >
+                <div className="max-w-2xl">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary-dark">
+                    {offer.eyebrow}
+                  </span>
+                  <div className="mt-2 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                    <h3 className="font-display font-bold text-xl text-ink">{offer.name}</h3>
+                    <p className="font-display font-semibold text-lg text-primary-dark">{offer.priceNote}</p>
+                  </div>
+                  <p className="text-muted text-sm mt-3 leading-relaxed">{offer.desc}</p>
+                </div>
+                {/* mt-auto so the four cards' links line up along the bottom
+                    regardless of how long each description runs. */}
+                <a
+                  href={offer.href}
+                  className="mt-auto inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-ink hover:text-primary-dark transition-colors duration-300"
+                >
+                  {offer.linkLabel}
+                  <ArrowRight className="h-4 w-4" />
+                </a>
               </div>
-              <p className="text-muted text-sm mt-3 leading-relaxed">{PRICING_ENTRY.desc}</p>
-            </div>
-            <a
-              href={PRICING_ENTRY.href}
-              className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-ink hover:text-primary-dark transition-colors duration-300"
-            >
-              {PRICING_ENTRY.linkLabel}
-              <ArrowRight className="h-4 w-4" />
-            </a>
+            ))}
           </div>
 
           <p className="text-muted text-sm mt-5 leading-relaxed max-w-3xl">{PRICING_RETAINER}</p>
