@@ -57,9 +57,12 @@ export default function Footer() {
 
         <div className="grid grid-cols-2 lg:grid-cols-5 gap-10">
           <div className="col-span-2">
-            <div className="flex items-center gap-2 mb-4">
-              <LogoMark className="h-9 w-9 text-primary" />
-              <span className="font-display font-bold text-lg">Rizmajer Máté</span>
+            <div className="flex items-center mb-4">
+              {/* Not inverted: the footer is the dark `card-invert` surface.
+                  The wordmark that used to sit beside this is gone, so the mark
+                  carries the name as its alt — it is the only place the footer
+                  states whose site this is. */}
+              <LogoMark className="h-9 w-auto" alt="Rizmajer Máté" />
             </div>
             {/* "szakértelmével" is gone. Expertise is not something you award
                 yourself in your own footer, and this page argues everywhere else

@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
-import { NAV_LINKS } from './nav'
+import { NAV_LINKS, CONTACT_PHONE } from './nav'
 
 /* Why this file exists.
 
@@ -69,6 +69,22 @@ describe('NAV_LINKS', () => {
     const positions = swapped.map(({ href }) => ORDER.indexOf(href.slice(1)))
 
     expect(positions[1]).toBeLessThan(positions[0])
+  })
+})
+
+describe('CONTACT_PHONE', () => {
+  /* The number lives in two places on purpose — nav.js renders the tile, the
+     Person JSON-LD in index.html is what makes it eligible for Google's local
+     results — and index.html cannot import from src/. The four-projects count
+     drifted exactly this way, hardcoded in several files with nothing watching,
+     so this is the watcher: compare digits only, leaving the spacing in each
+     free to change. */
+  it('matches the telephone published in the Person JSON-LD', () => {
+    const html = read('../../index.html')
+    const published = html.match(/"telephone":\s*"([^"]+)"/)?.[1]
+
+    expect(published, 'index.html no longer publishes a telephone in its JSON-LD').toBeTruthy()
+    expect(published.replace(/\D/g, '')).toBe(CONTACT_PHONE.replace(/\D/g, ''))
   })
 })
 

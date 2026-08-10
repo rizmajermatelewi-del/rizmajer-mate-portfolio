@@ -29,6 +29,11 @@ export const NAV_LINKS = [
   { label: 'Árak', href: '#arak' },
 ]
 
+/* Displayed exactly as written; the tel: href strips the spaces, so the
+   grouping here is a presentation choice and nothing depends on it. The tile
+   renders nothing if this is emptied — same convention as TESTIMONIALS. */
+export const CONTACT_PHONE = '+36 30 13 14 353'
+
 export const SOCIAL_LINKS = [
   { Icon: GithubIcon, href: 'https://github.com/rizmajermatelewi-del', label: 'GitHub' },
   { Icon: LinkedinIcon, href: 'https://www.linkedin.com/in/rizmajer-mate/', label: 'LinkedIn' },

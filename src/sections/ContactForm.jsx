@@ -1,7 +1,8 @@
 import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, AlertCircle, CheckCircle2, Upload, Mail, MapPin, Clock } from 'lucide-react'
+import { ArrowRight, AlertCircle, CheckCircle2, Upload, Mail, MapPin, Clock, Phone } from 'lucide-react'
 import Field from '../components/Field'
+import { CONTACT_PHONE } from '../data/nav'
 import { useInView } from '../motion/useInView'
 import { Magnetic } from '../motion/Magnetic'
 
@@ -113,6 +114,21 @@ export default function ContactForm() {
             </p>
 
             <div className="mt-10 space-y-4">
+              {/* First tile on purpose: an SME owner deciding on a six-figure
+                  job calls before they type. `tel:` so it dials from a phone,
+                  where most of the traffic is. Hidden until the number exists. */}
+              {CONTACT_PHONE && (
+                <a href={`tel:${CONTACT_PHONE.replace(/\s/g, '')}`} className="lift-on-hover flex items-center gap-4 group">
+                  <span className="h-12 w-12 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:bg-primary transition">
+                    <Phone className="h-5 w-5 text-primary group-hover:text-white" />
+                  </span>
+                  <span>
+                    <span className="block font-mono text-[10px] uppercase tracking-widest text-muted">Hívj fel</span>
+                    <span className="font-display font-semibold text-ink text-lg">{CONTACT_PHONE}</span>
+                  </span>
+                </a>
+              )}
+
               <a href="mailto:rizmajermatelewi@gmail.com" className="lift-on-hover flex items-center gap-4 group">
                 <span className="h-12 w-12 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:bg-primary transition">
                   <Mail className="h-5 w-5 text-primary group-hover:text-white" />

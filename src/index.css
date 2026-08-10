@@ -108,6 +108,51 @@
   .magnetic-btn:hover::before { transform: translateY(0); }
   .lift-on-hover { transition: transform 0.3s cubic-bezier(0.25,0.46,0.45,0.94); }
   .lift-on-hover:hover { transform: translateY(-1px); }
+  /* A highlight travelling through the brush strokes of the logo, rather than
+     across a box containing it. The gradient is masked by the logo's own PNG —
+     passed in as --logo-src so the image stays a hashed Vite asset and this
+     file needs no path to it — so the light only ever appears inside the ink.
+
+     Behind @supports because a failed mask-image is not a missing effect, it is
+     an opaque violet slab over the mark. Browsers without it keep the scale and
+     lose the sheen, which is the correct way round.
+
+     Paused for prefers-reduced-motion along with everything else: a 700ms
+     travelling highlight is exactly the kind of motion that setting means. */
+  @supports ((-webkit-mask-image: url('')) or (mask-image: url(''))) {
+    .logo-sheen::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image: linear-gradient(115deg,
+        transparent 38%,
+        rgb(var(--color-primary) / 0.95) 50%,
+        transparent 62%);
+      background-size: 260% 100%;
+      background-position: 165% 0;
+      -webkit-mask-image: var(--logo-src);
+      mask-image: var(--logo-src);
+      -webkit-mask-size: contain;
+      mask-size: contain;
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      -webkit-mask-position: center;
+      mask-position: center;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    .group:hover .logo-sheen::after,
+    .group:focus-visible .logo-sheen::after {
+      opacity: 1;
+      background-position: -65% 0;
+      transition: background-position 1.5s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.3s ease;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .group:hover .logo-sheen::after,
+      .group:focus-visible .logo-sheen::after { opacity: 0; transition: none; }
+    }
+  }
   .gradient-text {
     background: linear-gradient(135deg, rgb(var(--color-primary)) 0%, rgb(var(--color-primary-dark)) 100%);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
