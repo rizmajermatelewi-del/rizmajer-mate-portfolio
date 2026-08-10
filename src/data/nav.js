@@ -29,10 +29,12 @@ export const NAV_LINKS = [
   { label: 'Árak', href: '#arak' },
 ]
 
-/* Displayed exactly as written; the tel: href strips the spaces, so the
-   grouping here is a presentation choice and nothing depends on it. The tile
-   renders nothing if this is emptied — same convention as TESTIMONIALS. */
-export const CONTACT_PHONE = '+36 30 13 14 353'
+/* Re-exported so the sections that already import it from here keep working.
+   It now lives in contact.js, which imports nothing: this module pulls in
+   BrandIcons for the social links, and a build script running under plain
+   Node cannot follow an extensionless .jsx import. The tile still renders
+   nothing if the string is emptied — same convention as TESTIMONIALS. */
+export { CONTACT_PHONE } from './contact.js'
 
 export const SOCIAL_LINKS = [
   { Icon: GithubIcon, href: 'https://github.com/rizmajermatelewi-del', label: 'GitHub' },

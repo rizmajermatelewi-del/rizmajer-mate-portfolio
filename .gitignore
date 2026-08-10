@@ -37,3 +37,6 @@ dist-ssr
 # produced warnings unrelated to anything in src/.
 Claude Skills/
 .claude/
+
+# Generated at build time from the data modules — see scripts/knowledge.mjs
+public/knowledge.json

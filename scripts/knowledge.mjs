@@ -3,7 +3,7 @@ import { AI_SERVICES } from '../src/data/ai.js'
 import { ORDERED_SKILLS } from '../src/data/skills.js'
 import { FAQ_QUESTIONS } from '../src/data/faq.js'
 import { PROTOCOL_STEPS } from '../src/data/protocol.js'
-import { CONTACT_PHONE } from '../src/data/nav.js'
+import { CONTACT_PHONE, CONTACT_EMAIL } from '../src/data/contact.js'
 
 /* Assembles every content module into one machine-readable object, published
    at /knowledge.json and consumed by the chatbot demo at its build time.
@@ -18,7 +18,7 @@ import { CONTACT_PHONE } from '../src/data/nav.js'
    React component; it is dropped explicitly below, because JSON.stringify
    would otherwise turn it into an empty object and the bot would read a
    skill with a meaningless field. */
-export const CONTACT_EMAIL = 'rizmajermatelewi@gmail.com'
+export { CONTACT_EMAIL }
 
 /* Not "weboldalt és belső rendszert", which is how this read while it was
    still only a plan. Tier 03 was renamed away from "Belső rendszer" because
