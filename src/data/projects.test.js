@@ -16,8 +16,27 @@ function assertGalleryItemShape(g, label) {
 }
 
 describe('PROJECTS_FULL', () => {
+  /* The reason two entries were deleted on 2026-08-10: both were labelled
+     'Ügyfélprojekt' and described work that had never been delivered or
+     invoiced, on the one section of the site whose entire job is proof. That is
+     not a typo you notice in review — it reads perfectly well and is simply
+     untrue, and the person who finds out is a prospect asking for a reference.
+
+     So the rule is mechanical now. Call something client work and you must be
+     able to hand over a URL or a repo. AB Masszázs is a real salon and will
+     pass this the day it ships; until then it stays out. */
+  it('never claims client work without something a stranger can open', () => {
+    for (const p of PROJECTS_FULL) {
+      if (p.label !== 'Ügyfélprojekt') continue
+      expect(
+        Boolean(p.live) || p.github !== '#',
+        `${p.title} is labelled Ügyfélprojekt but has no live URL and no repo to back it`,
+      ).toBe(true)
+    }
+  })
+
   it('still has four projects', () => {
-    expect(PROJECTS_FULL).toHaveLength(4)
+    expect(PROJECTS_FULL).toHaveLength(2)
   })
 
   it('gives every project every case-study field, so the modal never reads undefined', () => {

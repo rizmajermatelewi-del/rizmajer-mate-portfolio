@@ -17,22 +17,32 @@ export default function Pillars() {
     {
       n: '01',
       title: 'Leszállítva',
-      target: 4,
+      /* Was 4, described as "kettő fizető ügyfélnek, kettő saját
+         kezdeményezés". The two client projects were removed from projects.js
+         on 2026-08-10 because neither had been delivered or invoiced, so this
+         numeral counted work that did not exist. Two own projects, no client
+         work yet — which is what the section now actually contains. */
+      target: 2,
       suffix: '',
       label: 'megépített projekt',
       /* The third sentence used to read "Mindegyik megnyitható és
          kipróbálható." Nothing on the site is: every `live` field in
          projects.js is empty and every `github` is '#'. It stays out until
          there are real links behind the project cards. */
-      desc: 'Négy befejezett projekt: kettő fizető ügyfélnek, kettő saját kezdeményezés.',
+      desc: 'Két saját kezdeményezésű projekt. Az első ügyfélmunka most indul.',
     },
     {
       n: '02',
-      title: 'Ügyfelek',
-      target: 2,
+      /* Was "2 fizető ügyfél — két magyar vállalkozás, akiknek a rendszere ma
+         is élesben fut." Neither existed. "1 készül" is a weaker claim and a
+         true one; starting out is not something a first client holds against
+         you, being caught inventing a track record is. Update this the day AB
+         Masszázs goes live, and give it a link. */
+      title: 'Első ügyfél',
+      target: 1,
       suffix: '',
-      label: 'fizető ügyfél',
-      desc: 'Két magyar vállalkozás, akiknek a rendszere ma is élesben fut.',
+      label: 'ügyfélprojekt készül',
+      desc: 'Egy masszázsszalon időpontfoglalója, ami most épül. Amint él, itt lesz a link hozzá.',
     },
     {
       n: '03',

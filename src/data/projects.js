@@ -26,46 +26,23 @@
    a badge handed out arbitrarily is decoration, and this section's whole claim
    is that it does not decorate. Set it on the one project that earns it once
    the demos are deployed. */
+/* Two entries removed on 2026-08-10, both labelled 'Ügyfélprojekt': a
+   Rétes-rendelő and the AB Masszázs időpontfoglaló. Neither was delivered and
+   neither was invoiced — they described work that had not happened, on the one
+   page whose job is to prove that it had. A prospect asking "megnézhetem?" or
+   "van referencia?" would have found nothing behind either.
+
+   AB Masszázs is coming back once it exists: it is a real salon and a real
+   brief. It belongs here the day it is live, with a screenshot and a URL, and
+   not before. projects.test.js now enforces the general form of that rule —
+   nothing may call itself client work without something a stranger can open. */
 export const PROJECTS_FULL = [
   {
-    title: 'Rétes-rendelő',
-    text: 'Online rendelés egy dabasi rétesháznak — élő menü, fiókkezelés, admin felület a háttérben.',
-    tech: ['React', 'TanStack Start', 'Supabase'],
-    features: [],
-    featured: false,
-    label: 'Ügyfélprojekt',
-    tone: { from: '--color-card-1', to: '--color-deep', accent: '--color-accent' },
-    image: '',
-    imageAlt: '',
-    year: '',
-    role: '',
-    problem: '',
-    solution: '',
-    gallery: [],
-    github: '#',
-    live: '',
-  },
-  {
-    title: 'AB Masszázs időpontfoglaló',
-    text: 'Időpontfoglaló rendszer egy masszázsszalonnak — naptár, utalványok, külön admin és ügyfél nézet.',
-    tech: ['PHP', 'MySQL', 'Docker'],
-    features: [],
-    featured: false,
-    label: 'Ügyfélprojekt',
-    tone: { from: '--color-card-2', to: '--color-deep', accent: '--color-primary-light' },
-    image: '',
-    imageAlt: '',
-    year: '',
-    role: '',
-    problem: '',
-    solution: '',
-    gallery: [],
-    github: '#',
-    live: '',
-  },
-  {
     title: 'Business Value Builder',
-    text: 'Saját árazási oldal egy valós esettanulmánnyal: végigmentem az inárcsi vállalkozásokon, kiszűrtem, kiknek nincs weboldaluk, és személyesen kerestem meg őket.',
+    /* Was: "végigmentem az inárcsi vállalkozásokon, kiszűrtem, kiknek nincs
+       weboldaluk, és személyesen kerestem meg őket." That outreach is planned,
+       not done, so the sentence claimed a case study that does not exist yet. */
+    text: 'Saját árazási oldal: azt modellezi, hogyan lehet egy környékbeli vállalkozásnak úgy árat mondani, hogy a végösszeg előre kiszámítható maradjon.',
     tech: ['React', 'TanStack Start'],
     features: [],
     featured: false,
