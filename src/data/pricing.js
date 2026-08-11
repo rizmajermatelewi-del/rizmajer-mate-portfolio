@@ -23,26 +23,49 @@
 /* Named after what the client is buying, not after what gets built. The tiers
    used to read "Landing Oldal / Webalkalmazás / Egyedi Rendszer" — artifact
    names. An SME owner does not shop for a webalkalmazás; they shop for a way
-   to take bookings without the phone ringing all day. Tier 02 is the one both
-   paying clients in projects.js actually bought (a rendelő and an
-   időpontfoglaló), so it is the one marked as most common. */
+   to take bookings without the phone ringing all day.
+
+   Tier 02 was marked "Leggyakoribb" on the strength of a comment here claiming
+   both paying clients in projects.js had bought it. Those two entries were
+   removed on 2026-08-10 because neither was delivered and neither was invoiced
+   — leaving a frequency claim about a tier nobody has ever bought, on a live
+   commercial page. It reads "Ajánlott" now: a judgement that survives zero
+   sales.
+
+   `scope` is DELIVERY time, not billable hours, and now says so. Before,
+   "Jellemzően 1-2 hét" sat beside a price derived from ~11 hours, and a reader
+   taking the week at face value would put the rate near 3 000 Ft/hour. */
 export const PRICING_TIERS = [
   {
     eyebrow: 'Kezdéshez',
     name: 'Bemutatkozó oldal',
     desc: 'Ha valaki rád keres a Google-ben, találjon valamit, ami rendben van, és ne a konkurenciádat.',
     priceNote: '180 000 Ft-tól',
-    scope: 'Jellemzően 1-2 hét',
+    scope: 'Átadás jellemzően 1-2 hét',
     features: ['Mobilon is jól működik', 'Megtalálnak a Google-ben', 'Kapcsolati űrlap, ami a postafiókodba jön', 'Elindítom és átadom'],
     highlight: false,
   },
   {
-    eyebrow: 'Leggyakoribb',
+    eyebrow: 'Ajánlott',
     name: 'Foglalás és rendelés',
     desc: 'Ha a foglalás vagy a rendelés ma telefonon és üzenetben megy, és ez már napi egy órát elvisz.',
-    priceNote: '450 000 Ft-tól',
-    scope: 'Jellemzően 3-6 hét',
-    features: ['Foglalás vagy rendelés online', 'Kezelőfelület, amit te is használsz', 'Értesítések e-mailben', 'Ahhoz illesztve, amit már használsz: naptár, számlázó, táblázat'],
+    /* 450 000 implied ~28 billable hours for online booking, an admin UI,
+       e-mail notifications AND "ahhoz illesztve, amit már használsz: naptár,
+       számlázó, táblázat" — an open-ended promise sitting behind a floor price.
+       Each integration is days, and the floor did not move when a client named
+       a third system.
+
+       There was evidence to hand: AB Masszázs IS this tier, and phase 1 — the
+       site, with no booking at all — already ran past 28 hours. As a paying
+       450 000 Ft job it would have been underwater before booking started.
+
+       550 000 buys ~34 hours, and the scope below now fits in them. Calendar
+       sync stays in, because a booking system without it double-books; the
+       számlázó and táblázat move out to the 90 000 Ft/folyamat offer further
+       down, which is the same promise priced per unit of work. */
+    priceNote: '550 000 Ft-tól',
+    scope: 'Átadás jellemzően 3-6 hét',
+    features: ['Foglalás vagy rendelés online', 'Kezelőfelület, amit te is használsz', 'Értesítések e-mailben', 'A naptáraddal összekötve, hogy ne legyen dupla foglalás'],
     highlight: true,
   },
   {
@@ -140,9 +163,15 @@ export const PRICING_ENTRY = {
    before the first call, which makes it the only offer here that can open a
    conversation with a stranger.
 
-   Cheap because it is genuinely a couple of hours, and priced as a flat fee for
-   the same reason the audit is: a small number with no "-tól" is a decision
-   somebody can make on the spot. */
+   Flat, not "-tól", for the same reason the audit is: a small number with no
+   open end is a decision somebody can make on the spot.
+
+   It used to say "genuinely a couple of hours", which put it at 32 000 Ft on
+   the 16 000 Ft/hour the rest of the page derives from, and left the 60 000 Ft
+   unexplained. Two hours was the wrong estimate, not the price: creating or
+   claiming the profile, categories, service list, hours, photographs, and then
+   seeing the verification through — which arrives days later and has to be
+   finished — is 3-4 hours of real work spread across a fortnight. */
 export const PRICING_GOOGLE = {
   eyebrow: 'A leggyorsabb',
   name: 'Google-megjelenés beállítása',

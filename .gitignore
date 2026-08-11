@@ -38,5 +38,14 @@ dist-ssr
 Claude Skills/
 .claude/
 
+# Same reason, later arrivals: vendored agent skills, and the local MCP server
+# list. None of it is site source, all of it is reproducible from its own
+# installer, and .agents/ alone is 2.2 MB that oxlint was scanning and
+# reporting warnings out of.
+.agents/
+.impeccable/
+skills-lock.json
+.mcp.json
+
 # Generated at build time from the data modules — see scripts/knowledge.mjs
 public/knowledge.json

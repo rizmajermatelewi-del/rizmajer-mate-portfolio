@@ -2,6 +2,16 @@ import { describe, it, expect } from 'vitest'
 import { readFileSync } from 'node:fs'
 import path from 'node:path'
 import { FAQ_QUESTIONS } from './faq'
+import { PRICING_TIERS, PRICING_RETAINER } from './pricing'
+
+/* "550 000 Ft-tól" -> "550 000". The thousands separator here is an ordinary
+   space, so the class is explicit about which characters count rather than
+   using \s, which would run across a line break. */
+function amountIn(text) {
+  const match = text.match(/\d[\d  ]*\d/)
+  if (!match) throw new Error(`no amount found in: ${text}`)
+  return match[0]
+}
 
 /* Faq.jsx used to define this list inline. The risk in moving it is a silently
    dropped or reworded answer, so this asserts both that the data survived and
@@ -20,8 +30,18 @@ describe('FAQ data', () => {
 
   it('still contains the answers the pricing FAQ depends on', () => {
     const joined = FAQ_QUESTIONS.map((x) => x.a).join(' ')
-    for (const floor of ['180 000', '450 000', '1 200 000', '25 000']) {
-      expect(joined, `the FAQ no longer mentions ${floor}`).toContain(floor)
+    /* Read out of pricing.js rather than written down again here. Restated,
+       these were literals that matched the price list only for as long as
+       somebody remembered to edit both -- and on 2026-08-11 the FAQ was found
+       still quoting 450 000 Ft and a "belső rendszer" that pricing.js had
+       already dropped, with this test green throughout. Derived, the edit that
+       moves a price fails here until the FAQ catches up. */
+    const figures = [
+      ...PRICING_TIERS.map((tier) => amountIn(tier.priceNote)),
+      amountIn(PRICING_RETAINER),
+    ]
+    for (const figure of figures) {
+      expect(joined, `the FAQ no longer mentions ${figure}`).toContain(figure)
     }
   })
 

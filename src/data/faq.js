@@ -4,7 +4,11 @@
 export const FAQ_QUESTIONS = [
   {
     q: 'Mennyibe kerül egy weboldal?',
-    a: 'Egy bemutatkozó oldal 180 000 Ft-tól, egy foglalási vagy rendelési rendszer 450 000 Ft-tól, egy belső rendszer 1 200 000 Ft-tól indul. Ezek indulóárak: a pontosat egy rövid egyeztetés után, írásban és tételesen kapod meg, és utólag nem jön hozzá semmi.',
+    /* "belső rendszer" was retired from pricing.js because no internal system
+       has been built for anyone, so quoting one is a seven-figure price for a
+       category never delivered. The FAQ went on saying it — the claim survived
+       in the one file that feeds both the page and the chatbot. */
+    a: 'Egy bemutatkozó oldal 180 000 Ft-tól, egy foglalási vagy rendelési rendszer 550 000 Ft-tól, a meglévő rendszereid összekötése 1 200 000 Ft-tól indul. Ezek indulóárak: a pontosat egy rövid egyeztetés után, írásban és tételesen kapod meg, és utólag nem jön hozzá semmi.',
   },
   {
     q: 'Mi kerül még pénzbe a fejlesztésen túl?',
