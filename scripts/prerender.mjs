@@ -163,10 +163,10 @@ function withFaqSchema(html, entries) {
         return [
           {
             ...node,
-            mainEntity: entries.map(({ q, a }) => ({
+            mainEntity: entries.map(({ name, text }) => ({
               '@type': 'Question',
-              name: q,
-              acceptedAnswer: { '@type': 'Answer', text: a },
+              name,
+              acceptedAnswer: { '@type': 'Answer', text },
             })),
           },
         ]
@@ -195,11 +195,12 @@ async function main() {
   const { ROUTE_PATHS } = await import(pathToFileURL(path.join(root, 'src', 'routePaths.js')).href)
   /* Same trick, same reason: locales.js is deliberately free of JSX and of any
      React import so it can be read here as plain ESM. */
-  const { LOCALES, DEFAULT_LOCALE, localeFromPath, withLocale } = await import(
+  const { LOCALES, DEFAULT_LOCALE, localeFromPath, withLocale, stripLocale } = await import(
     pathToFileURL(path.join(root, 'src', 'i18n', 'locales.js')).href
   )
   /* Same again for the FAQ: the page, the chatbot's knowledge.json and the
      FAQPage structured data all read this one module. */
+  const { t } = await import(pathToFileURL(path.join(root, 'src', 'i18n', 't.js')).href)
   const { FAQ_QUESTIONS } = await import(
     pathToFileURL(path.join(root, 'src', 'data', 'faq.js')).href
   )
@@ -253,9 +254,25 @@ async function main() {
 
     /* The template's JSON-LD graph is Person + WebSite + FAQPage. The first
        two stay true on every route; FAQPage describes only the page that
-       renders the questions, so it is filled on / and removed everywhere
-       else. */
-    page = withFaqSchema(page, route === '/' ? FAQ_QUESTIONS : null)
+       renders the questions, so it is filled on the FAQ-bearing route and
+       removed everywhere else.
+
+       Resolved to one language here rather than inside withFaqSchema, because
+       structured data has to match the page it sits on: an English page
+       carrying Hungarian answers would tell Google the two are duplicates of
+       each other, which is the mistake /en was withdrawn for. The locale
+       comes from the path, so it follows the route automatically. */
+    const routeLocale = localeFromPath(route)
+    const isHome = stripLocale(route) === '/'
+    page = withFaqSchema(
+      page,
+      isHome
+        ? FAQ_QUESTIONS.map((entry) => ({
+            name: t(entry.q, routeLocale),
+            text: t(entry.a, routeLocale),
+          }))
+        : null
+    )
 
     /* Check the output, not the intention. Filling the node from faq.js turns
        one silent failure (a stale copy) into another (an empty one) unless
@@ -264,16 +281,16 @@ async function main() {
        Scoped to the JSON-LD block on purpose: the section below renders the
        same questions as visible text, so searching the whole page would pass
        even with the structured data empty — the exact failure this guards. */
-    if (route === '/') {
+    if (isHome) {
       const block = page.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)?.[1]
       const faqNode = JSON.parse(block ?? '{}')['@graph']?.find((n) => n['@type'] === 'FAQPage')
       const published = faqNode?.mainEntity?.map((entry) => entry.name) ?? []
-      const missing = FAQ_QUESTIONS.filter(({ q }) => !published.includes(q))
+      const missing = FAQ_QUESTIONS.filter(({ q }) => !published.includes(t(q, routeLocale)))
 
       if (missing.length) {
         throw new Error(
           `${missing.length} of ${FAQ_QUESTIONS.length} FAQ questions missing from the ` +
-            `prerendered JSON-LD: ${missing.map(({ q }) => q).join(' | ')}`
+            `prerendered JSON-LD: ${missing.map(({ q }) => t(q, routeLocale)).join(' | ')}`
         )
       }
     }

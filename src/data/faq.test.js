@@ -3,7 +3,8 @@ import { readFileSync } from 'node:fs'
 import path from 'node:path'
 import { FAQ_QUESTIONS } from './faq'
 import { PRICING_TIERS, PRICING_RETAINER } from './pricing'
-import { t } from '../i18n/t'
+import { t, untranslatedIn } from '../i18n/t'
+import { LOCALES } from '../i18n/locales'
 
 /* "550 000 Ft-tól" -> "550 000". The thousands separator here is an ordinary
    space, so the class is explicit about which characters count rather than
@@ -21,17 +22,32 @@ const faqSource = readFileSync(path.resolve(process.cwd(), 'src/sections/Faq.jsx
 const indexHtml = readFileSync(path.resolve(process.cwd(), 'index.html'), 'utf8')
 
 describe('FAQ data', () => {
-  it('keeps every question and answer non-empty', () => {
+  it('keeps every question and answer non-empty, in both languages', () => {
     expect(FAQ_QUESTIONS.length).toBe(8)
-    for (const { q, a } of FAQ_QUESTIONS) {
-      expect(typeof q).toBe('string')
-      expect(q.trim().length).toBeGreaterThan(0)
-      expect(a.trim().length).toBeGreaterThan(20)
+    expect(untranslatedIn(FAQ_QUESTIONS)).toEqual([])
+
+    for (const locale of LOCALES) {
+      for (const { q, a } of FAQ_QUESTIONS) {
+        expect(t(q, locale).trim().length).toBeGreaterThan(0)
+        expect(t(a, locale).trim().length).toBeGreaterThan(20)
+      }
     }
   })
 
+  /* An answer whose English is a copy of its Hungarian passes every check
+     above. This is the one that notices. */
+  it('answers differently in each language', () => {
+    for (const { q, a } of FAQ_QUESTIONS) {
+      const rendered = LOCALES.map((locale) => t(a, locale))
+      expect(new Set(rendered).size, `"${t(q, 'hu')}" reads identically in both languages`).toBe(LOCALES.length)
+    }
+  })
+
+  /* The Hungarian side, because that is where the price figures live and
+     where pricing.js is the source of truth. The English figures carry the
+     euro approximation as well, and fx.test.js guards those. */
   it('still contains the answers the pricing FAQ depends on', () => {
-    const joined = FAQ_QUESTIONS.map((x) => x.a).join(' ')
+    const joined = FAQ_QUESTIONS.map((x) => t(x.a, 'hu')).join(' ')
     /* Read out of pricing.js rather than written down again here. Restated,
        these were literals that matched the price list only for as long as
        somebody remembered to edit both -- and on 2026-08-11 the FAQ was found
@@ -71,7 +87,9 @@ describe('FAQ data', () => {
     expect(faqNode.mainEntity, 'index.html is hand-maintaining questions again').toEqual([])
 
     for (const { a } of FAQ_QUESTIONS) {
-      expect(indexHtml, 'an answer was pasted back into index.html').not.toContain(a.slice(0, 40))
+      for (const locale of LOCALES) {
+        expect(indexHtml, 'an answer was pasted back into index.html').not.toContain(t(a, locale).slice(0, 40))
+      }
     }
   })
 })

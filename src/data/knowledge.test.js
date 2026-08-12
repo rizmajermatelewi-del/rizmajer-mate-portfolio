@@ -75,7 +75,8 @@ describe('knowledge object', () => {
   it('carries every FAQ pair and every process step', () => {
     expect(k.faq).toHaveLength(FAQ_QUESTIONS.length)
     for (const { q } of FAQ_QUESTIONS) {
-      expect(k.faq.some((f) => f.q === q), `FAQ "${q}" is missing`).toBe(true)
+      const question = t(q, 'hu')
+      expect(k.faq.some((f) => f.q === question), `FAQ "${question}" is missing`).toBe(true)
     }
     expect(k.process).toHaveLength(PROTOCOL_STEPS.length)
   })

@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { useInView } from '../motion/useInView'
 import { FAQ_QUESTIONS } from '../data/faq'
+import { useLocale } from '../i18n/useLocale'
+import { t } from '../i18n/t'
 
 /* ----------------------------------------------------------------
    FAQ — the objections an SME actually raises before hiring.
@@ -10,6 +12,7 @@ import { FAQ_QUESTIONS } from '../data/faq'
 export default function Faq() {
   const [ref, visible] = useInView(0.1)
   const [open, setOpen] = useState(0)
+  const locale = useLocale()
 
   // Standard section rhythm again. The padding was asymmetric while this sat
   // directly under the contact form and read as a continuation of it; now it
@@ -45,7 +48,7 @@ export default function Faq() {
                 aria-expanded={open === i}
                 className="group flex w-full items-center justify-between gap-5 px-6 sm:px-8 py-5 text-left"
               >
-                <span className="font-display font-semibold text-base sm:text-lg text-ink">{item.q}</span>
+                <span className="font-display font-semibold text-base sm:text-lg text-ink">{t(item.q, locale)}</span>
                 <span
                   aria-hidden="true"
                   className={`shrink-0 font-mono text-lg leading-none text-muted transition-transform duration-300 ease-out group-hover:text-primary-dark ${
@@ -64,7 +67,7 @@ export default function Faq() {
                 }`}
               >
                 <div className="overflow-hidden">
-                  <p className="text-muted text-sm sm:text-base leading-relaxed px-6 sm:px-8 pb-6">{item.a}</p>
+                  <p className="text-muted text-sm sm:text-base leading-relaxed px-6 sm:px-8 pb-6">{t(item.a, locale)}</p>
                 </div>
               </div>
             </div>

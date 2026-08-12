@@ -73,7 +73,7 @@ export function buildKnowledge(today = new Date(), locale = DEFAULT_LOCALE) {
       scope: s.scope,
     })),
     process: PROTOCOL_STEPS.map((s) => ({ title: t(s.title, locale), text: t(s.text, locale) })),
-    faq: FAQ_QUESTIONS.map((f) => ({ q: f.q, a: f.a })),
+    faq: FAQ_QUESTIONS.map((entry) => ({ q: t(entry.q, locale), a: t(entry.a, locale) })),
     skills: ORDERED_SKILLS.map((s) => ({
       category: s.category,
       title: s.title,
