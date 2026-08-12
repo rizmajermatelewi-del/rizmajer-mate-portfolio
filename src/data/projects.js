@@ -1,3 +1,5 @@
+import { neutral } from '../i18n/t.js'
+
 /* The case-study fields below are intentionally empty. ProjectModal renders
    each one only when it is non-empty, so filling them in later is a data edit
    rather than a code change, and a half-filled project degrades to a short
@@ -36,17 +38,31 @@
    brief. It belongs here the day it is live, with a screenshot and a URL, and
    not before. projects.test.js now enforces the general form of that rule —
    nothing may call itself client work without something a stranger can open. */
+/* The empty case-study fields stay as '' rather than becoming { hu: '', en: '' }.
+   Every render site already guards them with a truthiness check, so an empty
+   string is simply not rendered and t() is never called on it — while
+   untranslatedIn() would read an empty pair as missing both languages and turn
+   four deliberate blanks into four failures.
+
+   It also fails in the right direction later: fill one in with a bare string
+   and t() throws at build time naming the field, which is the reminder to
+   supply both languages. `tech` stays bare for the opposite reason — a stack
+   name is self-evidently not copy, and untranslatedIn ignores non-field
+   leaves. */
 export const PROJECTS_FULL = [
   {
-    title: 'Business Value Builder',
+    title: neutral('Business Value Builder'),
     /* Was: "végigmentem az inárcsi vállalkozásokon, kiszűrtem, kiknek nincs
        weboldaluk, és személyesen kerestem meg őket." That outreach is planned,
        not done, so the sentence claimed a case study that does not exist yet. */
-    text: 'Saját árazási oldal: azt modellezi, hogyan lehet egy környékbeli vállalkozásnak úgy árat mondani, hogy a végösszeg előre kiszámítható maradjon.',
+    text: {
+      hu: 'Saját árazási oldal: azt modellezi, hogyan lehet egy környékbeli vállalkozásnak úgy árat mondani, hogy a végösszeg előre kiszámítható maradjon.',
+      en: 'My own pricing page: it models how to quote a nearby business a price whose final total stays predictable up front.',
+    },
     tech: ['React', 'TanStack Start'],
     features: [],
     featured: false,
-    label: 'Saját projekt',
+    label: { hu: 'Saját projekt', en: 'Personal project' },
     tone: { from: '--color-card-3', to: '--color-deep', accent: '--color-primary' },
     image: '',
     imageAlt: '',
@@ -59,12 +75,15 @@ export const PROJECTS_FULL = [
     live: '',
   },
   {
-    title: 'WebWise Studio',
-    text: 'Ügynökségi koncepció-oldal egyedi React/AI alapú webalkalmazásokra — saját kezdeményezésű prototípus.',
+    title: neutral('WebWise Studio'),
+    text: {
+      hu: 'Ügynökségi koncepció-oldal egyedi React/AI alapú webalkalmazásokra — saját kezdeményezésű prototípus.',
+      en: 'An agency concept site for custom React/AI web applications — a prototype I started myself.',
+    },
     tech: ['React', 'Supabase', 'Framer Motion'],
     features: [],
     featured: false,
-    label: 'Saját projekt',
+    label: { hu: 'Saját projekt', en: 'Personal project' },
     tone: { from: '--color-card-4', to: '--color-deep', accent: '--color-primary-dark' },
     image: '',
     imageAlt: '',

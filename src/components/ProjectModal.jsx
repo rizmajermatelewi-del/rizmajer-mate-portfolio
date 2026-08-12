@@ -1,4 +1,6 @@
 import { useEffect, useRef } from 'react'
+import { useLocale } from '../i18n/useLocale'
+import { t } from '../i18n/t'
 import { createPortal } from 'react-dom'
 import { gsap } from 'gsap'
 import { X, ArrowUpRight } from 'lucide-react'
@@ -12,6 +14,7 @@ const FOCUSABLE = 'a[href], button:not([disabled]), input, textarea, [tabindex]:
    only when non-empty, so a half-filled project degrades to a short clean
    panel rather than a page of empty headings. */
 export default function ProjectModal({ project, originRect, onClose }) {
+  const locale = useLocale()
   const panelRef = useRef(null)
   const reduced = useReducedMotion()
 
@@ -109,34 +112,34 @@ export default function ProjectModal({ project, originRect, onClose }) {
         </button>
 
         <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary-dark">
-          {project.label}
-          {project.year && ` · ${project.year}`}
+          {t(project.label, locale)}
+          {project.year && ` · ${t(project.year, locale)}`}
         </span>
 
         <h2
           id="project-modal-title"
           className="font-display font-extrabold text-2xl sm:text-3xl text-ink mt-3 leading-tight"
         >
-          {project.title}
+          {t(project.title, locale)}
         </h2>
 
         {project.role && (
-          <p className="font-mono text-xs uppercase tracking-widest text-muted mt-2">{project.role}</p>
+          <p className="font-mono text-xs uppercase tracking-widest text-muted mt-2">{t(project.role, locale)}</p>
         )}
 
-        <p className="text-muted leading-relaxed mt-5">{project.text}</p>
+        <p className="text-muted leading-relaxed mt-5">{t(project.text, locale)}</p>
 
         {project.problem && (
           <section className="mt-8">
             <h3 className="font-display font-bold text-ink text-lg">A feladat</h3>
-            <p className="text-muted leading-relaxed mt-2">{project.problem}</p>
+            <p className="text-muted leading-relaxed mt-2">{t(project.problem, locale)}</p>
           </section>
         )}
 
         {project.solution && (
           <section className="mt-6">
             <h3 className="font-display font-bold text-ink text-lg">A megoldás</h3>
-            <p className="text-muted leading-relaxed mt-2">{project.solution}</p>
+            <p className="text-muted leading-relaxed mt-2">{t(project.solution, locale)}</p>
           </section>
         )}
 
@@ -158,12 +161,12 @@ export default function ProjectModal({ project, originRect, onClose }) {
         )}
 
         <div className="flex flex-wrap gap-1.5 mt-8">
-          {project.tech.map((t, i) => (
+          {project.tech.map((techName, i) => (
             <span
               key={i}
               className="font-mono text-[9px] uppercase tracking-wide text-muted bg-background border border-divider px-2 py-0.5 rounded-full"
             >
-              {t}
+              {techName}
             </span>
           ))}
         </div>

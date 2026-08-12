@@ -1,5 +1,7 @@
 import { useState } from 'react'
-import { ORDERED_SKILLS } from '../data/skills'
+import { ORDERED_SKILLS, categoryLabel } from '../data/skills'
+import { useLocale } from '../i18n/useLocale'
+import { t } from '../i18n/t'
 import { useInView } from '../motion/useInView'
 
 /* Grouped by category, but still one seamless mosaic rather than four separate
@@ -16,6 +18,7 @@ import { useInView } from '../motion/useInView'
    ServicesGrid
 ---------------------------------------------------------------- */
 export default function ServicesGrid() {
+  const locale = useLocale()
   const [ref, visible] = useInView(0.1)
   const [expanded, setExpanded] = useState(null)
 
@@ -50,7 +53,7 @@ export default function ServicesGrid() {
             const Icon = svc.icon
             return (
               <button
-                key={svc.title}
+                key={t(svc.title, locale)}
                 type="button"
                 onClick={() => setExpanded(expanded === i ? null : i)}
                 aria-expanded={expanded === i}
@@ -88,10 +91,10 @@ export default function ServicesGrid() {
                   </span>
                 </div>
                 <p className="relative font-mono text-[9px] uppercase tracking-[0.22em] text-primary-dark mb-2">
-                  {svc.category}
+                  {t(categoryLabel(svc.category), locale)}
                 </p>
-                <h3 className="relative font-display font-bold text-xl sm:text-2xl mb-3">{svc.title}</h3>
-                <p className="relative text-white/55 text-sm leading-relaxed">{svc.text}</p>
+                <h3 className="relative font-display font-bold text-xl sm:text-2xl mb-3">{t(svc.title, locale)}</h3>
+                <p className="relative text-white/55 text-sm leading-relaxed">{t(svc.text, locale)}</p>
 
                 <div
                   className={`relative grid transition-[grid-template-rows] duration-300 ease-out ${
@@ -99,7 +102,7 @@ export default function ServicesGrid() {
                   }`}
                 >
                   <div className="overflow-hidden">
-                    <p className="text-white/45 text-sm leading-relaxed pt-3">{svc.detail}</p>
+                    <p className="text-white/45 text-sm leading-relaxed pt-3">{t(svc.detail, locale)}</p>
                   </div>
                 </div>
               </button>

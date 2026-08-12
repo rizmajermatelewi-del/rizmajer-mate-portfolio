@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { AI_SERVICES } from '../data/ai'
+import { useLocale } from '../i18n/useLocale'
+import { t } from '../i18n/t'
 import { useInView } from '../motion/useInView'
 
 /* ----------------------------------------------------------------
@@ -16,6 +18,7 @@ import { useInView } from '../motion/useInView'
    the prices below credible.
 ---------------------------------------------------------------- */
 export default function AiServices() {
+  const locale = useLocale()
   const [ref, visible] = useInView(0.12)
   const [open, setOpen] = useState(0)
 
@@ -67,7 +70,7 @@ export default function AiServices() {
                   const isOpen = open === i
                   return (
                     <div
-                      key={svc.title}
+                      key={t(svc.title, locale)}
                       style={{ transitionDelay: visible ? `${180 + i * 110}ms` : '0ms' }}
                       className={`transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                         visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
@@ -81,7 +84,7 @@ export default function AiServices() {
                       >
                         <div className="flex items-start justify-between gap-6">
                           <h3 className="font-display font-semibold text-xl sm:text-2xl text-ink leading-tight">
-                            {svc.title}
+                            {t(svc.title, locale)}
                           </h3>
                           <span
                             aria-hidden="true"
@@ -93,13 +96,13 @@ export default function AiServices() {
                           </span>
                         </div>
 
-                        <p className="text-muted text-[15px] mt-3 leading-relaxed max-w-lg">{svc.text}</p>
+                        <p className="text-muted text-[15px] mt-3 leading-relaxed max-w-lg">{t(svc.text, locale)}</p>
 
                         <div className="mt-5 flex flex-wrap items-baseline gap-x-4 gap-y-1">
                           <span className="font-display font-semibold text-lg text-primary-dark">
-                            {svc.priceNote}
+                            {t(svc.priceNote, locale)}
                           </span>
-                          <span className="text-muted text-[13px]">{svc.scope}</span>
+                          <span className="text-muted text-[13px]">{t(svc.scope, locale)}</span>
                         </div>
 
                         {/* grid-rows so the panel animates to the content's
@@ -112,7 +115,7 @@ export default function AiServices() {
                         >
                           <span className="overflow-hidden">
                             <span className="block text-muted text-sm leading-relaxed max-w-lg pt-5">
-                              {svc.detail}
+                              {t(svc.detail, locale)}
                             </span>
                           </span>
                         </span>

@@ -1,6 +1,6 @@
 import { PRICING_TIERS, PRICING_SMALL_OFFERS, PRICING_RETAINER } from '../src/data/pricing.js'
 import { AI_SERVICES } from '../src/data/ai.js'
-import { ORDERED_SKILLS } from '../src/data/skills.js'
+import { ORDERED_SKILLS, categoryLabel } from '../src/data/skills.js'
 import { FAQ_QUESTIONS } from '../src/data/faq.js'
 import { PROTOCOL_STEPS } from '../src/data/protocol.js'
 import { CONTACT_PHONE, CONTACT_EMAIL } from '../src/data/contact.js'
@@ -66,18 +66,18 @@ export function buildKnowledge(today = new Date(), locale = DEFAULT_LOCALE) {
       retainer: t(PRICING_RETAINER, locale),
     },
     aiServices: AI_SERVICES.map((s) => ({
-      title: s.title,
-      text: s.text,
-      detail: s.detail,
-      priceNote: s.priceNote,
-      scope: s.scope,
+      title: t(s.title, locale),
+      text: t(s.text, locale),
+      detail: t(s.detail, locale),
+      priceNote: t(s.priceNote, locale),
+      scope: t(s.scope, locale),
     })),
     process: PROTOCOL_STEPS.map((s) => ({ title: t(s.title, locale), text: t(s.text, locale) })),
     faq: FAQ_QUESTIONS.map((entry) => ({ q: t(entry.q, locale), a: t(entry.a, locale) })),
     skills: ORDERED_SKILLS.map((s) => ({
-      category: s.category,
-      title: s.title,
-      detail: s.detail,
+      category: t(categoryLabel(s.category), locale),
+      title: t(s.title, locale),
+      detail: t(s.detail, locale),
     })),
     generated: today.toISOString().slice(0, 10),
   }

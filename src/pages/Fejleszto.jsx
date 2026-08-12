@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom'
 import { ArrowLeft, ArrowUpRight, Mail } from 'lucide-react'
-import { ORDERED_SKILLS } from '../data/skills'
+import { ORDERED_SKILLS, categoryLabel } from '../data/skills'
 import { PROJECTS_FULL } from '../data/projects'
 import { SOCIAL_LINKS } from '../data/nav'
 import { t } from '../i18n/t'
+import { useLocale } from '../i18n/useLocale'
 
 /* The second entry point.
 
@@ -36,6 +37,7 @@ import { t } from '../i18n/t'
    `detail` behind a click. Here it is the other way round — this reader is
    the one the technical copy was written for, so it leads. */
 export default function Fejleszto() {
+  const locale = useLocale()
   const linkedProjects = PROJECTS_FULL.filter((p) => p.live || p.github !== '#')
 
   return (
@@ -77,18 +79,18 @@ export default function Fejleszto() {
           {ORDERED_SKILLS.map((skill) => {
             const Icon = skill.icon
             return (
-              <div key={skill.title} className="border-t border-divider pt-6">
+              <div key={t(skill.title, locale)} className="border-t border-divider pt-6">
                 <div className="flex items-start gap-4">
                   <span className="h-10 w-10 shrink-0 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center">
                     <Icon className="h-4 w-4 text-primary-dark" strokeWidth={2} />
                   </span>
                   <div>
                     <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-primary-dark">
-                      {skill.category}
+                      {t(categoryLabel(skill.category), locale)}
                     </p>
-                    <h3 className="font-display font-semibold text-lg text-ink mt-1">{skill.title}</h3>
+                    <h3 className="font-display font-semibold text-lg text-ink mt-1">{t(skill.title, locale)}</h3>
                     {/* `detail`, not `text` — see the note above. */}
-                    <p className="text-muted leading-relaxed mt-2">{skill.detail}</p>
+                    <p className="text-muted leading-relaxed mt-2">{t(skill.detail, locale)}</p>
                   </div>
                 </div>
               </div>
@@ -102,29 +104,29 @@ export default function Fejleszto() {
         </h2>
         <div className="mt-8 grid sm:grid-cols-2 gap-5">
           {PROJECTS_FULL.map((p) => (
-            <article key={p.title} className="rounded-3xl border border-divider bg-surface p-6">
+            <article key={t(p.title, locale)} className="rounded-3xl border border-divider bg-surface p-6">
               {p.label && (
                 <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-primary-dark">
-                  {p.label}
+                  {t(p.label, locale)}
                 </p>
               )}
-              <h3 className="font-display font-semibold text-lg text-ink mt-2">{p.title}</h3>
-              <p className="text-muted text-sm leading-relaxed mt-2">{p.text}</p>
+              <h3 className="font-display font-semibold text-lg text-ink mt-2">{t(p.title, locale)}</h3>
+              <p className="text-muted text-sm leading-relaxed mt-2">{t(p.text, locale)}</p>
 
               {/* Every field below renders only when it holds something. year,
                   role, problem and solution are all '' today and all four
                   github values are '#', so nothing here invents a link or a
                   date that does not exist. */}
-              {p.role && <p className="text-muted text-sm mt-3">{p.role}</p>}
+              {p.role && <p className="text-muted text-sm mt-3">{t(p.role, locale)}</p>}
 
               {p.tech?.length > 0 && (
                 <ul className="flex flex-wrap gap-1.5 mt-4">
-                  {p.tech.map((t) => (
+                  {p.tech.map((techName) => (
                     <li
-                      key={t}
+                      key={techName}
                       className="font-mono text-[10px] uppercase tracking-wider text-muted border border-divider rounded-full px-2.5 py-1"
                     >
-                      {t}
+                      {techName}
                     </li>
                   ))}
                 </ul>

@@ -1,9 +1,23 @@
 import { useState, lazy, Suspense } from 'react'
 import { Star, Check } from 'lucide-react'
 import { PROJECTS_FULL } from '../data/projects'
+import { useLocale } from '../i18n/useLocale'
+import { t } from '../i18n/t'
+
 import ProjectMock from '../components/ProjectMock'
 import { useInView } from '../motion/useInView'
 import { TiltCard } from '../motion/TiltCard'
+
+/* This section's own strings, as opposed to the project data.
+   ---------------------------------------------------------------------
+   A `locale === 'en' ? … : …` ternary inline in the JSX would have been
+   shorter, and it is precisely what t() exists to stop: a conditional buried
+   in markup is invisible to untranslatedIn(), so the next string added that
+   way goes missing silently. Section copy gets the same { hu, en } shape as
+   the data modules, declared at the top where it can be found and counted. */
+const COPY = {
+  details: { hu: 'részletek', en: 'details' },
+}
 
 /* The modal is the one part of this page that can be deferred without cost to
    the prerender: it returns null until a card is clicked and portals itself out
@@ -18,6 +32,7 @@ const ProjectModal = lazy(() => import('../components/ProjectModal'))
 const preloadModal = () => import('../components/ProjectModal')
 
 export default function Projects() {
+  const locale = useLocale()
   const [sectionRef, visible] = useInView(0.1)
   const [openIndex, setOpenIndex] = useState(null)
   const [originRect, setOriginRect] = useState(null)
@@ -54,7 +69,7 @@ export default function Projects() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {PROJECTS_FULL.map((p, i) => (
             <button
-              key={p.title}
+              key={t(p.title, locale)}
               type="button"
               onClick={(e) => openProject(i, e)}
               /* Fetches the modal chunk on intent rather than on click, so the
@@ -62,7 +77,7 @@ export default function Projects() {
                  Focus counts as intent too — keyboard users never hover. */
               onPointerEnter={preloadModal}
               onFocus={preloadModal}
-              aria-label={`${p.title} — részletek`}
+              aria-label={`${t(p.title, locale)} — ${t(COPY.details, locale)}`}
               style={{ transitionDelay: visible ? `${i * 120}ms` : '0ms' }}
               className={`proj-card group w-full text-left card-invert border border-divider rounded-4xl overflow-hidden card-motion shadow-e2 hover:border-primary/60 hover:-translate-y-1.5 hover:shadow-e4 ${
                 visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
@@ -76,7 +91,7 @@ export default function Projects() {
                       and the number carried no other meaning. */}
                   <div className="mb-3.5 flex flex-wrap items-center gap-1.5">
                     <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-primary-dark bg-primary/10 px-2.5 py-1 rounded-full">
-                      {p.label}
+                      {t(p.label, locale)}
                     </span>
                     {/* Only when a project has actually earned it — see the
                         note in projects.js on why all four are false today. */}
@@ -87,11 +102,11 @@ export default function Projects() {
                       </span>
                     )}
                   </div>
-                  <h3 className="font-display font-bold text-lg text-ink leading-snug tracking-tight">{p.title}</h3>
+                  <h3 className="font-display font-bold text-lg text-ink leading-snug tracking-tight">{t(p.title, locale)}</h3>
                   {/* 13px of muted grey is below where this stays comfortable
                       on a phone, and the phone is the primary viewport. 14px at
                       the same line height costs one wrapped line at most. */}
-                  <p className="text-muted text-sm mt-2.5 leading-relaxed">{p.text}</p>
+                  <p className="text-muted text-sm mt-2.5 leading-relaxed">{t(p.text, locale)}</p>
 
                   {/* Renders only when filled, like every other case-study
                       field. An "Amit tud" heading standing over nothing would
@@ -115,12 +130,12 @@ export default function Projects() {
                       does from what it is built with, which are two different
                       questions asked by two different readers. */}
                   <div className="flex flex-wrap gap-1.5 mt-5 pt-4 border-t border-divider">
-                    {p.tech.map((t) => (
+                    {p.tech.map((techName) => (
                       <span
-                        key={t}
+                        key={techName}
                         className="font-mono text-[9px] uppercase tracking-wide text-muted bg-background border border-divider px-2 py-0.5 rounded-full"
                       >
-                        {t}
+                        {techName}
                       </span>
                     ))}
                   </div>

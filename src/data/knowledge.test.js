@@ -65,10 +65,11 @@ describe('knowledge object', () => {
   it('carries every AI service with its price and scope', () => {
     expect(k.aiServices).toHaveLength(AI_SERVICES.length)
     for (const svc of AI_SERVICES) {
-      const match = k.aiServices.find((s) => s.title === svc.title)
-      expect(match, `AI service "${svc.title}" is missing`).toBeTruthy()
-      expect(match.priceNote).toBe(svc.priceNote)
-      expect(match.scope).toBe(svc.scope)
+      const title = t(svc.title, 'hu')
+      const match = k.aiServices.find((s) => s.title === title)
+      expect(match, `AI service "${title}" is missing`).toBeTruthy()
+      expect(match.priceNote).toBe(t(svc.priceNote, 'hu'))
+      expect(match.scope).toBe(t(svc.scope, 'hu'))
     }
   })
 

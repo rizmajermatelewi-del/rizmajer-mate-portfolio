@@ -3,6 +3,7 @@ import { ArrowRight } from 'lucide-react'
 import { LogoMark } from '../components/Logo'
 import { SOCIAL_LINKS } from '../data/nav'
 import { t } from '../i18n/t'
+import { useLocale } from '../i18n/useLocale'
 import { ORDERED_SKILLS } from '../data/skills'
 import { useInView } from '../motion/useInView'
 import { ScrambleText } from '../motion/ScrambleText'
@@ -13,6 +14,7 @@ import { Magnetic } from '../motion/Magnetic'
 ---------------------------------------------------------------- */
 export default function Footer() {
   const [ref, visible] = useInView(0.1)
+  const locale = useLocale()
 
   return (
     <footer ref={ref} className="card-invert relative rounded-t-6xl mt-12 overflow-hidden">
@@ -80,9 +82,9 @@ export default function Footer() {
               {/* Same order as the Készségek section, not authoring order, so
                   the two lists cannot disagree about what comes first. */}
               {ORDERED_SKILLS.slice(0, 4).map((s) => (
-                <li key={s.title}>
+                <li key={t(s.title, locale)}>
                   <a href="#keszsegek" className="inline-block py-1 text-muted hover:text-primary-dark transition text-sm">
-                    <ScrambleText text={s.title} trigger="hover" />
+                    <ScrambleText text={t(s.title, locale)} trigger="hover" />
                   </a>
                 </li>
               ))}
