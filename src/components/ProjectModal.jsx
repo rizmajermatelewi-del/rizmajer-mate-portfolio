@@ -1,11 +1,19 @@
 import { useEffect, useRef } from 'react'
 import { useLocale } from '../i18n/useLocale'
 import { t } from '../i18n/t'
+
 import { createPortal } from 'react-dom'
 import { gsap } from 'gsap'
 import { X, ArrowUpRight } from 'lucide-react'
 import { duration, ease } from '../motion/tokens'
 import { useReducedMotion } from '../motion/useReducedMotion'
+
+const COPY = {
+  close: { hu: 'Bezárás', en: 'Close' },
+  problem: { hu: 'A feladat', en: 'The problem' },
+  solution: { hu: 'A megoldás', en: 'The solution' },
+  liveSite: { hu: 'Élő oldal', en: 'Live site' },
+}
 
 const FOCUSABLE = 'a[href], button:not([disabled]), input, textarea, [tabindex]:not([tabindex="-1"])'
 
@@ -93,7 +101,7 @@ export default function ProjectModal({ project, originRect, onClose }) {
     >
       <button
         type="button"
-        aria-label="Bezárás"
+        aria-label={t(COPY.close, locale)}
         onClick={onClose}
         className="absolute inset-0 bg-deep/70 backdrop-blur-sm"
       />
@@ -105,7 +113,7 @@ export default function ProjectModal({ project, originRect, onClose }) {
         <button
           type="button"
           onClick={onClose}
-          aria-label="Bezárás"
+          aria-label={t(COPY.close, locale)}
           className="absolute right-5 top-5 rounded-full p-2 text-muted transition-colors duration-200 hover:text-ink"
         >
           <X className="h-5 w-5" strokeWidth={2} />
@@ -131,14 +139,14 @@ export default function ProjectModal({ project, originRect, onClose }) {
 
         {project.problem && (
           <section className="mt-8">
-            <h3 className="font-display font-bold text-ink text-lg">A feladat</h3>
+            <h3 className="font-display font-bold text-ink text-lg">{t(COPY.problem, locale)}</h3>
             <p className="text-muted leading-relaxed mt-2">{t(project.problem, locale)}</p>
           </section>
         )}
 
         {project.solution && (
           <section className="mt-6">
-            <h3 className="font-display font-bold text-ink text-lg">A megoldás</h3>
+            <h3 className="font-display font-bold text-ink text-lg">{t(COPY.solution, locale)}</h3>
             <p className="text-muted leading-relaxed mt-2">{t(project.solution, locale)}</p>
           </section>
         )}
@@ -180,7 +188,7 @@ export default function ProjectModal({ project, originRect, onClose }) {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-widest text-primary-dark hover:text-ink transition-colors duration-200"
               >
-                Élő oldal <ArrowUpRight className="h-3.5 w-3.5" strokeWidth={2} />
+                {t(COPY.liveSite, locale)} <ArrowUpRight className="h-3.5 w-3.5" strokeWidth={2} />
               </a>
             )}
             {project.github !== '#' && (

@@ -1,13 +1,52 @@
 import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 import { LogoMark } from '../components/Logo'
-import { SOCIAL_LINKS } from '../data/nav'
+import { NAV_LINKS, SOCIAL_LINKS } from '../data/nav'
 import { t } from '../i18n/t'
 import { useLocale } from '../i18n/useLocale'
+import { UI } from '../i18n/ui'
 import { ORDERED_SKILLS } from '../data/skills'
 import { useInView } from '../motion/useInView'
 import { ScrambleText } from '../motion/ScrambleText'
 import { Magnetic } from '../motion/Magnetic'
+
+const COPY = {
+  headlineLead: { hu: 'Mondd el, mi', en: 'Tell me what' },
+  headlineAccent: { hu: 'viszi el', en: 'eats the most' },
+  headlineTail: { hu: 'a legtöbb időd.', en: 'of your time.' },
+  strapline: {
+    hu: 'Rizmajer Máté — full-stack fejlesztő Magyarországról, elérhető távoli és helyi projektekre egyaránt.',
+    en: 'Rizmajer Máté — full-stack developer from Hungary, available for remote and local projects alike.',
+  },
+  blurb: {
+    hu: 'Full-stack fejlesztő. React, Node.js és modern web-technológiák. Ötlettől a működő termékig.',
+    en: 'Full-stack developer. React, Node.js and modern web technologies. From the idea to the working product.',
+  },
+  skillsHeading: { hu: 'Készségek', en: 'Skills' },
+  pagesHeading: { hu: 'Oldalak', en: 'Pages' },
+  contactHeading: { hu: 'Kapcsolat', en: 'Contact' },
+  country: { hu: 'Magyarország', en: 'Hungary' },
+  available: { hu: 'Elérhető új projektekre', en: 'Available for new projects' },
+  /* Both legal links keep their Hungarian names on the English page, because
+     both documents are Hungarian-only by decision. An English label over a
+     Hungarian document promises a translation that does not exist — and for
+     an ÁSZF, a second binding text is worse than an untranslated one. */
+  privacy: { hu: 'Adatvédelem', en: 'Adatvédelem (in Hungarian)' },
+}
+
+/* The four shared entries are looked up from NAV_LINKS by href rather than
+   retyped, so the footer cannot end up calling a section something the navbar
+   does not. Kapcsolat is footer-only: nav.js deliberately omits it, because
+   the CTA button beside it already points at #kapcsolat. */
+const labelFor = (href) => NAV_LINKS.find((link) => link.href === href)?.label
+
+const PAGE_LINKS = [
+  { href: '#projektek', label: labelFor('#projektek') },
+  { href: '#rolam', label: labelFor('#rolam') },
+  { href: '#folyamat', label: labelFor('#folyamat') },
+  { href: '#arak', label: labelFor('#arak') },
+  { href: '#kapcsolat', label: COPY.contactHeading },
+]
 
 /* ----------------------------------------------------------------
    Footer
@@ -44,15 +83,14 @@ export default function Footer() {
               The old line read "Beszéljük meg, mi vinné el a munkát", which
               parses several ways and lands on none of them cleanly. */}
           <h2 className="font-display font-extrabold text-5xl sm:text-7xl md:text-8xl leading-[0.92] tracking-tight">
-            Mondd el, mi <span className="text-primary-dark font-bold whitespace-nowrap">viszi el</span> a legtöbb időd.
+            {t(COPY.headlineLead, locale)}{' '}
+            <span className="text-primary-dark font-bold whitespace-nowrap">{t(COPY.headlineAccent, locale)}</span>{' '}
+            {t(COPY.headlineTail, locale)}
           </h2>
           <div className="flex flex-col sm:flex-row sm:items-end justify-between mt-8 gap-6">
-            <p className="text-muted max-w-md">
-              Rizmajer Máté — full-stack fejlesztő Magyarországról, elérhető távoli és helyi
-              projektekre egyaránt.
-            </p>
+            <p className="text-muted max-w-md">{t(COPY.strapline, locale)}</p>
             <a href="#kapcsolat" className="magnetic-btn inline-flex items-center gap-2 bg-primary text-white font-semibold px-7 py-3.5 rounded-full self-start sm:self-auto">
-              Kérj ajánlatot
+              {t(UI.ctaQuote, locale)}
               <ArrowRight className="h-4 w-4" />
             </a>
           </div>
@@ -70,14 +108,11 @@ export default function Footer() {
             {/* "szakértelmével" is gone. Expertise is not something you award
                 yourself in your own footer, and this page argues everywhere else
                 that a claim needs something behind it. */}
-            <p className="text-muted text-sm leading-relaxed max-w-xs">
-              Full-stack fejlesztő. React, Node.js és modern web-technológiák.
-              Ötlettől a működő termékig.
-            </p>
+            <p className="text-muted text-sm leading-relaxed max-w-xs">{t(COPY.blurb, locale)}</p>
           </div>
 
           <div>
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary-dark mb-4">Készségek</p>
+            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary-dark mb-4">{t(COPY.skillsHeading, locale)}</p>
             <ul className="space-y-2.5">
               {/* Same order as the Készségek section, not authoring order, so
                   the two lists cannot disagree about what comes first. */}
@@ -94,25 +129,27 @@ export default function Footer() {
           <div>
             {/* "Oldalak", not "Rólam". The group used to be named after one of
                 its own five items, which made the label useless as a heading. */}
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary-dark mb-4">Oldalak</p>
+            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary-dark mb-4">{t(COPY.pagesHeading, locale)}</p>
             <ul className="space-y-2.5">
-              <li><a href="#projektek" className="inline-block py-1 text-muted hover:text-primary-dark transition text-sm">Projektek</a></li>
-              <li><a href="#rolam" className="inline-block py-1 text-muted hover:text-primary-dark transition text-sm">Rólam</a></li>
-              <li><a href="#folyamat" className="inline-block py-1 text-muted hover:text-primary-dark transition text-sm">Folyamat</a></li>
-              <li><a href="#arak" className="inline-block py-1 text-muted hover:text-primary-dark transition text-sm">Árak</a></li>
-              <li><a href="#kapcsolat" className="inline-block py-1 text-muted hover:text-primary-dark transition text-sm">Kapcsolat</a></li>
+              {PAGE_LINKS.map(({ href, label }) => (
+                <li key={href}>
+                  <a href={href} className="inline-block py-1 text-muted hover:text-primary-dark transition text-sm">
+                    {t(label, locale)}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
 
           <div>
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary-dark mb-4">Kapcsolat</p>
+            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary-dark mb-4">{t(COPY.contactHeading, locale)}</p>
             <ul className="space-y-2.5">
               <li>
                 <a href="mailto:rizmajermatelewi@gmail.com" className="inline-block py-1 text-muted hover:text-primary-dark transition text-sm">
                   rizmajermatelewi@gmail.com
                 </a>
               </li>
-              <li className="text-muted text-sm">Magyarország</li>
+              <li className="text-muted text-sm">{t(COPY.country, locale)}</li>
             </ul>
           </div>
         </div>
@@ -125,7 +162,7 @@ export default function Footer() {
           <div className="flex items-center gap-2.5">
             <span className="h-1.5 w-1.5 rounded-full bg-primary-dark" />
             <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-muted">
-              Elérhető új projektekre
+              {t(COPY.available, locale)}
             </span>
           </div>
 
@@ -146,7 +183,7 @@ export default function Footer() {
           </div>
 
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-muted text-xs font-mono">
-            <Link to="/adatvedelem" className="inline-block py-1 hover:text-primary-dark transition">Adatvédelem</Link>
+            <Link to="/adatvedelem" className="inline-block py-1 hover:text-primary-dark transition">{t(COPY.privacy, locale)}</Link>
             <Link to="/aszf" className="inline-block py-1 hover:text-primary-dark transition">ÁSZF</Link>
             <span>© 2026 Rizmajer Máté</span>
           </div>

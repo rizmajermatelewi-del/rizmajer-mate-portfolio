@@ -5,6 +5,17 @@ import { TiltCard } from '../motion/TiltCard'
 import { Magnetic } from '../motion/Magnetic'
 import { useLocale } from '../i18n/useLocale'
 import { t } from '../i18n/t'
+import { UI } from '../i18n/ui'
+
+const COPY = {
+  eyebrow: { hu: 'Árazás', en: 'Pricing' },
+  headingAccent: { hu: 'Ennyiből', en: 'This is what' },
+  headingTail: { hu: 'jön ki.', en: 'it comes to.' },
+  intro: {
+    hu: 'Ezek indulóárak. A pontosat akkor mondom meg, ha már tudom, mire van szükséged, és írásban, tételesen kapod meg. Utólag nem jön hozzá semmi.',
+    en: 'These are starting prices. I give you the exact one once I know what you need, in writing and itemised. Nothing gets added to it afterwards.',
+  },
+}
 
 /* ----------------------------------------------------------------
    Pricing
@@ -19,7 +30,7 @@ export default function Pricing() {
         {/* Left-aligned like every other section header on the page. This was
             the only one centred, so it read as a change of axis mid-scroll. */}
         <div className="max-w-2xl mb-16 sm:mb-20">
-          <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary-dark">╱ Árazás</span>
+          <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary-dark">╱ {t(COPY.eyebrow, locale)}</span>
           {/* "Egyszerű csomagok, rugalmas megoldások" said nothing. Every
               agency claims both, so neither word carried information; it was
               the kind of line that sounds like a headline without being one.
@@ -29,11 +40,11 @@ export default function Pricing() {
                 "indulóárak", "a pontosat akkor mondom meg", and a "-tól" on
                 every figure — so a fourth apology in the headline left a
                 pricing section that says the number and then flinches. */}
-            <span className="text-primary-dark font-semibold">Ennyiből</span> jön ki.
+            <span className="text-primary-dark font-semibold">{t(COPY.headingAccent, locale)}</span>{' '}
+            {t(COPY.headingTail, locale)}
           </h2>
           <p className="text-muted text-lg mt-6 leading-relaxed">
-            Ezek indulóárak. A pontosat akkor mondom meg, ha már tudom, mire van
-            szükséged, és írásban, tételesen kapod meg. Utólag nem jön hozzá semmi.
+            {t(COPY.intro, locale)}
           </p>
         </div>
 
@@ -92,7 +103,7 @@ export default function Pricing() {
                   {/* Same words as the nav, hero and footer buttons. Two
                       labels for one action ("Ajánlatkérés" here, "Kérj
                       ajánlatot" everywhere else) reads as two destinations. */}
-                  Kérj ajánlatot
+                  {t(UI.ctaQuote, locale)}
                   <ArrowRight className="h-4 w-4" />
                 </a>
               </Magnetic>

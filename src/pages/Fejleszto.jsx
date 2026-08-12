@@ -4,6 +4,26 @@ import { ORDERED_SKILLS, categoryLabel } from '../data/skills'
 import { PROJECTS_FULL } from '../data/projects'
 import { SOCIAL_LINKS } from '../data/nav'
 import { t } from '../i18n/t'
+import { UI } from '../i18n/ui'
+
+const COPY = {
+  eyebrow: { hu: 'Fejlesztői profil', en: 'Developer profile' },
+  role: { hu: 'Full-stack fejlesztő — React és Node.js', en: 'Full-stack developer — React and Node.js' },
+  bio1: {
+    hu: 'Szoftverfejlesztő végzettséget szereztem, a gyakorlatot pedig éles projekteken gyűjtöttem: működő rendszereket építettem valódi felhasználóknak, nem feladatlapra. A munkáim nagyobb része full-stack — a felülettől az adatbázisig ugyanaz a kéz viszi végig.',
+    en: 'I trained as a software developer and learned the craft on real projects: working systems for real users, not exercises. Most of my work is full-stack — the same pair of hands takes it from the interface to the database.',
+  },
+  bio2: {
+    hu: 'Nyitott vagyok fejlesztői pozícióra, alkalmazottként és szerződéses formában egyaránt. Ha technikai részlet érdekel, amit itt nem találsz, írj — konkrét kérdésre konkrétan válaszolok.',
+    en: 'I am open to developer roles, both employed and on contract. If there is a technical detail you want that is not here, write to me — a specific question gets a specific answer.',
+  },
+  stackHeading: { hu: 'Amivel dolgozom', en: 'What I work with' },
+  projectsHeading: { hu: 'Projektek', en: 'Projects' },
+  linksNote: {
+    hu: 'Az ügyfélprojektekhez nyilvános linket és repót nem tudok adni: éles rendszerek, valódi ügyféladatokkal. A saját projektekhez demókat építek, amiket bárki megnyithat. Kódot szívesen mutatok személyesen.',
+    en: 'I cannot give public links or repositories for client projects: they are live systems holding real customer data. For my own projects I build demos anyone can open. I am happy to walk through code in person.',
+  },
+}
 import { useLocale } from '../i18n/useLocale'
 
 /* The second entry point.
@@ -46,34 +66,25 @@ export default function Fejleszto() {
         {/* flex w-fit, not inline-flex — see the same note in Terms.jsx: as an
             inline box the eyebrow below shared this link's line. */}
         <Link to="/" className="flex w-fit items-center gap-2 text-sm font-medium text-primary-dark lift-on-hover mb-10">
-          <ArrowLeft className="h-4 w-4" /> Vissza a főoldalra
+          <ArrowLeft className="h-4 w-4" /> {t(UI.backToHome, locale)}
         </Link>
 
-        <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary-dark">╱ Fejlesztői profil</span>
+        <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary-dark">╱ {t(COPY.eyebrow, locale)}</span>
         <h1 className="font-display font-extrabold text-4xl sm:text-6xl text-ink mt-4 leading-[1.05] tracking-tight">
           Rizmajer Máté Levente
         </h1>
         <p className="font-display font-semibold text-xl sm:text-2xl text-primary-dark mt-3">
-          Full-stack fejlesztő — React és Node.js
+          {t(COPY.role, locale)}
         </p>
 
         <div className="mt-8 space-y-4 text-muted text-base sm:text-lg leading-relaxed max-w-2xl">
-          <p>
-            Szoftverfejlesztő végzettséget szereztem, a gyakorlatot pedig éles projekteken
-            gyűjtöttem: működő rendszereket építettem valódi felhasználóknak, nem feladatlapra.
-            A munkáim nagyobb része full-stack — a felülettől az adatbázisig ugyanaz a kéz
-            viszi végig.
-          </p>
-          <p>
-            Nyitott vagyok fejlesztői pozícióra, alkalmazottként és szerződéses formában
-            egyaránt. Ha technikai részlet érdekel, amit itt nem találsz, írj — konkrét
-            kérdésre konkrétan válaszolok.
-          </p>
+          <p>{t(COPY.bio1, locale)}</p>
+          <p>{t(COPY.bio2, locale)}</p>
         </div>
 
         {/* ---------------- Stack ---------------- */}
         <h2 className="font-display font-bold text-2xl sm:text-3xl text-ink mt-16 tracking-tight">
-          Amivel dolgozom
+          {t(COPY.stackHeading, locale)}
         </h2>
         <div className="mt-8 space-y-8">
           {ORDERED_SKILLS.map((skill) => {
@@ -100,7 +111,7 @@ export default function Fejleszto() {
 
         {/* ---------------- Projects ---------------- */}
         <h2 className="font-display font-bold text-2xl sm:text-3xl text-ink mt-16 tracking-tight">
-          Projektek
+          {t(COPY.projectsHeading, locale)}
         </h2>
         <div className="mt-8 grid sm:grid-cols-2 gap-5">
           {PROJECTS_FULL.map((p) => (
@@ -141,7 +152,7 @@ export default function Fejleszto() {
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1 text-sm font-medium text-primary-dark"
                     >
-                      Megnyitom <ArrowUpRight className="h-3.5 w-3.5" strokeWidth={2} />
+                      {t(UI.openLink, locale)} <ArrowUpRight className="h-3.5 w-3.5" strokeWidth={2} />
                     </a>
                   )}
                   {p.github !== '#' && (
@@ -169,11 +180,7 @@ export default function Fejleszto() {
             has already been bitten once by the four-projects fact living in
             four places until it rotted into a false claim. */}
         {linkedProjects.length === 0 && (
-          <p className="text-muted text-sm leading-relaxed mt-5">
-            Az ügyfélprojektekhez nyilvános linket és repót nem tudok adni: éles rendszerek,
-            valódi ügyféladatokkal. A saját projektekhez demókat építek, amiket bárki
-            megnyithat. Kódot szívesen mutatok személyesen.
-          </p>
+          <p className="text-muted text-sm leading-relaxed mt-5">{t(COPY.linksNote, locale)}</p>
         )}
 
         {/* ---------------- Contact ---------------- */}

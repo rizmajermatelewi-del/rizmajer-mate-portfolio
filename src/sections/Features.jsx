@@ -4,12 +4,20 @@ import CodeScan from '../components/showcases/CodeScan'
 import BookingScheduler from '../components/showcases/BookingScheduler'
 import { useInView } from '../motion/useInView'
 import { TiltCard } from '../motion/TiltCard'
+import { useLocale } from '../i18n/useLocale'
+import { t } from '../i18n/t'
+
+const COPY = {
+  headingLead: { hu: 'Három dolog, amit', en: 'Three things you can' },
+  headingAccent: { hu: 'elvárhatsz', en: 'expect' },
+}
 
 /* ----------------------------------------------------------------
    Features Section
 ---------------------------------------------------------------- */
 export default function Features() {
   const [sectionRef, visible] = useInView(0.15)
+  const locale = useLocale()
 
   /* Sentence case, not Title Case. Hungarian does not capitalise every word
      in a heading; "Modern Tech Stack" and "Tiszta, Tesztelt Kód" read as
@@ -25,24 +33,33 @@ export default function Features() {
      the expandable detail in skills.js, where whoever cares can find them. */
   const cards = [
     {
-      eyebrow: 'Amit kapsz',
-      heading: 'Gyors marad',
-      sub: 'Nem sablonra épül',
-      text: 'Az oldalad nem egy megvásárolt sablon, amit még ezren használnak. Ezért gyors, és később bővíteni lehet ahelyett, hogy elölről kellene kezdeni.',
+      eyebrow: { hu: 'Amit kapsz', en: 'What you get' },
+      heading: { hu: 'Gyors marad', en: 'It stays fast' },
+      sub: { hu: 'Nem sablonra épül', en: 'Not built on a template' },
+      text: {
+        hu: 'Az oldalad nem egy megvásárolt sablon, amit még ezren használnak. Ezért gyors, és később bővíteni lehet ahelyett, hogy elölről kellene kezdeni.',
+        en: 'Your site is not a bought template that a thousand other people are running as well. That is why it is fast, and why it can be extended later instead of started again.',
+      },
       Component: StackShuffler,
     },
     {
-      eyebrow: 'Amire számíthatsz',
-      heading: 'Tesztelve adom ki',
-      sub: 'Nem a vevőd találja meg a hibát',
-      text: 'Minden változtatás után automatikusan lefutnak az ellenőrzések. Ha valami elromlik, az nálam derül ki, nem akkor, amikor egy vevőd épp fizetne.',
+      eyebrow: { hu: 'Amire számíthatsz', en: 'What you can count on' },
+      heading: { hu: 'Tesztelve adom ki', en: 'It ships tested' },
+      sub: { hu: 'Nem a vevőd találja meg a hibát', en: 'Your customer does not find the bug' },
+      text: {
+        hu: 'Minden változtatás után automatikusan lefutnak az ellenőrzések. Ha valami elromlik, az nálam derül ki, nem akkor, amikor egy vevőd épp fizetne.',
+        en: 'The checks run automatically after every change. If something breaks, it surfaces on my side — not while one of your customers is trying to pay.',
+      },
       Component: CodeScan,
     },
     {
-      eyebrow: 'Ahogy kezdünk',
-      heading: 'Előbb beszéljünk',
-      sub: 'Kötelezettség nélkül',
-      text: 'Elmondod, mi a gond, én megmondom, mennyi munka és mennyibe kerül. Ha kiderül, hogy nem éri meg neked, azt is megmondom.',
+      eyebrow: { hu: 'Ahogy kezdünk', en: 'How we start' },
+      heading: { hu: 'Előbb beszéljünk', en: 'We talk first' },
+      sub: { hu: 'Kötelezettség nélkül', en: 'No obligation' },
+      text: {
+        hu: 'Elmondod, mi a gond, én megmondom, mennyi munka és mennyibe kerül. Ha kiderül, hogy nem éri meg neked, azt is megmondom.',
+        en: 'You tell me what the problem is, I tell you how much work it is and what it costs. If it turns out not to be worth it for you, I tell you that too.',
+      },
       Component: BookingScheduler,
     },
   ]
@@ -61,7 +78,8 @@ export default function Features() {
               it: it could sit on any page in any industry. This one states
               what the three cards below actually promise. */}
           <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink leading-[1.05] tracking-tight">
-            Három dolog, amit <span className="text-primary-dark font-semibold">elvárhatsz</span>.
+            {t(COPY.headingLead, locale)}{' '}
+            <span className="text-primary-dark font-semibold">{t(COPY.headingAccent, locale)}</span>.
           </h2>
         </div>
 
@@ -78,7 +96,7 @@ export default function Features() {
                   8deg tilt fights the motion already happening inside them. */}
               <TiltCard max={4}>
                 <div className="flex items-center justify-between mb-6">
-                  <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">{card.eyebrow}</span>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">{t(card.eyebrow, locale)}</span>
                   <ArrowUpRight
                     className="h-5 w-5 text-ink/30 group-hover:text-primary-dark group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all"
                     strokeWidth={1.8}
@@ -88,9 +106,9 @@ export default function Features() {
                 <card.Component />
 
                 <div className="mt-6">
-                  <h3 className="font-display font-bold text-2xl text-ink leading-tight">{card.heading}</h3>
-                  <p className="font-display font-medium text-primary-dark text-sm mt-1">{card.sub}</p>
-                  <p className="text-muted text-[15px] mt-4 leading-relaxed">{card.text}</p>
+                  <h3 className="font-display font-bold text-2xl text-ink leading-tight">{t(card.heading, locale)}</h3>
+                  <p className="font-display font-medium text-primary-dark text-sm mt-1">{t(card.sub, locale)}</p>
+                  <p className="text-muted text-[15px] mt-4 leading-relaxed">{t(card.text, locale)}</p>
                 </div>
               </TiltCard>
             </article>

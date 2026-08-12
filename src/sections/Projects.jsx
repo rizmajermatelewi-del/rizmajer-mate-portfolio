@@ -17,6 +17,15 @@ import { TiltCard } from '../motion/TiltCard'
    the data modules, declared at the top where it can be found and counted. */
 const COPY = {
   details: { hu: 'részletek', en: 'details' },
+  eyebrow: { hu: 'Projektek', en: 'Work' },
+  headingLead: { hu: 'Amin dolgozom.', en: 'What I am working on.' },
+  headingAccent: { hu: 'Kettő ügyfélnek, kettő magamnak.', en: 'Two for clients, two for myself.' },
+  intro: {
+    hu: 'Négy projekt, amit ténylegesen megépítettem: kettő élő ügyfélmunka, kettő saját kezdeményezés, amivel a saját gondolkodásomat és árazási stratégiámat teszteltem.',
+    en: 'Four projects I actually built: two live client jobs, and two of my own, which I used to test my own thinking and pricing.',
+  },
+  featured: { hu: 'Kiemelt projekt', en: 'Featured project' },
+  whatItDoes: { hu: 'Amit tud', en: 'What it does' },
 }
 
 /* The modal is the one part of this page that can be deferred without cost to
@@ -51,18 +60,17 @@ export default function Projects() {
     <section id="projektek" ref={sectionRef} className="relative py-20 sm:py-28 px-6 sm:px-10 lg:px-16">
       <div className="max-w-7xl mx-auto">
         <div className="max-w-3xl mb-16 sm:mb-20">
-          <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary-dark">╱ Projektek</span>
+          <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary-dark">╱ {t(COPY.eyebrow, locale)}</span>
           <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink mt-4 leading-[1.05] tracking-tight">
             {/* "Valós munka, nem mockup" used a word the buyer does not have.
                 "Mockup" is a designer's term; a rétesház owner reads past it.
                 The split of client work versus own work is the actual point
                 and needs no jargon to say. */}
-            Amin dolgozom.
-            <span className="block font-display font-semibold text-primary-dark mt-1">Kettő ügyfélnek, kettő magamnak.</span>
+            {t(COPY.headingLead, locale)}
+            <span className="block font-display font-semibold text-primary-dark mt-1">{t(COPY.headingAccent, locale)}</span>
           </h2>
           <p className="text-muted text-lg mt-6 leading-relaxed max-w-xl">
-            Négy projekt, amit ténylegesen megépítettem: kettő élő ügyfélmunka, kettő saját
-            kezdeményezés, amivel a saját gondolkodásomat és árazási stratégiámat teszteltem.
+            {t(COPY.intro, locale)}
           </p>
         </div>
 
@@ -98,7 +106,7 @@ export default function Projects() {
                     {p.featured && (
                       <span className="inline-flex items-center gap-1 font-mono text-[9px] uppercase tracking-[0.2em] text-white bg-primary px-2.5 py-1 rounded-full">
                         <Star className="h-2.5 w-2.5" strokeWidth={2.5} />
-                        Kiemelt projekt
+                        {t(COPY.featured, locale)}
                       </span>
                     )}
                   </div>
@@ -114,7 +122,7 @@ export default function Projects() {
                       once. */}
                   {p.features.length > 0 && (
                     <div className="mt-5">
-                      <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-primary-dark">Amit tud</p>
+                      <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-primary-dark">{t(COPY.whatItDoes, locale)}</p>
                       <ul className="mt-2 space-y-1.5">
                         {p.features.map((f) => (
                           <li key={f} className="flex gap-2 text-muted text-[13px] leading-relaxed">

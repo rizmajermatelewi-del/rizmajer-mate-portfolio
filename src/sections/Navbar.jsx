@@ -4,6 +4,13 @@ import { LogoMark } from '../components/Logo'
 import { NAV_LINKS, SOCIAL_LINKS } from '../data/nav'
 import { useLocale } from '../i18n/useLocale'
 import { t } from '../i18n/t'
+import { UI } from '../i18n/ui'
+
+const COPY = {
+  homeLink: { hu: 'Rizmajer Máté — kezdőlap', en: 'Rizmajer Máté — home' },
+  openMenu: { hu: 'Menü megnyitása', en: 'Open menu' },
+  closeMenu: { hu: 'Menü bezárása', en: 'Close menu' },
+}
 
 /* ----------------------------------------------------------------
    Navbar
@@ -66,7 +73,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between gap-6">
           {/* The mark stands alone here, so the link carries the accessible
               name the removed wordmark used to give it. */}
-          <a href="#kezdolap" className="flex items-center group" aria-label="Rizmajer Máté — kezdőlap">
+          <a href="#kezdolap" className="flex items-center group" aria-label={t(COPY.homeLink, locale)}>
             {/* Inverts on scroll: unscrolled the pill is transparent over the
                 dark hero, scrolled it is glass over the light page.
 
@@ -123,7 +130,7 @@ export default function Navbar() {
               href="#kapcsolat"
               className="magnetic-btn inline-flex items-center gap-1.5 bg-primary text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg shadow-primary/30"
             >
-              Kérj ajánlatot
+              {t(UI.ctaQuote, locale)}
               <ArrowUpRight className="h-4 w-4" strokeWidth={2.5} />
             </a>
           </div>
@@ -131,7 +138,7 @@ export default function Navbar() {
           <button
             onClick={() => setOpen(true)}
             className={`lg:hidden inline-flex h-11 w-11 items-center justify-center rounded-full ${scrolled ? 'text-ink' : 'text-white'}`}
-            aria-label="Menü megnyitása"
+            aria-label={t(COPY.openMenu, locale)}
           >
             <Menu className="h-5 w-5" />
           </button>
@@ -163,7 +170,7 @@ export default function Navbar() {
         >
           <div className="flex items-center justify-between mb-10">
             <span className="font-display font-bold text-xl text-ink">Rizmajer Máté</span>
-            <button onClick={() => setOpen(false)} aria-label="Menü bezárása" className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-divider/40">
+            <button onClick={() => setOpen(false)} aria-label={t(COPY.closeMenu, locale)} className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-divider/40">
               <X className="h-5 w-5" />
             </button>
           </div>
@@ -184,7 +191,7 @@ export default function Navbar() {
             onClick={() => setOpen(false)}
             className="mt-8 magnetic-btn flex items-center justify-center gap-2 bg-primary text-white px-6 py-4 rounded-full font-semibold w-full"
           >
-            Kérj ajánlatot
+            {t(UI.ctaQuote, locale)}
             <ArrowUpRight className="h-4 w-4" />
           </a>
           <div className="mt-6 flex items-center justify-center gap-3">

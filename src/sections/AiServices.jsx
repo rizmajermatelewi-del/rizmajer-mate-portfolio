@@ -2,7 +2,22 @@ import { useState } from 'react'
 import { AI_SERVICES } from '../data/ai'
 import { useLocale } from '../i18n/useLocale'
 import { t } from '../i18n/t'
+
 import { useInView } from '../motion/useInView'
+
+const COPY = {
+  headingLead: { hu: 'Amit a gép', en: 'What the machine' },
+  headingAccent: { hu: 'elvégez', en: 'handles' },
+  headingTail: { hu: 'helyetted.', en: 'for you.' },
+  intro: {
+    hu: 'A legtöbb kérdés, ami befut hozzád, ugyanaz a néhány kérdés. Ezekre nem neked kell válaszolnod éjjel fél tizenegykor.',
+    en: 'Most of the questions that reach you are the same few questions. You should not be the one answering those at half past ten at night.',
+  },
+  caveat: {
+    hu: 'Ez a legújabb része a kínálatomnak: fizető ügyfélnek még nem szállítottam ilyet. Az árak ezért indulóárak, és az első projekteknél ezt be is árazom. Ha valamiről menet közben kiderül, hogy nem éri meg neked, megmondom.',
+    en: 'This is the newest part of what I offer, and I have not delivered one for a paying client yet. The prices are starting prices for that reason, and I price the first few projects accordingly. If something turns out not to be worth it for you along the way, I will say so.',
+  },
+}
 
 /* ----------------------------------------------------------------
    AI services.
@@ -47,19 +62,18 @@ export default function AiServices() {
             <div className="lg:col-span-5">
               <div className="lg:sticky lg:top-28">
                 <h2 className="font-display font-extrabold text-4xl sm:text-5xl text-ink leading-[1.05] tracking-tight">
-                  Amit a gép <span className="text-primary-dark font-semibold">elvégez</span> helyetted.
+                  {t(COPY.headingLead, locale)}{' '}
+                  <span className="text-primary-dark font-semibold">{t(COPY.headingAccent, locale)}</span>{' '}
+                  {t(COPY.headingTail, locale)}
                 </h2>
                 <p className="text-muted text-base sm:text-lg mt-6 leading-relaxed max-w-md">
-                  A legtöbb kérdés, ami befut hozzád, ugyanaz a néhány kérdés. Ezekre nem
-                  neked kell válaszolnod éjjel fél tizenegykor.
+                  {t(COPY.intro, locale)}
                 </p>
 
                 {/* Stated plainly and early: a visitor who works this out
                     later discounts everything above it too. */}
                 <p className="text-muted text-sm mt-8 leading-relaxed max-w-md border-t border-divider pt-6">
-                  Ez a legújabb része a kínálatomnak: fizető ügyfélnek még nem szállítottam
-                  ilyet. Az árak ezért indulóárak, és az első projekteknél ezt be is árazom.
-                  Ha valamiről menet közben kiderül, hogy nem éri meg neked, megmondom.
+                  {t(COPY.caveat, locale)}
                 </p>
               </div>
             </div>

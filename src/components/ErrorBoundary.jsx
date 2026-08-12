@@ -1,4 +1,24 @@
 import { Component } from 'react'
+import { localeFromPath } from '../i18n/locales'
+import { t } from '../i18n/t'
+
+/* The one place that reads the locale from window.location rather than from
+   useLocale(). Two reasons, both structural: this is a class component, so it
+   cannot call a hook, and main.jsx mounts it OUTSIDE BrowserRouter on purpose
+   — a boundary inside the router would not catch a router-level failure. So
+   there is no router context here to read a location from.
+
+   Reading window.location directly is safe here in a way it would not be
+   elsewhere: this renders only after a client-side crash, so there is no
+   server pass to disagree with and no hydration to mismatch. */
+const COPY = {
+  eyebrow: { hu: 'Hiba történt', en: 'Something went wrong' },
+  heading: { hu: 'Az oldal betöltése félbeszakadt.', en: 'The page stopped loading partway.' },
+  body: {
+    hu: 'Ez az én hibám, nem a tiéd. Amíg javítom, írj közvetlenül — ugyanúgy válaszolok egy munkanapon belül.',
+    en: 'This is my fault, not yours. While I fix it, write to me directly — I answer within one working day either way.',
+  },
+}
 
 /* Client-side safety net.
 
@@ -35,19 +55,18 @@ export default class ErrorBoundary extends Component {
   render() {
     if (!this.state.failed) return this.props.children
 
+    const locale = localeFromPath(window.location.pathname)
+
     return (
       <main className="min-h-screen flex items-center justify-center px-6 py-20 bg-background">
         <div className="max-w-md text-center">
           <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-primary-dark">
-            Hiba történt
+            {t(COPY.eyebrow, locale)}
           </p>
           <h1 className="font-display font-extrabold text-3xl sm:text-4xl text-ink mt-4 leading-tight tracking-tight">
-            Az oldal betöltése félbeszakadt.
+            {t(COPY.heading, locale)}
           </h1>
-          <p className="text-muted mt-5 leading-relaxed">
-            Ez az én hibám, nem a tiéd. Amíg javítom, írj közvetlenül — ugyanúgy válaszolok
-            egy munkanapon belül.
-          </p>
+          <p className="text-muted mt-5 leading-relaxed">{t(COPY.body, locale)}</p>
           <a
             href="mailto:rizmajermatelewi@gmail.com"
             className="mt-8 inline-flex items-center justify-center bg-primary text-white font-semibold px-7 py-4 rounded-full shadow-lg shadow-primary/30"

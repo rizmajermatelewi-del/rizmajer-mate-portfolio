@@ -2,7 +2,18 @@ import { useState } from 'react'
 import { ORDERED_SKILLS, categoryLabel } from '../data/skills'
 import { useLocale } from '../i18n/useLocale'
 import { t } from '../i18n/t'
+
 import { useInView } from '../motion/useInView'
+
+const COPY = {
+
+  headingLead: { hu: 'Egy ember csinálja,', en: 'One person does it,' },
+  headingAccent: { hu: 'elejétől a végéig', en: 'start to finish' },
+  intro: {
+    hu: 'Nincs alvállalkozó és nincs projektmenedzser kettőnk közé ékelve. Akitől kérdezel, az ugyanaz, aki megépíti, és ugyanaz, aki fél év múlva felveszi a telefont.',
+    en: 'No subcontractor and no project manager wedged between us. The person you ask is the person who builds it, and the person who picks up the phone six months later.',
+  },
+}
 
 /* Grouped by category, but still one seamless mosaic rather than four separate
    labelled blocks. Splitting six tiles into four sections would have left two
@@ -39,13 +50,10 @@ export default function ServicesGrid() {
               arrangement means for the client, which is that there is nobody
               to be passed along to. */}
           <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink leading-[1.05] tracking-tight">
-            Egy ember csinálja, <span className="text-primary-dark font-bold">elejétől a végéig</span>.
+            {t(COPY.headingLead, locale)}{' '}
+            <span className="text-primary-dark font-bold">{t(COPY.headingAccent, locale)}</span>.
           </h2>
-          <p className="text-muted text-base leading-relaxed mt-6">
-            Nincs alvállalkozó és nincs projektmenedzser kettőnk közé ékelve. Akitől
-            kérdezel, az ugyanaz, aki megépíti, és ugyanaz, aki fél év múlva felveszi
-            a telefont.
-          </p>
+          <p className="text-muted text-base leading-relaxed mt-6">{t(COPY.intro, locale)}</p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-divider rounded-4xl overflow-hidden shadow-e2">

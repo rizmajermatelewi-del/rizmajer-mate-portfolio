@@ -4,6 +4,27 @@ import { ArrowRight, ArrowDown } from 'lucide-react'
 import { Magnetic } from '../motion/Magnetic'
 import { useReducedMotion } from '../motion/useReducedMotion'
 import heroBackdrop from '../assets/portrait-sunset.jpg'
+import { useLocale } from '../i18n/useLocale'
+import { t } from '../i18n/t'
+import { UI } from '../i18n/ui'
+
+const COPY = {
+  headlineLead: { hu: 'Weboldal és rendszer,', en: 'A website and a system,' },
+  headlineAccent: { hu: 'ami helyetted dolgozik.', en: 'that works so you do not have to.' },
+  introLead: {
+    hu: 'Kis- és középvállalkozásoknak építek weboldalakat és foglalási rendszereket: gyorsan betöltő, mobilon is használható felületeket, amiket utána',
+    en: 'I build websites and booking systems for small and medium businesses: quick to load, usable on a phone, and afterwards',
+  },
+  introAccent: { hu: 'te is tudsz kezelni', en: 'you can run them yourself' },
+  seeWork: { hu: 'Munkáim', en: 'See my work' },
+  /* The LCP image's alt text. It describes a photograph of a specific person
+     in a specific place, so both languages say the same thing about the same
+     picture — this is a description, not a slogan. */
+  photoAlt: {
+    hu: 'Rizmajer Máté Levente naplementében, egy sziklán ülve',
+    en: 'Rizmajer Máté Levente at sunset, sitting on a rock',
+  },
+}
 
 /* ----------------------------------------------------------------
    Hero.
@@ -17,6 +38,7 @@ import heroBackdrop from '../assets/portrait-sunset.jpg'
 export default function Hero() {
   const heroRef = useRef(null)
   const reduce = useReducedMotion()
+  const locale = useLocale()
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -82,7 +104,7 @@ export default function Hero() {
             priority rather than waiting its turn behind the bundle. */}
         <img
           src={heroBackdrop}
-          alt="Rizmajer Máté Levente naplementében, egy sziklán ülve"
+          alt={t(COPY.photoAlt, locale)}
           loading="eager"
           fetchPriority="high"
           decoding="async"
@@ -121,7 +143,7 @@ export default function Hero() {
               also no Next.js in this project. */}
           <h1 className="font-display font-extrabold text-white leading-[0.95] tracking-tight">
             <span className="hero-line-1 block text-3xl sm:text-4xl">
-              Weboldal és rendszer,
+              {t(COPY.headlineLead, locale)}
             </span>
             {/* Capped at 6xl so the line holds on one row at desktop. At 8xl
                 it wrapped, which made the headline three lines tall and
@@ -130,7 +152,7 @@ export default function Hero() {
               className="hero-line-2 block font-display font-semibold text-primary-light text-4xl sm:text-5xl md:text-6xl mt-2"
               style={{ lineHeight: '0.95' }}
             >
-              ami helyetted dolgozik.
+              {t(COPY.headlineAccent, locale)}
             </span>
           </h1>
 
@@ -149,9 +171,8 @@ export default function Hero() {
               retired category to every visitor before they reached the prices.
               Named after the tier that is actually sold instead. */}
           <p className="hero-meta max-w-lg text-white/80 text-base sm:text-lg mt-7 leading-relaxed">
-            Kis- és középvállalkozásoknak építek weboldalakat és foglalási rendszereket:
-            gyorsan betöltő, mobilon is használható felületeket, amiket utána{' '}
-            <span className="text-white">te is tudsz kezelni</span>.
+            {t(COPY.introLead, locale)}{' '}
+            <span className="text-white">{t(COPY.introAccent, locale)}</span>.
           </p>
 
           {/* Two CTAs, two intents. The secondary used to be the email address
@@ -165,7 +186,7 @@ export default function Hero() {
                 href="#kapcsolat"
                 className="magnetic-btn group inline-flex w-full sm:w-auto items-center justify-center gap-2 bg-primary text-white font-semibold px-7 py-4 rounded-full shadow-2xl shadow-primary/30 transition-shadow duration-300 hover:shadow-primary/50"
               >
-                Kérj ajánlatot
+                {t(UI.ctaQuote, locale)}
                 <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
               </a>
             </Magnetic>
@@ -178,7 +199,7 @@ export default function Hero() {
               href="#projektek"
               className="lift-on-hover group inline-flex w-full sm:w-auto items-center justify-center gap-2 bg-white/10 backdrop-blur-md text-white border border-white/25 font-medium px-7 py-4 rounded-full transition-colors duration-300 hover:bg-white/[0.18] hover:border-white/45"
             >
-              Munkáim
+              {t(COPY.seeWork, locale)}
               <ArrowDown className="h-4 w-4 transition-transform duration-200 group-hover:translate-y-0.5" />
             </a>
           </div>

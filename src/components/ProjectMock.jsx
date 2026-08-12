@@ -1,3 +1,6 @@
+import { useLocale } from '../i18n/useLocale'
+import { t } from '../i18n/t'
+
 /* The project card's visual slot.
 
    This used to draw a fake browser window: three grey dots and a stack of
@@ -15,7 +18,17 @@
    To fill one: drop the file in src/assets, import it in
    src/data/projects.js, and set `image` on that project. Nothing here
    changes. */
-export default function ProjectMock({ tone, image, alt = '', slotLabel = 'Képernyőkép hamarosan' }) {
+/* `slotLabel` used to be a prop with a Hungarian default. Nothing has ever
+   passed it, so it was a parameter that existed only to be defaulted — and
+   translating it would have meant a caller-supplied string that t() cannot
+   check. It reads the locale like every other piece of copy now. */
+const COPY = {
+  screenshotSoon: { hu: 'Képernyőkép hamarosan', en: 'Screenshot coming' },
+}
+
+export default function ProjectMock({ tone, image, alt = '' }) {
+  const locale = useLocale()
+
   if (image) {
     return (
       <div className="relative h-48 w-full overflow-hidden bg-deep">
@@ -56,7 +69,7 @@ export default function ProjectMock({ tone, image, alt = '', slotLabel = 'Képer
       />
       <span className="absolute inset-0 flex items-center justify-center">
         <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/45">
-          {slotLabel}
+          {t(COPY.screenshotSoon, locale)}
         </span>
       </span>
     </div>

@@ -20,6 +20,15 @@ import { PROTOCOL_STEPS } from '../data/protocol'
 import { useLocale } from '../i18n/useLocale'
 import { t } from '../i18n/t'
 
+/* Split at the accent span rather than kept as one string with markup in it,
+   so a translator can decide which word carries the emphasis instead of
+   inheriting whichever one lands in that position. */
+const COPY = {
+  headingLead: { hu: 'Három lépés, semmi', en: 'Three steps, no' },
+  headingAccent: { hu: 'meglepetés', en: 'surprises' },
+  imageSoon: { hu: 'Kép hamarosan', en: 'Photo coming' },
+}
+
 /* ----------------------------------------------------------------
    Protocol — Sticky Stacking Cards
 ---------------------------------------------------------------- */
@@ -156,7 +165,8 @@ export default function Protocol() {
 
       <div className="max-w-7xl mx-auto mb-10 sm:mb-16 px-2 sm:px-10">
         <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink leading-[1.05] tracking-tight max-w-3xl">
-          Három lépés, semmi <span className="text-primary-dark font-semibold">meglepetés</span>.
+          {t(COPY.headingLead, locale)}{' '}
+          <span className="text-primary-dark font-semibold">{t(COPY.headingAccent, locale)}</span>.
         </h2>
       </div>
 
@@ -229,7 +239,7 @@ export default function Protocol() {
                     />
                     <span className="absolute inset-0 flex items-center justify-center px-6 text-center">
                       <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-primary-light/60">
-                        Kép hamarosan
+                        {t(COPY.imageSoon, locale)}
                       </span>
                     </span>
                   </>

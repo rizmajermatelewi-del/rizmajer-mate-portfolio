@@ -5,6 +5,96 @@ import Field from '../components/Field'
 import { CONTACT_PHONE } from '../data/nav'
 import { useInView } from '../motion/useInView'
 import { Magnetic } from '../motion/Magnetic'
+import { useLocale } from '../i18n/useLocale'
+import { t } from '../i18n/t'
+
+/* The form's own copy. The `name` attributes below are deliberately NOT in
+   here: they are Formspree's field keys, so renaming one would quietly change
+   what arrives in his inbox rather than change what a visitor reads. */
+const COPY = {
+  headingLead: { hu: 'Hogyan segíthetek a', en: 'How can I help your' },
+  headingAccent: { hu: 'vállalkozásodnak', en: 'business' },
+  intro: {
+    hu: 'Nem kell kész tervvel érkezned. Elég, ha leírod, mi az, ami ma nehézkesen megy, a többit kitaláljuk. Akkor is válaszolok, ha végül nem én leszek a jó választás.',
+    en: 'You do not need to arrive with a finished plan. Just describe what is awkward today and we will work out the rest. I answer even when I turn out not to be the right choice.',
+  },
+  callMe: { hu: 'Hívj fel', en: 'Call me' },
+  emailMe: { hu: 'Írj emailt', en: 'Email me' },
+  based: { hu: 'Székhely', en: 'Based in' },
+  country: { hu: 'Magyarország', en: 'Hungary' },
+  responseTime: { hu: 'Válaszidő', en: 'Response time' },
+  within24: { hu: '24 órán belül', en: 'Within 24 hours' },
+  dataHeading: { hu: 'Adatkezelés', en: 'Your data' },
+  dataBody: {
+    hu: 'Az adataid biztonságban vannak. Kizárólag a megkeresésed kapcsán veszem fel veled a kapcsolatot, harmadik féllel nem osztom meg őket.',
+    en: 'Your data is safe. I contact you only about your enquiry, and I do not share it with anyone else.',
+  },
+  sendError: {
+    hu: 'Hiba történt a küldés során. Próbáld újra, vagy írj emailt közvetlenül a',
+    en: 'Something went wrong while sending. Try again, or email me directly at',
+  },
+  sendErrorTail: { hu: 'címre.', en: '.' },
+  fieldName: { hu: 'Neved', en: 'Your name' },
+  fieldEmail: { hu: 'E-mail címed', en: 'Your email address' },
+  fieldCompany: { hu: 'Cégnév', en: 'Company' },
+  fieldProjectType: { hu: 'Projekt típusa', en: 'Type of project' },
+  fieldMessage: { hu: 'Üzeneted', en: 'Your message' },
+  messagePlaceholder: {
+    hu: 'Meséld el röviden a projekted vagy az ötleted',
+    en: 'Tell me briefly about your project or your idea',
+  },
+  attachLabel: {
+    hu: 'Csatolj egy briefet vagy referenciát (opcionális)',
+    en: 'Attach a brief or a reference (optional)',
+  },
+  consentLead: {
+    hu: 'Hozzájárulok, hogy a megadott adataimat a megkeresésem megválaszolása céljából kezeld.',
+    en: 'I consent to my details being used to answer my enquiry.',
+  },
+  /* The link text stays Hungarian in both languages: it points at
+     /adatvedelem, which is a Hungarian-only legal page by decision. An English
+     label would promise a document that does not exist. */
+  privacyLink: { hu: 'Adatkezelési tájékoztató', en: 'Adatkezelési tájékoztató (in Hungarian)' },
+  requiredNote: { hu: 'A *-gal jelölt mezők kötelezőek.', en: 'Fields marked * are required.' },
+  sending: { hu: 'Küldés...', en: 'Sending…' },
+  submit: { hu: 'Üzenet küldése', en: 'Send message' },
+  thanksHeading: { hu: 'Köszönöm a megkeresésed', en: 'Thank you for getting in touch' },
+  thanksBody: {
+    hu: 'Hamarosan jelentkezem, hogy megbeszéljük a részleteket.',
+    en: 'I will be in touch shortly to go through the details.',
+  },
+  closingQuestion: { hu: 'Fejlesztőt keresel?', en: 'Looking for a developer?' },
+  closingLine: {
+    hu: 'Építsünk valamit, ami tényleg dolgozik.',
+    en: 'Let us build something that actually works.',
+  },
+  notAttached: { hu: 'Nem csatoltam:', en: 'Not attached:' },
+}
+
+/* Takes the file limit rather than restating it, so the hint and the rule it
+   describes cannot drift apart. */
+const DROP_HINT = (max) => ({
+  hu: `Kattints vagy húzd ide a fájlokat — legfeljebb ${max} db, egyenként 8 MB. Kép, PDF vagy Word.`,
+  en: `Click or drag files here — up to ${max}, 8 MB each. Images, PDF or Word.`,
+})
+
+/* These take a count, so they are functions returning a field rather than
+   fields. Kept beside COPY so a rejection reason is as findable as everything
+   else the visitor can be shown. */
+const REASON = {
+  wrongType: (n) => ({
+    hu: `${n} fájl típusa nem támogatott (kép, PDF vagy Word megy)`,
+    en: `${n} file(s) of an unsupported type — images, PDF or Word only`,
+  }),
+  tooBig: (n) => ({
+    hu: `${n} fájl nagyobb 8 MB-nál`,
+    en: `${n} file(s) larger than 8 MB`,
+  }),
+  overflow: (n, max) => ({
+    hu: `${n} fájl nem fért bele az ${max}-ös keretbe`,
+    en: `${n} file(s) over the limit of ${max}`,
+  }),
+}
 
 /* ----------------------------------------------------------------
    Contact Form
@@ -33,6 +123,7 @@ const isAllowedType = (file) => file.type.startsWith('image/') || ALLOWED_TYPES.
 
 export default function ContactForm() {
   const [sectionRef, visible] = useInView(0.1)
+  const locale = useLocale()
   const [form, setForm] = useState({ name: '', email: '', company: '', projectType: '', message: '' })
   const [files, setFiles] = useState([])
   const [status, setStatus] = useState('idle')
@@ -85,10 +176,10 @@ export default function ContactForm() {
     })
 
     const reasons = []
-    if (wrongType.length) reasons.push(`${wrongType.length} fájl típusa nem támogatott (kép, PDF vagy Word megy)`)
-    if (tooBig.length) reasons.push(`${tooBig.length} fájl nagyobb 8 MB-nál`)
-    if (overflow) reasons.push(`${overflow} fájl nem fért bele az ${MAX_FILES}-ös keretbe`)
-    setFileNotice(reasons.length ? `Nem csatoltam: ${reasons.join('; ')}.` : '')
+    if (wrongType.length) reasons.push(t(REASON.wrongType(wrongType.length), locale))
+    if (tooBig.length) reasons.push(t(REASON.tooBig(tooBig.length), locale))
+    if (overflow) reasons.push(t(REASON.overflow(overflow, MAX_FILES), locale))
+    setFileNotice(reasons.length ? `${t(COPY.notAttached, locale)} ${reasons.join('; ')}.` : '')
   }
 
   return (
@@ -101,16 +192,15 @@ export default function ContactForm() {
             }`}
           >
             <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink leading-[1.05] tracking-tight">
-              Hogyan segíthetek a <span className="text-primary-dark font-semibold">vállalkozásodnak</span>?
+              {t(COPY.headingLead, locale)}{' '}
+              <span className="text-primary-dark font-semibold">{t(COPY.headingAccent, locale)}</span>?
             </h2>
             {/* The response-time promise is stated once, in the contact tile
                 below. It used to run here, in that tile, and again under the
                 submit button: the same sentence three times inside one
                 viewport. */}
             <p className="text-muted text-lg mt-6 leading-relaxed max-w-md">
-              Nem kell kész tervvel érkezned. Elég, ha leírod, mi az, ami ma nehézkesen
-              megy, a többit kitaláljuk. Akkor is válaszolok, ha végül nem én leszek
-              a jó választás.
+              {t(COPY.intro, locale)}
             </p>
 
             <div className="mt-10 space-y-4">
@@ -123,7 +213,7 @@ export default function ContactForm() {
                     <Phone className="h-5 w-5 text-primary group-hover:text-white" />
                   </span>
                   <span>
-                    <span className="block font-mono text-[10px] uppercase tracking-widest text-muted">Hívj fel</span>
+                    <span className="block font-mono text-[10px] uppercase tracking-widest text-muted">{t(COPY.callMe, locale)}</span>
                     <span className="font-display font-semibold text-ink text-lg">{CONTACT_PHONE}</span>
                   </span>
                 </a>
@@ -134,7 +224,7 @@ export default function ContactForm() {
                   <Mail className="h-5 w-5 text-primary group-hover:text-white" />
                 </span>
                 <span>
-                  <span className="block font-mono text-[10px] uppercase tracking-widest text-muted">Írj emailt</span>
+                  <span className="block font-mono text-[10px] uppercase tracking-widest text-muted">{t(COPY.emailMe, locale)}</span>
                   <span className="font-display font-semibold text-ink text-lg">rizmajermatelewi@gmail.com</span>
                 </span>
               </a>
@@ -144,8 +234,8 @@ export default function ContactForm() {
                   <MapPin className="h-5 w-5 text-primary" />
                 </span>
                 <span>
-                  <span className="block font-mono text-[10px] uppercase tracking-widest text-muted">Székhely</span>
-                  <span className="font-display font-semibold text-ink text-lg">Magyarország</span>
+                  <span className="block font-mono text-[10px] uppercase tracking-widest text-muted">{t(COPY.based, locale)}</span>
+                  <span className="font-display font-semibold text-ink text-lg">{t(COPY.country, locale)}</span>
                 </span>
               </div>
 
@@ -154,17 +244,16 @@ export default function ContactForm() {
                   <Clock className="h-5 w-5 text-primary" />
                 </span>
                 <span>
-                  <span className="block font-mono text-[10px] uppercase tracking-widest text-muted">Válaszidő</span>
-                  <span className="font-display font-semibold text-ink text-lg">24 órán belül</span>
+                  <span className="block font-mono text-[10px] uppercase tracking-widest text-muted">{t(COPY.responseTime, locale)}</span>
+                  <span className="font-display font-semibold text-ink text-lg">{t(COPY.within24, locale)}</span>
                 </span>
               </div>
             </div>
 
             <div className="mt-10 p-5 rounded-3xl bg-primary/5 border border-primary/15">
-              <p className="font-mono text-[10px] uppercase tracking-widest text-primary-dark mb-2">Adatkezelés</p>
+              <p className="font-mono text-[10px] uppercase tracking-widest text-primary-dark mb-2">{t(COPY.dataHeading, locale)}</p>
               <p className="text-sm text-muted leading-relaxed">
-                Az adataid biztonságban vannak. Kizárólag a megkeresésed kapcsán veszem fel veled a
-                kapcsolatot, harmadik féllel nem osztom meg őket.
+                {t(COPY.dataBody, locale)}
               </p>
             </div>
           </div>
@@ -188,26 +277,26 @@ export default function ContactForm() {
                 <div className="mb-6 flex items-start gap-3 rounded-2xl border border-accent-dark/30 bg-accent/10 p-4">
                   <AlertCircle className="h-5 w-5 text-accent-dark shrink-0 mt-0.5" />
                   <p className="text-sm text-accent-dark leading-relaxed">
-                    Hiba történt a küldés során. Próbáld újra, vagy írj emailt közvetlenül a{' '}
+                    {t(COPY.sendError, locale)}{' '}
                     <a href="mailto:rizmajermatelewi@gmail.com" className="underline font-medium">
                       rizmajermatelewi@gmail.com
                     </a>{' '}
-                    címre.
+                    {t(COPY.sendErrorTail, locale)}
                   </p>
                 </div>
               )}
               {status !== 'sent' ? (
                 <>
                   <div className="grid sm:grid-cols-2 gap-5">
-                    <Field name="name" label="Neved" required value={form.name} onChange={(v) => setForm({ ...form, name: v })} />
-                    <Field name="email" label="E-mail címed" type="email" required value={form.email} onChange={(v) => setForm({ ...form, email: v })} />
-                    <Field name="company" label="Cégnév" value={form.company} onChange={(v) => setForm({ ...form, company: v })} />
-                    <Field name="projectType" label="Projekt típusa" value={form.projectType} onChange={(v) => setForm({ ...form, projectType: v })} />
+                    <Field name="name" label={t(COPY.fieldName, locale)} required value={form.name} onChange={(v) => setForm({ ...form, name: v })} />
+                    <Field name="email" label={t(COPY.fieldEmail, locale)} type="email" required value={form.email} onChange={(v) => setForm({ ...form, email: v })} />
+                    <Field name="company" label={t(COPY.fieldCompany, locale)} value={form.company} onChange={(v) => setForm({ ...form, company: v })} />
+                    <Field name="projectType" label={t(COPY.fieldProjectType, locale)} value={form.projectType} onChange={(v) => setForm({ ...form, projectType: v })} />
                   </div>
 
                   <div className="mt-5">
                     <label htmlFor="message" className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink/80 mb-2 block">
-                      Üzeneted <span aria-hidden="true">*</span>
+                      {t(COPY.fieldMessage, locale)} <span aria-hidden="true">*</span>
                     </label>
                     <textarea
                       id="message"
@@ -217,7 +306,7 @@ export default function ContactForm() {
                       onChange={(e) => setForm({ ...form, message: e.target.value })}
                       required
                       rows={5}
-                      placeholder="Meséld el röviden a projekted vagy az ötleted"
+                      placeholder={t(COPY.messagePlaceholder, locale)}
                       className="input-edge w-full bg-background rounded-2xl px-4 py-3.5 text-ink placeholder-ink/55 focus:border-primary focus:ring-4 focus:ring-primary/15 outline-none transition resize-none font-body"
                     />
                   </div>
@@ -248,14 +337,13 @@ export default function ContactForm() {
                     <label htmlFor="file-up" className="cursor-pointer block">
                       <Upload className="h-6 w-6 mx-auto text-primary-dark mb-2" />
                       <p className="font-display font-semibold text-ink text-sm">
-                        Csatolj egy briefet vagy referenciát (opcionális)
+                        {t(COPY.attachLabel, locale)}
                       </p>
                       {/* The limits were enforced but never stated. Someone
                           only found out about them by having a file quietly
                           disappear. */}
                       <p className="text-xs text-muted mt-1">
-                        Kattints vagy húzd ide a fájlokat — legfeljebb {MAX_FILES} db, egyenként 8 MB.
-                        Kép, PDF vagy Word.
+                        {t(DROP_HINT(MAX_FILES), locale)}
                       </p>
                       {fileNotice && (
                         <p role="status" className="text-xs text-primary-dark font-medium mt-2">
@@ -291,23 +379,22 @@ export default function ContactForm() {
                       className="input-edge mt-0.5 h-5 w-5 shrink-0 rounded-md bg-background accent-primary focus:ring-4 focus:ring-primary/15 outline-none"
                     />
                     <label htmlFor="consent" className="text-sm text-muted leading-relaxed">
-                      Hozzájárulok, hogy a megadott adataimat a megkeresésem megválaszolása
-                      céljából kezeld.{' '}
+                      {t(COPY.consentLead, locale)}{' '}
                       <Link to="/adatvedelem" className="text-primary-dark underline underline-offset-2">
-                        Adatkezelési tájékoztató
+                        {t(COPY.privacyLink, locale)}
                       </Link>
                     </label>
                   </div>
 
                   <div className="mt-7 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                    <p className="text-xs text-muted">A *-gal jelölt mezők kötelezőek.</p>
+                    <p className="text-xs text-muted">{t(COPY.requiredNote, locale)}</p>
                     <Magnetic>
                       <button
                         type="submit"
                         disabled={status === 'sending' || !consent}
                         className="magnetic-btn inline-flex items-center gap-2 bg-primary text-white font-semibold px-7 py-3.5 rounded-full shadow-lg shadow-primary/30 disabled:opacity-50 disabled:cursor-not-allowed"
                       >
-                        {status === 'sending' ? 'Küldés...' : 'Üzenet küldése'}
+                        {status === 'sending' ? t(COPY.sending, locale) : t(COPY.submit, locale)}
                         <ArrowRight className="h-4 w-4" />
                       </button>
                     </Magnetic>
@@ -318,9 +405,9 @@ export default function ContactForm() {
                   <div className="h-16 w-16 mx-auto rounded-full bg-primary/15 flex items-center justify-center mb-6">
                     <CheckCircle2 className="h-8 w-8 text-primary-dark" />
                   </div>
-                  <h3 className="font-display font-bold text-2xl text-ink mb-3">Köszönöm a megkeresésed</h3>
+                  <h3 className="font-display font-bold text-2xl text-ink mb-3">{t(COPY.thanksHeading, locale)}</h3>
                   <p className="text-muted max-w-md mx-auto">
-                    Hamarosan jelentkezem, hogy megbeszéljük a részleteket.
+                    {t(COPY.thanksBody, locale)}
                   </p>
                 </div>
               )}
@@ -343,10 +430,10 @@ export default function ContactForm() {
           }`}
         >
           <p className="font-display font-extrabold text-2xl sm:text-3xl text-ink tracking-tight">
-            Fejlesztőt keresel?
+            {t(COPY.closingQuestion, locale)}
           </p>
           <p className="font-display font-semibold text-2xl sm:text-3xl text-primary-dark tracking-tight mt-1">
-            Építsünk valamit, ami tényleg dolgozik.
+            {t(COPY.closingLine, locale)}
           </p>
         </div>
       </div>

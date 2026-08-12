@@ -4,6 +4,16 @@ import { FAQ_QUESTIONS } from '../data/faq'
 import { useLocale } from '../i18n/useLocale'
 import { t } from '../i18n/t'
 
+/* The heading is split at the accent span rather than held as one string with
+   markup in it. Two fields is the honest shape: a translator moving the
+   emphasis to a different word is making a real decision, and this lets them,
+   where an embedded <span> in a string would force the accent onto whatever
+   word happened to sit in the same position. */
+const COPY = {
+  headingLead: { hu: 'Amit meg szoktak', en: 'What people usually' },
+  headingAccent: { hu: 'kérdezni', en: 'ask' },
+}
+
 /* ----------------------------------------------------------------
    FAQ — the objections an SME actually raises before hiring.
    Sits after the contact form: the visitor who is ready just writes,
@@ -29,7 +39,8 @@ export default function Faq() {
           {/* No eyebrow: "╱ Gyakori kérdések" sitting above "Amit meg szoktak
               kérdezni" is the same sentence twice in two registers. */}
           <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink leading-[1.05] tracking-tight">
-            Amit meg szoktak <span className="text-primary-dark font-semibold">kérdezni</span>.
+            {t(COPY.headingLead, locale)}{' '}
+            <span className="text-primary-dark font-semibold">{t(COPY.headingAccent, locale)}</span>.
           </h2>
         </div>
 

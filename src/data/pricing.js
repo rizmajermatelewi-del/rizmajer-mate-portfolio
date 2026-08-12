@@ -1,4 +1,5 @@
 import { forint, priceEn } from './fx.js'
+import { UI } from '../i18n/ui.js'
 
 /* Figures are floors, not quotes. The earlier version published no numbers
    at all, on the theory that a price anchors the conversation before the
@@ -164,7 +165,7 @@ export const PRICING_AUDIT = {
     en: 'I go over your existing site on a phone and on a computer: what makes it slow, where visitors give up, and what a disabled or older customer cannot use at all. You get it in writing, in order of importance — including if you then have someone else fix it. If you have me do it, the fee comes off the price of the work.',
   },
   href: '#kapcsolat',
-  linkLabel: { hu: 'Kérj ajánlatot', en: 'Ask for a quote' },
+  linkLabel: UI.ctaQuote,
 }
 
 /* The smallest yes on the page, and the reason it sits here rather than only
@@ -202,7 +203,7 @@ export const PRICING_ENTRY = {
     en: 'If that is too big a step right now, we start with one thing that runs by hand today: the order writes itself into the spreadsheet, the notification sends itself. I have not delivered one of these for a paying client yet, so I price the first few accordingly.',
   },
   href: '#kapcsolat',
-  linkLabel: { hu: 'Kérj ajánlatot', en: 'Ask for a quote' },
+  linkLabel: UI.ctaQuote,
 }
 
 /* The cheapest real yes on the page, and the one most of the outbound list
@@ -230,7 +231,7 @@ export const PRICING_GOOGLE = {
     en: 'So that when somebody nearby searches for you, they actually find you: business profile, map, opening hours, phone number, photographs — filled in and kept straight. If you have no profile yet I create one; if you have one that has gone stale, I put it right.',
   },
   href: '#kapcsolat',
-  linkLabel: { hu: 'Kérj ajánlatot', en: 'Ask for a quote' },
+  linkLabel: UI.ctaQuote,
 }
 
 /* The other half of the audit. Without it the 45 000 Ft ends in a written
@@ -247,7 +248,7 @@ export const PRICING_REFRESH = {
     en: 'You keep the site you have, it just starts working: usable on a phone, quick to load, and the button that matters where people look for it. Worth doing when the content and the look are basically sound — if they are not, I say so in the audit and suggest building new instead.',
   },
   href: '#kapcsolat',
-  linkLabel: { hu: 'Kérj ajánlatot', en: 'Ask for a quote' },
+  linkLabel: UI.ctaQuote,
 }
 
 /* Ascending by price, which is also ascending by commitment. Exported as one
