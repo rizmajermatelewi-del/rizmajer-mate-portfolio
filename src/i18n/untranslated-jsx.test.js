@@ -56,12 +56,23 @@ const stripped = (source) =>
     .replace(/\bhu:\s*"(?:[^"\\]|\\.)*"/g, '')
     .replace(/\bhu:\s*`(?:[^`\\]|\\.)*`/g, '')
 
+/* Recursive, and that is not a detail. The first version listed each root
+   directory one level deep, so src/components/showcases/ — three components
+   whose copy was Hungarian from top to bottom — was never opened, and the
+   suite passed the whole time. What caught them was the build reading the
+   rendered /en page back. A scanner that quietly declines to look somewhere
+   is worse than no scanner, because it answers the question anyway. */
+function jsxFilesIn(dir) {
+  return readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
+    const rel = path.posix.join(dir, entry.name)
+    return entry.isDirectory() ? jsxFilesIn(rel) : entry.name.endsWith('.jsx') ? [rel] : []
+  })
+}
+
 function offenders() {
   const found = []
   for (const root of ROOTS) {
-    for (const file of readdirSync(root)) {
-      if (!file.endsWith('.jsx')) continue
-      const rel = path.posix.join(root, file)
+    for (const rel of jsxFilesIn(root)) {
       if (HUNGARIAN_ONLY.includes(rel)) continue
       const lines = stripped(readFileSync(path.resolve(process.cwd(), rel), 'utf8')).split('\n')
 
@@ -87,5 +98,15 @@ describe('components carry no untranslated Hungarian', () => {
     expect(HUNGARIAN.test('Kérj ajánlatot')).toBe(true)
     expect(stripped("const COPY = { hu: 'Árazás', en: 'Pricing' }")).not.toMatch(/Árazás/)
     expect(stripped('<p>Kérj ajánlatot</p>')).toMatch(/Kérj/)
+  })
+
+  /* The other half of guarding the guard, and the one that was actually
+     missing: the scan can be perfectly correct about the files it reads and
+     still be wrong about which files those are. */
+  it('descends into subdirectories', () => {
+    const files = ROOTS.flatMap((root) => jsxFilesIn(root))
+
+    expect(files).toContain('src/components/showcases/BookingScheduler.jsx')
+    expect(files.every((file) => file.endsWith('.jsx'))).toBe(true)
   })
 })

@@ -9,8 +9,13 @@ import { t } from '../i18n/t'
 import { UI } from '../i18n/ui'
 
 const COPY = {
-  headlineLead: { hu: 'Weboldal és rendszer,', en: 'A website and a system,' },
-  headlineAccent: { hu: 'ami helyetted dolgozik.', en: 'that works so you do not have to.' },
+  /* The comma sits in a different half of the sentence in each language, and
+     that is not a slip. Hungarian requires one before the "ami" clause;
+     English takes none before "that", and putting one there anyway is the
+     tell of a sentence that was translated rather than written. English wants
+     it before "so" instead, which is where the pause actually falls. */
+  headlineLead: { hu: 'Weboldal és rendszer,', en: 'A website and a system' },
+  headlineAccent: { hu: 'ami helyetted dolgozik.', en: 'that works, so you do not have to.' },
   introLead: {
     hu: 'Kis- és középvállalkozásoknak építek weboldalakat és foglalási rendszereket: gyorsan betöltő, mobilon is használható felületeket, amiket utána',
     en: 'I build websites and booking systems for small and medium businesses: quick to load, usable on a phone, and afterwards',

@@ -17,17 +17,17 @@ export const HU_ROUTE_PATHS = ['/', '/adatvedelem', '/aszf', '/fejleszto']
    author. The English pages therefore link to the Hungarian originals and say
    plainly that those are the binding text, which is the ordinary practice and
    the only one that does not invent legal exposure. */
-/* Empty, and deliberately so. The routing worked — /en and /en/fejleszto
-   prerendered with the right `lang` and `hreflang` — but the string
-   dictionary behind it was never written, so both pages served the Hungarian
-   copy under an English URL. That is worse than having no English at all: it
-   tells Google the Hungarian pages have a duplicate, lies about the language,
-   and hands a visitor who clicks "EN" the exact text they could not read.
+/* Back, and this time with copy behind them. The first attempt shipped these
+   two paths while the string dictionary was still empty, so both pages served
+   the Hungarian text under an English URL — worse than no English at all,
+   because it told Google the Hungarian pages had a duplicate and handed the
+   one visitor it was for the exact text they could not read.
 
-   The machinery stays (locales.js, useLocale.js and their tests): restoring
-   English is putting the two paths back into EN_PAGES, adding their sitemap
-   entries and their <Route>s, once there is copy to serve. */
-const EN_PAGES = []
+   This list was therefore the last edit of the conversion rather than the
+   first. Every field these two pages touch is a { hu, en } pair now and t()
+   throws on a missing side, so a half-translated page cannot reach dist/ —
+   the build fails instead of publishing it. */
+const EN_PAGES = ['/', '/fejleszto']
 
 export const EN_ROUTE_PATHS = EN_PAGES.map((path) => withLocale(path, 'en'))
 

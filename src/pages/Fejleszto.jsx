@@ -5,6 +5,8 @@ import { PROJECTS_FULL } from '../data/projects'
 import { SOCIAL_LINKS } from '../data/nav'
 import { t } from '../i18n/t'
 import { UI } from '../i18n/ui'
+import { useLocale } from '../i18n/useLocale'
+import { withLocale } from '../i18n/locales'
 
 const COPY = {
   eyebrow: { hu: 'Fejlesztői profil', en: 'Developer profile' },
@@ -23,8 +25,13 @@ const COPY = {
     hu: 'Az ügyfélprojektekhez nyilvános linket és repót nem tudok adni: éles rendszerek, valódi ügyféladatokkal. A saját projektekhez demókat építek, amiket bárki megnyithat. Kódot szívesen mutatok személyesen.',
     en: 'I cannot give public links or repositories for client projects: they are live systems holding real customer data. For my own projects I build demos anyone can open. I am happy to walk through code in person.',
   },
+  /* The last string on this page that was still written into the markup. It
+     survived the sweep because the scanner keys on Hungarian diacritics and
+     "Kapcsolat" has none — which is the documented limit of that guard, not a
+     surprise, and the reason the build now also reads the rendered English
+     pages back. */
+  contactHeading: { hu: 'Kapcsolat', en: 'Contact' },
 }
-import { useLocale } from '../i18n/useLocale'
 
 /* The second entry point.
 
@@ -65,7 +72,10 @@ export default function Fejleszto() {
       <div className="max-w-4xl mx-auto">
         {/* flex w-fit, not inline-flex — see the same note in Terms.jsx: as an
             inline box the eyebrow below shared this link's line. */}
-        <Link to="/" className="flex w-fit items-center gap-2 text-sm font-medium text-primary-dark lift-on-hover mb-10">
+        {/* withLocale, not "/" — from /en/fejleszto a bare "/" would drop the
+            reader onto the Hungarian home page, which is the one page they
+            came here instead of. */}
+        <Link to={withLocale('/', locale)} className="flex w-fit items-center gap-2 text-sm font-medium text-primary-dark lift-on-hover mb-10">
           <ArrowLeft className="h-4 w-4" /> {t(UI.backToHome, locale)}
         </Link>
 
@@ -185,7 +195,7 @@ export default function Fejleszto() {
 
         {/* ---------------- Contact ---------------- */}
         <h2 className="font-display font-bold text-2xl sm:text-3xl text-ink mt-16 tracking-tight">
-          Kapcsolat
+          {t(COPY.contactHeading, locale)}
         </h2>
         <div className="mt-6 flex flex-wrap gap-3">
           <a

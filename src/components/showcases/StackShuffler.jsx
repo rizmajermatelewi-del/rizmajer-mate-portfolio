@@ -1,16 +1,22 @@
 import { useEffect, useState } from 'react'
+import { t, neutral } from '../../i18n/t'
+import { useLocale } from '../../i18n/useLocale'
+
+/* Hoisted out of the component so the shuffle is seeded once rather than from
+   a fresh array on every render. */
+const ITEMS = [
+  { tag: neutral('Frontend'), label: { hu: 'React és Tailwind alapú felületek', en: 'React and Tailwind interfaces' } },
+  { tag: neutral('Backend'), label: { hu: 'Node.js és Express API-k', en: 'Node.js and Express APIs' } },
+  { tag: neutral('DevOps'), label: { hu: 'CI/CD és felhő alapú élesítés', en: 'CI/CD and cloud deployment' } },
+]
 
 /* No metric badges. These used to carry "98/100", "<100ms" and "99.9%" —
    invented figures reading as a Lighthouse score, a response time and an
    uptime SLA, none of which anything here measures. Faking engineering
    precision the work does not claim costs more trust than the badge buys. */
 export default function StackShuffler() {
-  const items = [
-    { tag: 'Frontend', label: 'React és Tailwind alapú felületek' },
-    { tag: 'Backend', label: 'Node.js és Express API-k' },
-    { tag: 'DevOps', label: 'CI/CD és felhő alapú élesítés' },
-  ]
-  const [stack, setStack] = useState(items)
+  const locale = useLocale()
+  const [stack, setStack] = useState(ITEMS)
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -30,7 +36,7 @@ export default function StackShuffler() {
         const total = stack.length
         return (
           <div
-            key={item.tag}
+            key={t(item.tag)}
             style={{
               transform: `translate(${offset * 14}px, ${offset * 14}px) scale(${1 - offset * 0.05})`,
               zIndex: total - offset,
@@ -41,11 +47,11 @@ export default function StackShuffler() {
           >
             <div className="flex items-center justify-between">
               <span className="font-mono text-[10px] uppercase tracking-widest text-primary-dark bg-primary/10 px-2 py-1 rounded-full">
-                {item.tag}
+                {t(item.tag)}
               </span>
             </div>
             <div className="mt-4 font-display text-lg font-semibold text-ink leading-tight">
-              {item.label}
+              {t(item.label, locale)}
             </div>
             <div className="mt-3 flex items-center gap-1.5">
               {Array.from({ length: 24 }).map((_, idx) => (

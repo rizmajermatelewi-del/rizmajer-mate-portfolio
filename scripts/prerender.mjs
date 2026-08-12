@@ -48,6 +48,66 @@ const ssrEntry = path.join(root, 'dist-ssr', 'entry-server.js')
    deliberately and must stay hidden. */
 const HIDDEN_REVEAL = /opacity-0 translate-y-/
 
+/* Hungarian that survived onto an English page.
+   ---------------------------------------------------------------------
+   src/i18n/untranslated-jsx.test.js reads the components; untranslatedIn()
+   reads the data modules. Neither reads the thing that actually ships. This
+   does: it runs on the markup React just produced for a real /en route, so a
+   string that reached the page by any route at all — a component, a data
+   module, a default argument, a field added after the sweep — trips the same
+   check.
+
+   Scanning raw markup rather than visible text on purpose: aria-label and alt
+   are copy too, and a screen-reader user is exactly the reader who cannot see
+   that a button's label was translated and its accessible name was not.
+
+   HU_ALLOWED_ON_EN is Hungarian that is correct on an English page: his name,
+   and the two legal documents that stay Hungarian by decision and keep their
+   Hungarian names so the label does not promise a translation that does not
+   exist. Each is a decision, listed rather than the rule being weakened.
+
+   The limit worth naming: it keys on diacritics, so it cannot see Hungarian
+   written without them. "Kapcsolat" sat in Fejleszto.jsx through the whole
+   section sweep for exactly that reason. This narrows the gap; it does not
+   close it. */
+const HU_DIACRITIC = '[áéíóöőúüűÁÉÍÓÖŐÚÜŰ]'
+
+const HU_ALLOWED_ON_EN = [
+  /* The word, not the phrase "Rizmajer Máté". About.jsx staggers its opening
+     line by wrapping every word in its own span, so in the markup the name
+     arrives as `Rizmajer</span><span>Máté` and a phrase pattern never
+     matches. Matching the one word that carries the diacritics is what
+     actually holds here — and it is his name, so it is allowed wherever it
+     appears. */
+  /Máté/g,
+  /Adatvédelmi tájékoztató/g,
+  /Adatkezelési tájékoztató/g,
+  /Adatvédelem/g,
+  /Általános Szerződési Feltételek/g,
+  /ÁSZF/g,
+]
+
+/* The Hungarian locale codes, which the diacritic rule cannot see — "hu_HU"
+   and "hu-HU" are plain ASCII. They are the two places on an English page
+   where being wrong is invisible to a person reading it and decisive to
+   everything reading it mechanically: og:locale tells a link preview which
+   language to present the card in, and schema.org inLanguage tells a search
+   engine what it just indexed.
+
+   Not `hreflang="hu"`, which is correct on the English page — that is the
+   link to the Hungarian twin. Hence the region suffix in both patterns. */
+const HU_LOCALE_CODES = [/hu_HU/g, /hu-HU/g]
+
+function hungarianLeaks(html) {
+  const rest = HU_ALLOWED_ON_EN.reduce((acc, pattern) => acc.replace(pattern, ''), html)
+  const context = new RegExp(`[^<>]{0,50}${HU_DIACRITIC}[^<>]{0,50}`, 'g')
+
+  return [
+    ...[...rest.matchAll(context)].map((m) => m[0].trim()),
+    ...HU_LOCALE_CODES.flatMap((pattern) => [...rest.matchAll(pattern)].map((m) => m[0])),
+  ]
+}
+
 const ENTITIES = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }
 const escapeAttr = (s) => s.replace(/[&<>"]/g, (c) => ENTITIES[c])
 
@@ -146,7 +206,7 @@ function withAlternates(html, route, origin, locales, defaultLocale, withLocale,
    the moment a node gains a nested object — and it throws instead of silently
    passing the block through, since a graph that stopped being parseable is a
    build problem worth stopping for. */
-function withFaqSchema(html, entries) {
+function withSchema(html, { entries, locale, siteName, schema, t }) {
   return html.replace(
     /(<script type="application\/ld\+json">)([\s\S]*?)(<\/script>)/i,
     (whole, open, body, close) => {
@@ -157,7 +217,28 @@ function withFaqSchema(html, entries) {
         throw new Error('index.html has no FAQPage node for the faq.js questions to fill.')
       }
 
-      const graph = data['@graph'].flatMap((node) => {
+      const graph = data['@graph'].flatMap((original) => {
+        /* Every node that declares a language declares this page's language.
+           The template says hu-HU throughout, which was true of every page
+           that existed when it was written. */
+        const node = original.inLanguage
+          ? { ...original, inLanguage: t(schema.inLanguage, locale) }
+          : original
+
+        if (node['@type'] === 'Person') {
+          return [
+            {
+              ...node,
+              jobTitle: t(schema.jobTitle, locale),
+              knowsAbout: schema.knowsAbout.map((topic) => t(topic, locale)),
+            },
+          ]
+        }
+
+        /* The site's name in the graph is the page title, not a second
+           sentence that happens to match it today. */
+        if (node['@type'] === 'WebSite') return [{ ...node, name: siteName }]
+
         if (node['@type'] !== 'FAQPage') return [node]
         if (!entries) return []
         return [
@@ -204,6 +285,25 @@ async function main() {
   const { FAQ_QUESTIONS } = await import(
     pathToFileURL(path.join(root, 'src', 'data', 'faq.js')).href
   )
+  const { HOME_META, OG_LOCALE, SCHEMA } = await import(
+    pathToFileURL(path.join(root, 'src', 'i18n', 'meta.js')).href
+  )
+
+  /* index.html carries the Hungarian title and description as well, for the
+     dev server and for anything reading the template before this script runs.
+     Two copies of one sentence is precisely the arrangement that let a stale
+     FAQ ship from this same file, so they are compared rather than trusted. */
+  for (const [label, pattern, field] of [
+    ['<title>', /<title>([\s\S]*?)<\/title>/i, HOME_META.title],
+    ['meta description', /<meta\s+name="description"\s+content="([^"]*)"/i, HOME_META.description],
+  ]) {
+    const inTemplate = decode(template.match(pattern)?.[1] ?? '')
+    if (inTemplate !== t(field, DEFAULT_LOCALE)) {
+      throw new Error(
+        `index.html's ${label} and src/i18n/meta.js disagree:\n  index.html: ${inTemplate}\n  meta.js:    ${t(field, DEFAULT_LOCALE)}`
+      )
+    }
+  }
   const { render } = await import(pathToFileURL(ssrEntry).href)
 
   for (const route of ROUTE_PATHS) {
@@ -216,18 +316,64 @@ async function main() {
       )
     }
 
+    /* A route with no matching <Route> renders an empty <Routes>, and this
+       loop would then happily write a blank page to dist/ and log a success
+       line. routes.jsx now maps over this same array so the paths cannot
+       disagree, but its PAGE_FOR lookup can still come back undefined, and
+       that failure is invisible everywhere except here. The threshold only
+       has to separate "a page" from "nothing"; the smallest real route
+       renders tens of thousands of characters. */
+    if (appHtml.length < 1000) {
+      throw new Error(
+        `${route} rendered only ${appHtml.length} characters of markup. ` +
+          'Most likely it has no component in PAGE_FOR in src/routes.jsx.'
+      )
+    }
+
     let page = template.replace('<div id="root"></div>', `<div id="root">${appHtml}</div>`)
+
+    const routeLocale = localeFromPath(route)
+    const isHome = stripLocale(route) === '/'
 
     const url = route === '/' ? `${origin}/` : `${origin}${route}`
     page = replaceCanonical(page, url)
     page = replaceMeta(page, 'property', 'og:url', url)
-    page = replaceLang(page, localeFromPath(route))
+    page = replaceLang(page, routeLocale)
+    page = replaceMeta(page, 'property', 'og:locale', OG_LOCALE[routeLocale])
+
+    /* Both copies from the one field, which is also what makes the "keep
+       these identical" comment in index.html true rather than hopeful. */
+    const imageAlt = t(HOME_META.imageAlt, routeLocale)
+    page = replaceMeta(page, 'property', 'og:image:alt', imageAlt)
+    page = replaceMeta(page, 'name', 'twitter:image:alt', imageAlt)
     page = withAlternates(page, route, origin, LOCALES, DEFAULT_LOCALE, withLocale, ROUTE_PATHS)
 
-    /* The homepage keeps the hand-written title and description in
-       index.html. Subroutes would otherwise inherit them verbatim, so
-       theirs are lifted from their own <h1> and opening paragraph. */
-    if (route !== '/') {
+    /* Two rules, and the split is by page rather than by language.
+
+       The home page takes its written pair from meta.js, in whichever
+       language the route is in. It used to take the Hungarian pair straight
+       off the template, which was only ever right because there was one
+       language; /en would have fallen through to the branch below and
+       advertised itself with its own slogan, "A website and a system that
+       works, so you do not have to. — Rizmajer Máté". A fine headline and a
+       poor search result, on the page an English visitor arrives at.
+
+       Every other route still derives its title from its own <h1> and its
+       description from its opening paragraph. That is the right rule for a
+       subpage — the heading is the subject — and it keeps working per
+       language for free, because the markup it reads is already localised. */
+    if (isHome) {
+      const title = t(HOME_META.title, routeLocale)
+      page = replaceTitle(page, title)
+      page = replaceMeta(page, 'property', 'og:title', title)
+      page = replaceMeta(page, 'name', 'twitter:title', title)
+
+      /* A different sentence from the description on purpose; see meta.js. */
+      const social = t(HOME_META.social, routeLocale)
+      page = replaceMeta(page, 'name', 'description', t(HOME_META.description, routeLocale))
+      page = replaceMeta(page, 'property', 'og:description', social)
+      page = replaceMeta(page, 'name', 'twitter:description', social)
+    } else {
       const heading = firstMatch(appHtml, 'h1')
       const intro = firstMatch(appHtml, 'p')
       const siteName = template.match(/<meta\s+property="og:site_name"\s+content="([^"]+)"/i)?.[1]
@@ -262,17 +408,18 @@ async function main() {
        carrying Hungarian answers would tell Google the two are duplicates of
        each other, which is the mistake /en was withdrawn for. The locale
        comes from the path, so it follows the route automatically. */
-    const routeLocale = localeFromPath(route)
-    const isHome = stripLocale(route) === '/'
-    page = withFaqSchema(
-      page,
-      isHome
+    page = withSchema(page, {
+      locale: routeLocale,
+      siteName: t(HOME_META.title, routeLocale),
+      schema: SCHEMA,
+      t,
+      entries: isHome
         ? FAQ_QUESTIONS.map((entry) => ({
             name: t(entry.q, routeLocale),
             text: t(entry.a, routeLocale),
           }))
-        : null
-    )
+        : null,
+    })
 
     /* Check the output, not the intention. Filling the node from faq.js turns
        one silent failure (a stale copy) into another (an empty one) unless
@@ -293,6 +440,37 @@ async function main() {
             `prerendered JSON-LD: ${missing.map(({ q }) => t(q, routeLocale)).join(' | ')}`
         )
       }
+    }
+
+    /* The acceptance gate for the whole English conversion.
+       /en was withdrawn once for serving Hungarian under an English URL, and
+       nothing in the build noticed — that is the failure this exists to make
+       impossible to repeat.
+
+       Runs on the finished page rather than on the rendered app, and the
+       difference was not theoretical: scanning only the app passed /en while
+       its <head> still declared og:locale hu_HU and its JSON-LD described a
+       Person whose jobTitle was "Full-stack fejlesztő". The head is where the
+       copy a search engine quotes actually lives, so leaving it out checked
+       everything except the part that gets republished. */
+    if (routeLocale !== DEFAULT_LOCALE) {
+      const leaks = hungarianLeaks(page)
+      if (leaks.length) {
+        throw new Error(
+          `${route} is an English page but ${leaks.length} Hungarian string(s) rendered into it:\n  ` +
+            `${leaks.slice(0, 20).join('\n  ')}`
+        )
+      }
+    }
+
+    /* Guards the guard. Every check above reports by finding nothing, so a
+       broken scanner and a clean page are the same result. The Hungarian home
+       page is the one input that must trip it. */
+    if (route === '/' && hungarianLeaks(page).length === 0) {
+      throw new Error(
+        'The Hungarian-leak scan found nothing on the Hungarian home page, so it ' +
+          'would pass on any page. HU_ALLOWED_ON_EN or the diacritic set is wrong.'
+      )
     }
 
     const outFile =

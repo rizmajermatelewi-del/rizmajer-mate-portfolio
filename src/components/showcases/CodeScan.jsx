@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react'
+import { t } from '../../i18n/t'
+import { useLocale } from '../../i18n/useLocale'
 
 /* The status line names the stage, nothing more. It used to read
    "Hiba észlelve · #482. sor" and "Javítás fut · 12 mp" beside a build
@@ -10,13 +12,16 @@ import { useEffect, useState } from 'react'
    reference instead of a fresh array every render, which is what the
    exhaustive-deps warning was pointing at. */
 const STATUSES = [
-  { text: 'Tesztek futnak', label: 'Ellenőrzés', tone: 'primary' },
-  { text: 'Hiba a futtatásban', label: 'Elakadás', tone: 'accent' },
-  { text: 'Javítva, újra fut', label: 'Javítás', tone: 'primary' },
-  { text: 'Mehet élesbe', label: 'Kész', tone: 'emerald' },
+  { text: { hu: 'Tesztek futnak', en: 'Tests running' }, label: { hu: 'Ellenőrzés', en: 'Checking' }, tone: 'primary' },
+  { text: { hu: 'Hiba a futtatásban', en: 'Failure in the run' }, label: { hu: 'Elakadás', en: 'Stuck' }, tone: 'accent' },
+  { text: { hu: 'Javítva, újra fut', en: 'Fixed, running again' }, label: { hu: 'Javítás', en: 'Fixing' }, tone: 'primary' },
+  { text: { hu: 'Mehet élesbe', en: 'Ready to ship' }, label: { hu: 'Kész', en: 'Done' }, tone: 'emerald' },
 ]
 
+const HEADING = { hu: 'Élő build', en: 'Live build' }
+
 export default function CodeScan() {
+  const locale = useLocale()
   const [statusIdx, setStatusIdx] = useState(0)
 
   useEffect(() => {
@@ -65,7 +70,7 @@ export default function CodeScan() {
             <polyline points="8 6 2 12 8 18" />
           </svg>
           <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-primary-dark">
-            Élő build
+            {t(HEADING, locale)}
           </span>
         </div>
       </div>
@@ -135,12 +140,12 @@ export default function CodeScan() {
           <span className={`relative h-2 w-2 rounded-full ${toneDot}`}>
             {status.tone === 'accent' && <span className={`absolute inset-0 rounded-full ${toneDot} animate-ping`} />}
           </span>
-          <span key={status.text} className={`font-mono text-[10px] truncate ${toneText}`} style={{ animation: 'code-fadein 0.35s ease-out' }}>
-            {status.text}
+          <span key={t(status.text, locale)} className={`font-mono text-[10px] truncate ${toneText}`} style={{ animation: 'code-fadein 0.35s ease-out' }}>
+            {t(status.text, locale)}
           </span>
         </div>
         <span className={`font-mono text-[9px] uppercase tracking-[0.2em] whitespace-nowrap pl-2 ${toneText}`}>
-          {status.label}
+          {t(status.label, locale)}
         </span>
       </div>
 
