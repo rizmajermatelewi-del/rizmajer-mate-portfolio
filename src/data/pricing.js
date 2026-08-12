@@ -1,3 +1,5 @@
+import { forint, priceEn } from './fx.js'
+
 /* Figures are floors, not quotes. The earlier version published no numbers
    at all, on the theory that a price anchors the conversation before the
    scope is known. In practice it anchored nothing and cost the inquiry: a
@@ -35,20 +37,39 @@
    `scope` is DELIVERY time, not billable hours, and now says so. Before,
    "Jellemzően 1-2 hét" sat beside a price derived from ~11 hours, and a reader
    taking the week at face value would put the rate near 3 000 Ft/hour. */
+/* Both languages are built from the forint amount rather than written out
+   twice, so a price can only be changed in one place. Typing "550 000 Ft-tól"
+   in Hungarian and forgetting the English figure is the same drift that left
+   450 000 Ft in the FAQ and in the structured data after this file had already
+   moved on. */
+const fromPrice = (huf) => ({ hu: `${forint(huf)}-tól`, en: `${priceEn(huf)} and up` })
+const flatPrice = (huf) => ({ hu: forint(huf), en: priceEn(huf) })
+
 export const PRICING_TIERS = [
   {
-    eyebrow: 'Kezdéshez',
-    name: 'Bemutatkozó oldal',
-    desc: 'Ha valaki rád keres a Google-ben, találjon valamit, ami rendben van, és ne a konkurenciádat.',
-    priceNote: '180 000 Ft-tól',
-    scope: 'Átadás jellemzően 1-2 hét',
-    features: ['Mobilon is jól működik', 'Megtalálnak a Google-ben', 'Kapcsolati űrlap, ami a postafiókodba jön', 'Elindítom és átadom'],
+    eyebrow: { hu: 'Kezdéshez', en: 'To start' },
+    name: { hu: 'Bemutatkozó oldal', en: 'Introductory site' },
+    desc: {
+      hu: 'Ha valaki rád keres a Google-ben, találjon valamit, ami rendben van, és ne a konkurenciádat.',
+      en: 'So that when somebody looks you up on Google they find something that holds up, and not your competitor.',
+    },
+    priceNote: fromPrice(180000),
+    scope: { hu: 'Átadás jellemzően 1-2 hét', en: 'Delivered in 1-2 weeks, typically' },
+    features: [
+      { hu: 'Mobilon is jól működik', en: 'Works properly on a phone' },
+      { hu: 'Megtalálnak a Google-ben', en: 'People find you on Google' },
+      { hu: 'Kapcsolati űrlap, ami a postafiókodba jön', en: 'A contact form that lands in your inbox' },
+      { hu: 'Elindítom és átadom', en: 'I put it live and hand it over' },
+    ],
     highlight: false,
   },
   {
-    eyebrow: 'Ajánlott',
-    name: 'Foglalás és rendelés',
-    desc: 'Ha a foglalás vagy a rendelés ma telefonon és üzenetben megy, és ez már napi egy órát elvisz.',
+    eyebrow: { hu: 'Ajánlott', en: 'Recommended' },
+    name: { hu: 'Foglalás és rendelés', en: 'Booking and ordering' },
+    desc: {
+      hu: 'Ha a foglalás vagy a rendelés ma telefonon és üzenetben megy, és ez már napi egy órát elvisz.',
+      en: 'For when booking or ordering still runs on phone calls and messages, and it is already costing you an hour a day.',
+    },
     /* 450 000 implied ~28 billable hours for online booking, an admin UI,
        e-mail notifications AND "ahhoz illesztve, amit már használsz: naptár,
        számlázó, táblázat" — an open-ended promise sitting behind a floor price.
@@ -63,13 +84,21 @@ export const PRICING_TIERS = [
        sync stays in, because a booking system without it double-books; the
        számlázó and táblázat move out to the 90 000 Ft/folyamat offer further
        down, which is the same promise priced per unit of work. */
-    priceNote: '550 000 Ft-tól',
-    scope: 'Átadás jellemzően 3-6 hét',
-    features: ['Foglalás vagy rendelés online', 'Kezelőfelület, amit te is használsz', 'Értesítések e-mailben', 'A naptáraddal összekötve, hogy ne legyen dupla foglalás'],
+    priceNote: fromPrice(550000),
+    scope: { hu: 'Átadás jellemzően 3-6 hét', en: 'Delivered in 3-6 weeks, typically' },
+    features: [
+      { hu: 'Foglalás vagy rendelés online', en: 'Booking or ordering online' },
+      { hu: 'Kezelőfelület, amit te is használsz', en: 'An admin screen you will actually use' },
+      { hu: 'Értesítések e-mailben', en: 'Notifications by e-mail' },
+      {
+        hu: 'A naptáraddal összekötve, hogy ne legyen dupla foglalás',
+        en: 'Wired into your calendar, so nothing gets double-booked',
+      },
+    ],
     highlight: true,
   },
   {
-    eyebrow: 'Egyedi',
+    eyebrow: { hu: 'Egyedi', en: 'Bespoke' },
     /* Was "Belső rendszer". Same slot, same price, same anchoring job — but
        that version was the one claim on the site with nothing behind it: no
        internal system has been built for anyone, so a yes to it would have
@@ -82,17 +111,25 @@ export const PRICING_TIERS = [
        client's naptár. And it ladders directly up from the 90 000 Ft
        single-process offer below, so the cheapest and the dearest thing on the
        page are now the same promise at two sizes. */
-    name: 'Rendszerek összekötése',
-    desc: 'Ha már több program fut nálad, és a köztük lévő átmásolgatás viszi el a napodat.',
-    priceNote: '1 200 000 Ft-tól',
-    scope: 'Ütemezés a terjedelemtől függ',
+    name: { hu: 'Rendszerek összekötése', en: 'Connecting your systems' },
+    desc: {
+      hu: 'Ha már több program fut nálad, és a köztük lévő átmásolgatás viszi el a napodat.',
+      en: 'For when you already run several programs, and copying things between them is what eats the day.',
+    },
+    priceNote: fromPrice(1200000),
+    scope: { hu: 'Ütemezés a terjedelemtől függ', en: 'Timeline depends on the scope' },
     /* Was "Adatok kiajánlása", "Több modul, több jogosultsági szint" and the
        page's only plural address ("A ti folyamatotokra"). All three failed the
        same test: an SME owner does not parse "kiajánlás" or "modul", and the
        person shift read as a slip rather than as a deliberate address to a
        team. Written for the person paying, in the second person singular the
        rest of the site uses. */
-    features: ['A te folyamataidra szabva', 'Amit ma kézzel másolsz át, magától megy', 'Az adataidat bármikor kiviheted Excelbe', 'Együtt nő a céggel'],
+    features: [
+      { hu: 'A te folyamataidra szabva', en: 'Built around the way you already work' },
+      { hu: 'Amit ma kézzel másolsz át, magától megy', en: 'What you copy across by hand today happens on its own' },
+      { hu: 'Az adataidat bármikor kiviheted Excelbe', en: 'Your data comes out to Excel whenever you want it' },
+      { hu: 'Együtt nő a céggel', en: 'It grows with the business' },
+    ],
     highlight: false,
   },
 ]
@@ -119,12 +156,15 @@ export const PRICING_TIERS = [
    online — which is nearly every local business worth calling. Sold as reach,
    the way the FAQ already puts it, because that claim is true for all of them. */
 export const PRICING_AUDIT = {
-  eyebrow: 'Ha már van oldalad',
-  name: 'Átvilágítás és javaslat',
-  priceNote: '45 000 Ft',
-  desc: 'Végigmérem a meglévő oldaladat telefonon és gépen: mitől lassú, hol akad el a látogató, mi az, amit egy fogyatékkal élő vagy idősebb vásárló nem tud használni. Írásban kapod meg, magyarul, fontossági sorrendben — akkor is, ha utána nem velem csináltatod meg. Ha mégis velem, az árát beszámítom a javításba.',
+  eyebrow: { hu: 'Ha már van oldalad', en: 'If you already have a site' },
+  name: { hu: 'Átvilágítás és javaslat', en: 'Audit and recommendations' },
+  priceNote: flatPrice(45000),
+  desc: {
+    hu: 'Végigmérem a meglévő oldaladat telefonon és gépen: mitől lassú, hol akad el a látogató, mi az, amit egy fogyatékkal élő vagy idősebb vásárló nem tud használni. Írásban kapod meg, magyarul, fontossági sorrendben — akkor is, ha utána nem velem csináltatod meg. Ha mégis velem, az árát beszámítom a javításba.',
+    en: 'I go over your existing site on a phone and on a computer: what makes it slow, where visitors give up, and what a disabled or older customer cannot use at all. You get it in writing, in order of importance — including if you then have someone else fix it. If you have me do it, the fee comes off the price of the work.',
+  },
   href: '#kapcsolat',
-  linkLabel: 'Kérj ajánlatot',
+  linkLabel: { hu: 'Kérj ajánlatot', en: 'Ask for a quote' },
 }
 
 /* The smallest yes on the page, and the reason it sits here rather than only
@@ -148,12 +188,21 @@ export const PRICING_AUDIT = {
    delivered work, it would inherit a credibility it has not earned. Said
    plainly it also becomes a true reason to move now. */
 export const PRICING_ENTRY = {
-  eyebrow: 'Kisebb lépés',
-  name: 'Egy folyamat automatizálása',
-  priceNote: '90 000 Ft-tól / folyamat',
-  desc: 'Ha ez most túl nagy lépés, kezdjük egyetlen dologgal, ami ma kézzel megy: a rendelés magától a táblázatba kerül, az értesítő magától kimegy. Ilyet fizető ügyfélnek még nem szállítottam, ezért az első projekteknél ezt be is árazom.',
+  eyebrow: { hu: 'Kisebb lépés', en: 'A smaller step' },
+  name: { hu: 'Egy folyamat automatizálása', en: 'Automating one process' },
+  priceNote: {
+    hu: `${forint(90000)}-tól / folyamat`,
+    en: `${priceEn(90000)} and up, per process`,
+  },
+  desc: {
+    hu: 'Ha ez most túl nagy lépés, kezdjük egyetlen dologgal, ami ma kézzel megy: a rendelés magától a táblázatba kerül, az értesítő magától kimegy. Ilyet fizető ügyfélnek még nem szállítottam, ezért az első projekteknél ezt be is árazom.',
+    /* The admission stays in the English word for word. It is the one claim on
+       the page with no delivered work behind it, and a translation is exactly
+       where a caveat quietly goes missing. */
+    en: 'If that is too big a step right now, we start with one thing that runs by hand today: the order writes itself into the spreadsheet, the notification sends itself. I have not delivered one of these for a paying client yet, so I price the first few accordingly.',
+  },
   href: '#kapcsolat',
-  linkLabel: 'Kérj ajánlatot',
+  linkLabel: { hu: 'Kérj ajánlatot', en: 'Ask for a quote' },
 }
 
 /* The cheapest real yes on the page, and the one most of the outbound list
@@ -173,12 +222,15 @@ export const PRICING_ENTRY = {
    seeing the verification through — which arrives days later and has to be
    finished — is 3-4 hours of real work spread across a fortnight. */
 export const PRICING_GOOGLE = {
-  eyebrow: 'A leggyorsabb',
-  name: 'Google-megjelenés beállítása',
-  priceNote: '60 000 Ft',
-  desc: 'Hogy amikor valaki a környéken rád keres, meg is találjon: cégprofil, térkép, nyitvatartás, telefonszám, képek — kitöltve és rendben tartva. Ha még nincs profilod, létrehozom; ha van, de elavult, rendbe rakom.',
+  eyebrow: { hu: 'A leggyorsabb', en: 'The quickest one' },
+  name: { hu: 'Google-megjelenés beállítása', en: 'Setting up your Google listing' },
+  priceNote: flatPrice(60000),
+  desc: {
+    hu: 'Hogy amikor valaki a környéken rád keres, meg is találjon: cégprofil, térkép, nyitvatartás, telefonszám, képek — kitöltve és rendben tartva. Ha még nincs profilod, létrehozom; ha van, de elavult, rendbe rakom.',
+    en: 'So that when somebody nearby searches for you, they actually find you: business profile, map, opening hours, phone number, photographs — filled in and kept straight. If you have no profile yet I create one; if you have one that has gone stale, I put it right.',
+  },
   href: '#kapcsolat',
-  linkLabel: 'Kérj ajánlatot',
+  linkLabel: { hu: 'Kérj ajánlatot', en: 'Ask for a quote' },
 }
 
 /* The other half of the audit. Without it the 45 000 Ft ends in a written
@@ -187,12 +239,15 @@ export const PRICING_GOOGLE = {
    audit has an obvious next step at a published price, and the credit note on
    the audit makes taking it the cheaper path. */
 export const PRICING_REFRESH = {
-  eyebrow: 'A következő lépés',
-  name: 'Meglévő oldal felújítása',
-  priceNote: '120 000 Ft-tól',
-  desc: 'A meglévő oldalad marad, csak működni fog: mobilon is használható, gyorsan betölt, és a fontos gomb ott lesz, ahol keresik. Akkor éri meg, ha a tartalom és a megjelenés alapvetően jó — ha nem, azt az átvilágításban megmondom, és inkább újat javaslok.',
+  eyebrow: { hu: 'A következő lépés', en: 'The next step' },
+  name: { hu: 'Meglévő oldal felújítása', en: 'Overhauling the site you have' },
+  priceNote: fromPrice(120000),
+  desc: {
+    hu: 'A meglévő oldalad marad, csak működni fog: mobilon is használható, gyorsan betölt, és a fontos gomb ott lesz, ahol keresik. Akkor éri meg, ha a tartalom és a megjelenés alapvetően jó — ha nem, azt az átvilágításban megmondom, és inkább újat javaslok.',
+    en: 'You keep the site you have, it just starts working: usable on a phone, quick to load, and the button that matters where people look for it. Worth doing when the content and the look are basically sound — if they are not, I say so in the audit and suggest building new instead.',
+  },
   href: '#kapcsolat',
-  linkLabel: 'Kérj ajánlatot',
+  linkLabel: { hu: 'Kérj ajánlatot', en: 'Ask for a quote' },
 }
 
 /* Ascending by price, which is also ascending by commitment. Exported as one
@@ -211,4 +266,7 @@ export const PRICING_SMALL_OFFERS = [
    24-hour reply in Pillars is free and stays free, so a retainer that charged
    for it would be selling back something already given away. What it sells is
    work done, not work answered. */
-export const PRICING_RETAINER = 'Üzemeltetés, ha kéred: 25 000 Ft/hó — frissítések, biztonsági mentés, havi egy óra apró módosítás, és ha leáll, én veszem észre, nem te. Nincs hűségidő, hónapra felmondható.'
+export const PRICING_RETAINER = {
+  hu: `Üzemeltetés, ha kéred: ${forint(25000)}/hó — frissítések, biztonsági mentés, havi egy óra apró módosítás, és ha leáll, én veszem észre, nem te. Nincs hűségidő, hónapra felmondható.`,
+  en: `Ongoing upkeep if you want it: ${priceEn(25000)} a month — updates, backups, an hour of small changes each month, and if it goes down I notice rather than you. No minimum term, cancellable monthly.`,
+}

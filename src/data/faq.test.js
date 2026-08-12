@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs'
 import path from 'node:path'
 import { FAQ_QUESTIONS } from './faq'
 import { PRICING_TIERS, PRICING_RETAINER } from './pricing'
+import { t } from '../i18n/t'
 
 /* "550 000 Ft-tól" -> "550 000". The thousands separator here is an ordinary
    space, so the class is explicit about which characters count rather than
@@ -38,8 +39,8 @@ describe('FAQ data', () => {
        already dropped, with this test green throughout. Derived, the edit that
        moves a price fails here until the FAQ catches up. */
     const figures = [
-      ...PRICING_TIERS.map((tier) => amountIn(tier.priceNote)),
-      amountIn(PRICING_RETAINER),
+      ...PRICING_TIERS.map((tier) => amountIn(t(tier.priceNote, 'hu'))),
+      amountIn(t(PRICING_RETAINER, 'hu')),
     ]
     for (const figure of figures) {
       expect(joined, `the FAQ no longer mentions ${figure}`).toContain(figure)

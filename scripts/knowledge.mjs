@@ -48,22 +48,22 @@ export function buildKnowledge(today = new Date(), locale = DEFAULT_LOCALE) {
     contact: { email: CONTACT_EMAIL, phone: CONTACT_PHONE },
     pricing: {
       tiers: PRICING_TIERS.map((tier) => ({
-        name: tier.name,
-        floor: tier.priceNote,
-        scope: tier.scope,
-        desc: tier.desc,
-        includes: [...tier.features],
+        name: t(tier.name, locale),
+        floor: t(tier.priceNote, locale),
+        scope: t(tier.scope, locale),
+        desc: t(tier.desc, locale),
+        includes: tier.features.map((feature) => t(feature, locale)),
       })),
       /* Every offer under the three tiers, read from the same list the
          section maps. A prospect who already has a site is the largest group
          in the catchment, and the bot has to be able to name the 45 000 Ft
          audit rather than quoting them a new build. */
       smallOffers: PRICING_SMALL_OFFERS.map((o) => ({
-        name: o.name,
-        floor: o.priceNote,
-        desc: o.desc,
+        name: t(o.name, locale),
+        floor: t(o.priceNote, locale),
+        desc: t(o.desc, locale),
       })),
-      retainer: PRICING_RETAINER,
+      retainer: t(PRICING_RETAINER, locale),
     },
     aiServices: AI_SERVICES.map((s) => ({
       title: s.title,

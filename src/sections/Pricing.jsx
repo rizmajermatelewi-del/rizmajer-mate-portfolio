@@ -3,12 +3,15 @@ import { PRICING_TIERS, PRICING_SMALL_OFFERS, PRICING_RETAINER } from '../data/p
 import { useInView } from '../motion/useInView'
 import { TiltCard } from '../motion/TiltCard'
 import { Magnetic } from '../motion/Magnetic'
+import { useLocale } from '../i18n/useLocale'
+import { t } from '../i18n/t'
 
 /* ----------------------------------------------------------------
    Pricing
 ---------------------------------------------------------------- */
 export default function Pricing() {
   const [ref, visible] = useInView(0.1)
+  const locale = useLocale()
 
   return (
     <section id="arak" ref={ref} className="relative py-20 sm:py-28 px-6 sm:px-10 lg:px-16">
@@ -53,14 +56,14 @@ export default function Pricing() {
                   and a superlative earned by two paying clients overclaims
                   next to a Pillars section that plainly says "2". The border,
                   the shadow and the lift still mark the card. */}
-              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary-dark">{tier.eyebrow}</span>
-              <h3 className="font-display font-bold text-2xl text-ink mt-3">{tier.name}</h3>
-              <p className="text-muted text-sm mt-2 leading-relaxed">{tier.desc}</p>
+              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary-dark">{t(tier.eyebrow, locale)}</span>
+              <h3 className="font-display font-bold text-2xl text-ink mt-3">{t(tier.name, locale)}</h3>
+              <p className="text-muted text-sm mt-2 leading-relaxed">{t(tier.desc, locale)}</p>
 
               <div className="mt-6 pt-5 border-t border-divider">
-                <p className="font-display font-semibold text-xl text-ink">{tier.priceNote}</p>
+                <p className="font-display font-semibold text-xl text-ink">{t(tier.priceNote, locale)}</p>
                 <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary-dark mt-1.5">
-                  {tier.scope}
+                  {t(tier.scope, locale)}
                 </p>
               </div>
 
@@ -72,7 +75,7 @@ export default function Pricing() {
                     className="flex items-start gap-2.5 text-sm text-muted transition-transform duration-200 group-hover:translate-x-1"
                   >
                     <Check className="h-4 w-4 text-primary mt-0.5 shrink-0" strokeWidth={2.5} />
-                    {f}
+                    {t(f, locale)}
                   </li>
                 ))}
               </ul>
@@ -115,18 +118,18 @@ export default function Pricing() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-5">
             {PRICING_SMALL_OFFERS.map((offer) => (
               <div
-                key={offer.name}
+                key={t(offer.name, locale)}
                 className="rounded-5xl border border-divider p-6 sm:p-8 flex flex-col gap-5 hover:border-primary/60 transition-colors duration-300"
               >
                 <div className="max-w-2xl">
                   <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary-dark">
-                    {offer.eyebrow}
+                    {t(offer.eyebrow, locale)}
                   </span>
                   <div className="mt-2 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                    <h3 className="font-display font-bold text-xl text-ink">{offer.name}</h3>
-                    <p className="font-display font-semibold text-lg text-primary-dark">{offer.priceNote}</p>
+                    <h3 className="font-display font-bold text-xl text-ink">{t(offer.name, locale)}</h3>
+                    <p className="font-display font-semibold text-lg text-primary-dark">{t(offer.priceNote, locale)}</p>
                   </div>
-                  <p className="text-muted text-sm mt-3 leading-relaxed">{offer.desc}</p>
+                  <p className="text-muted text-sm mt-3 leading-relaxed">{t(offer.desc, locale)}</p>
                 </div>
                 {/* mt-auto so the four cards' links line up along the bottom
                     regardless of how long each description runs. */}
@@ -134,14 +137,14 @@ export default function Pricing() {
                   href={offer.href}
                   className="mt-auto inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-ink hover:text-primary-dark transition-colors duration-300"
                 >
-                  {offer.linkLabel}
+                  {t(offer.linkLabel, locale)}
                   <ArrowRight className="h-4 w-4" />
                 </a>
               </div>
             ))}
           </div>
 
-          <p className="text-muted text-sm mt-5 leading-relaxed max-w-3xl">{PRICING_RETAINER}</p>
+          <p className="text-muted text-sm mt-5 leading-relaxed max-w-3xl">{t(PRICING_RETAINER, locale)}</p>
         </div>
       </div>
     </section>
