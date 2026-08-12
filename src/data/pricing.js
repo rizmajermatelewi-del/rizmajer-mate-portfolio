@@ -43,7 +43,18 @@ import { UI } from '../i18n/ui.js'
    in Hungarian and forgetting the English figure is the same drift that left
    450 000 Ft in the FAQ and in the structured data after this file had already
    moved on. */
-const fromPrice = (huf) => ({ hu: `${forint(huf)}-tól`, en: `${priceEn(huf)} and up` })
+/* "from 550 000 Ft (~1 600 EUR)", not "550 000 Ft (~1 600 EUR) and up".
+   A trailing "and up" put the qualifier at the far end of the longest string
+   on the card, and tier 03 — the only price carrying both seven forint digits
+   and four euro ones — overran its column and wrapped onto a second line.
+   That pushed its scope note and its whole feature list a line below the two
+   cards beside it, so the row lost its alignment on the one tier whose job is
+   to anchor. Hungarian never showed it: "-tól" is a suffix, so every Hungarian
+   price is shorter than its English twin and all three fit.
+
+   Leading "from" is also the ordinary English pricing idiom and the exact
+   sense of "-tól", so the shorter line is the better line either way. */
+const fromPrice = (huf) => ({ hu: `${forint(huf)}-tól`, en: `from ${priceEn(huf)}` })
 const flatPrice = (huf) => ({ hu: forint(huf), en: priceEn(huf) })
 
 export const PRICING_TIERS = [
@@ -193,7 +204,7 @@ export const PRICING_ENTRY = {
   name: { hu: 'Egy folyamat automatizálása', en: 'Automating one process' },
   priceNote: {
     hu: `${forint(90000)}-tól / folyamat`,
-    en: `${priceEn(90000)} and up, per process`,
+    en: `from ${priceEn(90000)}, per process`,
   },
   desc: {
     hu: 'Ha ez most túl nagy lépés, kezdjük egyetlen dologgal, ami ma kézzel megy: a rendelés magától a táblázatba kerül, az értesítő magától kimegy. Ilyet fizető ügyfélnek még nem szállítottam, ezért az első projekteknél ezt be is árazom.',

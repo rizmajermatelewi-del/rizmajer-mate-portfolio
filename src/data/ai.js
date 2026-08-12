@@ -19,7 +19,12 @@ import { forint, priceEn } from './fx.js'
    modules happen to phrase a floor price the same way today, and a helper
    imported across them would make that coincidence load-bearing. One forint
    amount per price is the part that matters, and that is in fx.js. */
-const fromPrice = (huf) => ({ hu: `${forint(huf)}-tól`, en: `${priceEn(huf)} and up` })
+/* Leading "from", matching pricing.js — the note there says why the trailing
+   "and up" had to go. No price in this section wrapped, and it is changed
+   anyway: the two blocks sit on the same page, so a reader scrolling from the
+   AI list to the price list would meet the same kind of figure phrased two
+   ways. Kept as its own line rather than imported, per the note above. */
+const fromPrice = (huf) => ({ hu: `${forint(huf)}-tól`, en: `from ${priceEn(huf)}` })
 
 export const AI_SERVICES = [
   {

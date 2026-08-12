@@ -9,13 +9,21 @@ import { t } from '../i18n/t'
 import { UI } from '../i18n/ui'
 
 const COPY = {
-  /* The comma sits in a different half of the sentence in each language, and
-     that is not a slip. Hungarian requires one before the "ami" clause;
-     English takes none before "that", and putting one there anyway is the
-     tell of a sentence that was translated rather than written. English wants
-     it before "so" instead, which is where the pause actually falls. */
+  /* The Hungarian comma is grammar — the "ami" clause requires one. The
+     English line carries none, and that is a second draft rather than an
+     oversight. The first was "that works, so you do not have to.", which
+     says the same thing in more characters than the line has room for: the
+     accent span is capped at 6xl so it holds on one row at desktop, and at
+     34 characters it wrapped and left "to." alone on a third line. Found by
+     opening the built page at 1440px, not by reading the source — the
+     Hungarian fits on one row, so no test and nothing in the markup could
+     have said otherwise.
+
+     "that does the work for you." is also the nearer reading of "helyetted
+     dolgozik": in your stead, rather than merely so-that-you-need-not. The
+     stiff uncontracted "do not" goes with it. */
   headlineLead: { hu: 'Weboldal és rendszer,', en: 'A website and a system' },
-  headlineAccent: { hu: 'ami helyetted dolgozik.', en: 'that works, so you do not have to.' },
+  headlineAccent: { hu: 'ami helyetted dolgozik.', en: 'that does the work for you.' },
   introLead: {
     hu: 'Kis- és középvállalkozásoknak építek weboldalakat és foglalási rendszereket: gyorsan betöltő, mobilon is használható felületeket, amiket utána',
     en: 'I build websites and booking systems for small and medium businesses: quick to load, usable on a phone, and afterwards',
