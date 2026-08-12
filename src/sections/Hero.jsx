@@ -140,9 +140,16 @@ export default function Hero() {
               opposite of, which makes them worth nothing. Speed and mobile stay
               because they are checkable; "clean code" and "modern
               technologies" go, because the buyer cannot verify either and the
-              developer who can is reading the repo, not the hero. */}
+              developer who can is reading the repo, not the hero.
+
+              "belső rendszereket" was the second half of this sentence until
+              2026-08-12. pricing.js had already retired the internal-system
+              tier — none has been built for anyone — and renamed it
+              "Rendszerek összekötése", but the hero went on advertising the
+              retired category to every visitor before they reached the prices.
+              Named after the tier that is actually sold instead. */}
           <p className="hero-meta max-w-lg text-white/80 text-base sm:text-lg mt-7 leading-relaxed">
-            Kis- és középvállalkozásoknak építek weboldalakat és belső rendszereket:
+            Kis- és középvállalkozásoknak építek weboldalakat és foglalási rendszereket:
             gyorsan betöltő, mobilon is használható felületeket, amiket utána{' '}
             <span className="text-white">te is tudsz kezelni</span>.
           </p>
