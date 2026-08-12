@@ -17,6 +17,7 @@ function amountIn(text) {
    dropped or reworded answer, so this asserts both that the data survived and
    that the component no longer carries a second copy of it. */
 const faqSource = readFileSync(path.resolve(process.cwd(), 'src/sections/Faq.jsx'), 'utf8')
+const indexHtml = readFileSync(path.resolve(process.cwd(), 'index.html'), 'utf8')
 
 describe('FAQ data', () => {
   it('keeps every question and answer non-empty', () => {
@@ -48,5 +49,28 @@ describe('FAQ data', () => {
   it('leaves no second copy of the list inside the component', () => {
     expect(faqSource).toContain("from '../data/faq'")
     expect(faqSource, 'Faq.jsx still declares its own QUESTIONS array').not.toMatch(/const QUESTIONS\s*=\s*\[/)
+  })
+
+  /* The same defect, in the place nothing was checking. index.html carried a
+     hand-written FAQPage copy of all eight answers; after the pricing review
+     the page said 550 000 Ft and the structured data still said 450 000, and
+     every test stayed green. Structured data is what Google reproduces, so
+     the stale copy was the one most likely to be read.
+
+     scripts/prerender.mjs now fills mainEntity from faq.js, which only works
+     as long as the template stays empty -- a re-pasted question here would be
+     overwritten on / and shipped verbatim nowhere, which is a confusing way
+     to be wrong. So: assert the template holds the node's shape and none of
+     its content. */
+  it('leaves no second copy of the answers in the JSON-LD template', () => {
+    const graph = JSON.parse(indexHtml.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1])
+    const faqNode = graph['@graph'].find((node) => node['@type'] === 'FAQPage')
+
+    expect(faqNode, 'index.html has no FAQPage node for prerender to fill').toBeTruthy()
+    expect(faqNode.mainEntity, 'index.html is hand-maintaining questions again').toEqual([])
+
+    for (const { a } of FAQ_QUESTIONS) {
+      expect(indexHtml, 'an answer was pasted back into index.html').not.toContain(a.slice(0, 40))
+    }
   })
 })

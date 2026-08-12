@@ -125,22 +125,54 @@ function withAlternates(html, route, origin, locales, defaultLocale, withLocale,
   return html.replace(/(<link\s+rel="canonical"[^>]*>)/i, `$1${tags}${fallback}`)
 }
 
-/* Drops the FAQPage node from the JSON-LD graph, leaving Person and WebSite.
+/* Fills the FAQPage node's questions from faq.js, or drops the node when
+   `entries` is null.
+   ---------------------------------------------------------------------
+   index.html used to carry its own hand-written copy of all eight answers,
+   and it drifted: after the pricing review the visible page said 550 000 Ft
+   while the structured data still said 450 000 and still quoted a "belső
+   rendszer" that pricing.js had already retired as an undeliverable claim.
+   Structured data is the copy Google reproduces in search results, so the
+   stale one was the likeliest to be read — and nothing failed, because no
+   test compared the two. Deriving the node here leaves no second copy to
+   forget.
+
+   Dropping is the other half: FAQPage belongs only on the page that renders
+   the questions. It was being copied onto /adatvedelem, /aszf and /fejleszto,
+   so a developer profile was publishing price structured data it does not
+   display.
+
    Parses rather than pattern-matches, because a regex over JSON would break
    the moment a node gains a nested object — and it throws instead of silently
    passing the block through, since a graph that stopped being parseable is a
    build problem worth stopping for. */
-function withoutFaqSchema(html) {
+function withFaqSchema(html, entries) {
   return html.replace(
     /(<script type="application\/ld\+json">)([\s\S]*?)(<\/script>)/i,
     (whole, open, body, close) => {
       const data = JSON.parse(body)
       if (!Array.isArray(data['@graph'])) return whole
 
-      const kept = data['@graph'].filter((node) => node['@type'] !== 'FAQPage')
-      if (kept.length === data['@graph'].length) return whole
+      if (entries && !data['@graph'].some((node) => node['@type'] === 'FAQPage')) {
+        throw new Error('index.html has no FAQPage node for the faq.js questions to fill.')
+      }
 
-      return `${open}${JSON.stringify({ ...data, '@graph': kept }, null, 2)}${close}`
+      const graph = data['@graph'].flatMap((node) => {
+        if (node['@type'] !== 'FAQPage') return [node]
+        if (!entries) return []
+        return [
+          {
+            ...node,
+            mainEntity: entries.map(({ q, a }) => ({
+              '@type': 'Question',
+              name: q,
+              acceptedAnswer: { '@type': 'Answer', text: a },
+            })),
+          },
+        ]
+      })
+
+      return `${open}${JSON.stringify({ ...data, '@graph': graph }, null, 2)}${close}`
     }
   )
 }
@@ -165,6 +197,11 @@ async function main() {
      React import so it can be read here as plain ESM. */
   const { LOCALES, DEFAULT_LOCALE, localeFromPath, withLocale } = await import(
     pathToFileURL(path.join(root, 'src', 'i18n', 'locales.js')).href
+  )
+  /* Same again for the FAQ: the page, the chatbot's knowledge.json and the
+     FAQPage structured data all read this one module. */
+  const { FAQ_QUESTIONS } = await import(
+    pathToFileURL(path.join(root, 'src', 'data', 'faq.js')).href
   )
   const { render } = await import(pathToFileURL(ssrEntry).href)
 
@@ -212,14 +249,33 @@ async function main() {
         page = replaceMeta(page, 'name', 'twitter:description', description)
       }
 
-      /* The template's JSON-LD graph is Person + WebSite + FAQPage. The first
-         two stay true on every route; FAQPage does not. It was being copied
-         onto /adatvedelem, /aszf and /fejleszto — pages with no FAQ on them —
-         and it carries the pricing answers, so a developer profile was
-         publishing price structured data it does not display. Structured data
-         is supposed to describe the page it sits on, so the node comes out
-         everywhere except the page that actually renders the questions. */
-      page = withoutFaqSchema(page)
+    }
+
+    /* The template's JSON-LD graph is Person + WebSite + FAQPage. The first
+       two stay true on every route; FAQPage describes only the page that
+       renders the questions, so it is filled on / and removed everywhere
+       else. */
+    page = withFaqSchema(page, route === '/' ? FAQ_QUESTIONS : null)
+
+    /* Check the output, not the intention. Filling the node from faq.js turns
+       one silent failure (a stale copy) into another (an empty one) unless
+       somebody looks at what was actually written.
+
+       Scoped to the JSON-LD block on purpose: the section below renders the
+       same questions as visible text, so searching the whole page would pass
+       even with the structured data empty — the exact failure this guards. */
+    if (route === '/') {
+      const block = page.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)?.[1]
+      const faqNode = JSON.parse(block ?? '{}')['@graph']?.find((n) => n['@type'] === 'FAQPage')
+      const published = faqNode?.mainEntity?.map((entry) => entry.name) ?? []
+      const missing = FAQ_QUESTIONS.filter(({ q }) => !published.includes(q))
+
+      if (missing.length) {
+        throw new Error(
+          `${missing.length} of ${FAQ_QUESTIONS.length} FAQ questions missing from the ` +
+            `prerendered JSON-LD: ${missing.map(({ q }) => q).join(' | ')}`
+        )
+      }
     }
 
     const outFile =
