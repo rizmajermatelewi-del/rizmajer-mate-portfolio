@@ -1,5 +1,6 @@
 import portraitSunset from '../assets/portrait-sunset.jpg'
 import { SOCIAL_LINKS } from '../data/nav'
+import { t } from '../i18n/t'
 import { useInView } from '../motion/useInView'
 
 /* ----------------------------------------------------------------
@@ -98,14 +99,14 @@ export default function About() {
             <div className="mt-8 flex flex-wrap gap-3">
               {SOCIAL_LINKS.map(({ Icon, href, label }) => (
                 <a
-                  key={label}
+                  key={t(label)}
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="lift-on-hover inline-flex items-center gap-2 bg-surface border border-divider text-ink px-5 py-3 rounded-full font-medium text-sm hover:border-primary/60 hover:text-primary-dark transition-colors duration-300"
                 >
                   <Icon className="h-4 w-4" strokeWidth={2} />
-                  {label}
+                  {t(label)}
                 </a>
               ))}
             </div>

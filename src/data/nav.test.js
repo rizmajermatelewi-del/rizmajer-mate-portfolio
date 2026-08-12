@@ -1,7 +1,14 @@
 import { describe, it, expect } from 'vitest'
 import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
-import { NAV_LINKS, CONTACT_PHONE } from './nav'
+import { NAV_LINKS, SOCIAL_LINKS, CONTACT_PHONE } from './nav'
+import { t, untranslatedIn } from '../i18n/t'
+import { LOCALES } from '../i18n/locales'
+
+/* Labels are { hu, en } fields now, so the assertion messages below have to
+   resolve one — an unresolved field prints "[object Object]" and names no
+   offender, which is the whole value of those messages. */
+const hu = (field) => t(field, 'hu')
 
 /* Why this file exists.
 
@@ -46,8 +53,22 @@ describe('NAV_LINKS', () => {
 
   it('points every link at a section that exists', () => {
     for (const { label, href } of NAV_LINKS) {
-      expect(ORDER, `${label} points at ${href}, which no section renders`).toContain(href.slice(1))
+      expect(ORDER, `${hu(label)} points at ${href}, which no section renders`).toContain(href.slice(1))
     }
+  })
+
+  /* The reason /en was withdrawn the first time was a language served with no
+     copy behind it. untranslatedIn walks the whole export, so adding an eighth
+     link in Hungarian only fails here naming the exact path -- rather than
+     shipping an English navbar with one Hungarian word in it. */
+  it('carries every label in both languages', () => {
+    expect(untranslatedIn(NAV_LINKS)).toEqual([])
+    expect(untranslatedIn(SOCIAL_LINKS)).toEqual([])
+  })
+
+  it('resolves a different label per language, not the same one twice', () => {
+    const rendered = LOCALES.map((locale) => NAV_LINKS.map((link) => t(link.label, locale)).join('|'))
+    expect(new Set(rendered).size, 'the English navbar is identical to the Hungarian one').toBe(LOCALES.length)
   })
 
   it('lists the sections in the order the page renders them', () => {
@@ -58,7 +79,7 @@ describe('NAV_LINKS', () => {
     for (let i = 1; i < positions.length; i++) {
       expect(
         positions[i],
-        `${NAV_LINKS[i].label} sits after ${NAV_LINKS[i - 1].label} in the navbar but before it on the page`,
+        `${hu(NAV_LINKS[i].label)} sits after ${hu(NAV_LINKS[i - 1].label)} in the navbar but before it on the page`,
       ).toBeGreaterThan(positions[i - 1])
     }
   })

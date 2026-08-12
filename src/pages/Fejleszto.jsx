@@ -3,6 +3,7 @@ import { ArrowLeft, ArrowUpRight, Mail } from 'lucide-react'
 import { ORDERED_SKILLS } from '../data/skills'
 import { PROJECTS_FULL } from '../data/projects'
 import { SOCIAL_LINKS } from '../data/nav'
+import { t } from '../i18n/t'
 
 /* The second entry point.
 
@@ -187,14 +188,14 @@ export default function Fejleszto() {
           </a>
           {SOCIAL_LINKS.map(({ Icon, href, label }) => (
             <a
-              key={label}
+              key={t(label)}
               href={href}
               target="_blank"
               rel="noopener noreferrer"
               className="lift-on-hover inline-flex items-center gap-2 bg-surface border border-divider text-ink px-6 py-3.5 rounded-full font-medium text-sm hover:border-primary/60 hover:text-primary-dark transition-colors duration-300"
             >
               <Icon className="h-4 w-4" strokeWidth={2} />
-              {label}
+              {t(label)}
             </a>
           ))}
         </div>

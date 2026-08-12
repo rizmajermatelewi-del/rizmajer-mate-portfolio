@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 import { LogoMark } from '../components/Logo'
 import { SOCIAL_LINKS } from '../data/nav'
+import { t } from '../i18n/t'
 import { ORDERED_SKILLS } from '../data/skills'
 import { useInView } from '../motion/useInView'
 import { ScrambleText } from '../motion/ScrambleText'
@@ -128,12 +129,12 @@ export default function Footer() {
 
           <div className="flex items-center gap-1.5">
             {SOCIAL_LINKS.map(({ Icon, href, label }) => (
-              <Magnetic key={label}>
+              <Magnetic key={t(label)}>
                 <a
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={label}
+                  aria-label={t(label)}
                   className="p-2 rounded-full text-muted hover:text-primary-dark hover:scale-110 transition-all duration-300"
                 >
                   <Icon className="h-4 w-4" strokeWidth={2} />

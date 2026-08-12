@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import { Menu, X, ArrowUpRight } from 'lucide-react'
 import { LogoMark } from '../components/Logo'
 import { NAV_LINKS, SOCIAL_LINKS } from '../data/nav'
+import { useLocale } from '../i18n/useLocale'
+import { t } from '../i18n/t'
 
 /* ----------------------------------------------------------------
    Navbar
@@ -9,6 +11,7 @@ import { NAV_LINKS, SOCIAL_LINKS } from '../data/nav'
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+  const locale = useLocale()
 
   /* A sentinel plus an observer, not a scroll handler. The old version ran a
      callback on every scroll frame to recompute one boolean; the browser can
@@ -89,7 +92,7 @@ export default function Navbar() {
                   scrolled ? 'text-ink/70 hover:text-primary-dark' : 'text-white/90 hover:text-white'
                 }`}
               >
-                {link.label}
+                {t(link.label, locale)}
               </a>
             ))}
           </div>
@@ -103,11 +106,11 @@ export default function Navbar() {
             <div className="flex items-center gap-1">
               {SOCIAL_LINKS.map(({ Icon, href, label }) => (
                 <a
-                  key={label}
+                  key={t(label)}
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={label}
+                  aria-label={t(label)}
                   className={`p-2 rounded-full transition-all duration-300 hover:scale-110 ${
                     scrolled ? 'text-ink/60 hover:text-primary-dark' : 'text-white/80 hover:text-white'
                   }`}
@@ -172,7 +175,7 @@ export default function Navbar() {
                 onClick={() => setOpen(false)}
                 className="font-display text-3xl font-semibold text-ink py-3 border-b border-divider"
               >
-                {link.label}
+                {t(link.label, locale)}
               </a>
             ))}
           </div>
@@ -187,11 +190,11 @@ export default function Navbar() {
           <div className="mt-6 flex items-center justify-center gap-3">
             {SOCIAL_LINKS.map(({ Icon, href, label }) => (
               <a
-                key={label}
+                key={t(label)}
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={label}
+                aria-label={t(label)}
                 className="p-3 rounded-full bg-divider/40 text-ink/60 hover:text-primary-dark hover:scale-110 transition-all duration-300"
               >
                 <Icon className="h-5 w-5" strokeWidth={2} />
