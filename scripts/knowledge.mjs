@@ -4,6 +4,8 @@ import { ORDERED_SKILLS } from '../src/data/skills.js'
 import { FAQ_QUESTIONS } from '../src/data/faq.js'
 import { PROTOCOL_STEPS } from '../src/data/protocol.js'
 import { CONTACT_PHONE, CONTACT_EMAIL } from '../src/data/contact.js'
+import { t } from '../src/i18n/t.js'
+import { DEFAULT_LOCALE } from '../src/i18n/locales.js'
 
 /* Assembles every content module into one machine-readable object, published
    at /knowledge.json and consumed by the chatbot demo at its build time.
@@ -30,17 +32,27 @@ const SUMMARY =
   'jellemzően olyan folyamatokat, amelyek ma telefonon és táblázatban mennek. Egy ember ' +
   'csinálja végig, alvállalkozó és projektmenedzser nélkül.'
 
-export function buildKnowledge(today = new Date()) {
+/* `locale` is an explicit parameter rather than a hardcoded 'hu', because the
+   corpus is what a bot answers a visitor from — and answering an English
+   visitor in Hungarian is the same failure /en was withdrawn for.
+
+   It still defaults to Hungarian and only one file is emitted, because the
+   chatbot does not exist yet (Plan B). Building a second corpus for an
+   unbuilt consumer would be guessing at its shape; when Plan B lands,
+   emitting the English one is calling this a second time. What this does buy
+   now is that the choice is visible and made in one place, instead of being
+   the accident of whichever language the data modules happened to hold. */
+export function buildKnowledge(today = new Date(), locale = DEFAULT_LOCALE) {
   return {
     summary: SUMMARY,
     contact: { email: CONTACT_EMAIL, phone: CONTACT_PHONE },
     pricing: {
-      tiers: PRICING_TIERS.map((t) => ({
-        name: t.name,
-        floor: t.priceNote,
-        scope: t.scope,
-        desc: t.desc,
-        includes: [...t.features],
+      tiers: PRICING_TIERS.map((tier) => ({
+        name: tier.name,
+        floor: tier.priceNote,
+        scope: tier.scope,
+        desc: tier.desc,
+        includes: [...tier.features],
       })),
       /* Every offer under the three tiers, read from the same list the
          section maps. A prospect who already has a site is the largest group
@@ -60,7 +72,7 @@ export function buildKnowledge(today = new Date()) {
       priceNote: s.priceNote,
       scope: s.scope,
     })),
-    process: PROTOCOL_STEPS.map((s) => ({ title: s.title, text: s.text })),
+    process: PROTOCOL_STEPS.map((s) => ({ title: t(s.title, locale), text: t(s.text, locale) })),
     faq: FAQ_QUESTIONS.map((f) => ({ q: f.q, a: f.a })),
     skills: ORDERED_SKILLS.map((s) => ({
       category: s.category,

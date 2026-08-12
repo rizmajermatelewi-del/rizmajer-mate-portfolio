@@ -17,12 +17,15 @@ import protocolEgyeztetes from '../assets/protocol-01-egyeztetes.webp'
 import protocolFejlesztes from '../assets/protocol-02-fejlesztes.webp'
 import protocolAtadas from '../assets/protocol-03-atadas.webp'
 import { PROTOCOL_STEPS } from '../data/protocol'
+import { useLocale } from '../i18n/useLocale'
+import { t } from '../i18n/t'
 
 /* ----------------------------------------------------------------
    Protocol — Sticky Stacking Cards
 ---------------------------------------------------------------- */
 export default function Protocol() {
   const containerRef = useRef(null)
+  const locale = useLocale()
 
   useEffect(() => {
     /* matchMedia rather than a plain context, for two reasons. The recede is
@@ -135,8 +138,12 @@ export default function Protocol() {
      any; a real one is worth more than all three of these. Deleting a file
      and blanking its two fields restores the blueprint frame. */
   const stepImages = [protocolEgyeztetes, protocolFejlesztes, protocolAtadas]
+  /* Resolved here rather than at each of the three render sites below, so the
+     JSX stays free of t() and there is one place to look for the locale. */
   const steps = PROTOCOL_STEPS.map((step, i) => ({
-    ...step,
+    title: t(step.title, locale),
+    tagline: t(step.tagline, locale),
+    text: t(step.text, locale),
     image: stepImages[i],
     imageAlt: '',
   }))
