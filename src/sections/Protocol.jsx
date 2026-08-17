@@ -14,7 +14,6 @@ import { gsap } from 'gsap'
    They are decorative in any case: a browser that failed to decode them would
    lose atmosphere, not information. */
 import protocolEgyeztetes from '../assets/protocol-01-egyeztetes.webp'
-import protocolFejlesztes from '../assets/protocol-02-fejlesztes.webp'
 import protocolAtadas from '../assets/protocol-03-atadas.webp'
 import { PROTOCOL_STEPS } from '../data/protocol'
 import { useLocale } from '../i18n/useLocale'
@@ -138,15 +137,29 @@ export default function Protocol() {
      Wanted: 01 a real meeting or notes shot, 02 the build in progress on a
      screen, 03 the handover. Anything genuinely yours beats stock here.
 
-     TEMPORARY: those three slots currently hold Unsplash photographs, put
+     TEMPORARY: slots 01 and 03 currently hold Unsplash photographs, put
      back deliberately and knowing they were pulled once before. They are
      atmosphere, not evidence — nothing here is presented as a shot of a real
      project, which is why every `imageAlt` is '' and the images render as
      decorative. Replace them with your own photographs of an actual
      consultation, an actual build and an actual handover the moment you have
      any; a real one is worth more than all three of these. Deleting a file
-     and blanking its two fields restores the blueprint frame. */
-  const stepImages = [protocolEgyeztetes, protocolFejlesztes, protocolAtadas]
+     and blanking its two fields restores the blueprint frame.
+
+     Slot 02 is deliberately empty, which is why this array has a null in it.
+     It held a monitor full of WordPress PHP — wp_head(), bloginfo(), a theme's
+     get_favicon() — on a site that sells custom development against WordPress
+     and answers "WordPress vagy egyedi fejlesztés?" in its own FAQ. The step
+     it illustrated is the build step, so the one card claiming to show my work
+     was showing someone else's CMS in a language this site does not sell.
+     Hero.jsx dropped a PHP stock photo for that exact reason and this one
+     outlived it. An empty frame that says "kép hamarosan" costs a visitor
+     nothing; a picture arguing against the sentence beside it costs the sale.
+
+     The blueprint frame is the honest state, not a placeholder to rush past —
+     fill it only with a real photograph of an actual build, not another
+     stock shot. */
+  const stepImages = [protocolEgyeztetes, null, protocolAtadas]
   /* Resolved here rather than at each of the three render sites below, so the
      JSX stays free of t() and there is one place to look for the locale. */
   const steps = PROTOCOL_STEPS.map((step, i) => ({
