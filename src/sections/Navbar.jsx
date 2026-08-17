@@ -25,15 +25,13 @@ const COPY = {
      key this by target — which is why the twin below is computed rather than
      assumed. */
   switchLanguage: { hu: 'Angol nyelvű változat', en: 'Hungarian version' },
-  /* The drawer has room for a word where the desktop pill has room for two
-     letters. Unlike the label above, this is the target language's own name
-     for itself: a Hungarian speaker landing on the English page is looking
-     for the word "Magyar", not for "Hungarian". That is the ordinary
-     convention for a language switcher, and it is the one part of the control
-     that works for a reader of neither language. Same two-locale assumption
-     as switchLanguage above. */
-  switchLabel: { hu: 'English', en: 'Magyar' },
 }
+/* `switchLabel` — { hu: 'English', en: 'Magyar' } — is gone with the drawer row
+   that rendered it. The drawer now shows the same two-letter pill as the
+   desktop bar, so the visible label is `twin.locale.toUpperCase()` in both
+   places and there is no second string to keep in step. The accessible name
+   above still carries the full phrase, which is the part a screen reader
+   needs; a pill reading "EN" tells it nothing on its own. */
 
 /* The other-language twin of the page being viewed, or null when it has none.
    ---------------------------------------------------------------------
@@ -217,16 +215,75 @@ export default function Navbar() {
         }`}
       >
         <div className="absolute inset-0 bg-deep/90 backdrop-blur-2xl" onClick={() => setOpen(false)} />
+        {/* Capped at the viewport and scrollable, which it was not.
+            ---------------------------------------------------------------
+            Measured on the live site at 375x667, the size of an iPhone SE:
+            this panel rendered 836px tall with `overflow-y: visible` and
+            `max-height: none`, inside a `fixed inset-0` parent. A fixed
+            ancestor does not scroll with the page, so the bottom 169px were
+            not merely below the fold — they were unreachable by any gesture.
+            What sat in that 169px was the "Kérj ajánlatot" button and both
+            social links: the drawer's only call to action, on the half of the
+            traffic that arrives on a phone, invisible since the drawer was
+            written.
+
+            No test could have caught it. Nothing about the markup is wrong in
+            the source, and prerender.mjs checks that sections are not left at
+            opacity-0, not that a panel fits the screen it opens on. It took
+            opening the menu at a phone size and measuring getBoundingClientRect
+            against innerHeight.
+
+            `100dvh`, not `100vh`: on mobile Safari and Chrome the visual
+            viewport shrinks as the address bar appears, and vh keeps reporting
+            the taller figure — which would reintroduce exactly this bug at a
+            smaller size. `overscroll-contain` stops a flick at the end of the
+            list from chaining into the page behind. */}
         <div
-          className={`absolute top-0 left-0 right-0 bg-background rounded-b-5xl px-6 pt-8 pb-12 transition-transform duration-500 ${
+          className={`absolute top-0 left-0 right-0 max-h-[100dvh] overflow-y-auto overscroll-contain bg-background rounded-b-5xl px-6 pt-8 pb-12 transition-transform duration-500 ${
             open ? 'translate-y-0' : '-translate-y-full'
           }`}
         >
           <div className="flex items-center justify-between mb-10">
-            <span className="font-display font-bold text-xl text-ink">Rizmajer Máté</span>
-            <button onClick={() => setOpen(false)} aria-label={t(COPY.closeMenu, locale)} className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-divider/40">
-              <X className="h-5 w-5" />
-            </button>
+            {/* The mark, not the name set as text. Every other surface on the
+                site — the bar above, the footer — identifies the brand with
+                the artwork; the drawer was the one place it appeared as a
+                typed string, so the logo was absent from the screen most
+                visitors actually use.
+
+                `inverted` because this panel is bg-background, the light page.
+                The mark ships flat white and the prop flips it to black, the
+                same pair the brand sheet supplies. A real `alt` for the same
+                reason the footer passes one: with the wordmark gone, this is
+                now the only thing in the drawer header that names the brand,
+                so it is content rather than decoration. */}
+            <LogoMark className="h-8 w-auto" inverted alt="Rizmajer Máté" />
+            <div className="flex items-center gap-2">
+              {/* The desktop bar's pill, in its scrolled colours — the drawer
+                  sits on the light page, which is the surface those colours
+                  were picked for.
+
+                  This was a text-3xl row at the bottom of the link list. At
+                  that size it read as an eighth section rather than as a
+                  control, it put the language switch below Árak where nobody
+                  scans for one, and it cost a 60px row the drawer could not
+                  spare: measured at 375x667 the panel needed 836px and could
+                  not scroll, so the row was part of why the CTA below it was
+                  off-screen. Same destination, same accessible name, a third
+                  of the height. */}
+              {twin && (
+                <Link
+                  to={twin.target}
+                  onClick={() => setOpen(false)}
+                  aria-label={t(COPY.switchLanguage, locale)}
+                  className="font-mono text-xs font-semibold tracking-[0.15em] px-2.5 py-1.5 rounded-full border border-divider text-ink/60 transition-colors duration-300 hover:border-primary/60 hover:text-primary-dark"
+                >
+                  {twin.locale.toUpperCase()}
+                </Link>
+              )}
+              <button onClick={() => setOpen(false)} aria-label={t(COPY.closeMenu, locale)} className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-divider/40">
+                <X className="h-5 w-5" />
+              </button>
+            </div>
           </div>
           <div className="flex flex-col gap-1">
             {NAV_LINKS.map((link) => (
@@ -239,21 +296,13 @@ export default function Navbar() {
                 {t(link.label, locale)}
               </a>
             ))}
-            {/* Here and not only in the desktop bar. The bar's toggle is
-                `hidden lg:flex`, so leaving this out would mean the language
-                switch does not exist on a phone — on a site whose traffic is
-                mostly phones, and for the visitor least able to work around
-                it by editing the URL. */}
-            {twin && (
-              <Link
-                to={twin.target}
-                onClick={() => setOpen(false)}
-                aria-label={t(COPY.switchLanguage, locale)}
-                className="font-display text-3xl font-semibold text-primary-dark py-3 border-b border-divider"
-              >
-                {t(COPY.switchLabel, locale)}
-              </Link>
-            )}
+            {/* The language switch used to sit here, as an eighth item in this
+                list. It moved into the header row above — still present on a
+                phone, which is the part that matters: the bar's toggle is
+                `hidden lg:flex`, so dropping it entirely would mean no language
+                switch at all on the devices most of this traffic arrives on,
+                for the visitor least able to work around it by editing the
+                URL. */}
           </div>
           <a
             href="#kapcsolat"
