@@ -265,11 +265,21 @@ async function main() {
     throw new Error('dist/index.html has no empty <div id="root"></div> to fill.')
   }
 
-  // Origin comes from the template's own canonical tag so the two can never
-  // drift apart.
+  /* The origin the built pages publish comes from src/site.js, so moving to a
+     real domain is one line rather than a hunt through eight files.
+
+     The template's canonical is still read, but now as the *dev* origin — the
+     string to replace rather than the value to publish. index.html has to
+     carry a working absolute URL for the dev server and for anything reading
+     the template before this script runs, and that copy is exactly the kind
+     that drifts. Treating it as a placeholder means it cannot: whatever it
+     says, the output says SITE_ORIGIN. */
   const canonical = template.match(/<link\s+rel="canonical"\s+href="([^"]+)"/i)
   if (!canonical) throw new Error('dist/index.html has no <link rel="canonical">.')
-  const origin = canonical[1].replace(/\/+$/, '')
+  const templateOrigin = canonical[1].replace(/\/+$/, '')
+
+  const { SITE_ORIGIN } = await import(pathToFileURL(path.join(root, 'src', 'site.js')).href)
+  const origin = SITE_ORIGIN.replace(/\/+$/, '')
 
   // Plain ESM with no JSX, so Node reads the route list straight from
   // source rather than from the SSR bundle.
@@ -472,6 +482,16 @@ async function main() {
           'would pass on any page. HU_ALLOWED_ON_EN or the diacritic set is wrong.'
       )
     }
+
+    /* Last, and deliberately a blunt string replace over the whole page rather
+       than another per-tag rewrite. The tag rewrites above cover canonical and
+       og:url; they never touched the JSON-LD, where the origin appears in
+       every @id and in Person.url — so a domain move would have left the
+       structured data pointing at the old host while the head pointed at the
+       new one, which is precisely the kind of split a search engine reads as
+       two sites. Anything absolute on the page is this origin, so replacing
+       all of it is correct rather than merely convenient. */
+    if (templateOrigin !== origin) page = page.split(templateOrigin).join(origin)
 
     const outFile =
       route === '/'

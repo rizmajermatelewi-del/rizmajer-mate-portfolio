@@ -49,3 +49,12 @@ skills-lock.json
 
 # Generated at build time from the data modules — see scripts/knowledge.mjs
 public/knowledge.json
+
+# Same, from scripts/generate-static.mjs. These carry the site's own URL and,
+# in llms.txt, its prices. They were hand-maintained and llms.txt drifted two
+# price revisions behind the tiers it quoted — while telling the reader it did
+# not repeat any figure that came from a data file. Tracking a generated file
+# is what makes that possible, so they are not tracked.
+public/sitemap.xml
+public/robots.txt
+public/llms.txt
