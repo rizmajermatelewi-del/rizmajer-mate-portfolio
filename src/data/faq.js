@@ -30,8 +30,11 @@ export const FAQ_QUESTIONS = [
   {
     q: { hu: 'Mi kerül még pénzbe a fejlesztésen túl?', en: 'What costs money besides the build itself?' },
     a: {
-      hu: 'A domain és a tárhely éves díja — ezek nem nálam futnak, hanem a te nevedre regisztráljuk, így pontosan látod, mit fizetsz és kinek. Ezen felül csak akkor van további költség, ha kérsz karbantartást vagy új funkciót. Az ajánlatban ezt előre tételesen leírom, hogy ne utólag derüljön ki.',
-      en: 'The yearly domain and hosting fees — those do not run through me, they are registered in your name, so you can see exactly what you pay and to whom. Beyond that there is no further cost unless you ask for maintenance or a new feature. I itemise all of it in the quote up front, rather than letting it surface afterwards.',
+      /* Closing sentence dropped: "Az ajánlatban ezt előre tételesen leírom" is
+         now word for word what the pricing section's intro says, two sections
+         up the page. */
+      hu: 'A domain és a tárhely éves díja — ezek nem nálam futnak, hanem a te nevedre regisztráljuk, így pontosan látod, mit fizetsz és kinek. Ezen felül csak akkor van további költség, ha kérsz karbantartást vagy új funkciót.',
+      en: 'The yearly domain and hosting fees — those do not run through me, they are registered in your name, so you can see exactly what you pay and to whom. Beyond that there is no further cost unless you ask for maintenance or a new feature.',
     },
   },
   {
@@ -51,8 +54,13 @@ export const FAQ_QUESTIONS = [
   {
     q: { hu: 'Mi történik, ha nem tetszik, amit csinálsz?', en: 'What if I do not like what you build?' },
     a: {
-      hu: 'Nem a végén látod először. Menet közben folyamatosan megmutatom, hol tart, így a korrekció olcsó marad ahelyett, hogy a leadáskor derülne ki. Az egyeztetési körök számát és a félbeszakadás feltételeit az ajánlatban rögzítjük, hogy egyikünket se érje meglepetés.',
-      en: 'You are not seeing it for the first time at the end. I show you where it stands as it goes, so correcting something stays cheap instead of surfacing on delivery day. The number of review rounds and the terms for stopping are both written into the quote, so neither of us gets a surprise.',
+      /* Opening dropped: Protocol's second step already says "Nem a végén
+         szembesülsz az eredménnyel: amíg alakul, olcsó változtatni rajta",
+         which is this sentence and its reason. What is kept is the part only
+         this answer makes — that the review rounds and the terms for stopping
+         are written down. */
+      hu: 'Az egyeztetési körök számát és a félbeszakadás feltételeit az ajánlatban rögzítjük, hogy egyikünket se érje meglepetés. Menet közben végig látod, hol tart, így a korrekció olcsó marad.',
+      en: 'The number of review rounds and the terms for stopping are written into the quote, so neither of us gets a surprise. You see where it stands throughout, which is what keeps corrections cheap.',
     },
   },
   {
@@ -65,8 +73,13 @@ export const FAQ_QUESTIONS = [
   {
     q: { hu: 'Mobilon is jól fog működni?', en: 'Will it work properly on a phone?' },
     a: {
-      hu: 'Igen, és ezt nem utólag ragasztom rá. A látogatók nagyobb része telefonon érkezik, ezért a mobil nézet ugyanolyan súllyal készül, mint az asztali. Ide tartozik az is, hogy billentyűzettel és képernyőolvasóval is használható legyen — webshopoknál és bizonyos szolgáltatásoknál ez ma már uniós előírás, máshol pedig egyszerűen több elérhető ügyfelet jelent.',
-      en: 'Yes, and it is not bolted on afterwards. Most visitors arrive on a phone, so the mobile view gets the same weight as the desktop one. That includes being usable with a keyboard and a screen reader — for online shops and certain services that is now an EU requirement, and everywhere else it simply means more customers who can reach you.',
+      /* The first two sentences said the same thing twice — "nem utólag
+         ragasztom rá" and "ugyanolyan súllyal készül" are one claim — and
+         mobile is already a feature line in pricing and a skill tile. What is
+         left is the part nothing else on the page says: that this covers
+         keyboard and screen-reader use, and why that is worth money. */
+      hu: 'Igen — a mobil nézet ugyanolyan súllyal készül, mint az asztali, nem utólag ragasztva. Ide tartozik az is, hogy billentyűzettel és képernyőolvasóval is használható legyen: webshopoknál és bizonyos szolgáltatásoknál ez uniós előírás, máshol pedig több elérhető ügyfelet jelent.',
+      en: 'Yes — the mobile view is built with the same weight as the desktop one, not bolted on afterwards. That includes being usable with a keyboard and a screen reader: for online shops and certain services that is an EU requirement, and everywhere else it simply means more customers who can reach you.',
     },
   },
   {

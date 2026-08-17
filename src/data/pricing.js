@@ -232,7 +232,10 @@ export const PRICING_AUDIT = {
   name: { hu: 'Weboldal- és folyamatátvilágítás', en: 'Site and process audit' },
   priceNote: flatPrice(45000),
   desc: {
-    hu: 'Végigmérem a meglévő oldaladat telefonon és gépen: mitől lassú, hol akad el a látogató, mi az, amit egy fogyatékkal élő vagy idősebb vásárló nem tud használni. Írásban kapod meg, magyarul, fontossági sorrendben — akkor is, ha utána nem velem csináltatod meg. Ha mégis velem, az árát beszámítom a javításba.',
+    /* "telefonon és gépen" and "magyarul" both went: mobile is stated three
+       other places on the page, and the language of a Hungarian page does not
+       need announcing. */
+    hu: 'Végigmérem a meglévő oldaladat: mitől lassú, hol akad el a látogató, mi az, amit egy fogyatékkal élő vagy idősebb vásárló nem tud használni. Írásban, fontossági sorrendben kapod meg — akkor is, ha nem velem csináltatod meg. Ha mégis velem, az árát beszámítom a javításba.',
     en: 'I go over your existing site on a phone and on a computer: what makes it slow, where visitors give up, and what a disabled or older customer cannot use at all. You get it in writing, in order of importance — including if you then have someone else fix it. If you have me do it, the fee comes off the price of the work.',
   },
   href: '#kapcsolat',
@@ -325,7 +328,7 @@ export const PRICING_REFRESH = {
      half hours. */
   priceNote: fromPrice(150000),
   desc: {
-    hu: 'A meglévő oldalad marad, csak működni fog: mobilon is használható, gyorsan betölt, és a fontos gomb ott lesz, ahol keresik. Akkor éri meg, ha a tartalom és a megjelenés alapvetően jó — ha nem, azt az átvilágításban megmondom, és inkább újat javaslok.',
+    hu: 'A meglévő oldalad marad, csak működni fog: gyorsan betölt, és a fontos gomb ott lesz, ahol keresik. Akkor éri meg, ha a tartalom és a megjelenés alapvetően jó — ha nem, azt az átvilágításban megmondom, és inkább újat javaslok.',
     en: 'You keep the site you have, it just starts working: usable on a phone, quick to load, and the button that matters where people look for it. Worth doing when the content and the look are basically sound — if they are not, I say so in the audit and suggest building new instead.',
   },
   href: '#kapcsolat',
