@@ -4,6 +4,7 @@ import { LogoMark } from '../components/Logo'
 import { NAV_LINKS, SOCIAL_LINKS } from '../data/nav'
 import { t } from '../i18n/t'
 import { useLocale } from '../i18n/useLocale'
+import { withLocale } from '../i18n/locales'
 import { UI } from '../i18n/ui'
 import { ORDERED_SKILLS } from '../data/skills'
 import { useInView } from '../motion/useInView'
@@ -49,6 +50,11 @@ const COPY = {
      Hungarian document promises a translation that does not exist — and for
      an ÁSZF, a second binding text is worse than an untranslated one. */
   privacy: { hu: 'Adatvédelem', en: 'Adatvédelem (in Hungarian)' },
+  /* Unlike the two legal links, this one has a real English twin at
+     /en/fejleszto, so it gets a translated label and goes through
+     withLocale — a bare "/fejleszto" would drop an English reader onto the
+     Hungarian page. */
+  devProfile: { hu: 'Fejlesztői profil', en: 'Developer profile' },
 }
 
 /* The four shared entries are looked up from NAV_LINKS by href rather than
@@ -200,6 +206,7 @@ export default function Footer() {
           </div>
 
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-muted text-xs font-mono">
+            <Link to={withLocale('/fejleszto', locale)} className="inline-block py-1 hover:text-primary-dark transition">{t(COPY.devProfile, locale)}</Link>
             <Link to="/adatvedelem" className="inline-block py-1 hover:text-primary-dark transition">{t(COPY.privacy, locale)}</Link>
             <Link to="/aszf" className="inline-block py-1 hover:text-primary-dark transition">ÁSZF</Link>
             <span>© 2026 Rizmajer Máté</span>

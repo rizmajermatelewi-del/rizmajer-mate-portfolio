@@ -251,7 +251,12 @@ export default function Protocol() {
                       className="absolute inset-6 rounded-3xl border border-dashed border-primary-light/25"
                     />
                     <span className="absolute inset-0 flex items-center justify-center px-6 text-center">
-                      <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-primary-light/60">
+                      {/* Was text-primary-light/60: 2.47:1 against the frame,
+                          measured on the live page. primary-light cannot reach
+                          4.5:1 here even at full opacity — it tops out at 4.16
+                          on this background — so the indigo goes rather than
+                          the contrast, and the label matches ProjectMock's. */}
+                      <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/70">
                         {t(COPY.imageSoon, locale)}
                       </span>
                     </span>

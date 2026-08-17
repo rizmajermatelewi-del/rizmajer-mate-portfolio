@@ -41,19 +41,20 @@ const COPY = {
    this person build". One page cannot do both, so this one drops the pricing,
    the terms and the form entirely and keeps what a technical reader wants.
 
-   In sitemap.xml, but deliberately not in the nav or the footer. Those are two
-   different decisions and they were made separately.
+   In sitemap.xml and, since 2026-08-17, in the footer's bottom row beside
+   Adatvédelem and ÁSZF — Máté asked for it to be reachable the same way the
+   legal pages are. The nav still does not carry it; those were always two
+   separate decisions.
 
    The sitemap entry is there so a recruiter searching can actually arrive:
    a page nobody can find only works if you paste the URL into every
-   application yourself. The nav and footer stay clear of it because a
-   prospective client who follows a link to a page saying its author wants a
-   job reads the freelance business as a stopgap — the opposite of what `/`
-   argues. Search reaches people looking for a developer; the sales site's own
-   navigation reaches people looking to buy, and only the first should land
-   here.
+   application yourself. The footer link is the accepted half of a real trade:
+   a prospective client who follows a link to a page saying its author wants a
+   job can read the freelance business as a stopgap, which is the opposite of
+   what `/` argues. It sits in the quietest row on the page, in the same
+   register as the legal links, rather than in the navigation a buyer scans.
 
-   Both halves are one-line changes if the trade stops being worth it.
+   Removing it is one line in Footer.jsx if that trade stops being worth it.
 
    Everything here reads from the same data the main page uses, so when the
    demos land and projects.js gains real `live` and `github` values, both pages

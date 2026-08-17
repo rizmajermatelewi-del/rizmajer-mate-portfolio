@@ -68,7 +68,10 @@ export default function ProjectMock({ tone, image, alt = '' }) {
         style={{ borderColor: `rgb(var(${tone.accent}) / 0.35)` }}
       />
       <span className="absolute inset-0 flex items-center justify-center">
-        <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/45">
+        {/* /45 measured 4.03:1 and 4.35:1 on the two card tones — under 4.5
+            on both, and close enough that reading the class tells you nothing.
+            /70 clears it at 7.4:1 on the darker of the two. */}
+        <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/70">
           {t(COPY.screenshotSoon, locale)}
         </span>
       </span>
