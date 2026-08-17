@@ -18,11 +18,34 @@ import { TiltCard } from '../motion/TiltCard'
 const COPY = {
   details: { hu: 'részletek', en: 'details' },
   eyebrow: { hu: 'Projektek', en: 'Work' },
+  /* These three counted four projects and two live client jobs. PROJECTS_FULL
+     holds two entries, both labelled "Saját projekt", both with `live: ''` and
+     `github: '#'`.
+
+     The two fabricated client entries were deleted on 2026-08-10 — Máté said
+     plainly the paying clients were not real — and Pillars was corrected in the
+     same commit from "4 megépített projekt / 2 fizető ügyfél" to "2 / 1 készül".
+     This block was missed. So the section went on announcing four projects and
+     two client jobs directly above two cards that both read "Saját projekt",
+     while Pillars said the opposite two sections earlier. A visitor who counts
+     the cards catches it in about three seconds, and what they catch is not a
+     typo: it is the page overstating delivered work on the one section whose
+     entire job is to prove it.
+
+     projects.test.js could not see this. It asserts that no *entry* calls
+     itself client work without a URL a stranger can open — it has no view of a
+     sentence hardcoded in the JSX above the entries. The lesson is the one this
+     codebase keeps relearning: a count restated in prose drifts from the data
+     it counts. Wording it so it stays true at two, three or ten entries is what
+     keeps it from drifting again.
+
+     "Amint él, itt lesz a link hozzá" is deliberately the same promise Pillars
+     makes about the same salon, in the same words. */
   headingLead: { hu: 'Amin dolgozom.', en: 'What I am working on.' },
-  headingAccent: { hu: 'Kettő ügyfélnek, kettő magamnak.', en: 'Two for clients, two for myself.' },
+  headingAccent: { hu: 'Egyelőre a sajátjaim.', en: 'My own, for now.' },
   intro: {
-    hu: 'Négy projekt, amit ténylegesen megépítettem: kettő élő ügyfélmunka, kettő saját kezdeményezés, amivel a saját gondolkodásomat és árazási stratégiámat teszteltem.',
-    en: 'Four projects I actually built: two live client jobs, and two of my own, which I used to test my own thinking and pricing.',
+    hu: 'Mindegyiket végig én építettem. Ügyfélmunkát még nem adtam át — az első most készül, és amint él, itt lesz a link hozzá.',
+    en: 'I built every one of them end to end. I have not handed over client work yet — the first is being built now, and the moment it is live the link will be here.',
   },
   featured: { hu: 'Kiemelt projekt', en: 'Featured project' },
   whatItDoes: { hu: 'Amit tud', en: 'What it does' },
