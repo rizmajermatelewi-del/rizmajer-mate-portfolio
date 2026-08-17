@@ -47,7 +47,6 @@ const COPY = {
   fieldName: { hu: 'Neved', en: 'Your name' },
   fieldEmail: { hu: 'E-mail címed', en: 'Your email address' },
   fieldCompany: { hu: 'Cégnév', en: 'Company' },
-  fieldProjectType: { hu: 'Projekt típusa', en: 'Type of project' },
   fieldMessage: { hu: 'Üzeneted', en: 'Your message' },
   messagePlaceholder: {
     hu: 'Meséld el röviden a projekted vagy az ötleted',
@@ -134,7 +133,7 @@ const isAllowedType = (file) => file.type.startsWith('image/') || ALLOWED_TYPES.
 export default function ContactForm() {
   const [sectionRef, visible] = useInView(0.1)
   const locale = useLocale()
-  const [form, setForm] = useState({ name: '', email: '', company: '', projectType: '', message: '' })
+  const [form, setForm] = useState({ name: '', email: '', company: '', message: '' })
   const [files, setFiles] = useState([])
   const [status, setStatus] = useState('idle')
   const [dragging, setDragging] = useState(false)
@@ -152,7 +151,6 @@ export default function ContactForm() {
       data.append('name', form.name)
       data.append('email', form.email)
       data.append('company', form.company)
-      data.append('projectType', form.projectType)
       data.append('message', form.message)
       files.forEach((f) => data.append('attachments', f))
 
@@ -283,8 +281,12 @@ export default function ContactForm() {
                 aria-hidden="true"
                 className="absolute -left-[9999px] h-0 w-0 opacity-0"
               />
+              {/* role="alert" so a submission failure is spoken. Without it the
+                  banner appeared silently: a screen reader user pressed send,
+                  heard nothing, and had no way to know the message had not
+                  gone. Measured — the form contained no live region at all. */}
               {status === 'error' && (
-                <div className="mb-6 flex items-start gap-3 rounded-2xl border border-accent-dark/30 bg-accent/10 p-4">
+                <div role="alert" className="mb-6 flex items-start gap-3 rounded-2xl border border-accent-dark/30 bg-accent/10 p-4">
                   <AlertCircle className="h-5 w-5 text-accent-dark shrink-0 mt-0.5" />
                   <p className="text-sm text-accent-dark leading-relaxed">
                     {t(COPY.sendError, locale)}{' '}
@@ -300,8 +302,19 @@ export default function ContactForm() {
                   <div className="grid sm:grid-cols-2 gap-5">
                     <Field name="name" label={t(COPY.fieldName, locale)} required value={form.name} onChange={(v) => setForm({ ...form, name: v })} />
                     <Field name="email" label={t(COPY.fieldEmail, locale)} type="email" required value={form.email} onChange={(v) => setForm({ ...form, email: v })} />
-                    <Field name="company" label={t(COPY.fieldCompany, locale)} value={form.company} onChange={(v) => setForm({ ...form, company: v })} />
-                    <Field name="projectType" label={t(COPY.fieldProjectType, locale)} value={form.projectType} onChange={(v) => setForm({ ...form, projectType: v })} />
+                    {/* "Milyen projekt?" is gone. It was a free-text box asking
+                        for the same thing as the message directly below it, and
+                        every optional field on a contact form is another reason
+                        to close the tab. Four inputs became three; the one that
+                        went is the one whose answer the message already
+                        contains. Full width now that it is alone on its row. */}
+                    <Field
+                      name="company"
+                      label={t(COPY.fieldCompany, locale)}
+                      value={form.company}
+                      onChange={(v) => setForm({ ...form, company: v })}
+                      className="sm:col-span-2"
+                    />
                   </div>
 
                   <div className="mt-5">
@@ -332,15 +345,32 @@ export default function ContactForm() {
                       setDragging(false)
                       handleFiles(e.dataTransfer.files)
                     }}
-                    className={`mt-5 border-2 border-dashed rounded-3xl p-6 text-center transition-colors cursor-pointer ${
+                    /* focus-within rather than a peer variant: the input is a
+                       child of this box, not a preceding sibling, so `peer-`
+                       would never match. This is the only thing a keyboard
+                       user sees when the now-focusable file input takes
+                       focus. */
+                    className={`mt-5 border-2 border-dashed rounded-3xl p-6 text-center transition-colors cursor-pointer focus-within:border-primary focus-within:ring-4 focus-within:ring-primary/15 ${
                       dragging ? 'border-primary bg-primary/5' : 'border-ink/25 hover:border-primary/60'
                     }`}
                   >
+                    {/* sr-only, not hidden. `hidden` is display:none, and a
+                        display:none input is not focusable — so this control
+                        was absent from the tab order entirely and a keyboard
+                        user could not attach a file at all. The label is no
+                        help: labels are never focusable. Measured before the
+                        fix: the form's tab stops ran name, email, company,
+                        message, consent, privacy link, submit, with no file
+                        input anywhere in the sequence.
+
+                        sr-only keeps it invisible and keeps it focusable; the
+                        focus-within ring on the wrapper is what makes that
+                        focus visible, since the input itself cannot be seen. */}
                     <input
                       type="file"
                       multiple
                       id="file-up"
-                      className="hidden"
+                      className="sr-only"
                       onChange={(e) => handleFiles(e.target.files)}
                       accept="image/*,.pdf,.doc,.docx"
                     />
@@ -411,9 +441,14 @@ export default function ContactForm() {
                   </div>
                 </>
               ) : (
-                <div className="text-center py-12">
+                /* role="status" because success replaces the entire form. On a
+                   screen reader the old behaviour was the worst of both: the
+                   controls vanished from under the user and nothing said why.
+                   Polite rather than assertive — the message has already sent,
+                   so it can wait for a pause rather than cutting in. */
+                <div role="status" className="text-center py-12">
                   <div className="h-16 w-16 mx-auto rounded-full bg-primary/15 flex items-center justify-center mb-6">
-                    <CheckCircle2 className="h-8 w-8 text-primary-dark" />
+                    <CheckCircle2 className="h-8 w-8 text-primary-dark" aria-hidden="true" />
                   </div>
                   <h3 className="font-display font-bold text-2xl text-ink mb-3">{t(COPY.thanksHeading, locale)}</h3>
                   <p className="text-muted max-w-md mx-auto">
