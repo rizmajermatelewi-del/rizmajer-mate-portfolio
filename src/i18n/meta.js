@@ -22,27 +22,42 @@
    plain Node, the way it already reads locales.js and t.js. */
 import { neutral } from './t.js'
 
+/* Repositioned on 2026-08-17. All three fields led with "full-stack fejlesztő.
+   React, Node.js és modern web-technológiák", which optimised for the one
+   search this business does not want: a recruiter or an agency looking for a
+   React developer. The buyer is an SME owner searching for the thing they need
+   built, and they do not know or care what it is built with.
+
+   The job title is not gone — it stays in the JSON-LD Person node below, which
+   is where a machine looks for it. It is out of the title tag, which is where
+   a human decides in one line whether this page is for them. */
 export const HOME_META = {
+  /* 63 characters. Google truncates a title around 60, so the name sits after
+     the pipe: if anything is cut it should be the part a reader can already
+     see in the URL and the result's site name, not the part that says what is
+     sold. */
   title: {
-    hu: 'Rizmajer Máté — Full-Stack Fejlesztő',
-    en: 'Rizmajer Máté — Full-Stack Developer',
+    hu: 'Egyedi weboldalak és üzleti rendszerek KKV-knak | Rizmajer Máté',
+    en: 'Custom websites and business systems for SMEs | Rizmajer Máté',
   },
 
   /* The <meta name="description"> — what a search result shows under the
-     title. Says what the work is and who it is for, because that is the
-     question a reader is answering at that moment. */
+     title. Names the four things actually built and the problem they remove,
+     because that is the question a reader is answering at that moment. Under
+     170 characters so it is not truncated mid-clause. */
   description: {
-    hu: 'Rizmajer Máté — full-stack fejlesztő. React, Node.js és modern web-technológiák, ötlettől a működő termékig.',
-    en: 'Rizmajer Máté — full-stack developer. React, Node.js and modern web technologies, from the idea to the working product.',
+    hu: 'Egyedi weboldalak, időpontfoglaló, rendelési és belső rendszerek magyar vállalkozásoknak. Kevesebb kézi adminisztráció, átlátható fejlesztés, előre egyeztetett ár.',
+    en: 'Custom websites, booking, ordering and internal systems for Hungarian businesses. Less admin done by hand, development you can follow, and a price agreed up front.',
   },
 
   /* og: and twitter: descriptions, i.e. the link preview in a chat window
      rather than a search result. Deliberately a different sentence from the
      one above: a preview card is read by someone a colleague has just sent the
-     link to, who needs the pitch rather than the keywords. */
+     link to, who needs the pitch rather than the keywords — so this one is the
+     hero's positioning line, which is the shortest true version of it. */
   social: {
-    hu: 'React, Node.js és modern web-technológiák — ötlettől a működő termékig. Full-stack fejlesztő Magyarországról.',
-    en: 'React, Node.js and modern web technologies — from the idea to the working product. Full-stack developer from Hungary.',
+    hu: 'Weboldalak, foglalási, rendelési és belső rendszerek kis- és középvállalkozásoknak — kevesebb kézi adminisztrációval.',
+    en: 'Websites, booking, ordering and internal systems for small and medium businesses — with less done by hand.',
   },
 
   /* The alt text on the link-preview image, which index.html carries twice —
