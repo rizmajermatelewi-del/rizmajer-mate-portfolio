@@ -3,7 +3,6 @@ import { gsap } from 'gsap'
 import { ArrowRight, ArrowDown } from 'lucide-react'
 import { Magnetic } from '../motion/Magnetic'
 import { useReducedMotion } from '../motion/useReducedMotion'
-import heroBackdrop from '../assets/portrait-sunset.jpg'
 import { useLocale } from '../i18n/useLocale'
 import { t } from '../i18n/t'
 import { UI } from '../i18n/ui'
@@ -53,13 +52,9 @@ const COPY = {
      action rather than as a section label, which is what it has to do sitting
      beside a primary button that names one. */
   seeWork: { hu: 'Munkáim megtekintése', en: 'See my work' },
-  /* The LCP image's alt text. It describes a photograph of a specific person
-     in a specific place, so both languages say the same thing about the same
-     picture — this is a description, not a slogan. */
-  photoAlt: {
-    hu: 'Rizmajer Máté Levente naplementében, egy sziklán ülve',
-    en: 'Rizmajer Máté Levente at sunset, sitting on a rock',
-  },
+  /* photoAlt went with the photograph. The backdrop is drawn and carries no
+     information, so it is aria-hidden rather than described — alt text for a
+     gradient is noise in a screen reader, not access. */
 }
 
 /* ----------------------------------------------------------------
@@ -136,22 +131,74 @@ export default function Hero() {
   return (
     <section id="kezdolap" ref={heroRef} className="relative min-h-viewport w-full overflow-hidden">
       <div className="absolute inset-0">
-        {/* The hero image is the LCP element, so it loads eagerly and at high
-            priority rather than waiting its turn behind the bundle. */}
-        <img
-          src={heroBackdrop}
-          alt={t(COPY.photoAlt, locale)}
-          loading="eager"
-          fetchPriority="high"
-          decoding="async"
-          className="hero-backdrop w-full h-full object-cover scale-[1.12] will-change-transform"
-        />
-        {/* Scrim weighted left, where the headline sits, so the photo stays
-            visible on the right instead of being flattened everywhere. It
-            used to be bg-deep/85 under a full-bleed gradient, which meant the
-            image was downloaded and then rendered invisible: an asset paid
-            for in bytes and showing nothing. */}
-        <div className="absolute inset-0 bg-gradient-to-r from-deep via-deep/85 to-deep/50" />
+        {/* Drawn, not photographed. This used to be a 110 kB JPEG of me
+            sitting on rocks at sunset — a holiday snapshot with another
+            studio's watermark burned into the bottom edge, carrying the hero
+            of a site that sells business systems. The same file also served
+            the Rólam section, so one photograph appeared twice on one page,
+            and the scrims below covered most of it anyway: bytes paid for and
+            largely not seen.
+
+            Keeping the .hero-backdrop class matters. gsap parallaxes that
+            selector above, and preloader.js waits on it before lifting the
+            cover — its heroDecoded() guards on `typeof decode === 'function'`,
+            so a div resolves immediately instead of throwing. The element is
+            still pre-scaled 1.12, which is the headroom the parallax
+            translate consumes; without it the bottom edge lifts off. */}
+        <div
+          aria-hidden="true"
+          className="hero-backdrop absolute inset-0 scale-[1.12] will-change-transform"
+          style={{ backgroundColor: 'rgb(var(--color-deep))' }}
+        >
+          {/* Weighted right of centre, opposite the copy, so the light falls
+              where the headline is not. */}
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: [
+                'radial-gradient(58% 62% at 74% 34%, rgb(var(--color-primary) / 0.45), transparent 70%)',
+                'radial-gradient(42% 46% at 92% 76%, rgb(var(--color-primary-light) / 0.20), transparent 72%)',
+                'radial-gradient(66% 52% at 14% 6%, rgb(var(--color-primary-dark) / 0.34), transparent 68%)',
+              ].join(', '),
+            }}
+          />
+          {/* The page's own grid, at hero scale and masked so it dissolves
+              rather than ending on a visible edge. */}
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage:
+                'linear-gradient(rgb(var(--color-primary-light) / 0.07) 1px, transparent 1px), linear-gradient(90deg, rgb(var(--color-primary-light) / 0.07) 1px, transparent 1px)',
+              backgroundSize: '72px 72px',
+              maskImage: 'radial-gradient(80% 70% at 68% 40%, #000 20%, transparent 78%)',
+              WebkitMaskImage: 'radial-gradient(80% 70% at 68% 40%, #000 20%, transparent 78%)',
+            }}
+          />
+          <svg
+            className="absolute inset-0 h-full w-full"
+            viewBox="0 0 1200 800"
+            preserveAspectRatio="xMidYMid slice"
+            fill="none"
+          >
+            {/* Three arcs from one origin off the right edge. Abstract on
+                purpose: a mocked-up dashboard here would be a screenshot of
+                work that does not exist, which the brief rules out. */}
+            {[210, 330, 450].map((r) => (
+              <circle
+                key={r}
+                cx="1010"
+                cy="330"
+                r={r}
+                stroke="rgb(var(--color-primary-light) / 0.16)"
+                strokeWidth="1"
+              />
+            ))}
+          </svg>
+        </div>
+        {/* Scrim weighted left, where the headline sits. Lighter than it was
+            for the photograph: there is no longer a subject that needs
+            hiding, only contrast to protect. */}
+        <div className="absolute inset-0 bg-gradient-to-r from-deep via-deep/70 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-deep/80 via-transparent to-deep/40" />
         {/* Fades into the light page, so the boundary is a transition
             rather than the hard seam a flat cut would leave. */}

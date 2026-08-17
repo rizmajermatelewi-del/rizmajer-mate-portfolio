@@ -1,20 +1,16 @@
 import { useRef, useEffect } from 'react'
 import { gsap } from 'gsap'
-/* Downloaded, not hotlinked. The CSP in vercel.json is `img-src 'self' data:`,
-   so an images.unsplash.com URL is blocked in production — and blocked only
-   there, because `vite preview` does not apply vercel.json headers. Importing
-   the files means Vite hashes them and they load as first-party assets.
+/* The two WebP files that used to be imported here are deleted, not merely
+   unreferenced — 78 kB of stock photography that the CSP notes below were
+   written to accommodate. Both notes are kept because they still describe a
+   real constraint the next image would hit:
 
-   WebP, converted once from the downloaded JPEGs: 315 kB became 141 kB at the
-   same visual quality. No <picture> fallback: build.target in vite.config.js
-   is chrome87/edge88/firefox78/safari14, and WebP has been supported since
-   Chrome 32, Edge 18, Firefox 65 and Safari 14, so nothing that can parse this
-   bundle can fail to decode these. (browserslist reaches further back than
-   that — ios_saf 11, kaios 2.5 — but the build target is the real floor.)
-   They are decorative in any case: a browser that failed to decode them would
-   lose atmosphere, not information. */
-import protocolEgyeztetes from '../assets/protocol-01-egyeztetes.webp'
-import protocolAtadas from '../assets/protocol-03-atadas.webp'
+   img-src in vercel.json is 'self' data:, so an images.unsplash.com URL is
+   blocked in production and only there, since `vite preview` does not apply
+   vercel.json headers. Any future photograph has to be imported, not
+   hotlinked. WebP needs no <picture> fallback at build.target
+   chrome87/edge88/firefox78/safari14. */
+import StepVisual from '../components/StepVisual'
 import { PROTOCOL_STEPS } from '../data/protocol'
 import { useLocale } from '../i18n/useLocale'
 import { t } from '../i18n/t'
@@ -25,8 +21,12 @@ import { t } from '../i18n/t'
 const COPY = {
   headingLead: { hu: 'Három lépés, semmi', en: 'Three steps, no' },
   headingAccent: { hu: 'meglepetés', en: 'surprises' },
-  imageSoon: { hu: 'Kép hamarosan', en: 'Photo coming' },
 }
+
+/* Positional, like the steps themselves. PROTOCOL_STEPS is an ordered list of
+   exactly three and protocol.test.js holds it to that, so an index is enough
+   and the data file stays free of presentation. */
+const STEP_VARIANTS = ['planning', 'build', 'handover']
 
 /* ----------------------------------------------------------------
    Protocol — Sticky Stacking Cards
@@ -137,37 +137,30 @@ export default function Protocol() {
      Wanted: 01 a real meeting or notes shot, 02 the build in progress on a
      screen, 03 the handover. Anything genuinely yours beats stock here.
 
-     TEMPORARY: slots 01 and 03 currently hold Unsplash photographs, put
-     back deliberately and knowing they were pulled once before. They are
-     atmosphere, not evidence — nothing here is presented as a shot of a real
-     project, which is why every `imageAlt` is '' and the images render as
-     decorative. Replace them with your own photographs of an actual
-     consultation, an actual build and an actual handover the moment you have
-     any; a real one is worth more than all three of these. Deleting a file
-     and blanking its two fields restores the blueprint frame.
+     Superseded on 2026-08-17: all three panels are drawn now, by StepVisual.
+     There is no `image` field left to fill, so a real photograph means
+     restoring the branch, not just dropping a file into src/assets.
 
-     Slot 02 is deliberately empty, which is why this array has a null in it.
-     It held a monitor full of WordPress PHP — wp_head(), bloginfo(), a theme's
-     get_favicon() — on a site that sells custom development against WordPress
-     and answers "WordPress vagy egyedi fejlesztés?" in its own FAQ. The step
-     it illustrated is the build step, so the one card claiming to show my work
-     was showing someone else's CMS in a language this site does not sell.
-     Hero.jsx dropped a PHP stock photo for that exact reason and this one
-     outlived it. An empty frame that says "kép hamarosan" costs a visitor
-     nothing; a picture arguing against the sentence beside it costs the sale.
+     The reasons are kept because each one cost something to learn. Slot 03
+     held a phone covered in Facebook, WhatsApp, Instagram, Gmail and Uber
+     icons — other companies' trademarks on a site that self-hosts its fonts
+     specifically to keep third parties out of the page. Slot 02 held a
+     monitor full of WordPress PHP — wp_head(), bloginfo(), a theme's
+     get_favicon() — on a site that sells custom development against
+     WordPress and answers "WordPress vagy egyedi fejlesztés?" in its own
+     FAQ; pulling it left the slot advertising its own gap with a
+     "Kép hamarosan" frame. Slot 01 was the notebook, pencil and glasses
+     flat-lay that ships with every freelance template.
 
-     The blueprint frame is the honest state, not a placeholder to rush past —
-     fill it only with a real photograph of an actual build, not another
-     stock shot. */
-  const stepImages = [protocolEgyeztetes, null, protocolAtadas]
+     A photograph of your own work still beats a drawing. This is what
+     stands in until there is one. */
   /* Resolved here rather than at each of the three render sites below, so the
      JSX stays free of t() and there is one place to look for the locale. */
   const steps = PROTOCOL_STEPS.map((step, i) => ({
     title: t(step.title, locale),
     tagline: t(step.tagline, locale),
     text: t(step.text, locale),
-    image: stepImages[i],
-    imageAlt: '',
+    variant: STEP_VARIANTS[i],
   }))
 
   return (
@@ -227,41 +220,7 @@ export default function Protocol() {
                 className="lg:col-span-5 relative overflow-hidden min-h-[150px] sm:min-h-[210px] lg:min-h-full"
                 style={{ backgroundColor: 'rgb(var(--color-card-1))' }}
               >
-                {step.image ? (
-                  <img
-                    src={step.image}
-                    alt={step.imageAlt}
-                    loading="lazy"
-                    decoding="async"
-                    className="absolute inset-0 h-full w-full object-cover"
-                  />
-                ) : (
-                  <>
-                    <span
-                      aria-hidden="true"
-                      className="absolute inset-0"
-                      style={{
-                        backgroundImage:
-                          'linear-gradient(rgb(var(--color-primary-light) / 0.10) 1px, transparent 1px), linear-gradient(90deg, rgb(var(--color-primary-light) / 0.10) 1px, transparent 1px)',
-                        backgroundSize: '32px 32px',
-                      }}
-                    />
-                    <span
-                      aria-hidden="true"
-                      className="absolute inset-6 rounded-3xl border border-dashed border-primary-light/25"
-                    />
-                    <span className="absolute inset-0 flex items-center justify-center px-6 text-center">
-                      {/* Was text-primary-light/60: 2.47:1 against the frame,
-                          measured on the live page. primary-light cannot reach
-                          4.5:1 here even at full opacity — it tops out at 4.16
-                          on this background — so the indigo goes rather than
-                          the contrast, and the label matches ProjectMock's. */}
-                      <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/70">
-                        {t(COPY.imageSoon, locale)}
-                      </span>
-                    </span>
-                  </>
-                )}
+                <StepVisual variant={step.variant} />
               </div>
             </div>
           </article>
