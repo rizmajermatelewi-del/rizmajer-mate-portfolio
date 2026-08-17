@@ -6,6 +6,18 @@ import { t } from '../i18n/t'
 import { useInView } from '../motion/useInView'
 
 const COPY = {
+  /* The section had no eyebrow while Projektek, Árak and Pillars all have one,
+     so it read as a peer of the sections backed by delivered work rather than
+     as the one category that is not. Naming it here is the smallest change
+     that fixes that: the heading and the offer stay, the label sets the frame
+     before either is read.
+
+     "Pilot" rather than "Új technológiák" because it says what the buyer is
+     being invited into — an early project priced as one — instead of
+     flattering the technology. The caveat below still states plainly that no
+     paying client has bought one; the eyebrow makes that visible to somebody
+     scanning who never reaches the sentence. */
+  eyebrow: { hu: 'Pilot megoldások', en: 'Pilot services' },
   headingLead: { hu: 'Amit a gép', en: 'What the machine' },
   headingAccent: { hu: 'elvégez', en: 'handles' },
   headingTail: { hu: 'helyetted.', en: 'for you.' },
@@ -61,7 +73,13 @@ export default function AiServices() {
           <div className="relative grid lg:grid-cols-12 gap-10 lg:gap-16 p-8 sm:p-12 lg:p-16">
             <div className="lg:col-span-5">
               <div className="lg:sticky lg:top-28">
-                <h2 className="font-display font-extrabold text-4xl sm:text-5xl text-ink leading-[1.05] tracking-tight">
+                {/* Same mark and metrics as the eyebrow on Projektek and Árak,
+                    so it reads as the page's own section label rather than as
+                    a badge invented for this one. */}
+                <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary-dark">
+                  ╱ {t(COPY.eyebrow, locale)}
+                </span>
+                <h2 className="font-display font-extrabold text-4xl sm:text-5xl text-ink leading-[1.05] tracking-tight mt-4">
                   {t(COPY.headingLead, locale)}{' '}
                   <span className="text-primary-dark font-semibold">{t(COPY.headingAccent, locale)}</span>{' '}
                   {t(COPY.headingTail, locale)}
