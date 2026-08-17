@@ -54,12 +54,23 @@ export default function Pricing() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 items-start">
+        {/* items-start let every card size to its own content, so the three
+            finished at 579, 619 and 601px and their buttons sat at three
+            different heights — a ragged bottom edge across the row a buyer is
+            being asked to compare along. Stretch, h-full through the TiltCard
+            wrapper, and mt-auto on the CTA put the tops, the bottoms and the
+            three buttons on one line.
+
+            The middle card keeps its 12px lift: that is the thing marking it,
+            and it is deliberate rather than raggedness. One class
+            (lg:-translate-y-3, below) if it should sit flush with the others
+            instead. */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch">
           {PRICING_TIERS.map((tier, i) => (
-            <TiltCard key={i} max={5}>
+            <TiltCard key={i} max={5} className="h-full">
             <article
               style={{ transitionDelay: visible ? `${i * 150}ms` : '0ms' }}
-              className={`pricing-card group relative card-invert border rounded-5xl p-8 sm:p-10 card-motion ${
+              className={`pricing-card group relative card-invert border rounded-5xl p-8 sm:p-10 card-motion flex h-full flex-col ${
                 visible ? 'opacity-100' : 'opacity-0 translate-y-10'
               } ${
                 tier.highlight
@@ -123,7 +134,16 @@ export default function Pricing() {
                 ))}
               </ul>
 
-              <Magnetic block className="mt-8">
+              {/* The spacer div carries mt-auto, not the Magnetic. When motion
+                  is on, Magnetic renders an outer span with no class and puts
+                  its className on an *inner* span (motion/Magnetic.jsx:66-74),
+                  so the flex child is the unclassed outer one and mt-auto on
+                  the component lands a level too deep and does nothing —
+                  measured: the three buttons stayed 31px apart. A fixed margin
+                  could never have aligned them anyway: the feature lists are
+                  four items each but wrap to different numbers of lines. */}
+              <div className="mt-auto pt-8">
+                <Magnetic block>
                 <a
                   href="#kapcsolat"
                   className={`magnetic-btn inline-flex w-full items-center justify-center gap-2 px-6 py-3.5 rounded-full font-semibold transition-colors duration-300 ${
@@ -138,7 +158,8 @@ export default function Pricing() {
                   {t(UI.ctaQuote, locale)}
                   <ArrowRight className="h-4 w-4" />
                 </a>
-              </Magnetic>
+                </Magnetic>
+              </div>
             </article>
             </TiltCard>
           ))}
