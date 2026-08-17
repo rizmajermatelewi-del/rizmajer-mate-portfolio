@@ -26,8 +26,18 @@ const COPY = {
   within24: { hu: '24 órán belül', en: 'Within 24 hours' },
   dataHeading: { hu: 'Adatkezelés', en: 'Your data' },
   dataBody: {
-    hu: 'Az adataid biztonságban vannak. Kizárólag a megkeresésed kapcsán veszem fel veled a kapcsolatot, harmadik féllel nem osztom meg őket.',
-    en: 'Your data is safe. I contact you only about your enquiry, and I do not share it with anyone else.',
+    /* Was: "…harmadik féllel nem osztom meg őket." Not true, and untrue in a
+       way the file itself gives away forty lines down: the form posts to
+       formspree.io, so a third party receives every submission before it
+       reaches any inbox. A reassurance that the code contradicts is worse
+       than no reassurance — it is the one claim on the page a reader could
+       check and find false.
+
+       What replaces it keeps the part that IS true (nothing is sold or used
+       for marketing) and names the mechanism. /adatvedelem carries the fuller
+       version, with a TODO on the parts that need a qualified eye. */
+    hu: 'Az űrlapot a Formspree továbbítja az e-mail címemre. Kizárólag a megkeresésed kapcsán veszem fel veled a kapcsolatot — nem adom el az adataidat és nem használom marketingre.',
+    en: 'The form is delivered to my inbox by Formspree. I contact you only about your enquiry — I do not sell your details or use them for marketing.',
   },
   sendError: {
     hu: 'Hiba történt a küldés során. Próbáld újra, vagy írj emailt közvetlenül a',

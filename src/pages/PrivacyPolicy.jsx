@@ -28,8 +28,37 @@ export default function PrivacyPolicy() {
           <h2 className="font-display font-semibold text-xl text-ink mt-8">Az adatok felhasználása</h2>
           <p>
             A megadott adatokat kizárólag a veled történő kapcsolatfelvételre és a megkeresésed
-            kezelésére használom. Az adatokat harmadik félnek nem adom át, és marketing célra nem
-            használom fel.
+            kezelésére használom. Nem adom el, nem adom át hirdetőnek vagy más vállalkozásnak, és
+            marketing célra nem használom fel.
+          </p>
+          {/* This section is new because the two sentences above it were not
+              true. The page said "Az adatokat harmadik félnek nem adom át" and
+              the form posts to https://formspree.io/f/maqgvjbv — so every
+              submission is received by a third party before it reaches any
+              inbox. A privacy notice that misdescribes its own processing is
+              worse than a thin one.
+
+              TODO (Máté): this states the mechanism, which is checkable from
+              the code. It deliberately does not name Formspree's legal entity,
+              its place of establishment, the basis for any transfer outside
+              the EEA, or whether a processor agreement is in place — those are
+              facts I cannot verify from here and legal conclusions I am not
+              qualified to draw. Have them checked, and complete this section,
+              before treating the notice as final. The same applies to the
+              hosting provider, which also receives the request. */}
+          <h2 className="font-display font-semibold text-xl text-ink mt-8">
+            Ki továbbítja az űrlapot
+          </h2>
+          <p>
+            A kapcsolatfelvételi űrlapot a Formspree nevű szolgáltatás továbbítja az e-mail
+            címemre, ezért a beküldött adatok — a név, az e-mail cím, az üzenet és a csatolt
+            fájlok — áthaladnak a rendszerén. Az űrlap használata nélkül is elérsz közvetlen
+            e-mailben a fenti címen, ilyenkor a Formspree nem kap semmit.
+          </p>
+          <p className="text-sm">
+            Ez a szakasz a technikai működést írja le. A szolgáltató jogi adatai és az
+            adattovábbítás részletei még kiegészítésre várnak — a tájékoztató ezen része
+            felülvizsgálat alatt áll.
           </p>
           <h2 className="font-display font-semibold text-xl text-ink mt-8">Adatmegőrzés</h2>
           <p>
