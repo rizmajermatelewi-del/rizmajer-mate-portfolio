@@ -3,22 +3,7 @@ import { gsap } from 'gsap'
 import { ArrowRight, ArrowDown } from 'lucide-react'
 import { Magnetic } from '../motion/Magnetic'
 import { useReducedMotion } from '../motion/useReducedMotion'
-/* Downloaded, not hotlinked: img-src in vercel.json is `self` data:, so an
-   images.unsplash.com URL is blocked in production — and only there, because
-   `vite preview` does not apply vercel.json headers.
-
-   Source: unsplash.com/photos/view-through-a-window-of-a-barber-shop-at-night-lJZO8IJjNKQ
-   Unsplash License — free for commercial use, no permission needed. Fetched
-   2026-08-17 at w=1600&q=45 (130 kB); the frame sits under two scrims and a
-   tint, so quality beyond that buys nothing a visitor can see.
-
-   Why this one, after a sunset holiday snapshot with another studio's
-   watermark: it is a small service business lit at night with its owner doing
-   paperwork, which is the exact thing this site offers to take off their
-   hands. The French signage falls in the left third, under the heaviest part
-   of the scrim, which is the only reason it is acceptable — check it again if
-   the scrim ever lightens. */
-import heroBackdrop from '../assets/hero-esti-uzlet.jpg'
+import HeroVisual from '../components/HeroVisual'
 import { useLocale } from '../i18n/useLocale'
 import { t } from '../i18n/t'
 import { UI } from '../i18n/ui'
@@ -161,36 +146,44 @@ export default function Hero() {
             so a div resolves immediately instead of throwing. The element is
             still pre-scaled 1.12, which is the headroom the parallax
             translate consumes; without it the bottom edge lifts off. */}
-        {/* The LCP element, so it loads eagerly and at high priority rather
-            than queueing behind the bundle. Empty alt: this is atmosphere, not
-            information — the headline beside it carries the meaning, and a
-            screen reader gains nothing from a description of a dim room. */}
-        <img
-          src={heroBackdrop}
-          alt=""
-          loading="eager"
-          fetchPriority="high"
-          decoding="async"
-          className="hero-backdrop absolute inset-0 h-full w-full object-cover scale-[1.12] will-change-transform"
-        />
-        {/* Ties the photograph to the palette rather than letting it sit in
-            the page as a foreign object: the same indigo the rest of the site
-            uses, weighted right, where the copy is not. */}
+        {/* No photograph. The three that have held this slot were a holiday
+            snapshot carrying another studio's watermark, then a night shot of
+            somebody else's barber shop — atmosphere borrowed from a business
+            that is not this one. What a developer's hero can honestly show is
+            the work itself, so it is drawn: a browser frame, a wireframe, and
+            code. 130 kB of JPEG left with it.
+
+            .hero-backdrop stays on this element because two other modules
+            select it — gsap parallaxes it, and preloader.js waits on it before
+            lifting the cover (its heroDecoded() guards on
+            `typeof decode === 'function'`, so a div resolves immediately). The
+            1.12 pre-scale is the headroom the parallax translate consumes. */}
         <div
           aria-hidden="true"
-          className="absolute inset-0"
+          className="hero-backdrop absolute inset-0 scale-[1.12] will-change-transform"
           style={{
+            backgroundColor: 'rgb(var(--color-deep))',
             backgroundImage: [
-              'radial-gradient(62% 66% at 76% 36%, rgb(var(--color-primary) / 0.34), transparent 72%)',
-              'radial-gradient(60% 50% at 12% 4%, rgb(var(--color-primary-dark) / 0.28), transparent 70%)',
+              'radial-gradient(58% 62% at 72% 34%, rgb(var(--color-primary) / 0.40), transparent 72%)',
+              'radial-gradient(60% 50% at 10% 2%, rgb(var(--color-primary-dark) / 0.30), transparent 70%)',
             ].join(', '),
           }}
-        />
-        {/* Scrim weighted left, where the headline sits, so the photograph
-            keeps the right of the frame instead of being flattened
-            everywhere. */}
-        <div className="absolute inset-0 bg-gradient-to-r from-deep via-deep/85 to-deep/45" />
-        <div className="absolute inset-0 bg-gradient-to-t from-deep/85 via-transparent to-deep/45" />
+        >
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage:
+                'linear-gradient(rgb(var(--color-primary-light) / 0.06) 1px, transparent 1px), linear-gradient(90deg, rgb(var(--color-primary-light) / 0.06) 1px, transparent 1px)',
+              backgroundSize: '64px 64px',
+              maskImage: 'radial-gradient(85% 75% at 70% 42%, #000 15%, transparent 80%)',
+              WebkitMaskImage: 'radial-gradient(85% 75% at 70% 42%, #000 15%, transparent 80%)',
+            }}
+          />
+          <HeroVisual />
+        </div>
+        {/* Scrim weighted left, where the headline sits, so the panels keep the
+            right of the frame instead of being flattened everywhere. */}
+        <div className="absolute inset-0 bg-gradient-to-r from-deep via-deep/60 to-transparent" />
         {/* Fades into the light page, so the boundary is a transition
             rather than the hard seam a flat cut would leave. */}
         {/* Linear ramp, no midpoint stop. With via-background/70 the fade was
