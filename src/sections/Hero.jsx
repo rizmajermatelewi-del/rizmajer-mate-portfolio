@@ -24,12 +24,35 @@ const COPY = {
      stiff uncontracted "do not" goes with it. */
   headlineLead: { hu: 'Weboldal és rendszer,', en: 'A website and a system' },
   headlineAccent: { hu: 'ami helyetted dolgozik.', en: 'that does the work for you.' },
+  /* Halved, and pointed at a different question.
+     ---------------------------------------------------------------------
+     Was: "Kis- és középvállalkozásoknak építek weboldalakat és foglalási
+     rendszereket: gyorsan betöltő, mobilon is használható felületeket, amiket
+     utána te is tudsz kezelni."
+
+     Three of those clauses are made again further down the page — mobile in
+     the Készségek tiles, speed in its own tile, "te is tudsz kezelni" in the
+     Folyamat handover step and again in the FAQ. Spending the hero's one
+     supporting line on claims the page repeats twice more left it saying
+     nothing the headline had not already implied.
+
+     What it says now is the part nothing else on the page states outright:
+     the four things I actually build, who they are for, and the problem they
+     remove. That is the whole positioning in one line, which is what a
+     visitor deciding in five seconds needs — not a list of qualities.
+
+     The accent span carries "kevesebb kézi adminisztrációval" rather than a
+     capability, because the emphasis should land on what the buyer gets rid
+     of, not on what I am good at. */
   introLead: {
-    hu: 'Kis- és középvállalkozásoknak építek weboldalakat és foglalási rendszereket: gyorsan betöltő, mobilon is használható felületeket, amiket utána',
-    en: 'I build websites and booking systems for small and medium businesses: quick to load, usable on a phone, and afterwards',
+    hu: 'Weboldalak, foglalási, rendelési és belső rendszerek kis- és középvállalkozásoknak —',
+    en: 'Websites, booking, ordering and internal systems for small and medium businesses —',
   },
-  introAccent: { hu: 'te is tudsz kezelni', en: 'you can run them yourself' },
-  seeWork: { hu: 'Munkáim', en: 'See my work' },
+  introAccent: { hu: 'kevesebb kézi adminisztrációval', en: 'with less done by hand' },
+  /* "Munkáim" -> "Munkáim megtekintése". The secondary CTA now reads as an
+     action rather than as a section label, which is what it has to do sitting
+     beside a primary button that names one. */
+  seeWork: { hu: 'Munkáim megtekintése', en: 'See my work' },
   /* The LCP image's alt text. It describes a photograph of a specific person
      in a specific place, so both languages say the same thing about the same
      picture — this is a description, not a slogan. */

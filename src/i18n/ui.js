@@ -20,8 +20,19 @@
    Free of JSX and of any React import: pricing.js imports this, and
    scripts/knowledge.mjs reads pricing.js in plain Node. */
 export const UI = {
-  /* The primary call to action, everywhere it appears. */
-  ctaQuote: { hu: 'Kérj ajánlatot', en: 'Ask for a quote' },
+  /* The primary call to action, everywhere it appears.
+
+     Was "Kérj ajánlatot". A quote is what the seller wants; a conversation is
+     what the buyer is willing to agree to, and an SME owner who is not yet
+     sure what they need will not ask for a formal offer. The label now names
+     the low-commitment step the contact form actually is.
+
+     It is 24 characters against 14, and this file's whole purpose is that the
+     nine render sites move together — including the desktop navbar, which is
+     the one place on the site with no room to spare. Measured after the
+     change rather than assumed; see the note in Navbar.jsx if it ends up
+     carrying a shorter one. */
+  ctaQuote: { hu: 'Beszéljük át a projekted', en: 'Let us talk about your project' },
 
   /* The back link on /fejleszto, /adatvedelem and /aszf. The two legal pages
      stay Hungarian-only, so only /fejleszto ever resolves the English side —
