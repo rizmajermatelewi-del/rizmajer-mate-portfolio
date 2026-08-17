@@ -120,7 +120,15 @@ export default function ServicesGrid() {
                     <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-primary-dark pt-4">
                       {t(COPY.techLabel, locale)}
                     </p>
-                    <p className="text-white/45 text-sm leading-relaxed pt-2">{t(svc.detail, locale)}</p>
+                    {/* /45 measured 4.51:1 on the deep card — over the 4.5
+                        floor by a hundredth, which is not a margin. It also
+                        never showed up in a contrast sweep, because the
+                        disclosure is collapsed until clicked: every tile had to
+                        be opened and the reveal animations allowed to settle
+                        before the number meant anything. /55 measures 6.16:1,
+                        and matches the tile's own visible text, which was
+                        already /55 a few lines up. */}
+                    <p className="text-white/55 text-sm leading-relaxed pt-2">{t(svc.detail, locale)}</p>
                   </div>
                 </div>
               </button>
