@@ -281,3 +281,103 @@
   }
 }
 
+/* The loading cover. Markup is in index.html, outside #root; the note there
+   says why it cannot be a React component.
+   ---------------------------------------------------------------------
+   z-index clears the two things that already stack: the navbar at z-50 and
+   the mobile drawer at z-[60].
+
+   bg is --color-deep, the hero's own colour, so the cover dissolves into the
+   photograph behind it rather than cutting from one surface to another. */
+#preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(var(--color-deep));
+  opacity: 1;
+  /* The failsafe. src/preloader.js normally removes this element long before
+     the delay elapses; this is what happens when it never runs at all — a
+     bundle that 404s, a module that throws on import, JS switched off.
+
+     It survives the reduced-motion block above, and that is deliberate rather
+     than lucky. That block overrides animation-duration, iteration-count and
+     transition-duration — it does not override animation-delay. So a reader
+     with the OS setting on still gets the cover cleared at 4s; they get it
+     without the fade, which is exactly what they asked the setting for.
+     preloader.test.js pins that, because the failsafe is the kind of line a
+     later cleanup deletes as dead code. */
+  animation: preloader-failsafe 400ms ease 4s forwards;
+}
+
+/* Set by src/preloader.js. The element is removed a beat later; the class
+   exists so the removal is a fade rather than a cut. */
+#preloader.is-done {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 400ms ease;
+}
+
+@keyframes preloader-failsafe {
+  to { opacity: 0; visibility: hidden; }
+}
+
+/* The mark, drawn as a gradient masked to the logo artwork — the same
+   technique as .logo-sheen above, which is why no second asset is needed and
+   why the highlight follows the brush strokes instead of sweeping a rectangle
+   across them.
+
+   Behind @supports for the same reason .logo-sheen is: a mask-image that
+   fails to apply is not a missing effect, it is an opaque white slab in the
+   middle of the screen. Without support the cover is simply the dark ground,
+   which is a plain loading screen rather than a broken one. */
+@supports ((-webkit-mask-image: url('')) or (mask-image: url(''))) {
+  .preloader-mark {
+    width: 96px;
+    aspect-ratio: 164 / 83;
+    /* Two layers, and the split matters. background-color draws the mark and
+       always fills the element; background-image is only the travelling
+       highlight.
+
+       The first version put both in one gradient, and most of the logo was
+       invisible. With background-size: 300% and no-repeat, a background-position
+       of 150% resolves to (W - 3W) x 1.5 = -3W — the image sits entirely off the
+       left edge, so there is nothing behind the mask and the mark disappears;
+       -50% puts it entirely off the right, same result. Only mid-sweep was
+       anything drawn. .logo-sheen gets away with exactly this because it is a
+       transparent ::after layered over a real <img>; here the gradient was the
+       only thing drawing the logo. Caught by looking at a screenshot, not by
+       reading the rule. */
+    background-color: rgb(255 255 255 / 0.55);
+    background-image: linear-gradient(
+      100deg,
+      rgb(255 255 255 / 0) 40%,
+      rgb(255 255 255 / 0.9) 50%,
+      rgb(255 255 255 / 0) 60%
+    );
+    background-size: 300% 100%;
+    background-position: 150% 0;
+    background-repeat: no-repeat;
+    -webkit-mask-image: url('./assets/logo-rml.png');
+    mask-image: url('./assets/logo-rml.png');
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    /* Infinite, because the wait has no known length — a loop that ends would
+       read as the page having given up. Under reduced motion the block above
+       clamps this to one 0.01ms pass, leaving the mark static at its start
+       position, which is a legible white logo. */
+    animation: preloader-sheen 1.8s ease-in-out infinite;
+  }
+
+  @keyframes preloader-sheen {
+    from { background-position: 150% 0; }
+    to { background-position: -50% 0; }
+  }
+}
+

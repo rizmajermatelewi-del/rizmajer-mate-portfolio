@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import { AppRoutes } from './routes.jsx'
 import ErrorBoundary from './components/ErrorBoundary'
+import { dismissPreloader } from './preloader'
 import './index.css'
 
 /* `createRoot`, not `hydrateRoot`, on purpose. The build prerenders each
@@ -23,3 +24,14 @@ createRoot(document.getElementById('root')).render(
     </ErrorBoundary>
   </StrictMode>,
 )
+
+/* Called after render rather than from inside a component, and unawaited.
+   render() only schedules the work, so this returns immediately and does not
+   hold React up; dismissPreloader waits for the paint itself.
+
+   Outside the ErrorBoundary on purpose. The boundary catches a render that
+   throws and shows a fallback — but a fallback still needs the cover taken
+   off it, and a dismissal living inside the tree would go down with whatever
+   it was meant to reveal. index.css keeps a 4s failsafe underneath this for
+   the case where the bundle never gets this far at all. */
+dismissPreloader()

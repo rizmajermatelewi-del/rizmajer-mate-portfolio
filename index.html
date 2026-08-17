@@ -92,6 +92,36 @@
     </script>
   </head>
   <body>
+    <!-- The loading cover.
+
+         It lives here, outside #root, and that placement is the whole design
+         rather than a detail. The gap being covered is the wait for the React
+         bundle: main.jsx uses createRoot, so when the bundle finally runs it
+         discards the prerendered markup and renders again from scratch, and
+         GSAP then pulls the hero lines back to opacity 0 to animate them in.
+         A cover rendered by React cannot hide React's own arrival. Sitting in
+         the template means it is painted with the first frame the browser
+         produces, and React's re-render never touches it.
+
+         Measured before this existed, on Slow 4G with a 4x CPU throttle: LCP
+         2122ms, of which 2116ms was render delay. The cover does not change
+         that number — it changes what fills those two seconds.
+
+         No text, and that is a build constraint as well as a design one.
+         prerender.mjs scans the whole finished /en page for Hungarian and
+         fails the build on a hit, so a Hungarian loading word here would
+         break every English route. That check reads raw markup, comments
+         included — this note originally spelled the word out as an example
+         and failed the build on itself, which is the guard behaving exactly
+         as intended. The cover is decorative, so aria-hidden keeps it out of
+         the accessibility tree entirely and there is nothing to translate.
+
+         Removed by src/preloader.js once React has painted and the hero image
+         has decoded. If that never happens — a failed bundle, JS disabled, a
+         thrown module — the CSS failsafe in index.css hides it anyway. A
+         loading screen that can outlive its own script is not a slow site, it
+         is an unreachable one. -->
+    <div id="preloader" aria-hidden="true"><span class="preloader-mark"></span></div>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
