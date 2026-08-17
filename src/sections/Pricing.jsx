@@ -12,9 +12,15 @@ const COPY = {
   headingAccent: { hu: 'Ennyiből', en: 'This is what' },
   headingTail: { hu: 'jön ki.', en: 'it comes to.' },
   intro: {
-    hu: 'Ezek indulóárak. A pontosat akkor mondom meg, ha már tudom, mire van szükséged, és írásban, tételesen kapod meg. Utólag nem jön hozzá semmi.',
-    en: 'These are starting prices. I give you the exact one once I know what you need, in writing and itemised. Nothing gets added to it afterwards.',
+    hu: 'Ezek indulóárak. A végleges árat a funkciók és a projekt összetettsége alapján, a munka megkezdése előtt rögzítjük — írásban, tételesen. Utólag nem jön hozzá semmi.',
+    en: 'These are starting prices. The final one is set from the features and the complexity of the project before any work begins — in writing and itemised. Nothing gets added afterwards.',
   },
+  /* The same question on all three cards, so it belongs to the layout rather
+     than to the data — pricing.js carries the three answers, not three copies
+     of the question. It is a label, not a heading: putting an h4 here would
+     insert three of them between the tier's h3 and the page's next section,
+     for a two-word signpost that no reader navigates by. */
+  audience: { hu: 'Kinek való?', en: 'Who is it for?' },
 }
 
 /* ----------------------------------------------------------------
@@ -67,15 +73,41 @@ export default function Pricing() {
                   and a superlative earned by two paying clients overclaims
                   next to a Pillars section that plainly says "2". The border,
                   the shadow and the lift still mark the card. */}
+              {/* Name, then price, then who it is for, then what is in it.
+                  The price used to sit below the description, which meant a
+                  buyer scanning three cards read three different sentences
+                  before reaching the one number they came to compare. Putting
+                  it directly under the name makes the three figures line up
+                  across the row, and the description stops being the thing
+                  standing between the reader and the comparison.
+
+                  "Kinek való?" then leads, because that is the question a
+                  three-tier grid actually poses: not what each one contains,
+                  but which row is mine. The feature list answers the second
+                  question once the first is settled. */}
               <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary-dark">{t(tier.eyebrow, locale)}</span>
-              <h3 className="font-display font-bold text-2xl text-ink mt-3">{t(tier.name, locale)}</h3>
-              <p className="text-muted text-sm mt-2 leading-relaxed">{t(tier.desc, locale)}</p>
+              {/* Two lines' worth of room whether the name needs it or not.
+                  "Foglalási / rendelési rendszer" wraps at this width and the
+                  other two do not, which pushed the middle card's price a line
+                  below its neighbours' — undoing the one thing moving the price
+                  up here was for, which is three figures a buyer can compare
+                  along a single horizontal line.
+
+                  4rem rather than 2lh: text-2xl is 1.5rem on a 2rem line, so
+                  this is exactly two lines, and the lh unit needs Chrome 109
+                  while this bundle targets 87. */}
+              <h3 className="font-display font-bold text-2xl text-ink mt-3 min-h-[4rem]">{t(tier.name, locale)}</h3>
+
+              <p className="font-display font-semibold text-2xl text-ink">{t(tier.priceNote, locale)}</p>
+              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary-dark mt-1.5">
+                {t(tier.scope, locale)}
+              </p>
 
               <div className="mt-6 pt-5 border-t border-divider">
-                <p className="font-display font-semibold text-xl text-ink">{t(tier.priceNote, locale)}</p>
-                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary-dark mt-1.5">
-                  {t(tier.scope, locale)}
+                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
+                  {t(COPY.audience, locale)}
                 </p>
+                <p className="text-muted text-sm mt-2 leading-relaxed">{t(tier.desc, locale)}</p>
               </div>
 
               <ul className="mt-7 space-y-3">

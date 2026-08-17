@@ -1,4 +1,5 @@
 import { forint, priceEn } from './fx.js'
+import { TIER_FLOORS } from './pricing.js'
 
 /* The objections an SME actually raises before hiring.
    Moved out of Faq.jsx so the knowledge generator can read the same answers
@@ -16,8 +17,14 @@ export const FAQ_QUESTIONS = [
        out of pricing.js and fails if the two disagree, so a price moved there
        and forgotten here is caught rather than published. */
     a: {
-      hu: `Egy bemutatkozó oldal ${forint(180000)}-tól, egy foglalási vagy rendelési rendszer ${forint(550000)}-tól, a meglévő rendszereid összekötése ${forint(1200000)}-tól indul. Ezek indulóárak: a pontosat egy rövid egyeztetés után, írásban és tételesen kapod meg, és utólag nem jön hozzá semmi.`,
-      en: `An introductory site starts at ${priceEn(180000)}, a booking or ordering system at ${priceEn(550000)}, and connecting the systems you already run at ${priceEn(1200000)}. Those are starting prices: you get the exact figure after a short call, in writing and itemised, and nothing is added to it afterwards.`,
+      /* Figures come from TIER_FLOORS rather than being typed here. This
+         sentence has now gone stale twice against the tiers it quotes — and it
+         is the worst place on the site for that, because prerender.mjs feeds
+         these answers into the FAQPage structured data, which is the copy
+         Google reproduces in a search result. A visitor could be quoted one
+         price by the listing and another by the page. */
+      hu: `Egy bemutatkozó weboldal ${forint(TIER_FLOORS.intro)}-tól, egy foglalási vagy rendelési rendszer ${forint(TIER_FLOORS.booking)}-tól, egy egyedi üzleti rendszer ${forint(TIER_FLOORS.system)}-tól indul. Ezek indulóárak: a végleges árat a funkciók és a projekt összetettsége alapján, a munka megkezdése előtt rögzítjük — írásban, tételesen.`,
+      en: `An introductory website starts at ${priceEn(TIER_FLOORS.intro)}, a booking or ordering system at ${priceEn(TIER_FLOORS.booking)}, and a business system of your own at ${priceEn(TIER_FLOORS.system)}. Those are starting prices: the final one is set from the features and the complexity of the project, in writing and itemised, before any work begins.`,
     },
   },
   {
@@ -51,8 +58,8 @@ export const FAQ_QUESTIONS = [
   {
     q: { hu: 'Ki tartja karban az oldalt utána?', en: 'Who looks after the site afterwards?' },
     a: {
-      hu: `Ahogy megbeszéljük. Az oldalt úgy építem, hogy a tartalmat magad is tudd kezelni, és az átadáskor megmutatom, hogyan. Ha inkább rám bíznád, az üzemeltetés ${forint(25000)}/hó: frissítések, biztonsági mentés, havi egy óra apró módosítás, és ha leáll, én veszem észre, nem te. Nincs hűségidő, hónapra felmondható. Ha nem kéred, akkor sem tűnök el — kérdésre és hibára egy munkanapon belül válaszolok, ez nem havidíjas.`,
-      en: `Whatever we agree. I build it so you can handle the content yourself, and I show you how at handover. If you would rather leave it to me, upkeep is ${priceEn(25000)} a month: updates, backups, an hour of small changes, and if it goes down I notice rather than you. No minimum term, cancellable monthly. And if you do not want it, I still do not disappear — I answer questions and faults within one working day, and that is not on a subscription.`,
+      hu: `Ahogy megbeszéljük. Az oldalt úgy építem, hogy a tartalmat magad is tudd kezelni, és az átadáskor megmutatom, hogyan. Ha inkább rám bíznád, a karbantartás ${forint(25000)}/hó-tól: frissítések, biztonsági mentés, havi egy óra apró módosítás, és ha leáll, én veszem észre, nem te. Nincs hűségidő, hónapra felmondható.`,
+      en: `Whatever we agree. I build it so you can handle the content yourself, and I show you how at handover. If you would rather leave it to me, upkeep starts at ${priceEn(25000)} a month: updates, backups, an hour of small changes, and if it goes down I notice rather than you. No minimum term, cancellable monthly.`,
     },
   },
   {

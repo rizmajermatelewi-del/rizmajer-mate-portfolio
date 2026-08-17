@@ -14,15 +14,23 @@ import { UI } from '../i18n/ui.js'
    50-300e on top, and custom or AI-integrated work starts around 1M. Every
    figure below is a "-tól" and the written quote still follows a call.
 
-   Tier 03 moved from 900e to 1.2M. Its implied effort was out of line with
-   its own scope — a multi-module system with permission levels and
-   integrations does not fit in the ~7 billable days that 900e buys at a
-   16e/hour freelance rate, while tiers 01 and 02 imply 1.4 and 3.5 days for
-   scopes that plausibly fit. The top tier's job is to anchor, not to close,
-   so raising it costs no inquiries and lifts the perceived value of the
-   middle tier. Tier 01 stays deliberately below the market floor (265-350e)
-   as an acquisition price while the calendar is empty; the trigger to move it
-   to 260e is three won projects or a half-full calendar. */
+   Repriced on 2026-08-17 at Máté's direction: 180e -> 240e, 550e -> 690e,
+   1.2M unchanged. The brief's reasoning was positional rather than
+   arithmetic — the page should not read as cheap website work — and the
+   numbers land where the effort estimates already pointed.
+
+   Tier 01 had been held deliberately below the market floor (265-350e) as an
+   acquisition price while the calendar was empty. 240e enters the bottom of
+   that band rather than sitting under it, which is the same decision the old
+   note deferred until "three won projects or a half-full calendar"; it is
+   being taken early on purpose, and the risk is real — the first inquiries
+   are also the ones most likely to be lost on price. Tier 02 is covered in
+   its own note below. Tier 03 was already moved from 900e to 1.2M because a
+   multi-module system with permission levels does not fit the ~7 billable
+   days 900e buys at 16e/hour; nothing about that changed.
+
+   The top tier's job is to anchor rather than to close, which is why raising
+   the two beneath it lifts the middle rather than flattening the set. */
 /* Named after what the client is buying, not after what gets built. The tiers
    used to read "Landing Oldal / Webalkalmazás / Egyedi Rendszer" — artifact
    names. An SME owner does not shop for a webalkalmazás; they shop for a way
@@ -57,30 +65,58 @@ import { UI } from '../i18n/ui.js'
 const fromPrice = (huf) => ({ hu: `${forint(huf)}-tól`, en: `from ${priceEn(huf)}` })
 const flatPrice = (huf) => ({ hu: forint(huf), en: priceEn(huf) })
 
+/* The three floors, exported as numbers rather than only as rendered strings.
+   faq.js answers "mennyibe kerül?" by naming all three, and it did that by
+   typing forint(180000) into its own sentence — so the FAQ, and with it the
+   FAQPage structured data Google reproduces, kept a price the tiers had
+   already moved past. That has now happened twice: 450 000 survived in the FAQ
+   after the 2026-08-12 review, and 180 000 / 550 000 survived here until the
+   2026-08-17 repricing. Both times nothing failed, because nothing compared
+   them.
+
+   Naming the floors once and importing them is what ends it. The keys are
+   roles rather than positions: TIER_FLOORS[1] would break silently the day a
+   fourth tier is inserted anywhere but the end. */
+export const TIER_FLOORS = {
+  intro: 240000,
+  booking: 690000,
+  system: 1200000,
+}
+
+/* `desc` answers one question and only one: who is this for. It used to be a
+   mixed sentence — part audience, part benefit, part reassurance — and read as
+   three cards each making a slightly different kind of argument.
+
+   A buyer comparing three tiers is doing one thing: working out which row is
+   theirs. Answering that first, in the same shape on every card, is what makes
+   the three comparable at a glance; the feature list underneath answers "what
+   is in it" once they have found their row. The visible "Kinek való?" label
+   lives in Pricing.jsx, because it is the same word on every card and belongs
+   to the layout rather than to the data. */
 export const PRICING_TIERS = [
   {
     eyebrow: { hu: 'Kezdéshez', en: 'To start' },
-    name: { hu: 'Bemutatkozó oldal', en: 'Introductory site' },
+    name: { hu: 'Bemutatkozó weboldal', en: 'Introductory website' },
     desc: {
-      hu: 'Ha valaki rád keres a Google-ben, találjon valamit, ami rendben van, és ne a konkurenciádat.',
-      en: 'So that when somebody looks you up on Google they find something that holds up, and not your competitor.',
+      hu: 'Annak, akinek rendes online megjelenés kell, de nincs mögötte bonyolult üzleti logika.',
+      en: 'For anyone who needs a proper presence online, without complicated business logic behind it.',
     },
-    priceNote: fromPrice(180000),
+    priceNote: fromPrice(TIER_FLOORS.intro),
     scope: { hu: 'Átadás jellemzően 1-2 hét', en: 'Delivered in 1-2 weeks, typically' },
     features: [
-      { hu: 'Mobilon is jól működik', en: 'Works properly on a phone' },
-      { hu: 'Megtalálnak a Google-ben', en: 'People find you on Google' },
-      { hu: 'Kapcsolati űrlap, ami a postafiókodba jön', en: 'A contact form that lands in your inbox' },
-      { hu: 'Elindítom és átadom', en: 'I put it live and hand it over' },
+      { hu: 'Egyedi megjelenés, mobilon is', en: 'A design of your own, on a phone too' },
+      { hu: 'Kapcsolatfelvétel, ami a postafiókodba jön', en: 'An enquiry form that lands in your inbox' },
+      { hu: 'Alap keresőoptimalizálás, hogy megtaláljanak', en: 'The search basics, so people find you' },
+      { hu: 'Élesítés és átadás', en: 'Put live and handed over' },
     ],
     highlight: false,
   },
   {
     eyebrow: { hu: 'Ajánlott', en: 'Recommended' },
-    name: { hu: 'Foglalás és rendelés', en: 'Booking and ordering' },
+    name: { hu: 'Foglalási / rendelési rendszer', en: 'Booking / ordering system' },
     desc: {
-      hu: 'Ha a foglalás vagy a rendelés ma telefonon és üzenetben megy, és ez már napi egy órát elvisz.',
-      en: 'For when booking or ordering still runs on phone calls and messages, and it is already costing you an hour a day.',
+      hu: 'Annak, aki a telefonálgatást, az üzenetváltást és a kézi időpont- vagy rendelésfelvételt szeretné kiváltani.',
+      en: 'For anyone who wants to stop taking bookings and orders by phone, by message, and by hand.',
     },
     /* 450 000 implied ~28 billable hours for online booking, an admin UI,
        e-mail notifications AND "ahhoz illesztve, amit már használsz: naptár,
@@ -96,39 +132,63 @@ export const PRICING_TIERS = [
        sync stays in, because a booking system without it double-books; the
        számlázó and táblázat move out to the 90 000 Ft/folyamat offer further
        down, which is the same promise priced per unit of work. */
-    priceNote: fromPrice(550000),
+    /* 690 000 buys ~43 hours at the 16 000 Ft/hour the page derives from, up
+       from ~34 at 550 000. The scope below did not grow to match, and that is
+       the point of the move rather than an oversight: at 550 000 the four
+       lines here were the whole budget, so a client naming one more system to
+       integrate, one more booking rule, or a second location put the job
+       underwater. The floor now carries the variance that a real booking
+       build has and the four lines do not describe. */
+    priceNote: fromPrice(TIER_FLOORS.booking),
     scope: { hu: 'Átadás jellemzően 3-6 hét', en: 'Delivered in 3-6 weeks, typically' },
     features: [
-      { hu: 'Foglalás vagy rendelés online', en: 'Booking or ordering online' },
-      { hu: 'Kezelőfelület, amit te is használsz', en: 'An admin screen you will actually use' },
-      { hu: 'Értesítések e-mailben', en: 'Notifications by e-mail' },
+      { hu: 'Online időpontfoglalás vagy rendelésfelvétel', en: 'Booking or ordering online' },
+      { hu: 'Adminfelület, amit te is használsz', en: 'An admin screen you will actually use' },
+      { hu: 'Automatikus e-mail értesítések', en: 'Notifications by e-mail, automatically' },
       {
-        hu: 'A naptáraddal összekötve, hogy ne legyen dupla foglalás',
-        en: 'Wired into your calendar, so nothing gets double-booked',
+        hu: 'Kapacitás- és időpontkezelés, hogy ne legyen ütközés',
+        en: 'Capacity and slot handling, so nothing collides',
       },
     ],
     highlight: true,
   },
   {
     eyebrow: { hu: 'Egyedi', en: 'Bespoke' },
-    /* Was "Belső rendszer". Same slot, same price, same anchoring job — but
-       that version was the one claim on the site with nothing behind it: no
-       internal system has been built for anyone, so a yes to it would have
-       been a seven-figure quote for a category never delivered.
+    /* This slot has now been named three things, and the history is worth
+       keeping because it is the same argument each time.
 
-       Connecting existing tools is the honest version of the same tier. It is
-       also the one thing a SaaS cannot take: a booking product serves every
-       salon identically, which is why the Salonic-shaped competitor exists,
-       but no product knows that this client's számlázó has to talk to that
-       client's naptár. And it ladders directly up from the 90 000 Ft
-       single-process offer below, so the cheapest and the dearest thing on the
-       page are now the same promise at two sizes. */
-    name: { hu: 'Rendszerek összekötése', en: 'Connecting your systems' },
+       It began as "Belső rendszer" and was renamed to "Rendszerek
+       összekötése" on the grounds that no internal system had been built for
+       anyone, so the tier named a category never delivered. Máté asked for
+       "Egyedi üzleti rendszer" on 2026-08-17, which is closer to the original
+       than to the replacement.
+
+       That is a defensible reversal, and the distinction the first rename
+       missed is worth stating so it is not re-litigated: a price tier is an
+       offer, not a claim about past work. Nothing here says one has been
+       built. The 2026-08-10 problem was different in kind — projects.js listed
+       two client projects that did not exist, which is a statement of fact
+       that was false. Naming a service you are willing to be hired for is not.
+
+       What the tier must not do is borrow credibility from the ones beside it.
+       If that ever becomes a risk, the honest fix is the one PRICING_ENTRY
+       already uses: say plainly that no paying client has bought it yet. Not
+       added here, because the section carries no claim of delivery at all —
+       Pillars states the real count two sections up, and the projects section
+       now says outright that no client work has been handed over.
+
+       Connecting existing tools stays as the first feature line rather than as
+       the tier name. It is still the one thing a SaaS cannot take: a booking
+       product serves every salon identically, but no product knows that this
+       client's számlázó has to talk to that client's naptár. And it ladders up
+       from the 90 000 Ft single-process offer below, so the cheapest and the
+       dearest thing on the page remain the same promise at two sizes. */
+    name: { hu: 'Egyedi üzleti rendszer', en: 'A business system of your own' },
     desc: {
-      hu: 'Ha már több program fut nálad, és a köztük lévő átmásolgatás viszi el a napodat.',
-      en: 'For when you already run several programs, and copying things between them is what eats the day.',
+      hu: 'Annak, aki több belső folyamatot, adatot vagy munkatársat szeretne egy saját rendszerben kezelni.',
+      en: 'For anyone who needs several internal processes, or their data and staff, handled in one system of their own.',
     },
-    priceNote: fromPrice(1200000),
+    priceNote: fromPrice(TIER_FLOORS.system),
     scope: { hu: 'Ütemezés a terjedelemtől függ', en: 'Timeline depends on the scope' },
     /* Was "Adatok kiajánlása", "Több modul, több jogosultsági szint" and the
        page's only plural address ("A ti folyamatotokra"). All three failed the
@@ -137,10 +197,10 @@ export const PRICING_TIERS = [
        team. Written for the person paying, in the second person singular the
        rest of the site uses. */
     features: [
-      { hu: 'A te folyamataidra szabva', en: 'Built around the way you already work' },
+      { hu: 'Egyedi adminfelület a te folyamataidra', en: 'An admin system built around your processes' },
+      { hu: 'Több munkatárs, külön jogosultságokkal', en: 'Several people, each with their own permissions' },
       { hu: 'Amit ma kézzel másolsz át, magától megy', en: 'What you copy across by hand today happens on its own' },
-      { hu: 'Az adataidat bármikor kiviheted Excelbe', en: 'Your data comes out to Excel whenever you want it' },
-      { hu: 'Együtt nő a céggel', en: 'It grows with the business' },
+      { hu: 'A meglévő programjaid összekötve', en: 'The programs you already run, wired together' },
     ],
     highlight: false,
   },
@@ -169,7 +229,7 @@ export const PRICING_TIERS = [
    the way the FAQ already puts it, because that claim is true for all of them. */
 export const PRICING_AUDIT = {
   eyebrow: { hu: 'Ha már van oldalad', en: 'If you already have a site' },
-  name: { hu: 'Átvilágítás és javaslat', en: 'Audit and recommendations' },
+  name: { hu: 'Weboldal- és folyamatátvilágítás', en: 'Site and process audit' },
   priceNote: flatPrice(45000),
   desc: {
     hu: 'Végigmérem a meglévő oldaladat telefonon és gépen: mitől lassú, hol akad el a látogató, mi az, amit egy fogyatékkal élő vagy idősebb vásárló nem tud használni. Írásban kapod meg, magyarul, fontossági sorrendben — akkor is, ha utána nem velem csináltatod meg. Ha mégis velem, az árát beszámítom a javításba.',
@@ -224,19 +284,25 @@ export const PRICING_ENTRY = {
    before the first call, which makes it the only offer here that can open a
    conversation with a stranger.
 
-   Flat, not "-tól", for the same reason the audit is: a small number with no
-   open end is a decision somebody can make on the spot.
-
    It used to say "genuinely a couple of hours", which put it at 32 000 Ft on
    the 16 000 Ft/hour the rest of the page derives from, and left the 60 000 Ft
    unexplained. Two hours was the wrong estimate, not the price: creating or
    claiming the profile, categories, service list, hours, photographs, and then
    seeing the verification through — which arrives days later and has to be
-   finished — is 3-4 hours of real work spread across a fortnight. */
+   finished — is 3-4 hours of real work spread across a fortnight.
+
+   Now a "-tól", at Máté's direction, where it was previously flat. Worth
+   recording that this trades something away rather than being free: the case
+   for a flat number here was that a small figure with no open end is a
+   decision a stranger can make on the spot, which is exactly what this offer
+   exists to be. The "-tól" is the honest form for a listing that turns out to
+   need a rebuilt service list or a verification fight, and it keeps the page
+   consistent — the audit is the only fixed price left, which is defensible
+   because its scope genuinely cannot grow. */
 export const PRICING_GOOGLE = {
   eyebrow: { hu: 'A leggyorsabb', en: 'The quickest one' },
-  name: { hu: 'Google-megjelenés beállítása', en: 'Setting up your Google listing' },
-  priceNote: flatPrice(60000),
+  name: { hu: 'Google-megjelenés és alap keresőoptimalizálás', en: 'Google listing and search basics' },
+  priceNote: fromPrice(60000),
   desc: {
     hu: 'Hogy amikor valaki a környéken rád keres, meg is találjon: cégprofil, térkép, nyitvatartás, telefonszám, képek — kitöltve és rendben tartva. Ha még nincs profilod, létrehozom; ha van, de elavult, rendbe rakom.',
     en: 'So that when somebody nearby searches for you, they actually find you: business profile, map, opening hours, phone number, photographs — filled in and kept straight. If you have no profile yet I create one; if you have one that has gone stale, I put it right.',
@@ -252,8 +318,12 @@ export const PRICING_GOOGLE = {
    the audit makes taking it the cheaper path. */
 export const PRICING_REFRESH = {
   eyebrow: { hu: 'A következő lépés', en: 'The next step' },
-  name: { hu: 'Meglévő oldal felújítása', en: 'Overhauling the site you have' },
-  priceNote: fromPrice(120000),
+  name: { hu: 'Meglévő weboldal felújítása', en: 'Overhauling the site you have' },
+  /* 120 000 -> 150 000 on 2026-08-17. It had been the one small offer priced
+     below its own tier logic: a refresh that has to survive the audit's own
+     findings is rarely under a working week, and 120 000 bought seven and a
+     half hours. */
+  priceNote: fromPrice(150000),
   desc: {
     hu: 'A meglévő oldalad marad, csak működni fog: mobilon is használható, gyorsan betölt, és a fontos gomb ott lesz, ahol keresik. Akkor éri meg, ha a tartalom és a megjelenés alapvetően jó — ha nem, azt az átvilágításban megmondom, és inkább újat javaslok.',
     en: 'You keep the site you have, it just starts working: usable on a phone, quick to load, and the button that matters where people look for it. Worth doing when the content and the look are basically sound — if they are not, I say so in the audit and suggest building new instead.',
@@ -279,6 +349,6 @@ export const PRICING_SMALL_OFFERS = [
    for it would be selling back something already given away. What it sells is
    work done, not work answered. */
 export const PRICING_RETAINER = {
-  hu: `Üzemeltetés, ha kéred: ${forint(25000)}/hó — frissítések, biztonsági mentés, havi egy óra apró módosítás, és ha leáll, én veszem észre, nem te. Nincs hűségidő, hónapra felmondható.`,
-  en: `Ongoing upkeep if you want it: ${priceEn(25000)} a month — updates, backups, an hour of small changes each month, and if it goes down I notice rather than you. No minimum term, cancellable monthly.`,
+  hu: `Karbantartás, ha kéred: ${forint(25000)}/hó-tól — frissítések, biztonsági mentés, havi egy óra apró módosítás, és ha leáll, én veszem észre, nem te. Nincs hűségidő, hónapra felmondható.`,
+  en: `Upkeep if you want it: from ${priceEn(25000)} a month — updates, backups, an hour of small changes each month, and if it goes down I notice rather than you. No minimum term, cancellable monthly.`,
 }
