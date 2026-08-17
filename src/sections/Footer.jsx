@@ -18,9 +18,26 @@ const COPY = {
     hu: 'Rizmajer Máté — full-stack fejlesztő Magyarországról, elérhető távoli és helyi projektekre egyaránt.',
     en: 'Rizmajer Máté — full-stack developer from Hungary, available for remote and local projects alike.',
   },
+  /* Was: "Full-stack fejlesztő. React, Node.js és modern web-technológiák.
+     Ötlettől a működő termékig." Three problems in one line, all of them the
+     kind Hero.jsx already settled.
+
+     "modern web-technológiák" is the empty adjective — no competitor claims
+     outdated ones, so it carries no information and the buyer cannot check it.
+     Hero.jsx cut "clean code and modern technologies" from the brief's English
+     for exactly this, and the footer kept saying it. The stack list has the
+     same problem in a different direction: React and Node.js are written for a
+     recruiter, and the person reading this footer runs a bakery. Finally
+     "Full-stack fejlesztő" opens the strapline sitting a few lines above, so
+     the phrase appeared twice in one footer.
+
+     What replaces it says who it is for and what they end up with, which is
+     what the rest of the page says everywhere else. The stack still lives in
+     the Készségek tiles' `detail`, behind a click — the developer checking
+     whether I know it will open one; the client never has to. */
   blurb: {
-    hu: 'Full-stack fejlesztő. React, Node.js és modern web-technológiák. Ötlettől a működő termékig.',
-    en: 'Full-stack developer. React, Node.js and modern web technologies. From the idea to the working product.',
+    hu: 'Weboldalak és foglalási rendszerek kis- és középvállalkozásoknak. Az ötlettől az élő oldalig, egy kézben.',
+    en: 'Websites and booking systems for small and medium businesses. From the idea to the live site, in one pair of hands.',
   },
   skillsHeading: { hu: 'Készségek', en: 'Skills' },
   pagesHeading: { hu: 'Oldalak', en: 'Pages' },

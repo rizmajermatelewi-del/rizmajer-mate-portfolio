@@ -40,11 +40,32 @@ export function categoryLabel(id) {
   return label
 }
 
+/* Four of the six titles changed on 2026-08-17, and the rule they now follow is
+   worth stating because the next one added will otherwise drift back.
+
+   A tile shows three things in this order: the category chip, the title, the
+   text. The chip already prints "Frontend" / "Backend" / "Eszközök", so a title
+   reading "Frontend fejlesztés" spent the largest type on the tile repeating
+   the smallest — and repeating it in a word the buyer does not have. A bakery
+   owner scanning this grid met "Frontend fejlesztés", "Backend fejlesztés",
+   "Felhő és üzemeltetés" and "Verziókezelés és átadás" before reaching a single
+   sentence written for them. The `text` underneath was already good; it was
+   just the fourth thing on the tile rather than the first.
+
+   So: the chip carries the technical name for the developer checking the stack,
+   the title names what the client ends up with, and `detail` — behind a click —
+   stays as technical as it likes. A title must not restate its own `text`
+   either, which is what ruled out the obvious "Amit az ügyfeled lát" for the
+   first tile: that is the opening clause of the sentence directly below it.
+
+   "Adatbázis tervezés" and "Teljesítmény és sebesség" were left alone. Both are
+   ordinary Hungarian that a non-technical reader parses without help, and
+   changing them would have been movement rather than improvement. */
 export const SKILLS_FULL = [
   {
     icon: Code,
     category: 'frontend',
-    title: { hu: 'Frontend fejlesztés', en: 'Frontend development' },
+    title: { hu: 'Weboldal és felület', en: 'The website itself' },
     text: {
       hu: 'Amit az ügyfeled lát és használ. Telefonon ugyanúgy, mint gépen — mert a látogatók nagyobb része onnan érkezik.',
       en: 'What your customer sees and uses. On a phone just as much as on a computer — because that is where most visitors arrive from.',
@@ -57,7 +78,7 @@ export const SKILLS_FULL = [
   {
     icon: Terminal,
     category: 'backend',
-    title: { hu: 'Backend fejlesztés', en: 'Backend development' },
+    title: { hu: 'Ami a háttérben fut', en: 'What runs behind it' },
     text: {
       hu: 'Ami a felület mögött dolgozik: a foglalás tényleg lefoglal, a rendelés megérkezik, és csak az lát adatot, akinek szabad.',
       en: 'What works behind the screen: the booking actually reserves, the order actually arrives, and only the people who should can see the data.',
@@ -83,7 +104,7 @@ export const SKILLS_FULL = [
   {
     icon: Cloud,
     category: 'tools',
-    title: { hu: 'Felhő és üzemeltetés', en: 'Cloud and operations' },
+    title: { hu: 'Folyamatos működés', en: 'Staying online' },
     text: {
       hu: 'Az oldal akkor is fut, amikor én nem ülök gép előtt. Ha egy frissítés mégis elrontana valamit, percek alatt visszaáll.',
       en: 'The site keeps running when I am not sitting at a computer. And if an update does break something, it is back within minutes.',
@@ -96,7 +117,7 @@ export const SKILLS_FULL = [
   {
     icon: GitBranch,
     category: 'tools',
-    title: { hu: 'Verziókezelés és átadás', en: 'Version control and handover' },
+    title: { hu: 'Átadható munka', en: 'Work you can hand on' },
     text: {
       hu: 'Nem kerülsz függő helyzetbe. A munka dokumentálva van, így ha egyszer más viszi tovább, nem kell elölről kezdenie.',
       en: 'You are not left dependent on me. The work is documented, so if somebody else takes it over one day, they are not starting from nothing.',
