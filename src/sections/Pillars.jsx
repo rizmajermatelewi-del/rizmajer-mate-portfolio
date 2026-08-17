@@ -70,8 +70,14 @@ export default function Pillars() {
       suffix: { hu: 'ó', en: 'h' },
       label: { hu: 'órán belül válaszolok', en: 'hours to a reply' },
       desc: {
-        hu: 'A leadás után sem tűnök el. Kérdésre, hibára vagy bővítésre egy munkanapon belül reagálok.',
-        en: 'I do not disappear after delivery. I respond to a question, a fault or a change request within one working day.',
+        /* "A leadás után sem tűnök el" is the tagline of Protocol's handover
+           step, word for word, and the FAQ's upkeep answer made the same
+           promise a third time. Three statements of one thing read as
+           insistence rather than as reassurance. This note now carries the
+           part the number cannot — that the reply is free — and the FAQ's
+           duplicate clause is gone. */
+        hu: 'Kérdésre, hibára vagy bővítésre egy munkanapon belül reagálok — akkor is, ha nincs karbantartási szerződésed.',
+        en: 'I respond to a question, a fault or a change request within one working day — with or without an upkeep agreement.',
       },
     },
   ]

@@ -13,6 +13,13 @@ const COPY = {
     hu: 'Nincs alvállalkozó és nincs projektmenedzser kettőnk közé ékelve. Akitől kérdezel, az ugyanaz, aki megépíti, és ugyanaz, aki fél év múlva felveszi a telefont.',
     en: 'No subcontractor and no project manager wedged between us. The person you ask is the person who builds it, and the person who picks up the phone six months later.',
   },
+  /* Names what opens on click. The disclosure already kept the stack out of
+     the way, but it opened into an unlabelled paragraph, so a client who
+     clicked one got a wall of React and JWT with nothing telling them it was
+     not meant for them. A two-word label turns that from an accident into a
+     signposted detour — and it is the only place on this section where the
+     word "technológia" appears at all. */
+  techLabel: { hu: 'Technológiai háttér', en: 'Technical background' },
 }
 
 /* Grouped by category, but still one seamless mosaic rather than four separate
@@ -110,7 +117,10 @@ export default function ServicesGrid() {
                   }`}
                 >
                   <div className="overflow-hidden">
-                    <p className="text-white/45 text-sm leading-relaxed pt-3">{t(svc.detail, locale)}</p>
+                    <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-primary-dark pt-4">
+                      {t(COPY.techLabel, locale)}
+                    </p>
+                    <p className="text-white/45 text-sm leading-relaxed pt-2">{t(svc.detail, locale)}</p>
                   </div>
                 </div>
               </button>

@@ -71,8 +71,14 @@ export const SKILLS_FULL = [
       en: 'What your customer sees and uses. On a phone just as much as on a computer — because that is where most visitors arrive from.',
     },
     detail: {
-      hu: 'A gyakorlatban ez React 19-et, Vite-ot és Tailwindet jelent, komponens-alapú felépítéssel. Minden felület mobilra is optimalizált, a betöltési időt pedig méréssel ellenőrzöm, nem érzésre.',
-      en: 'In practice that means React 19, Vite and Tailwind, built out of components. Every screen is built for mobile as well, and I check load time by measuring it rather than by feel.',
+      /* Two sentences went. "Minden felület mobilra is optimalizált" repeats
+         this tile's own `text` a line above it, and "a betöltési időt méréssel
+         ellenőrzöm, nem érzésre" is the whole of the Teljesítmény tile further
+         down — the same claim twice in one grid, once inside a tile that had
+         already made it. What is left is the stack, which is the only thing
+         `detail` is for. */
+      hu: 'A gyakorlatban ez React 19-et, Vite-ot és Tailwindet jelent, komponens-alapú felépítéssel.',
+      en: 'In practice that means React 19, Vite and Tailwind, built out of components.',
     },
   },
   {
