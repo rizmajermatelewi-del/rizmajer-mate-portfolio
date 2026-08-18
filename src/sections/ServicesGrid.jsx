@@ -95,10 +95,15 @@ export default function ServicesGrid() {
                   <div className="h-12 w-12 rounded-2xl bg-primary/15 border border-primary/30 flex items-center justify-center transition-all duration-200 ease-out group-hover:bg-primary group-hover:border-primary group-hover:scale-105">
                     <Icon className="h-5 w-5 text-primary transition-colors duration-200 group-hover:text-white" strokeWidth={2} />
                   </div>
-                  {/* These tiles expand on click, so say so. */}
+                  {/* These tiles expand on click, so say so. At /40 the glyph
+                      measured 3.81:1, which clears the 3:1 bar for a non-text
+                      UI component but not the 4.5:1 one for text — and this is
+                      text: an 18px regular glyph, where "large" starts at 24px
+                      (or 18.66px bold). /55 measures 6.14:1 and is the alpha
+                      the rest of the tile already uses. */}
                   <span
                     aria-hidden="true"
-                    className={`font-mono text-lg leading-none text-white/40 transition-transform duration-300 ease-out group-hover:text-primary-dark ${
+                    className={`font-mono text-lg leading-none text-white/55 transition-transform duration-300 ease-out group-hover:text-primary-dark ${
                       expanded === i ? 'rotate-45' : ''
                     }`}
                   >

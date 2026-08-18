@@ -40,6 +40,14 @@ export default function StackShuffler() {
             style={{
               transform: `translate(${offset * 14}px, ${offset * 14}px) scale(${1 - offset * 0.05})`,
               zIndex: total - offset,
+              /* A contrast sweep flags the Frontend/Backend chips on the two
+                 back cards at 2.97:1, and it is wrong: bg-surface is opaque
+                 (rgb(28,40,58)) and the front card sits at opacity 1, so both
+                 chips are painted over entirely — elementsFromPoint at their
+                 centre returns the front card, never the chip. Raising this
+                 falloff would change nothing on screen and cost the stack its
+                 depth. Measure what is actually painted, not what is in the
+                 DOM. */
               opacity: 1 - offset * 0.25,
               transition: 'transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.6s ease',
             }}
