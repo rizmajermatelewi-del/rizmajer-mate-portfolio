@@ -71,6 +71,47 @@ export const HOME_META = {
   },
 }
 
+/* Written metadata for subpages that need it, keyed by locale-free route.
+   ---------------------------------------------------------------------
+   Every route outside this map still derives its title from its own <h1> and
+   its description from its opening paragraph, which is the right default for
+   a subpage: the heading is the subject, and no copy has to be invented or
+   kept in step. /fejleszto is where that default broke, in both directions at
+   once.
+
+   Its <h1> is a name, so both language versions published the identical title
+   "Rizmajer Máté Levente" — two URLs, two languages, one title, which tells a
+   search engine very little and tells it twice. And the first <p> on the page
+   is the role line, so the description read "Full-stack fejlesztő — React és
+   Node.js": a fragment rather than a sentence, and the whole of what a
+   recruiter would see under the result.
+
+   Both fields are therefore written here, per language, rather than derived.
+   Not keyword-stuffed: each is one natural sentence saying who the page is
+   about and what is on it. The English is written as English rather than
+   translated across, for the same reason the rest of the site's English is.
+
+   Add a route here only when derivation genuinely fails for it. /adatvedelem
+   and /aszf both carry a descriptive <h1> and a real opening paragraph, so
+   they derive correctly, and listing them would only create a second copy
+   waiting to drift. */
+export const PAGE_META = {
+  '/fejleszto': {
+    /* 44 characters, so nothing is truncated. Role first, name second: a
+       recruiter searching finds the role, and the name is what confirms the
+       result once they have. The home page's title leads with what is sold
+       instead, because its reader is buying rather than hiring. */
+    title: {
+      hu: 'Full-stack fejlesztő — Rizmajer Máté Levente',
+      en: 'Full-stack developer — Rizmajer Máté Levente',
+    },
+    description: {
+      hu: 'React és Node.js alapú webalkalmazások: mérnöki döntések, tesztelt kód és élesítési szemlélet. Az oldal a saját forrásából mutatja meg, hogyan épült.',
+      en: 'Full-stack web applications in React and Node.js: how the decisions get made, how quality is enforced, and how this site itself was built and shipped.',
+    },
+  },
+}
+
 /* What <meta property="og:locale"> expects: language_TERRITORY, not a bare
    language code. index.html hardcodes hu_HU, which would otherwise be copied
    onto the English pages verbatim — the same mistake as the lang attribute,

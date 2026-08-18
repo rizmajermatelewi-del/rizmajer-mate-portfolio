@@ -29,6 +29,14 @@ dist-ssr
 .vercel
 .env*
 
+# The one exception, and it has to sit after the .env patterns above to win.
+# .env.example carries no values — only the two variable names the build
+# reads, VITE_GOOGLE_SITE_VERIFICATION and VITE_BING_SITE_VERIFICATION, with
+# empty right-hand sides and a note on where each token comes from. Without
+# it, the fact that those variables exist at all lives only in vite.config.js,
+# and a fresh clone deploys with no way to verify the domain.
+!.env.example
+
 # Superpowers brainstorming visual companion
 .superpowers/
 

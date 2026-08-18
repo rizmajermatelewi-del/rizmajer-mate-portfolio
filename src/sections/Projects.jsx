@@ -90,6 +90,14 @@ export default function Projects() {
                 The split of client work versus own work is the actual point
                 and needs no jargon to say. */}
             {t(COPY.headingLead, locale)}
+            {/* Same missing space as the hero h1 had, from the same cause:
+                a `block` span reads as its own line, so whoever wrote the
+                markup never saw the two sentences run together — but the
+                heading is one accessible name, and it announced as
+                "Amin dolgozom.Egyelőre a sajátjaim." Collapsed on screen,
+                audible in a screen reader. Every other heading on the site
+                already carries this space, because its accent span is inline
+                and the gap was visible there. */}{' '}
             <span className="block font-display font-semibold text-primary-dark mt-1">{t(COPY.headingAccent, locale)}</span>
           </h2>
           <p className="text-muted text-lg mt-6 leading-relaxed max-w-xl">

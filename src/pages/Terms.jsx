@@ -3,7 +3,10 @@ import { ArrowLeft } from 'lucide-react'
 
 export default function Terms() {
   return (
-    <div className="min-h-screen bg-background text-ink font-body px-6 sm:px-10 lg:px-16 py-16 sm:py-24">
+    /* <main>, not <div>: App.jsx has had one since it was written, and none
+       of the three subpages did, so a screen-reader user landing here had no
+       landmark to jump to. */
+    <main className="min-h-screen bg-background text-ink font-body px-6 sm:px-10 lg:px-16 py-16 sm:py-24">
       <div className="max-w-3xl mx-auto">
         {/* flex w-fit, not inline-flex: as an inline box the eyebrow below sat
             on the same line as this link, so the page opened with "Vissza a
@@ -44,6 +47,6 @@ export default function Terms() {
           </p>
         </div>
       </div>
-    </div>
+    </main>
   )
 }

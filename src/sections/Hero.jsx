@@ -212,6 +212,12 @@ export default function Hero() {
             <span className="hero-line-1 block text-3xl sm:text-4xl">
               {t(COPY.headlineLead, locale)}
             </span>
+            {/* This space is not decorative. The two spans are one sentence
+                split across two lines, and without it the h1's accessible
+                name — the whole of what a screen reader announces for this
+                heading — read "Weboldal és rendszer,ami helyetted dolgozik."
+                Whitespace between two block boxes is collapsed by CSS, so
+                nothing moves on screen; only the text node changes. */}{' '}
             {/* Capped at 6xl so the line holds on one row at desktop. At 8xl
                 it wrapped, which made the headline three lines tall and
                 pushed the buttons toward the fold. */}

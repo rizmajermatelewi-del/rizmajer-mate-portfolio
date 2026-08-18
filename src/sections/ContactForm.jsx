@@ -199,7 +199,17 @@ export default function ContactForm() {
               visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
-            <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink leading-[1.05] tracking-tight">
+            {/* max-[380px]:text-3xl, not a smaller base size. "vállalkozásodnak"
+                is sixteen characters and cannot break, so at text-4xl it
+                measures 287px — wider than the 272px a 320px viewport leaves
+                after the section padding, which made the whole document
+                scroll sideways. Every other section heading keeps text-4xl at
+                this width because no other one carries a word this long, and
+                dropping the base step here would leave this heading visibly
+                smaller than its neighbours on every ordinary phone. The
+                arbitrary variant confines the change to below 380px, so 390,
+                393 and 414 are untouched. */}
+            <h2 className="font-display font-extrabold text-4xl max-[380px]:text-3xl sm:text-5xl md:text-6xl text-ink leading-[1.05] tracking-tight">
               {t(COPY.headingLead, locale)}{' '}
               <span className="text-primary-dark font-semibold">{t(COPY.headingAccent, locale)}</span>?
             </h2>
@@ -227,13 +237,22 @@ export default function ContactForm() {
                 </a>
               )}
 
+              {/* min-w-0 and break-all fix a real horizontal scroll, not an
+                  aesthetic. The address is one unbreakable 26-character
+                  token: at text-lg it measures 255px, and a 320px viewport
+                  leaves 208px once the icon and the section padding are
+                  taken out. A flex child defaults to min-width: auto, so it
+                  refused to shrink and pushed the whole document 23px wide —
+                  the page scrolled sideways, in the section the site exists
+                  to convert into. Measured on the built page at 320px, which
+                  is where it appears; at 360px and above it never did. */}
               <a href="mailto:rizmajermatelewi@gmail.com" className="lift-on-hover flex items-center gap-4 group">
-                <span className="h-12 w-12 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:bg-primary transition">
+                <span className="h-12 w-12 shrink-0 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:bg-primary transition">
                   <Mail className="h-5 w-5 text-primary group-hover:text-white" />
                 </span>
-                <span>
+                <span className="min-w-0">
                   <span className="block font-mono text-[10px] uppercase tracking-widest text-muted">{t(COPY.emailMe, locale)}</span>
-                  <span className="font-display font-semibold text-ink text-lg">rizmajermatelewi@gmail.com</span>
+                  <span className="font-display font-semibold text-ink text-base sm:text-lg break-all">rizmajermatelewi@gmail.com</span>
                 </span>
               </a>
 

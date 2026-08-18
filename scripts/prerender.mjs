@@ -295,9 +295,22 @@ async function main() {
   const { FAQ_QUESTIONS } = await import(
     pathToFileURL(path.join(root, 'src', 'data', 'faq.js')).href
   )
-  const { HOME_META, OG_LOCALE, SCHEMA } = await import(
+  const { HOME_META, PAGE_META, OG_LOCALE, SCHEMA } = await import(
     pathToFileURL(path.join(root, 'src', 'i18n', 'meta.js')).href
   )
+
+  /* A written entry whose route no longer exists is dead copy nobody would
+     notice, because the derive-from-markup fallback below quietly takes over
+     and produces something plausible. Checking the keys against the real
+     route list turns that into a build failure naming the stale key. */
+  for (const written of Object.keys(PAGE_META)) {
+    if (!ROUTE_PATHS.includes(written)) {
+      throw new Error(
+        `src/i18n/meta.js has written metadata for "${written}", which is not a route. ` +
+          `Known routes: ${ROUTE_PATHS.join(', ')}`
+      )
+    }
+  }
 
   /* index.html carries the Hungarian title and description as well, for the
      dev server and for anything reading the template before this script runs.
@@ -383,6 +396,23 @@ async function main() {
       page = replaceMeta(page, 'name', 'description', t(HOME_META.description, routeLocale))
       page = replaceMeta(page, 'property', 'og:description', social)
       page = replaceMeta(page, 'name', 'twitter:description', social)
+    } else if (PAGE_META[stripLocale(route)]) {
+      /* A subpage whose written pair beat the derivation. /fejleszto is the
+         only one so far, and it broke the default in both directions at once:
+         its <h1> is a name, so both languages published the same title, and
+         its first <p> is the role line, so the description was a fragment.
+         See the note above PAGE_META in src/i18n/meta.js. */
+      const written = PAGE_META[stripLocale(route)]
+
+      const title = t(written.title, routeLocale)
+      page = replaceTitle(page, title)
+      page = replaceMeta(page, 'property', 'og:title', title)
+      page = replaceMeta(page, 'name', 'twitter:title', title)
+
+      const description = t(written.description, routeLocale)
+      page = replaceMeta(page, 'name', 'description', description)
+      page = replaceMeta(page, 'property', 'og:description', description)
+      page = replaceMeta(page, 'name', 'twitter:description', description)
     } else {
       const heading = firstMatch(appHtml, 'h1')
       const intro = firstMatch(appHtml, 'p')
