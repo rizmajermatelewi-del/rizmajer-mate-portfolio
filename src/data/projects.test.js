@@ -35,7 +35,17 @@ describe('PROJECTS_FULL', () => {
     }
   })
 
-  it('still has four projects', () => {
+  /* Named "still has four projects" until 2026-08-18, while asserting two.
+     The count was corrected when the two undelivered client entries were
+     removed on 2026-08-10 and the name was not, so the one line a reader
+     scans said the opposite of the line that runs. A test whose name lies is
+     worse than no test: it is the sentence somebody quotes in review.
+
+     What it is actually for: the number of projects is a fact this repo has
+     already let rot once, by keeping it in four files at the same time.
+     Pinning it here makes adding or removing an entry deliberate, and the
+     failure points at the copy that quotes the number. */
+  it('pins the project count, so a change to the list cannot be accidental', () => {
     expect(PROJECTS_FULL).toHaveLength(2)
   })
 

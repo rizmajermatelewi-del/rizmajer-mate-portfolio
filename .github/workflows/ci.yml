@@ -1,0 +1,64 @@
+# Lint, tests and a full production build on every push and pull request.
+#
+# Until this existed the repository had no CI at all, while skills.js told
+# visitors that "a teszteket és a buildet GitHub Actions futtatja". That was
+# true of how the work is done elsewhere and not true of this repository, and
+# a profile page whose claims do not hold on its own source is the one kind of
+# inaccuracy that costs the most here.
+#
+# It runs the build too, not only the tests. The build is where most of this
+# project's real assertions live: prerender.mjs fails on a section left at
+# opacity-0, on Hungarian text reaching an English page, on structured data
+# left empty, on index.html and meta.js disagreeing, and on written metadata
+# for a route that no longer exists. A green test run beside a red build would
+# be the misleading half.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# A second push to the same branch makes the first run irrelevant, so cancel
+# it rather than paying for both and reading a stale result.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          # Pinned to the major version the work is done on locally, so a
+          # failure here means the code changed rather than the runtime did.
+          node-version: '24'
+          cache: npm
+
+      # ci, not install: it installs exactly what package-lock.json records
+      # and fails when the lockfile and package.json disagree, which is the
+      # difference between reproducing the local run and approximating it.
+      - run: npm ci
+
+      - run: npm run lint
+
+      # One step, because `npm run build` now runs the suite itself: the
+      # chain is generators -> vitest -> vite -> prerender, so a red test
+      # stops the build and therefore stops a Vercel deploy, which a
+      # workflow on its own cannot do.
+      #
+      # A separate `npm test` step before this one would read better in the
+      # checks list and would be wrong twice over. It would run all 138 tests
+      # a second time, and on a fresh checkout it would fail: public/
+      # sitemap.xml, robots.txt, llms.txt and knowledge.json are generated at
+      # build time and deliberately untracked — tracking them is what let
+      # llms.txt drift two price revisions behind the tiers it quoted — while
+      # static-output.test.js and knowledge-output.test.js read those exact
+      # files to check what gets published rather than what the generator
+      # intended. Before the generators run they do not exist, so the tests
+      # would fail on a clean machine and pass on every developer's, which is
+      # the worst shape a CI failure can take.
+      - run: npm run build

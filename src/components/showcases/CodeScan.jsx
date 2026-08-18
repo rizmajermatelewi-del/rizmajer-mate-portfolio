@@ -15,7 +15,7 @@ const STATUSES = [
   { text: { hu: 'Tesztek futnak', en: 'Tests running' }, label: { hu: 'Ellenőrzés', en: 'Checking' }, tone: 'primary' },
   { text: { hu: 'Hiba a futtatásban', en: 'Failure in the run' }, label: { hu: 'Elakadás', en: 'Stuck' }, tone: 'accent' },
   { text: { hu: 'Javítva, újra fut', en: 'Fixed, running again' }, label: { hu: 'Javítás', en: 'Fixing' }, tone: 'primary' },
-  { text: { hu: 'Mehet élesbe', en: 'Ready to ship' }, label: { hu: 'Kész', en: 'Done' }, tone: 'emerald' },
+  { text: { hu: 'Mehet élesbe', en: 'Ready to ship' }, label: { hu: 'Kész', en: 'Done' }, tone: 'done' },
 ]
 
 const HEADING = { hu: 'Élő build', en: 'Live build' }
@@ -49,10 +49,21 @@ export default function CodeScan() {
   ]
 
   const status = STATUSES[statusIdx]
+  /* The final tone was 'emerald', and emerald is not in this palette. The
+     One Accent Rule in DESIGN.md names that case specifically — "an emerald
+     status dot, an amber badge or a teal highlight anywhere in the system is
+     a defect" — because one had already reached the footer once and made
+     that corner read as a different website.
+
+     Resolution is carried by value instead of by hue now: 'done' goes to
+     ink, which inside a .card-invert subtree resolves to the near-white end
+     of the ramp, so the closing state is simply the brightest thing in the
+     panel. Violet stays on the failure state, which is the one non-primary
+     use DESIGN.md does sanction. */
   const toneText =
-    status.tone === 'emerald' ? 'text-emerald-400' : status.tone === 'accent' ? 'text-accent' : 'text-primary-dark'
+    status.tone === 'done' ? 'text-ink' : status.tone === 'accent' ? 'text-accent' : 'text-primary-dark'
   const toneDot =
-    status.tone === 'emerald' ? 'bg-emerald-500' : status.tone === 'accent' ? 'bg-accent' : 'bg-primary'
+    status.tone === 'done' ? 'bg-ink' : status.tone === 'accent' ? 'bg-accent' : 'bg-primary'
 
   return (
     <div
