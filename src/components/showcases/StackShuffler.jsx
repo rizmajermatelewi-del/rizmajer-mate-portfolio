@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { t, neutral } from '../../i18n/t'
 import { useLocale } from '../../i18n/useLocale'
 import { durationMs, easeCss } from '../../motion/tokens'
+import { useReducedMotion } from '../../motion/useReducedMotion'
 
 /* Hoisted out of the component so the shuffle is seeded once rather than from
    a fresh array on every render. */
@@ -18,8 +19,19 @@ const ITEMS = [
 export default function StackShuffler() {
   const locale = useLocale()
   const [stack, setStack] = useState(ITEMS)
+  const reduced = useReducedMotion()
 
+  /* The global CSS collapses every transition to 0.01ms under
+     prefers-reduced-motion, which was not enough here and in fact made this
+     worse: the timer kept firing, so instead of cards gliding into a new
+     order every three seconds they teleported into it, forever. Flattening
+     the transition without stopping the clock turns a smooth loop into a
+     jump-cut loop. Under reduce the stack simply holds its opening order,
+     which is what "collapses to static" has to mean for anything driven by
+     a timer rather than by CSS. Re-running on `reduced` so toggling the OS
+     setting mid-session takes effect without a reload. */
   useEffect(() => {
+    if (reduced) return undefined
     const interval = setInterval(() => {
       setStack((prev) => {
         const next = [...prev]
@@ -28,7 +40,7 @@ export default function StackShuffler() {
       })
     }, 3000)
     return () => clearInterval(interval)
-  }, [])
+  }, [reduced])
 
   return (
     <div className="relative h-44 w-full">
