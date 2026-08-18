@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { t, neutral } from '../../i18n/t'
 import { useLocale } from '../../i18n/useLocale'
+import { durationMs, easeCss } from '../../motion/tokens'
 
 /* Hoisted out of the component so the shuffle is seeded once rather than from
    a fresh array on every render. */
@@ -49,7 +50,15 @@ export default function StackShuffler() {
                  depth. Measure what is actually painted, not what is in the
                  DOM. */
               opacity: 1 - offset * 0.25,
-              transition: 'transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.6s ease',
+              /* Was a hand-written back-out curve at 0.7s, one whose second
+                 control point sat above 1 so each card sprang past its
+                 resting position and settled back. Overshoot is toy physics;
+                 a card sliding into a stack does not bounce. Both
+                 properties now run on the shared out curve, which is the
+                 same ease-out-quint the reveals, the hovers and the project
+                 cards already use, and on a duration from the same file
+                 rather than two hand-written numbers sitting next to it. */
+              transition: `transform ${durationMs.slow}ms ${easeCss.out}, opacity ${durationMs.slow}ms ${easeCss.out}`,
             }}
             className="absolute inset-0 bg-surface border border-divider rounded-3xl p-5 shadow-md"
           >

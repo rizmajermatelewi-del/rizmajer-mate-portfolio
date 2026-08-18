@@ -67,7 +67,10 @@
   }
   ::-webkit-scrollbar { width: 10px; }
   ::-webkit-scrollbar-track { background: rgb(var(--color-background)); }
-  ::-webkit-scrollbar-thumb { background: rgb(var(--color-primary-light)); border-radius: 10px; }
+  /* Pill, like every other radius in the system. 10px on a 10px-wide thumb
+     already drew a pill; it just did it with a number that belongs to no
+     scale, which is how a rounded scale quietly stops being one. */
+  ::-webkit-scrollbar-thumb { background: rgb(var(--color-primary-light)); border-radius: 9999px; }
   ::-webkit-scrollbar-thumb:hover { background: rgb(var(--color-primary)); }
 }
 
@@ -153,10 +156,13 @@
       .group:focus-visible .logo-sheen::after { opacity: 0; transition: none; }
     }
   }
-  .gradient-text {
-    background: linear-gradient(135deg, rgb(var(--color-primary)) 0%, rgb(var(--color-primary-dark)) 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  }
+  /* No .gradient-text here. It survived from an earlier palette pass, was
+     never applied to a single element, and gradient-clipped text is banned
+     outright in this system: the gradient carries no meaning, and it costs
+     the headline the one thing it needs, which is a measurable contrast
+     ratio against the page. Emphasis is a weight change or a shift to
+     primary-dark. Deleted rather than left dormant, because a dormant
+     utility is an invitation. */
   /* 0.88, not 0.65. At 65% the display headings scrolling underneath read
      straight through the bar — "A számok mögöttem" was legible on top of the
      nav links. Blur alone does not separate two layers of large dark type. */
