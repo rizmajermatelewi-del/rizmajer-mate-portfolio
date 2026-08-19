@@ -30,6 +30,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+        with:
+          # The sitemap's lastmod is the date of the last commit touching each
+          # route's sources, and the default shallow checkout has exactly one
+          # commit -- which would stamp every URL with the same date. The
+          # generator detects a shallow clone and omits lastmod rather than
+          # publish that, so without this the CI build would not exercise the
+          # branch that actually ships.
+          fetch-depth: 0
 
       - uses: actions/setup-node@v5
         with:

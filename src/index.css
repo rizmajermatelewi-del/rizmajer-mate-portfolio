@@ -76,6 +76,17 @@
   .card-invert :focus-visible {
     outline-color: rgb(var(--color-primary-dark));
   }
+  /* The navbar is the one element that sits on both surfaces without being
+     inside either: unscrolled it floats over the near-black hero, scrolled it
+     is glass over the light page. So it never inherited the card-invert fix
+     above, and every keyboard stop in it — the logo, seven section links, the
+     language switch, two social links — was drawing #4f46e5 on #0b1421, about
+     2.3:1 where SC 1.4.11 asks for 3. Navbar.jsx adds this class only in the
+     unscrolled state; scrolled, the default ring is already on light ground
+     and correct. */
+  .focus-on-deep :focus-visible {
+    outline-color: rgb(var(--color-primary-light));
+  }
   ::-webkit-scrollbar { width: 10px; }
   ::-webkit-scrollbar-track { background: rgb(var(--color-background)); }
   /* Pill, like every other radius in the system. 10px on a 10px-wide thumb
@@ -389,7 +400,12 @@
        read as the page having given up. Under reduced motion the block above
        clamps this to one 0.01ms pass, leaving the mark static at its start
        position, which is a legible white logo. */
-    animation: preloader-sheen 1.8s ease-in-out infinite;
+    /* 1.8s until 2026-08-19. The floor in preloader.js exists to let this
+       sweep finish, so shortening the hold without shortening the sweep would
+       have cut the highlight partway across the mark. Halved together: the
+       animation still completes, and the page it is covering is handed over
+       twice as early. */
+    animation: preloader-sheen 0.9s ease-in-out infinite;
   }
 
   @keyframes preloader-sheen {

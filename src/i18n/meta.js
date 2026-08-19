@@ -132,6 +132,22 @@ export const NOT_FOUND_META = {
   },
 }
 
+/* Breadcrumb labels. Short on purpose and separate from PAGE_META: a
+   breadcrumb replaces the URL line in a search result, so it wants the name of
+   the page rather than its title. /fejleszto's title is a role plus a person
+   and its h1 is a name; neither is what belongs in a trail.
+
+   Both languages on every entry even though two of these routes are Hungarian
+   only, because untranslatedIn() walks this structure and a one-sided field is
+   the shape it exists to catch. */
+export const CRUMB_HOME = { hu: 'Kezdőlap', en: 'Home' }
+
+export const PAGE_CRUMB = {
+  '/fejleszto': { hu: 'Fejlesztői profil', en: 'Developer profile' },
+  '/adatvedelem': { hu: 'Adatvédelmi tájékoztató', en: 'Privacy notice' },
+  '/aszf': { hu: 'Általános szerződési feltételek', en: 'Terms and conditions' },
+}
+
 export const OG_LOCALE = { hu: 'hu_HU', en: 'en_GB' }
 
 /* The parts of the JSON-LD graph that are prose rather than identifiers.

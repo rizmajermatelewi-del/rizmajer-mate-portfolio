@@ -3,6 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- PNG, and not because SVG is unfashionable: iOS does not read an SVG
+         for a home-screen icon at all, so without this the bookmark gets a
+         screenshot of the page. Rendered at 180 from the same mark as the
+         favicon, square and unrounded, because iOS applies its own mask and a
+         pre-rounded square shows dark corners inside it. -->
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <!-- Matches --color-deep, not the page background. It tints the browser
+         chrome on Android, and the top of every route on this site is the dark
+         hero or a dark header rather than the light page below it. -->
+    <meta name="theme-color" content="#0b1421" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- This pair is the Hungarian side of HOME_META in src/i18n/meta.js, and
          prerender.mjs fails the build if the two ever disagree. It is here for

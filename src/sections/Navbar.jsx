@@ -103,7 +103,7 @@ export default function Navbar() {
     <>
       <nav
         className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 ${
-          scrolled ? 'glass shadow-lg shadow-primary/10' : 'bg-transparent'
+          scrolled ? 'glass shadow-lg shadow-primary/10' : 'bg-transparent focus-on-deep'
         } rounded-full px-4 sm:px-6 py-2.5 w-[calc(100%-2rem)] max-w-5xl`}
       >
         <div className="flex items-center justify-between gap-6">

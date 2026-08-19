@@ -25,6 +25,7 @@
    a generated file in version control is a second copy waiting to disagree
    with the first. */
 
+import { execFileSync } from 'node:child_process'
 import { writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
@@ -35,18 +36,94 @@ const load = (rel) => import(pathToFileURL(path.join(root, rel)).href)
 const { SITE_ORIGIN, urlFor } = await load('src/site.js')
 const { ROUTE_PATHS } = await load('src/routePaths.js')
 const { t } = await load('src/i18n/t.js')
+const { stripLocale } = await load('src/i18n/locales.js')
 const { PRICING_TIERS, PRICING_ENTRY } = await load('src/data/pricing.js')
 
-/* No lastmod, changefreq or priority.
-   Google ignores changefreq and priority outright, and uses lastmod only where
-   it has learned to trust it — which a hand-edited date cannot earn, because
-   the moment one route's content changes without the date being touched the
-   whole file's dates become noise. The previous version carried six dates, of
-   which the newest was 2026-08-12; the pages have changed since. A sitemap
-   whose only claim is "these URLs exist" is a claim that stays true. */
+/* lastmod, derived from git rather than written down.
+
+   The previous version of this file argued against lastmod, and the argument
+   was right about what it was aimed at: six hand-edited dates, the newest
+   2026-08-12, on pages that had changed since. A date a human maintains goes
+   stale the first time somebody forgets it, and a sitemap full of stale dates
+   is worse than one with none, because Google learns to ignore the field for
+   the whole domain.
+
+   Computing it removes the human. Each route names the sources that can change
+   what it publishes, and the date is the last commit touching any of them, so
+   the field cannot disagree with the page unless a change was never committed.
+
+   Two ways this can be wrong, and both end in omitting the field rather than
+   guessing: a shallow clone reports one commit for everything, which would
+   stamp every URL with the same misleading date, and a build from a tarball
+   has no git at all. CI therefore checks out with fetch-depth 0. */
+const SOURCES_FOR = {
+  '/': ['src/App.jsx', 'src/sections', 'src/components', 'src/data', 'src/i18n'],
+  '/fejleszto': [
+    'src/pages/Fejleszto.jsx',
+    'src/data/engineering.js',
+    'src/data/projects.js',
+    'src/i18n/meta.js',
+    'src/i18n/ui.js',
+  ],
+  /* Named files rather than the whole src/i18n directory. Listing the folder
+     was the first draft and it claims too much: a string added for the home
+     page would have bumped the date on the ASZF, and a lastmod that runs ahead
+     of the content is the exact failure that makes a crawler stop reading the
+     field. These two pages render their own text plus one shared label. */
+  '/adatvedelem': ['src/pages/PrivacyPolicy.jsx', 'src/i18n/ui.js'],
+  '/aszf': ['src/pages/Terms.jsx', 'src/i18n/ui.js'],
+}
+
+for (const route of ROUTE_PATHS) {
+  if (!SOURCES_FOR[stripLocale(route)]) {
+    throw new Error(
+      `${route} is in ROUTE_PATHS but has no entry in SOURCES_FOR in ` +
+        'scripts/generate-static.mjs, so its sitemap entry would carry no lastmod.'
+    )
+  }
+}
+
+function gitUsable() {
+  try {
+    execFileSync('git', ['rev-parse', '--git-dir'], { cwd: root, stdio: 'pipe' })
+    const shallow = execFileSync('git', ['rev-parse', '--is-shallow-repository'], {
+      cwd: root,
+      encoding: 'utf8',
+      stdio: 'pipe',
+    }).trim()
+    return shallow === 'false'
+  } catch {
+    return false
+  }
+}
+
+const GIT_DATES = gitUsable()
+
+function lastmodFor(route) {
+  if (!GIT_DATES) return ''
+  const sources = SOURCES_FOR[stripLocale(route)]
+  try {
+    const iso = execFileSync(
+      'git',
+      ['log', '-1', '--format=%cI', '--', ...sources],
+      { cwd: root, encoding: 'utf8', stdio: 'pipe' }
+    ).trim()
+    /* Date only. The time of day is real and says nothing a crawler uses, and
+       a full timestamp makes every rebuild look like a change to anyone
+       diffing the file. */
+    return iso ? `\n    <lastmod>${iso.slice(0, 10)}</lastmod>` : ''
+  } catch {
+    return ''
+  }
+}
+
+if (!GIT_DATES) {
+  console.log('sitemap: no usable git history, writing <loc> without <lastmod>')
+}
+
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${ROUTE_PATHS.map((route) => `  <url>\n    <loc>${urlFor(route)}</loc>\n  </url>`).join('\n')}
+${ROUTE_PATHS.map((route) => `  <url>\n    <loc>${urlFor(route)}</loc>${lastmodFor(route)}\n  </url>`).join('\n')}
 </urlset>
 `
 

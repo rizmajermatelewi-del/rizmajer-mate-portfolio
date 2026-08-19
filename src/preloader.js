@@ -19,9 +19,14 @@
    ready AND the floor has passed. A slow connection adds nothing on top of
    its own load — by the time the bundle has arrived the floor is long gone. */
 
-/* One full sweep of the .preloader-mark sheen is 1.8s, so this is the shortest
+/* One full sweep of the .preloader-mark sheen is 0.9s, so this is the shortest
    floor that lets the highlight travel the mark once end to end rather than
-   being cut off partway. Measured from navigation start, not from the moment
+   being cut off partway.
+
+   Was 2000ms against an 1800ms sweep, and both were halved on 2026-08-19.
+   The hold was measured at the time it was added: LCP 2122 -> 2630ms on
+   Slow 4G with 4x CPU, on a site that sells page speed. Half the hold is half
+   that penalty, and the mark still gets its full sweep. Measured from navigation start, not from the moment
    this module runs, because the cover has been on screen since the browser's
    first paint — starting the clock here would hold it for 2s on top of
    however long the bundle already took.
@@ -29,7 +34,7 @@
    Deliberately well under the 4s CSS failsafe in index.css: if this ever
    exceeded that, the failsafe would clear the cover mid-wait and the two
    mechanisms would be fighting over the same element. */
-const MIN_VISIBLE_MS = 2000
+const MIN_VISIBLE_MS = 1000
 
 /* Long enough for the 400ms fade in index.css to finish, short enough that a
    stuck node is not left in the tree. Kept a touch above the transition so a

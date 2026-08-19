@@ -1,0 +1,21 @@
+{
+  "name": "Rizmajer Máté Levente — weboldalak és üzleti rendszerek KKV-knak",
+  "short_name": "Rizmajer",
+  "lang": "hu",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#0b1421",
+  "theme_color": "#0b1421",
+  "icons": [
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

@@ -206,7 +206,7 @@ function withAlternates(html, route, origin, locales, defaultLocale, withLocale,
    the moment a node gains a nested object — and it throws instead of silently
    passing the block through, since a graph that stopped being parseable is a
    build problem worth stopping for. */
-function withSchema(html, { entries, locale, siteName, schema, t }) {
+function withSchema(html, { entries, locale, siteName, schema, t, breadcrumb }) {
   return html.replace(
     /(<script type="application\/ld\+json">)([\s\S]*?)(<\/script>)/i,
     (whole, open, body, close) => {
@@ -253,7 +253,26 @@ function withSchema(html, { entries, locale, siteName, schema, t }) {
         ]
       })
 
-      return `${open}${JSON.stringify({ ...data, '@graph': graph }, null, 2)}${close}`
+      /* Appended rather than declared in index.html, because unlike Person
+         and WebSite a trail is different on every page and absent on the home
+         page — a one-item breadcrumb naming the page you are already on is
+         noise Google ignores at best. */
+      const withCrumbs = breadcrumb
+        ? [
+            ...graph,
+            {
+              '@type': 'BreadcrumbList',
+              itemListElement: breadcrumb.map((crumb, i) => ({
+                '@type': 'ListItem',
+                position: i + 1,
+                name: crumb.name,
+                item: crumb.item,
+              })),
+            },
+          ]
+        : graph
+
+      return `${open}${JSON.stringify({ ...data, '@graph': withCrumbs }, null, 2)}${close}`
     }
   )
 }
@@ -295,7 +314,8 @@ async function main() {
   const { FAQ_QUESTIONS } = await import(
     pathToFileURL(path.join(root, 'src', 'data', 'faq.js')).href
   )
-  const { HOME_META, PAGE_META, NOT_FOUND_META, OG_LOCALE, SCHEMA } = await import(
+  const { HOME_META, PAGE_META, NOT_FOUND_META, CRUMB_HOME, PAGE_CRUMB, OG_LOCALE, SCHEMA } =
+    await import(
     pathToFileURL(path.join(root, 'src', 'i18n', 'meta.js')).href
   )
 
@@ -303,6 +323,26 @@ async function main() {
      notice, because the derive-from-markup fallback below quietly takes over
      and produces something plausible. Checking the keys against the real
      route list turns that into a build failure naming the stale key. */
+  /* Same shape of guard as PAGE_META's below, for the same reason: a key that
+     is not a route is a label nothing will ever print, and a route with no
+     label would silently ship a trail with an undefined name in it. */
+  for (const written of Object.keys(PAGE_CRUMB)) {
+    if (!ROUTE_PATHS.includes(written)) {
+      throw new Error(
+        `src/i18n/meta.js has a breadcrumb label for "${written}", which is not a route.`
+      )
+    }
+  }
+  for (const route of ROUTE_PATHS) {
+    const bare = stripLocale(route)
+    if (bare !== '/' && !PAGE_CRUMB[bare]) {
+      throw new Error(
+        `${route} has no entry in PAGE_CRUMB in src/i18n/meta.js, so its ` +
+          'BreadcrumbList would name the page "undefined".'
+      )
+    }
+  }
+
   for (const written of Object.keys(PAGE_META)) {
     if (!ROUTE_PATHS.includes(written)) {
       throw new Error(
@@ -448,11 +488,23 @@ async function main() {
        carrying Hungarian answers would tell Google the two are duplicates of
        each other, which is the mistake /en was withdrawn for. The locale
        comes from the path, so it follows the route automatically. */
+    /* Two levels, which is all this site has. The home item is the localised
+       root so an English page's trail does not walk through the Hungarian
+       one. */
+    const homeUrl = routeLocale === DEFAULT_LOCALE ? `${origin}/` : `${origin}${withLocale('/', routeLocale)}`
+    const breadcrumb = isHome
+      ? null
+      : [
+          { name: t(CRUMB_HOME, routeLocale), item: homeUrl },
+          { name: t(PAGE_CRUMB[stripLocale(route)], routeLocale), item: url },
+        ]
+
     page = withSchema(page, {
       locale: routeLocale,
       siteName: t(HOME_META.title, routeLocale),
       schema: SCHEMA,
       t,
+      breadcrumb,
       entries: isHome
         ? FAQ_QUESTIONS.map((entry) => ({
             name: t(entry.q, routeLocale),

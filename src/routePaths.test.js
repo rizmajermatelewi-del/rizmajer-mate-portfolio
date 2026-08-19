@@ -60,19 +60,37 @@ describe('sitemap.xml', () => {
     }
   })
 
-  /* This used to require an ISO <lastmod> on every entry. The dates are gone
-     on purpose: Google ignores changefreq and priority outright and trusts
-     lastmod only where a site has earned it, which a hand-edited date cannot —
-     the moment one page changes without its date being touched, every date in
-     the file becomes noise. The old file carried six, the newest of which was
-     already weeks behind the pages it described.
+  /* The history of this assertion is the point of it.
 
-     Asserted as an absence rather than deleted, so that reintroducing dates is
-     a deliberate act with this reasoning in front of it. */
-  it('publishes no lastmod, changefreq or priority', () => {
-    expect(sitemap).not.toContain('<lastmod>')
+     It first required a <lastmod> on every entry. Then it required their
+     absence, because the six dates in the file were hand-maintained and the
+     newest was weeks behind the pages it described — and a lastmod a crawler
+     has learned to distrust is worse than none, for the whole domain. It was
+     left as an assertion rather than deleted specifically so that bringing
+     dates back would have to be deliberate, and on 2026-08-19 it did its job:
+     the build went red the moment they came back.
+
+     They are allowed now because nobody types them. generate-static.mjs takes
+     each date from the last commit touching that route's sources, so the field
+     cannot drift from the page without a change going uncommitted, and on a
+     shallow clone — where every path reports the same commit — it omits the
+     field instead of publishing a date it cannot stand behind.
+
+     changefreq and priority stay banned. Google ignores both outright. */
+  it('publishes a lastmod on every entry, and never changefreq or priority', () => {
     expect(sitemap).not.toContain('<changefreq>')
     expect(sitemap).not.toContain('<priority>')
+
+    const dates = [...sitemap.matchAll(/<lastmod>([^<]*)<\/lastmod>/g)].map((m) => m[1])
+    expect(dates.length, 'sitemap has fewer lastmod dates than URLs').toBe(locs.length)
+
+    const today = new Date().toISOString().slice(0, 10)
+    for (const date of dates) {
+      expect(date, `${date} is not a plain ISO date`).toMatch(/^\d{4}-\d{2}-\d{2}$/)
+      /* A commit date cannot be in the future, so one here means the value
+         came from somewhere other than git — a clock, or a literal. */
+      expect(date <= today, `${date} is in the future`).toBe(true)
+    }
   })
 
   it('serves every URL from one origin', () => {
