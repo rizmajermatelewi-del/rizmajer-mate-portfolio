@@ -61,11 +61,12 @@ const COPY = {
 /* ----------------------------------------------------------------
    Hero.
 
-   The backdrop is an owned local photo, not a remote stock shot. It used
-   to be a hotlinked stock URL of PHP on a monitor — a third-party runtime
-   request in a codebase that self-hosts its fonts precisely to avoid
-   those, showing a language this site does not sell. Bundling the asset
-   also lets img-src drop the extra host from the CSP.
+   The backdrop carries no raster image at all any more — gradients, a grid
+   and one drawn SVG. Before the photograph it was a hotlinked stock URL of
+   PHP on a monitor: a third-party runtime request in a codebase that
+   self-hosts its fonts precisely to avoid those, showing a language this
+   site does not sell. Nothing here reaches off-origin now, which is why
+   img-src can stay as tight as it is.
 ---------------------------------------------------------------- */
 export default function Hero() {
   const heroRef = useRef(null)
@@ -132,26 +133,13 @@ export default function Hero() {
   return (
     <section id="kezdolap" ref={heroRef} className="relative min-h-viewport w-full overflow-hidden">
       <div className="absolute inset-0">
-        {/* Drawn, not photographed. This used to be a 110 kB JPEG of me
-            sitting on rocks at sunset — a holiday snapshot with another
-            studio's watermark burned into the bottom edge, carrying the hero
-            of a site that sells business systems. The same file also served
-            the Rólam section, so one photograph appeared twice on one page,
-            and the scrims below covered most of it anyway: bytes paid for and
-            largely not seen.
-
-            Keeping the .hero-backdrop class matters. gsap parallaxes that
-            selector above, and preloader.js waits on it before lifting the
-            cover — its heroDecoded() guards on `typeof decode === 'function'`,
-            so a div resolves immediately instead of throwing. The element is
-            still pre-scaled 1.12, which is the headroom the parallax
-            translate consumes; without it the bottom edge lifts off. */}
         {/* No photograph. The three that have held this slot were a holiday
             snapshot carrying another studio's watermark, then a night shot of
             somebody else's barber shop — atmosphere borrowed from a business
             that is not this one. What a developer's hero can honestly show is
-            the work itself, so it is drawn: a browser frame, a wireframe, and
-            code. 130 kB of JPEG left with it.
+            the work itself, so it is drawn: a measured plan sheet, a wireframe
+            and code. 130 kB of JPEG left with it. (It was a browser window
+            until 2026-08-19; HeroVisual.jsx records why that had to go.)
 
             .hero-backdrop stays on this element because two other modules
             select it — gsap parallaxes it, and preloader.js waits on it before
