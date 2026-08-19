@@ -175,6 +175,13 @@ export const SCHEMA = {
      both change together. */
   inLanguage: { hu: 'hu-HU', en: 'en-GB' },
 
+  /* The one country name in the structured data, and it has to be a pair.
+     index.html writes the Hungarian side because it is the Hungarian
+     template, and the prerender's leak scan reads the whole finished page —
+     JSON-LD included — so a hardcoded "Magyarorszag" with its real diacritics
+     would fail the build on /en, correctly. */
+  areaServed: { hu: 'Magyarország', en: 'Hungary' },
+
   knowsAbout: [
     { hu: 'Webfejlesztés', en: 'Web development' },
     neutral('React'),

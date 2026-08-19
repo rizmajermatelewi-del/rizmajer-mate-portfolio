@@ -80,6 +80,12 @@ const HU_ALLOWED_ON_EN = [
      actually holds here — and it is his name, so it is allowed wherever it
      appears. */
   /Máté/g,
+  /* A place name, on the same footing as his: Inárcs is Inárcs in English.
+     It reaches the page through the ProfessionalService node's
+     addressLocality, which exists so local results have a town to work with,
+     and translating it would name a town that does not exist. Listed rather
+     than the rule weakened, like every other entry here. */
+  /Inárcs/g,
   /Adatvédelmi tájékoztató/g,
   /Adatkezelési tájékoztató/g,
   /Adatvédelem/g,
@@ -217,6 +223,13 @@ function withSchema(html, { entries, locale, siteName, schema, t, breadcrumb }) 
         throw new Error('index.html has no FAQPage node for the faq.js questions to fill.')
       }
 
+      if (!data['@graph'].some((node) => node['@type'] === 'ProfessionalService')) {
+        throw new Error(
+          'index.html has no ProfessionalService node. It carries the locality and ' +
+            'the served area for local search results, and nothing else publishes them.'
+        )
+      }
+
       const graph = data['@graph'].flatMap((original) => {
         /* Every node that declares a language declares this page's language.
            The template says hu-HU throughout, which was true of every page
@@ -238,6 +251,20 @@ function withSchema(html, { entries, locale, siteName, schema, t, breadcrumb }) 
         /* The site's name in the graph is the page title, not a second
            sentence that happens to match it today. */
         if (node['@type'] === 'WebSite') return [{ ...node, name: siteName }]
+
+        /* The business node exists for local results, where the only field
+           that can be in the wrong language is the country it serves. Filled
+           from SCHEMA rather than written twice, for the same reason
+           jobTitle is: the template carries the Hungarian side, and an
+           English page publishing it would be caught by the leak scan below
+           rather than by anybody reading the structured data.
+
+           No priceRange here on purpose. It would have to restate figures
+           that live in pricing.js, and prose restating a number is what let
+           llms.txt publish a tier two revisions stale. */
+        if (node['@type'] === 'ProfessionalService') {
+          return [{ ...node, areaServed: { ...node.areaServed, name: t(schema.areaServed, locale) } }]
+        }
 
         if (node['@type'] !== 'FAQPage') return [node]
         if (!entries) return []
