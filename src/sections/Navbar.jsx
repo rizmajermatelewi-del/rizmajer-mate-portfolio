@@ -10,7 +10,7 @@ import { t } from '../i18n/t'
 import { UI } from '../i18n/ui'
 
 const COPY = {
-  homeLink: { hu: 'Rizmajer Máté — kezdőlap', en: 'Rizmajer Máté — home' },
+  homeLink: { hu: 'Rizmajer Máté Levente — kezdőlap', en: 'Rizmajer Máté Levente — home' },
   openMenu: { hu: 'Menü megnyitása', en: 'Open menu' },
   closeMenu: { hu: 'Menü bezárása', en: 'Close menu' },
   /* The accessible name, in the language of the page it is on — not in the
@@ -256,7 +256,7 @@ export default function Navbar() {
                 reason the footer passes one: with the wordmark gone, this is
                 now the only thing in the drawer header that names the brand,
                 so it is content rather than decoration. */}
-            <LogoMark className="h-8 w-auto" inverted alt="Rizmajer Máté" />
+            <LogoMark className="h-8 w-auto" inverted alt="Rizmajer Máté Levente" />
             <div className="flex items-center gap-2">
               {/* The desktop bar's pill, in its scrolled colours — the drawer
                   sits on the light page, which is the surface those colours

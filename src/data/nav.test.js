@@ -29,7 +29,10 @@ const read = (rel) => readFileSync(fileURLToPath(new URL(rel, import.meta.url)),
    id, so the id is read out of the component file rather than duplicated. */
 function pageOrder() {
   const app = read('../App.jsx')
-  const main = app.slice(app.indexOf('<main>'), app.indexOf('</main>'))
+  /* '<main', not '<main>'. The element took an id and a tabIndex when the
+     skip link landed, and this slice silently returned an empty string —
+     which the guard below caught, exactly as intended. */
+  const main = app.slice(app.indexOf('<main'), app.indexOf('</main>'))
   const components = [...main.matchAll(/<([A-Z][A-Za-z]*)\s*\/>/g)].map((m) => m[1])
 
   return components

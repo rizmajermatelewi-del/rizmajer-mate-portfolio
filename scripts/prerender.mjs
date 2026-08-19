@@ -295,7 +295,7 @@ async function main() {
   const { FAQ_QUESTIONS } = await import(
     pathToFileURL(path.join(root, 'src', 'data', 'faq.js')).href
   )
-  const { HOME_META, PAGE_META, OG_LOCALE, SCHEMA } = await import(
+  const { HOME_META, PAGE_META, NOT_FOUND_META, OG_LOCALE, SCHEMA } = await import(
     pathToFileURL(path.join(root, 'src', 'i18n', 'meta.js')).href
   )
 
@@ -339,11 +339,11 @@ async function main() {
       )
     }
 
-    /* A route with no matching <Route> renders an empty <Routes>, and this
-       loop would then happily write a blank page to dist/ and log a success
-       line. routes.jsx now maps over this same array so the paths cannot
-       disagree, but its PAGE_FOR lookup can still come back undefined, and
-       that failure is invisible everywhere except here. The threshold only
+    /* A route whose PAGE_FOR lookup comes back undefined renders nothing,
+       and this loop would then happily write a blank page to dist/ and log a
+       success line. The catch-all added to routes.jsx does not rescue this:
+       the path still matches its own <Route>, which simply has no element.
+       That failure is invisible everywhere except here. The threshold only
        has to separate "a page" from "nothing"; the smallest real route
        renders tens of thousands of characters. */
     if (appHtml.length < 1000) {
@@ -534,6 +534,62 @@ async function main() {
     const rel = path.relative(root, outFile).replace(/\\/g, '/')
     console.log(`prerendered ${route} -> ${rel} (${appHtml.length} chars of markup)`)
   }
+
+  /* dist/404.html. Vercel serves this file, with a 404 status, for any path
+     its static output does not match. The status was already correct before
+     this existed — what the visitor got with it was 79 bytes of text/plain.
+
+     Written outside the loop and deliberately not added to ROUTE_PATHS. It is
+     not a route: nothing links to it, it must never reach the sitemap, and
+     unlike every real page it carries noindex and no canonical. A canonical
+     here would be an instruction to treat every dead URL on the domain as the
+     same page as the home page.
+
+     One file, served in both languages. It is prerendered in Hungarian and
+     the component swaps to English on hydration when the path starts with
+     /en, because an address that produced a 404 cannot be trusted to say
+     anything about language. */
+  const notFoundHtml = render('/404')
+  if (notFoundHtml.length < 400) {
+    throw new Error(
+      `The 404 page rendered only ${notFoundHtml.length} characters. ` +
+        'Most likely the catch-all <Route path="*"> is gone from src/routes.jsx.'
+    )
+  }
+
+  let notFound = template.replace('<div id="root"></div>', `<div id="root">${notFoundHtml}</div>`)
+  notFound = replaceLang(notFound, DEFAULT_LOCALE)
+
+  const notFoundTitle = t(NOT_FOUND_META.title, DEFAULT_LOCALE)
+  notFound = replaceTitle(notFound, notFoundTitle)
+  notFound = replaceMeta(notFound, 'property', 'og:title', notFoundTitle)
+  notFound = replaceMeta(notFound, 'name', 'twitter:title', notFoundTitle)
+
+  const notFoundDescription = t(NOT_FOUND_META.description, DEFAULT_LOCALE)
+  notFound = replaceMeta(notFound, 'name', 'description', notFoundDescription)
+  notFound = replaceMeta(notFound, 'property', 'og:description', notFoundDescription)
+  notFound = replaceMeta(notFound, 'name', 'twitter:description', notFoundDescription)
+
+  /* Person and WebSite stay true here as they do everywhere; FAQPage does
+     not, and entries: null is what drops it. */
+  notFound = withSchema(notFound, {
+    locale: DEFAULT_LOCALE,
+    siteName: t(HOME_META.title, DEFAULT_LOCALE),
+    schema: SCHEMA,
+    t,
+    entries: null,
+  })
+
+  const canonicalTag = /<link\s+rel="canonical"[^>]*>/i
+  if (!canonicalTag.test(notFound)) {
+    throw new Error('The 404 template has no <link rel="canonical"> to replace with noindex.')
+  }
+  notFound = notFound.replace(canonicalTag, '<meta name="robots" content="noindex" />')
+
+  if (templateOrigin !== origin) notFound = notFound.split(templateOrigin).join(origin)
+
+  await writeFile(path.join(distDir, '404.html'), notFound, 'utf8')
+  console.log(`prerendered 404 -> dist/404.html (${notFoundHtml.length} chars of markup)`)
 }
 
 main().catch((error) => {

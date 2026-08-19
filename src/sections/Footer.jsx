@@ -16,8 +16,8 @@ const COPY = {
   headlineAccent: { hu: 'viszi el', en: 'eats the most' },
   headlineTail: { hu: 'a legtöbb időd.', en: 'of your time.' },
   strapline: {
-    hu: 'Rizmajer Máté — full-stack fejlesztő Magyarországról, elérhető távoli és helyi projektekre egyaránt.',
-    en: 'Rizmajer Máté — full-stack developer from Hungary, available for remote and local projects alike.',
+    hu: 'Rizmajer Máté Levente — full-stack fejlesztő Magyarországról, elérhető távoli és helyi projektekre egyaránt.',
+    en: 'Rizmajer Máté Levente — full-stack developer from Hungary, available for remote and local projects alike.',
   },
   /* Was: "Full-stack fejlesztő. React, Node.js és modern web-technológiák.
      Ötlettől a működő termékig." Three problems in one line, all of them the
@@ -89,7 +89,12 @@ export default function Footer() {
           The gradient alone gives the identical result. */}
       <div className="absolute inset-0" aria-hidden="true">
         <div className="absolute inset-0 bg-gradient-to-b from-deep/95 via-deep/90 to-deep" />
-        <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-background to-transparent" />
+        {/* paper, not background. This element sits inside .card-invert, which
+            redeclares --color-background to the dark card value — so this fade
+            ran from the footer's own colour to transparent and had been doing
+            nothing at all since the invert landed. It is supposed to carry the
+            light page down into the dark footer. */}
+        <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-paper to-transparent" />
       </div>
       <div aria-hidden="true" className="section-glow" />
 
@@ -126,7 +131,7 @@ export default function Footer() {
                   The wordmark that used to sit beside this is gone, so the mark
                   carries the name as its alt — it is the only place the footer
                   states whose site this is. */}
-              <LogoMark className="h-9 w-auto" alt="Rizmajer Máté" />
+              <LogoMark className="h-9 w-auto" alt="Rizmajer Máté Levente" />
             </div>
             {/* "szakértelmével" is gone. Expertise is not something you award
                 yourself in your own footer, and this page argues everywhere else
@@ -209,7 +214,7 @@ export default function Footer() {
             <Link to={withLocale('/fejleszto', locale)} className="inline-block py-1 hover:text-primary-dark transition">{t(COPY.devProfile, locale)}</Link>
             <Link to="/adatvedelem" className="inline-block py-1 hover:text-primary-dark transition">{t(COPY.privacy, locale)}</Link>
             <Link to="/aszf" className="inline-block py-1 hover:text-primary-dark transition">ÁSZF</Link>
-            <span>© 2026 Rizmajer Máté</span>
+            <span>© 2026 Rizmajer Máté Levente</span>
           </div>
         </div>
       </div>

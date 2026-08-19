@@ -19,6 +19,17 @@
   /* Darker again. muted and divider move with it — on a darker base, dark
      text loses contrast, so muted has to get darker too or it drops under AA. */
   --color-background: 197 211 231;
+  /* The same value as --color-background and deliberately a second property.
+     .card-invert redeclares --color-background so that a chip filled with
+     bg-background stays legible on a dark card; that is correct, and it also
+     means a gradient written as from-background inside an inverted subtree
+     fades from the dark surface to itself and does nothing.
+
+     Both places that fade between a dark surface and the page hit exactly
+     that: the hero's bottom edge, and the footer's top edge, where the fade
+     had already been silently dead. --color-paper is never redeclared
+     anywhere, so it always means the page. */
+  --color-paper: 197 211 231;
   --color-surface: 252 253 255;
   --color-ink: 12 22 35;
   --color-muted: 64 80 100;

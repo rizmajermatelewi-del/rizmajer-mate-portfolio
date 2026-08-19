@@ -39,6 +39,14 @@ export const UI = {
      but the field is shared because the label is the same decision. */
   backToHome: { hu: 'Vissza a főoldalra', en: 'Back to the home page' },
 
+  /* The skip link, the first focusable element on the home page. Without it a
+     keyboard or screen-reader visitor passes the logo, seven section links,
+     the language switch, two social links and the CTA — twelve stops — before
+     reaching any content, and does it again on every visit to the page.
+     WCAG 2.4.1. Shared rather than local because the label is one decision
+     even though only one page renders it today. */
+  skipToContent: { hu: 'Ugrás a tartalomra', en: 'Skip to content' },
+
   /* On a project's live-site link. */
   openLink: { hu: 'Megnyitom', en: 'Open it' },
 }

@@ -37,8 +37,8 @@ export const HOME_META = {
      see in the URL and the result's site name, not the part that says what is
      sold. */
   title: {
-    hu: 'Egyedi weboldalak és üzleti rendszerek KKV-knak | Rizmajer Máté',
-    en: 'Custom websites and business systems for SMEs | Rizmajer Máté',
+    hu: 'Rizmajer Máté Levente — weboldalak és üzleti rendszerek KKV-knak',
+    en: 'Rizmajer Máté Levente — websites and business systems for SMEs',
   },
 
   /* The <meta name="description"> — what a search result shows under the
@@ -66,8 +66,8 @@ export const HOME_META = {
      and applied to both, on every route: the card image is the same picture
      everywhere, so its description does not vary by page, only by language. */
   imageAlt: {
-    hu: 'Rizmajer Máté — full-stack fejlesztő portfólió',
-    en: 'Rizmajer Máté — full-stack developer portfolio',
+    hu: 'Rizmajer Máté Levente — full-stack fejlesztő portfólió',
+    en: 'Rizmajer Máté Levente — full-stack developer portfolio',
   },
 }
 
@@ -120,6 +120,18 @@ export const PAGE_META = {
 
    en_GB rather than en_US: the copy is written in British spelling, and the
    nearer market for someone working out of Hungary is Europe. */
+/* dist/404.html. Kept out of PAGE_META deliberately: that map is keyed by
+   route and guarded against keys that are not routes, and /404 is not a route
+   — it is the file Vercel falls back to when nothing matched. The page also
+   carries noindex and no canonical, which no real route does. */
+export const NOT_FOUND_META = {
+  title: { hu: 'Ez az oldal nincs meg', en: 'This page does not exist' },
+  description: {
+    hu: 'A keresett oldal nem található. Vissza a főoldalra vagy a fejlesztői profilhoz.',
+    en: 'The page you asked for is not here. Head back to the home page or the developer profile.',
+  },
+}
+
 export const OG_LOCALE = { hu: 'hu_HU', en: 'en_GB' }
 
 /* The parts of the JSON-LD graph that are prose rather than identifiers.

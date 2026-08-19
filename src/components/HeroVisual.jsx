@@ -20,9 +20,16 @@
    that a holiday snapshot with another studio's watermark. And it has to
    survive being cropped, since the hero is full-bleed at every width.
 
-   Two drawings, not one. The desktop sheet sits beside the copy; below lg it
-   would sit behind the headline instead, so a fragment of the same drawing
-   goes under the buttons where the column is empty anyway. */
+   Two drawings, not one. The desktop sheet sits beside the copy; below the
+   breakpoint it would sit behind the headline instead, so a fragment of the
+   same drawing goes under the buttons where the column is empty anyway.
+
+   The breakpoint is xl, not lg. At lg the sheet appears the moment the
+   viewport passes 1024px, and between there and roughly 1150px the headline
+   runs straight across it while the code panel sits behind the secondary
+   button — measured at 1100px, where "ami helyetted dolgozik." ends at x=960
+   and the drawing starts at 447. The sheet needs the room it was drawn for,
+   so it waits for 1280px and the fragment covers the gap. */
 
 const EDGE = 'rgb(var(--color-primary-light) / 0.28)'
 const PANEL = 'rgb(var(--color-deep) / 0.72)'
@@ -92,7 +99,7 @@ function CardRow({ x, y, gap, w, h }) {
 export default function HeroVisual() {
   return (
     <>
-      <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 hidden w-[58%] lg:block">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 hidden w-[58%] xl:block">
         <svg viewBox="0 0 900 700" preserveAspectRatio="xMidYMid meet" className="h-full w-full">
           <defs>
             <linearGradient id="hv-sheen" x1="0" y1="0" x2="1" y2="1">
@@ -139,7 +146,7 @@ export default function HeroVisual() {
         </svg>
       </div>
 
-      {/* Below lg. Placed under the buttons rather than behind the copy: the
+      {/* Below xl. Placed under the buttons rather than behind the copy: the
           column there was empty at every phone size measured, and nothing
           passes behind text, so no contrast ratio on this page changes.
 
@@ -155,7 +162,7 @@ export default function HeroVisual() {
           so the top of the drawing was tucked behind one. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute bottom-[19%] right-[6%] h-[9%] w-[92%] lg:hidden"
+        className="pointer-events-none absolute bottom-[19%] right-[6%] h-[9%] w-[92%] xl:hidden"
       >
         <svg viewBox="0 0 640 200" preserveAspectRatio="xMaxYMax meet" className="h-full w-full">
           <g transform="rotate(-2.5 320 100)" opacity="0.85">

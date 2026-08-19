@@ -3,6 +3,7 @@ import App from './App.jsx'
 import PrivacyPolicy from './pages/PrivacyPolicy.jsx'
 import Terms from './pages/Terms.jsx'
 import Fejleszto from './pages/Fejleszto.jsx'
+import NotFound from './pages/NotFound.jsx'
 import { ROUTE_PATHS } from './routePaths.js'
 import { stripLocale } from './i18n/locales.js'
 
@@ -35,6 +36,12 @@ export function AppRoutes() {
       {ROUTE_PATHS.map((path) => (
         <Route key={path} path={path} element={PAGE_FOR[stripLocale(path)]} />
       ))}
+      {/* Everything else. Not decoration: Vercel serves dist/404.html for an
+          unmatched path, and that file boots this same bundle. Without a
+          catch-all the router would find no match, render nothing, and blank
+          out a page that had just painted its content — so the missing route
+          here would show up as a 404 page that works until React arrives. */}
+      <Route path="*" element={<NotFound />} />
     </Routes>
   )
 }

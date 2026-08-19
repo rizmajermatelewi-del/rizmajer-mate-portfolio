@@ -130,8 +130,21 @@ export default function Hero() {
     return () => ctx.revert()
   }, [reduce])
 
+  /* card-invert on the section, like every other dark surface in the system.
+     The hero had been writing text-white, text-white/80 and border-white/25 by
+     hand, which looked identical and was not: the class also carries
+     `.card-invert :focus-visible { outline-color: primary-dark }`, and
+     primary-dark outside an inverted subtree is #4338ca — a dark indigo ring
+     on a near-black hero, which is where keyboard focus on the two most
+     important buttons on the site was landing. Inside, it resolves to #a5b4fc
+     and is plainly visible.
+
+     The background-color the class paints is harmless: the backdrop div
+     covers the section edge to edge and is drawn over it. What is not
+     harmless is that .card-invert also redeclares --color-background, which
+     is why the fade at the bottom names paper instead. */
   return (
-    <section id="kezdolap" ref={heroRef} className="relative min-h-viewport w-full overflow-hidden">
+    <section id="kezdolap" ref={heroRef} className="card-invert relative min-h-viewport w-full overflow-hidden">
       <div className="absolute inset-0">
         {/* No photograph. The three that have held this slot were a holiday
             snapshot carrying another studio's watermark, then a night shot of
@@ -177,7 +190,7 @@ export default function Hero() {
         {/* Linear ramp, no midpoint stop. With via-background/70 the fade was
             already 70% opaque halfway up, which read as a white smear across
             the lower third rather than a transition into the page. */}
-        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-paper to-transparent" />
       </div>
 
       {/* Left-aligned, not centred. The scrim is heaviest on the left, so the
@@ -196,7 +209,7 @@ export default function Hero() {
               the person paying for this runs a bakery, and an h1 written for a
               recruiter is written for someone who is not on this page. There is
               also no Next.js in this project. */}
-          <h1 className="font-display font-extrabold text-white leading-[0.95] tracking-tight">
+          <h1 className="font-display font-extrabold text-ink leading-[0.95] tracking-tight">
             <span className="hero-line-1 block text-3xl sm:text-4xl">
               {t(COPY.headlineLead, locale)}
             </span>
@@ -231,9 +244,9 @@ export default function Hero() {
               "Rendszerek összekötése", but the hero went on advertising the
               retired category to every visitor before they reached the prices.
               Named after the tier that is actually sold instead. */}
-          <p className="hero-meta max-w-lg text-white/80 text-base sm:text-lg mt-7 leading-relaxed">
+          <p className="hero-meta max-w-lg text-ink/80 text-base sm:text-lg mt-7 leading-relaxed">
             {t(COPY.introLead, locale)}{' '}
-            <span className="text-white">{t(COPY.introAccent, locale)}</span>.
+            <span className="text-ink">{t(COPY.introAccent, locale)}</span>.
           </p>
 
           {/* Two CTAs, two intents. The secondary used to be the email address
@@ -258,7 +271,7 @@ export default function Hero() {
                 should not mimic the primary action's gesture. */}
             <a
               href="#projektek"
-              className="lift-on-hover group inline-flex w-full sm:w-auto items-center justify-center gap-2 bg-white/10 backdrop-blur-md text-white border border-white/25 font-medium px-7 py-4 rounded-full transition-colors duration-300 hover:bg-white/[0.18] hover:border-white/45"
+              className="lift-on-hover group inline-flex w-full sm:w-auto items-center justify-center gap-2 bg-ink/10 backdrop-blur-md text-ink border border-ink/25 font-medium px-7 py-4 rounded-full transition-colors duration-300 hover:bg-ink/[0.18] hover:border-ink/45"
             >
               {t(COPY.seeWork, locale)}
               <ArrowDown className="h-4 w-4 transition-transform duration-200 group-hover:translate-y-0.5" />

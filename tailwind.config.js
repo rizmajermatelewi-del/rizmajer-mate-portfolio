@@ -10,6 +10,12 @@ export default {
         accent: 'rgb(var(--color-accent) / <alpha-value>)',
         'accent-dark': 'rgb(var(--color-accent-dark) / <alpha-value>)',
         background: 'rgb(var(--color-background) / <alpha-value>)',
+        /* Not a synonym for background, despite being the same value at the
+           root. `background` is contextual and flips inside .card-invert;
+           `paper` is the page material and never flips. Anything fading
+           between a dark surface and the page itself has to name the second
+           one, or the gradient inverts along with the surface it sits in. */
+        paper: 'rgb(var(--color-paper) / <alpha-value>)',
         surface: 'rgb(var(--color-surface) / <alpha-value>)',
         ink: 'rgb(var(--color-ink) / <alpha-value>)',
         muted: 'rgb(var(--color-muted) / <alpha-value>)',
