@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
+import { Analytics } from '@vercel/analytics/react'
 import { AppRoutes } from './routes.jsx'
 import ErrorBoundary from './components/ErrorBoundary'
 import { dismissPreloader } from './preloader'
@@ -20,6 +21,21 @@ createRoot(document.getElementById('root')).render(
     <ErrorBoundary>
       <BrowserRouter>
         <AppRoutes />
+        {/* Here and not in routes.jsx, which entry-server.jsx also renders:
+            this belongs to the browser only, and putting it in the shared tree
+            would write a script tag into six prerendered files for no reason.
+
+            Chosen over Plausible and Umami for one structural reason. It
+            serves its script from /_vercel/insights on this origin and beacons
+            to the same place, so `script-src 'self'` and `connect-src 'self'`
+            already cover it — no third-party host joins the CSP on a site that
+            self-hosts its fonts specifically to keep them out. It also stores
+            nothing on the visitor's device, which is what keeps the answer to
+            "do we need a cookie banner" a no.
+
+            Inside BrowserRouter because it reads the location to count a view
+            per route rather than once per session. */}
+        <Analytics />
       </BrowserRouter>
     </ErrorBoundary>
   </StrictMode>,
