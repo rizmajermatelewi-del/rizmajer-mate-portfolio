@@ -7,15 +7,11 @@ import napiMenu01 from '../assets/demos/napi-menu-01.webp'
 import napiMenu02 from '../assets/demos/napi-menu-02.webp'
 import napiMenu03 from '../assets/demos/napi-menu-03.webp'
 
-/* Demo apps live in a **separate** public repo (portfolio-demos) and each has
-   its own Vercel project. This portfolio only stores screenshots + links.
+/* Demo apps live in a **separate** public repo (DEMOS) and each has its own
+   Vercel project. This portfolio only stores screenshots + links. */
 
-   `github` stays '#' until rizmajermatelewi-del/portfolio-demos exists and is
-   pushed — the agent token cannot create repositories. Do not invent a URL. */
-
-const DEMOS_REPO = 'https://github.com/rizmajermatelewi-del/portfolio-demos'
-/* Set to true in the same PR that fills github after the demos repo is public. */
-const DEMOS_REPO_READY = false
+const DEMOS_REPO = 'https://github.com/rizmajermatelewi-del/DEMOS'
+const DEMOS_REPO_READY = true
 
 export const PROJECTS_FULL = [
   {

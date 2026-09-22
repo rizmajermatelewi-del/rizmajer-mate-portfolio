@@ -55,14 +55,11 @@ describe('PROJECTS_FULL', () => {
     expect(LIVE_COUNT).toBe(PROJECTS_FULL.length)
   })
 
-  /* github stays '#' until the separate portfolio-demos repo is created and
-     pushed — the cloud agent cannot create GitHub repositories. When that
-     lands, flip DEMOS_REPO_READY in projects.js and expect real URLs here. */
-  it('keeps github honest: either a public URL or the # placeholder', () => {
+  it('points github at the public DEMOS monorepo folders', () => {
     for (const p of PROJECTS_FULL) {
-      if (p.github === '#') continue
-      expect(p.github).toMatch(/^https:\/\/github\.com\//)
+      expect(p.github).toMatch(/^https:\/\/github\.com\/rizmajermatelewi-del\/DEMOS\/tree\/main\//)
     }
+    expect(REPO_COUNT).toBe(PROJECTS_FULL.length)
   })
 
   it('labels demos as Bemutató projekt, never fake client work', () => {
