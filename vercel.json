@@ -1,5 +1,6 @@
 {
   "buildCommand": "npm run build:scaffold",
   "outputDirectory": "dist",
-  "framework": "vite"
+  "framework": "vite",
+  "rewrites": [{ "source":="/((?!assets/).*)", "destination": "/index.html" }]
 }
