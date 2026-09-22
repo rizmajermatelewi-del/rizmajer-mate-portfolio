@@ -3,11 +3,13 @@
 A one-page site for a one-therapist massage salon, plus an adatvédelmi
 tájékoztató. Phase 1 of the design spec: no booking yet.
 
-**Client property.** This app is self-contained (`ab-masszazs/package.json`) and
-must never be imported by the portfolio. It lives here only until a dedicated
-GitHub repository (`rizmajermatelewi-del/ab-masszazs` or similar) exists — then
-move this folder out as that repo’s root and delete it from the portfolio.
-Cloud-agent tokens could not create that repo from this environment.
+**Client property.** Self-contained app — not part of the portfolio product.
+Target home: dedicated GitHub repo `rizmajermatelewi-del/ab-masszazs` + its own
+Vercel project. Portfolio nesting is temporary review-only until that repo exists.
+
+Scaffold hosting uses `npm run build:scaffold` (Vite client only) so an empty
+facts site can still get a URL. Launch / SEO prerender remains `SITE_ORIGIN=…
+npm run build`, which refuses until real business facts are filled.
 
 ## Running it
 
