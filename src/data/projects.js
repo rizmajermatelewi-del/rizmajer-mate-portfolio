@@ -57,13 +57,19 @@ export const PROJECTS_FULL = [
     gallery: [
       {
         src: idopontfoglalo01,
-        alt: 'Foglalási felület: szolgáltatások és időpontválasztó',
+        alt: {
+          hu: 'Foglalási felület: szolgáltatások és időpontválasztó',
+          en: 'Booking UI: services and time-slot picker',
+        },
         width: 1280,
         height: 800,
       },
       {
         src: idopontfoglalo02,
-        alt: 'Admin lista a bemutató foglalásokkal',
+        alt: {
+          hu: 'Admin lista a bemutató foglalásokkal',
+          en: 'Admin list of sample bookings',
+        },
         width: 1280,
         height: 800,
       },
@@ -110,19 +116,28 @@ export const PROJECTS_FULL = [
     gallery: [
       {
         src: napiMenu01,
-        alt: 'Mai menü képernyő a Kispipa Büfé bemutatóban',
+        alt: {
+          hu: 'Mai menü képernyő a Kispipa Büfé bemutatóban',
+          en: 'Today menu screen in the Kispipa buffet demo',
+        },
         width: 1280,
         height: 800,
       },
       {
         src: napiMenu02,
-        alt: 'Heti áttekintés a napi menükről',
+        alt: {
+          hu: 'Heti áttekintés a napi menükről',
+          en: 'Week overview of daily menus',
+        },
         width: 1280,
         height: 800,
       },
       {
         src: napiMenu03,
-        alt: 'Menüszerkesztő admin felület',
+        alt: {
+          hu: 'Menüszerkesztő admin felület',
+          en: 'Menu editor admin screen',
+        },
         width: 1280,
         height: 800,
       },

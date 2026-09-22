@@ -6,7 +6,12 @@ const CASE_FIELDS = ['year', 'role', 'problem', 'solution', 'gallery', 'github',
 function assertGalleryItemShape(g, label) {
   expect(typeof g, `${label} gallery item must be an object, not a bare string`).toBe('object')
   expect(g.src, `${label} gallery item is missing src`).toBeTruthy()
-  expect(g.alt, `${label} gallery item needs Hungarian alt text, not ''`).toBeTruthy()
+  if (typeof g.alt === 'object' && g.alt) {
+    expect(g.alt.hu, `${label} gallery alt needs hu`).toBeTruthy()
+    expect(g.alt.en, `${label} gallery alt needs en`).toBeTruthy()
+  } else {
+    expect(g.alt, `${label} gallery item needs alt text, not ''`).toBeTruthy()
+  }
   expect(g.width, `${label} gallery item needs a width`).toBeGreaterThan(0)
   expect(g.height, `${label} gallery item needs a height`).toBeGreaterThan(0)
 }
@@ -90,11 +95,17 @@ describe('PROJECTS_FULL', () => {
   })
 
   it('fails on a gallery item that is missing alt text or dimensions', () => {
-    const good = { src: 'foo.webp', alt: 'Képernyőkép a felületről', width: 800, height: 600 }
+    const good = {
+      src: 'foo.webp',
+      alt: { hu: 'Képernyőkép a felületről', en: 'Screenshot of the UI' },
+      width: 800,
+      height: 600,
+    }
 
     expect(() => assertGalleryItemShape(good, 'good')).not.toThrow()
     expect(() => assertGalleryItemShape('foo.webp', 'bare string')).toThrow()
     expect(() => assertGalleryItemShape({ ...good, alt: '' }, 'empty alt')).toThrow()
+    expect(() => assertGalleryItemShape({ ...good, alt: { hu: 'x', en: '' } }, 'empty en')).toThrow()
     expect(() => assertGalleryItemShape({ ...good, width: undefined }, 'no width')).toThrow()
     expect(() => assertGalleryItemShape({ ...good, height: 0 }, 'zero height')).toThrow()
   })

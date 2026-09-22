@@ -117,9 +117,7 @@ export default function Projects() {
                     <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-primary-dark bg-primary/10 px-2.5 py-1 rounded-full">
                       {t(p.label, locale)}
                     </span>
-                    {/* Only when a project has actually earned it — see the
-                        note in projects.js on why all four are false today. */}
-                    {p.featured && (
+                {p.featured && (
                       <span className="inline-flex items-center gap-1 font-mono text-[9px] uppercase tracking-[0.2em] text-white bg-primary px-2.5 py-1 rounded-full">
                         <Star className="h-2.5 w-2.5" strokeWidth={2.5} />
                         {t(COPY.featured, locale)}

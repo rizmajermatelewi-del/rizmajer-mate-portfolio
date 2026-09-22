@@ -38,13 +38,12 @@ export default function Pillars() {
       target: 2,
       suffix: neutral(''),
       label: { hu: 'megépített projekt', en: 'projects built' },
-      /* The third sentence used to read "Mindegyik megnyitható és
-         kipróbálható." Nothing on the site is: every `live` field in
-         projects.js is empty and every `github` is '#'. It stays out until
-         there are real links behind the project cards. */
+      /* Third sentence used to claim every project was openable while
+         live/github were empty. It stays out of the delivered-count card;
+         openable demos are listed under Projects with real live URLs. */
       desc: {
-        hu: 'Két bemutató app a repóban — időpontfoglaló és napi menü. Az első ügyfélmunka most indul.',
-        en: 'Two demo apps in the repo — booking and a daily menu. The first client job is beginning now.',
+        hu: 'Két bemutató app — időpontfoglaló és napi menü. Az első ügyfélmunka most indul.',
+        en: 'Two demo apps — booking and a daily menu. The first client job is beginning now.',
       },
     },
     {

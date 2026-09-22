@@ -157,7 +157,7 @@ export default function ProjectModal({ project, originRect, onClose }) {
               <img
                 key={i}
                 src={g.src}
-                alt={g.alt}
+                alt={typeof g.alt === 'object' ? t(g.alt, locale) : g.alt}
                 width={g.width}
                 height={g.height}
                 loading="lazy"
