@@ -8,5 +8,8 @@
      company: 'Cégnév',
    }
    One real sentence from the rétesház or AB Masszázs is worth more here
-   than every statistic elsewhere on the page. */
+   than every statistic elsewhere on the page.
+
+   TODO(owner): do not invent a quote. Ask the client for written permission,
+   then paste their exact words into TESTIMONIALS. Until then leave this empty. */
 export const TESTIMONIALS = []

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import CountUp from '../components/CountUp'
+import { PROJECT_COUNT, LIVE_COUNT } from '../data/projects'
 import { useInView } from '../motion/useInView'
 import { useLocale } from '../i18n/useLocale'
 import { t, neutral } from '../i18n/t'
@@ -30,22 +31,24 @@ export default function Pillars() {
     {
       n: '01',
       title: { hu: 'Leszállítva', en: 'Delivered' },
-      /* Was 4, described as "kettő fizető ügyfélnek, kettő saját
-         kezdeményezés". The two client projects were removed from projects.js
-         on 2026-08-10 because neither had been delivered or invoiced, so this
-         numeral counted work that did not exist. Two own projects, no client
-         work yet — which is what the section now actually contains. */
-      target: 2,
+      /* Was 4, then 2 after fabricated client entries were removed. The
+         target is PROJECT_COUNT so this numeral cannot drift from
+         projects.js again. */
+      target: PROJECT_COUNT,
       suffix: neutral(''),
       label: { hu: 'megépített projekt', en: 'projects built' },
-      /* The third sentence used to read "Mindegyik megnyitható és
-         kipróbálható." Nothing on the site is: every `live` field in
-         projects.js is empty and every `github` is '#'. It stays out until
-         there are real links behind the project cards. */
-      desc: {
-        hu: 'Két saját kezdeményezésű projekt. Az első ügyfélmunka most indul.',
-        en: 'Two projects I started myself. The first client job is beginning now.',
-      },
+      /* LIVE_COUNT drives the "megnyitható" claim — only true when at least
+         one project has a real live URL. */
+      desc:
+        LIVE_COUNT > 0
+          ? {
+              hu: 'Saját kezdeményezésű projektek. Legalább egy megnyitható és kipróbálható — az első ügyfélmunka most indul.',
+              en: 'Projects I started myself. At least one is live and openable — the first client job is beginning now.',
+            }
+          : {
+              hu: 'Saját kezdeményezésű projektek. Az első ügyfélmunka most indul.',
+              en: 'Projects I started myself. The first client job is beginning now.',
+            },
     },
     {
       n: '02',

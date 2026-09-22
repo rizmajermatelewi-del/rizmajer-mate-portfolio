@@ -19,9 +19,9 @@ const COPY = {
      opened with where the training came from, which is the first thing a CV
      says and roughly the last thing anyone assessing a developer wants.
 
-     No "senior", no "architect", no "expert". Two delivered projects do not
-     support any of those, and a reader who checks finds out — at which point
-     every other sentence on the page is discounted too. */
+     No "senior", no "architect", no "expert". A short list of delivered
+     projects does not support any of those, and a reader who checks finds
+     out — at which point every other sentence on the page is discounted too. */
   bio1: {
     hu: 'Full-stack webalkalmazásokat építek: a felülettől az API-n át az adatbázisig ugyanaz a kéz viszi végig. Jellemzően olyan rendszereket, amik a napi adminisztrációt alakítják magától működő folyamattá — foglalás, rendelés, belső nyilvántartás.',
     en: 'I build full-stack web applications, carrying the same work from the interface through the API to the database. Usually the kind of system that turns daily admin into a process that runs on its own — booking, ordering, internal records.',
@@ -62,8 +62,8 @@ const COPY = {
      of projects belongs to projects.js, and this repository has already been
      bitten once by that fact living in four files at the same time. */
   projectsNote: {
-    hu: 'Ügyfélprojekthez nyilvános linket és repót nem adok: éles rendszerek, valódi ügyféladatokkal. A saját projektekhez demókat építek, amiket bárki megnyithat, és kódot szívesen mutatok egy beszélgetésen. Az első ügyfélmunka most készül — amint él, itt lesz a link és a képernyőkép.',
-    en: 'I do not publish links or repositories for client projects: they are live systems holding real customer data. For my own projects I build demos anyone can open, and I am glad to walk through code in a conversation. The first client build is under way — the moment it is live, the link and the screenshot will be here.',
+    hu: 'Ügyfélprojekthez nyilvános linket és repót nem adok: éles rendszerek, valódi ügyféladatokkal. A saját projektek közül ez az oldal megnyitható, a kódja nyilvános; további demókat építek, amiket bárki megnyithat. Az első ügyfélmunka most készül — amint él, itt lesz a link és a képernyőkép.',
+    en: 'I do not publish links or repositories for client projects: they are live systems holding real customer data. Among my own projects, this site is openable and its code is public; I am building further demos anyone can open. The first client build is under way — the moment it is live, the link and the screenshot will be here.',
   },
   problemLabel: { hu: 'A feladat', en: 'The problem' },
   solutionLabel: { hu: 'A megoldás', en: 'What I built' },

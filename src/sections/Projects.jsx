@@ -1,6 +1,6 @@
 import { useState, lazy, Suspense } from 'react'
 import { Star, Check } from 'lucide-react'
-import { PROJECTS_FULL } from '../data/projects'
+import { PROJECTS_FULL, LIVE_COUNT } from '../data/projects'
 import { useLocale } from '../i18n/useLocale'
 import { t } from '../i18n/t'
 
@@ -18,32 +18,18 @@ import { TiltCard } from '../motion/TiltCard'
 const COPY = {
   details: { hu: 'részletek', en: 'details' },
   eyebrow: { hu: 'Projektek', en: 'Work' },
-  /* These three counted four projects and two live client jobs. PROJECTS_FULL
-     holds two entries, both labelled "Saját projekt", both with `live: ''` and
-     `github: '#'`.
+  /* Counts and live links live in projects.js (PROJECT_COUNT / LIVE_COUNT).
+     Do not restate a fixed number here — that is how this section once claimed
+     four projects and two client jobs above two "Saját projekt" cards.
 
-     The two fabricated client entries were deleted on 2026-08-10 — Máté said
-     plainly the paying clients were not real — and Pillars was corrected in the
-     same commit from "4 megépített projekt / 2 fizető ügyfél" to "2 / 1 készül".
-     This block was missed. So the section went on announcing four projects and
-     two client jobs directly above two cards that both read "Saját projekt",
-     while Pillars said the opposite two sections earlier. A visitor who counts
-     the cards catches it in about three seconds, and what they catch is not a
-     typo: it is the page overstating delivered work on the one section whose
-     entire job is to prove it.
-
-     projects.test.js could not see this. It asserts that no *entry* calls
-     itself client work without a URL a stranger can open — it has no view of a
-     sentence hardcoded in the JSX above the entries. The lesson is the one this
-     codebase keeps relearning: a count restated in prose drifts from the data
-     it counts. Wording it so it stays true at two, three or ten entries is what
-     keeps it from drifting again.
-
-     "Amint él, itt lesz a link hozzá" is deliberately the same promise Pillars
-     makes about the same salon, in the same words. */
+     "Amint él, itt lesz a link hozzá" matches Pillars on the same salon. */
   headingLead: { hu: 'Amin dolgozom.', en: 'What I am working on.' },
   headingAccent: { hu: 'Egyelőre a sajátjaim.', en: 'My own, for now.' },
   intro: {
+    hu: 'Mindegyiket végig én építettem. Az egyik élőben megnyitható — ez az oldal maga. Ügyfélmunkát még nem adtam át; az első most készül, és amint él, itt lesz a link hozzá.',
+    en: 'I built every one of them end to end. One is live and openable — this site itself. I have not handed over client work yet; the first is being built now, and the moment it is live the link will be here.',
+  },
+  introWhenNoLive: {
     hu: 'Mindegyiket végig én építettem. Ügyfélmunkát még nem adtam át — az első most készül, és amint él, itt lesz a link hozzá.',
     en: 'I built every one of them end to end. I have not handed over client work yet — the first is being built now, and the moment it is live the link will be here.',
   },
@@ -101,11 +87,11 @@ export default function Projects() {
             <span className="block font-display font-semibold text-primary-dark mt-1">{t(COPY.headingAccent, locale)}</span>
           </h2>
           <p className="text-muted text-lg mt-6 leading-relaxed max-w-xl">
-            {t(COPY.intro, locale)}
+            {t(LIVE_COUNT > 0 ? COPY.intro : COPY.introWhenNoLive, locale)}
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {PROJECTS_FULL.map((p, i) => (
             <button
               key={t(p.title, locale)}
@@ -123,17 +109,21 @@ export default function Projects() {
               }`}
             >
               <TiltCard className="h-full">
-                <ProjectMock tone={p.tone} image={p.image} alt={p.imageAlt} />
+                <ProjectMock
+                  tone={p.tone}
+                  image={p.image}
+                  alt={p.imageAlt ? t(p.imageAlt, locale) : ''}
+                />
                 <div className="p-6">
                   {/* The "01 / 02 / 03 / 04" counter that sat opposite the
-                      label is gone. Four cards in a row are already countable
+                      label is gone. Cards in a row are already countable
                       and the number carried no other meaning. */}
                   <div className="mb-3.5 flex flex-wrap items-center gap-1.5">
                     <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-primary-dark bg-primary/10 px-2.5 py-1 rounded-full">
                       {t(p.label, locale)}
                     </span>
                     {/* Only when a project has actually earned it — see the
-                        note in projects.js on why all four are false today. */}
+                        note in projects.js. */}
                     {p.featured && (
                       <span className="inline-flex items-center gap-1 font-mono text-[9px] uppercase tracking-[0.2em] text-white bg-primary px-2.5 py-1 rounded-full">
                         <Star className="h-2.5 w-2.5" strokeWidth={2.5} />
@@ -155,12 +145,15 @@ export default function Projects() {
                     <div className="mt-5">
                       <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-primary-dark">{t(COPY.whatItDoes, locale)}</p>
                       <ul className="mt-2 space-y-1.5">
-                        {p.features.map((f) => (
-                          <li key={f} className="flex gap-2 text-muted text-[13px] leading-relaxed">
-                            <Check className="h-3.5 w-3.5 shrink-0 mt-[3px] text-primary" strokeWidth={2.5} />
-                            <span>{f}</span>
-                          </li>
-                        ))}
+                        {p.features.map((f) => {
+                          const label = t(f, locale)
+                          return (
+                            <li key={label} className="flex gap-2 text-muted text-[13px] leading-relaxed">
+                              <Check className="h-3.5 w-3.5 shrink-0 mt-[3px] text-primary" strokeWidth={2.5} />
+                              <span>{label}</span>
+                            </li>
+                          )
+                        })}
                       </ul>
                     </div>
                   )}
