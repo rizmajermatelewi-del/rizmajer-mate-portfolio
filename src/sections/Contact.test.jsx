@@ -1,41 +1,12 @@
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect } from 'vitest'
 import { render, screen } from '@testing-library/react'
-
-const EMPTY = {
-  name: '',
-  legalName: '',
-  tagline: '',
-  street: '',
-  city: '',
-  postalCode: '',
-  phone: '',
-  email: '',
-  facebook: '',
-  instagram: '',
-  mapsUrl: '',
-  hours: [],
-}
+import Contact from './Contact.jsx'
 
 describe('Contact', () => {
-  it('renders nothing while phone and email are empty', async () => {
-    vi.resetModules()
-    vi.doMock('../data/business', () => ({ BUSINESS: EMPTY, missingFacts: () => [] }))
-    const { default: Contact } = await import('./Contact.jsx')
-    const { container } = render(<Contact />)
-    expect(container.firstChild).toBe(null)
-  })
-
-  it('shows a dialable phone when present', async () => {
-    vi.resetModules()
-    vi.doMock('../data/business', () => ({
-      BUSINESS: { ...EMPTY, phone: '+36 30 123 4567' },
-      missingFacts: () => [],
-    }))
-    const { default: Contact } = await import('./Contact.jsx')
+  it('shows minta contact without a dialable tel link', () => {
     render(<Contact />)
     expect(screen.getByRole('heading', { name: 'Időpont' })).toBeTruthy()
-    expect(screen.getByRole('link', { name: /123 4567/ }).getAttribute('href')).toBe(
-      'tel:+36301234567',
-    )
+    expect(screen.getByText(/\+36 30 000 0000/)).toBeTruthy()
+    expect(screen.queryByRole('link', { name: /\+36 30 000 0000/ })).toBe(null)
   })
 })

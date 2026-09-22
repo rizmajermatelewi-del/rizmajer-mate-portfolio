@@ -5,18 +5,22 @@ import { AppRoutes } from './routes.jsx'
 
 afterEach(() => cleanup())
 
-/* Proves the toolchain works end to end — JSX compiles, jsdom renders, the
-   router resolves — before any real component depends on all three. */
 describe('app shell', () => {
-  it('renders the home route with skip link and brand', () => {
+  it('renders a full preview home composition', () => {
     render(
       <MemoryRouter initialEntries={['/']}>
         <AppRoutes />
       </MemoryRouter>,
     )
     expect(screen.getByRole('link', { name: /Ugrás a tartalomra/ })).toBeTruthy()
+    expect(screen.getAllByText(/Előnézet \/ minta/).length).toBeGreaterThan(0)
     expect(screen.getAllByText('AB Masszázs').length).toBeGreaterThan(0)
-    expect(screen.getByText('Egy kezelő.')).toBeTruthy()
+    expect(screen.getByText(/Nyugodt kezelés/)).toBeTruthy()
+    expect(screen.getByRole('heading', { name: 'Szolgáltatások' })).toBeTruthy()
+    expect(screen.getByRole('heading', { name: 'Rólam' })).toBeTruthy()
+    expect(screen.getByRole('heading', { name: 'Elérhetőség' })).toBeTruthy()
+    expect(screen.getByRole('heading', { name: 'Gyakori kérdések' })).toBeTruthy()
+    expect(screen.getByText('Svédmasszázs')).toBeTruthy()
   })
 
   it('renders privacy inside the shared chrome', () => {

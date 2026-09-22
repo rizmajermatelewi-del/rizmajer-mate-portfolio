@@ -1,41 +1,47 @@
-import { BUSINESS } from '../data/business'
+import { isPreviewMode, siteBusiness, sitePhoneIsPreview } from '../data/site'
 
-/* Where / when / phone — each block only if the fact exists. Map is a link, not an iframe. */
 export default function Visit() {
-  const hasAddress = Boolean(BUSINESS.street && BUSINESS.city)
+  const business = siteBusiness()
+  const preview = isPreviewMode()
+  const hasAddress = Boolean(business.street && business.city)
   const address = hasAddress
-    ? `${BUSINESS.postalCode ? `${BUSINESS.postalCode} ` : ''}${BUSINESS.city}, ${BUSINESS.street}`
+    ? `${business.postalCode ? `${business.postalCode} ` : ''}${business.city}, ${business.street}`
     : ''
-  const hasAnything = hasAddress || BUSINESS.hours.length > 0 || Boolean(BUSINESS.phone)
+  const hasAnything = hasAddress || business.hours.length > 0 || Boolean(business.phone)
 
   if (!hasAnything) return null
 
   return (
     <section
       id="elerhetoseg"
-      className="border-y border-line/70 bg-mist-deep/40 px-5 py-20 sm:py-28"
+      className="border-y border-divider bg-surface/70 px-5 py-20 sm:py-28"
       aria-labelledby="visit-heading"
     >
       <div className="mx-auto max-w-5xl">
-        <h2 id="visit-heading" className="brand text-3xl font-semibold tracking-brand text-ink">
+        <p className="font-mono text-[11px] uppercase tracking-label text-muted">
+          {preview ? 'Minta elérhetőség' : 'Elérhetőség'}
+        </p>
+        <h2 id="visit-heading" className="brand mt-3 text-3xl font-semibold tracking-brand text-ink">
           Elérhetőség
         </h2>
-        <p className="mt-4 max-w-md font-sans text-sage-mute leading-relaxed">
-          Hol vagyok, mikor, és hogyan szólíthatsz.
+        <p className="mt-4 max-w-md font-sans leading-relaxed text-muted">
+          {preview
+            ? 'Minta cím és órák — nem a szalon valódi adatai.'
+            : 'Hol vagyok, mikor, és hogyan szólíthatsz.'}
         </p>
         <div className="mt-12 grid gap-12 sm:grid-cols-2">
           {hasAddress ? (
             <div>
-              <h3 className="font-mono text-[10px] font-medium uppercase tracking-[0.22em] text-sage-mute">
-                Cím
+              <h3 className="font-mono text-[11px] font-medium uppercase tracking-label text-muted">
+                Cím{preview ? ' (minta)' : ''}
               </h3>
               <p className="mt-3 font-sans text-lg text-ink">{address}</p>
-              {BUSINESS.mapsUrl ? (
+              {business.mapsUrl ? (
                 <a
-                  href={BUSINESS.mapsUrl}
+                  href={business.mapsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-3 inline-block font-sans text-sm text-sage underline underline-offset-4 hover:text-ink"
+                  className="mt-3 inline-block font-sans text-sm text-action underline underline-offset-4 hover:text-ink"
                 >
                   Megnyitás a térképen
                 </a>
@@ -43,33 +49,37 @@ export default function Visit() {
             </div>
           ) : null}
 
-          {BUSINESS.hours.length ? (
+          {business.hours.length ? (
             <div>
-              <h3 className="font-mono text-[10px] font-medium uppercase tracking-[0.22em] text-sage-mute">
-                Nyitvatartás
+              <h3 className="font-mono text-[11px] font-medium uppercase tracking-label text-muted">
+                Nyitvatartás{preview ? ' (minta)' : ''}
               </h3>
               <dl className="mt-3 space-y-1.5 font-sans">
-                {BUSINESS.hours.map(({ day, opens, closes }) => (
+                {business.hours.map(({ day, opens, closes }) => (
                   <div key={day} className="flex justify-between gap-6 text-ink">
                     <dt>{day}</dt>
-                    <dd className="tabular-nums text-ink-soft">{`${opens} – ${closes}`}</dd>
+                    <dd className="tabular-nums text-muted">{`${opens} – ${closes}`}</dd>
                   </div>
                 ))}
               </dl>
             </div>
           ) : null}
 
-          {BUSINESS.phone ? (
+          {business.phone ? (
             <div>
-              <h3 className="font-mono text-[10px] font-medium uppercase tracking-[0.22em] text-sage-mute">
-                Időpontért
+              <h3 className="font-mono text-[11px] font-medium uppercase tracking-label text-muted">
+                Időpontért{sitePhoneIsPreview() ? ' (minta)' : ''}
               </h3>
-              <a
-                href={`tel:${BUSINESS.phone.replace(/\s/g, '')}`}
-                className="mt-3 inline-block font-sans text-lg text-ink underline underline-offset-4"
-              >
-                {BUSINESS.phone}
-              </a>
+              {sitePhoneIsPreview() ? (
+                <p className="mt-3 font-sans text-lg text-ink">{business.phone}</p>
+              ) : (
+                <a
+                  href={`tel:${business.phone.replace(/\s/g, '')}`}
+                  className="mt-3 inline-block font-sans text-lg text-ink underline underline-offset-4"
+                >
+                  {business.phone}
+                </a>
+              )}
             </div>
           ) : null}
         </div>

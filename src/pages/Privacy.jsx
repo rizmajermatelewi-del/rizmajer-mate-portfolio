@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom'
 import Layout from '../components/Layout.jsx'
 import { BUSINESS } from '../data/business'
+import { isPreviewMode } from '../data/site'
 
-/* Phase 1 collects nothing — short, true tájékoztató until booking exists. */
 export default function Privacy() {
   const owner = BUSINESS.legalName || BUSINESS.name
 
@@ -12,10 +12,15 @@ export default function Privacy() {
         <h1 className="brand text-3xl font-semibold tracking-brand text-ink sm:text-4xl">
           Adatkezelési tájékoztató
         </h1>
+        {isPreviewMode() ? (
+          <p className="mt-4 font-mono text-[11px] uppercase tracking-label text-muted">
+            Előnézet — a szöveg a Phase 1 valós állapotát írja le
+          </p>
+        ) : null}
 
-        <div className="mt-10 space-y-5 font-sans leading-relaxed text-ink-soft">
+        <div className="mt-10 space-y-5 font-sans leading-relaxed text-muted">
           <p>
-            Ez az oldal jelenleg <strong className="font-medium text-ink">nem gyűjt</strong> személyes
+            Ez az oldal jelenleg <strong className="font-semibold text-ink">nem gyűjt</strong> személyes
             adatot: nincs rajta űrlap, hírlevél-feliratkozás, sem látogatottság-mérő. Saját sütit nem
             helyez el a böngésződben.
           </p>
@@ -43,7 +48,10 @@ export default function Privacy() {
           ) : null}
         </div>
 
-        <Link to="/" className="mt-12 inline-block font-sans text-sm text-sage underline underline-offset-4 hover:text-ink">
+        <Link
+          to="/"
+          className="mt-12 inline-block font-sans text-sm text-action underline underline-offset-4 hover:text-ink"
+        >
           Vissza a főoldalra
         </Link>
       </main>

@@ -8,7 +8,7 @@ import Faq from '../sections/Faq.jsx'
 
 export default function Home() {
   return (
-    <Layout overlayHeader>
+    <Layout>
       <main id="tartalom">
         <Hero />
         <Services />

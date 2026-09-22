@@ -1,22 +1,28 @@
 import { Link } from 'react-router-dom'
-import { BUSINESS } from '../data/business'
+import { siteBusiness, isPreviewMode } from '../data/site'
 
 export default function Footer() {
   const year = new Date().getFullYear()
-  const owner = BUSINESS.legalName || BUSINESS.name || 'AB Masszázs'
+  const business = siteBusiness()
+  const owner = business.legalName || business.name || 'AB Masszázs'
 
   return (
-    <footer className="border-t border-line/80 px-5 py-12">
-      <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4 font-sans text-sm text-sage-mute">
-        <p>{`© ${year} ${owner}`}</p>
+    <footer className="border-t border-divider bg-paper px-5 py-12">
+      <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4 font-sans text-sm text-muted">
+        <p>
+          {`© ${year} ${owner}`}
+          {isPreviewMode() ? (
+            <span className="ml-2 font-mono text-[9px] uppercase tracking-label">előnézet</span>
+          ) : null}
+        </p>
         <div className="flex flex-wrap gap-7">
-          {BUSINESS.facebook ? (
-            <a href={BUSINESS.facebook} target="_blank" rel="noopener noreferrer" className="nav-link hover:text-ink">
+          {business.facebook ? (
+            <a href={business.facebook} target="_blank" rel="noopener noreferrer" className="nav-link hover:text-ink">
               Facebook
             </a>
           ) : null}
-          {BUSINESS.instagram ? (
-            <a href={BUSINESS.instagram} target="_blank" rel="noopener noreferrer" className="nav-link hover:text-ink">
+          {business.instagram ? (
+            <a href={business.instagram} target="_blank" rel="noopener noreferrer" className="nav-link hover:text-ink">
               Instagram
             </a>
           ) : null}

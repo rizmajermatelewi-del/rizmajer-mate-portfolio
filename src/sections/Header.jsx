@@ -1,53 +1,50 @@
-import { BUSINESS } from '../data/business'
-import { SERVICES } from '../data/services'
+import { isPreviewMode, siteBusiness, siteServices } from '../data/site'
 
-/* Quiet chrome over the full-bleed hero. Brand signal lives in the hero;
-   this wordmark is navigation only. Links appear only when sections exist. */
-export default function Header({ overlay = false }) {
-  const brand = BUSINESS.name || 'AB Masszázs'
-  const showServices = SERVICES.length > 0
+export default function Header() {
+  const business = siteBusiness()
+  const services = siteServices()
+  const brand = business.name || 'AB Masszázs'
+  const showServices = services.length > 0
   const showVisit = Boolean(
-    (BUSINESS.street && BUSINESS.city) || BUSINESS.hours.length > 0 || BUSINESS.phone,
+    (business.street && business.city) || business.hours.length > 0 || business.phone,
   )
-  const showContact = Boolean(BUSINESS.phone || BUSINESS.email)
-  const hasNav = showServices || showVisit || showContact
+  const showContact = Boolean(business.phone || business.email)
 
   return (
-    <header
-      className={`motion-fade z-20 px-5 ${
-        overlay ? 'absolute inset-x-0 top-0 py-6 sm:py-8' : 'relative py-6'
-      }`}
-    >
+    <header className="motion-fade relative z-20 border-b border-divider/50 bg-paper/70 px-5 py-5 backdrop-blur-sm">
       <div className="mx-auto flex max-w-5xl items-baseline justify-between gap-4">
         <a
           href="/"
-          className={`font-sans text-sm font-medium tracking-wide text-ink ${overlay ? 'text-ink/80' : ''}`}
+          className="brand text-[15px] font-semibold tracking-brand text-ink"
           aria-label={`${brand} — főoldal`}
         >
           {brand}
+          {isPreviewMode() ? (
+            <span className="ml-2 font-mono text-[9px] font-normal uppercase tracking-label text-muted">
+              minta
+            </span>
+          ) : null}
         </a>
-        {hasNav ? (
-          <nav
-            className="flex flex-wrap justify-end gap-x-7 gap-y-2 font-sans text-sm text-sage-mute"
-            aria-label="Fő navigáció"
-          >
-            {showServices ? (
-              <a href="#szolgaltatasok" className="nav-link hover:text-ink">
-                Szolgáltatások
-              </a>
-            ) : null}
-            {showVisit ? (
-              <a href="#elerhetoseg" className="nav-link hover:text-ink">
-                Elérhetőség
-              </a>
-            ) : null}
-            {showContact ? (
-              <a href="#kapcsolat" className="nav-link hover:text-ink">
-                Kapcsolat
-              </a>
-            ) : null}
-          </nav>
-        ) : null}
+        <nav
+          className="flex flex-wrap justify-end gap-x-7 gap-y-2 font-sans text-sm text-muted"
+          aria-label="Fő navigáció"
+        >
+          {showServices ? (
+            <a href="#szolgaltatasok" className="nav-link hover:text-ink">
+              Szolgáltatások
+            </a>
+          ) : null}
+          {showVisit ? (
+            <a href="#elerhetoseg" className="nav-link hover:text-ink">
+              Elérhetőség
+            </a>
+          ) : null}
+          {showContact ? (
+            <a href="#kapcsolat" className="nav-link hover:text-ink">
+              Kapcsolat
+            </a>
+          ) : null}
+        </nav>
       </div>
     </header>
   )
