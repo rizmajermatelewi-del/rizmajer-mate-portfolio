@@ -2,17 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Typographic, warm salon surface — no stock imagery, no purple defaults.
-   Atmosphere from paper grain, soft light, and type hierarchy. */
+/* Cool mineral spa — calm local business, not cream/terracotta or purple AI defaults.
+   Atmosphere from soft window light, linen grain, and typographic hierarchy. */
 :root {
-  --color-paper: #f3eee6;
-  --color-ink: #1a1714;
-  --color-muted: #6b645c;
-  --color-line: #ddd4c8;
-  --color-accent: #4a433c;
-  --color-focus: #2c2824;
+  --color-paper: #e7ece9;
+  --color-paper-deep: #d5ddd8;
+  --color-ink: #141816;
+  --color-ink-soft: #3a423e;
+  --color-muted: #6a7a70;
+  --color-line: #c2cbc5;
+  --color-sage: #3f5348;
+  --color-focus: #2a3830;
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-  --dur: 700ms;
+  --dur: 820ms;
+  --dur-slow: 14s;
 }
 
 html {
@@ -31,6 +34,10 @@ html {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+
+  .hero-atmosphere {
+    animation: none !important;
+  }
 }
 
 body {
@@ -38,26 +45,25 @@ body {
   min-height: 100vh;
   color: var(--color-ink);
   background-color: var(--color-paper);
-  background-image:
-    radial-gradient(ellipse 110% 70% at 8% -10%, rgba(180, 160, 130, 0.22), transparent 55%),
-    radial-gradient(ellipse 80% 50% at 100% 0%, rgba(200, 185, 160, 0.28), transparent 48%),
-    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-  font-family: 'Palatino Linotype', Palatino, 'Book Antiqua', 'Iowan Old Style', Georgia, serif;
+  font-family: 'Figtree', ui-sans-serif, system-ui, sans-serif;
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
 }
 
 h1,
 h2,
 h3,
 .brand {
-  font-family: Futura, 'Century Gothic', 'Gill Sans', 'Trebuchet MS', sans-serif;
-  letter-spacing: -0.02em;
+  font-family: 'Fraunces', Georgia, serif;
+  font-optical-sizing: auto;
+  letter-spacing: -0.035em;
+  font-weight: 600;
 }
 
 .font-mono {
-  font-family: ui-monospace, 'Cascadia Code', 'SF Mono', Menlo, Consolas, monospace;
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
 }
 
-/* Visible focus for keyboard users (SC 2.4.7 / 1.4.11) */
 :focus {
   outline: none;
 }
@@ -71,12 +77,12 @@ h3,
   position: absolute;
   left: 1rem;
   top: -3rem;
-  z-index: 50;
-  padding: 0.5rem 0.85rem;
+  z-index: 60;
+  padding: 0.5rem 0.9rem;
   background: var(--color-ink);
   color: var(--color-paper);
   text-decoration: none;
-  font-family: Futura, 'Century Gothic', 'Gill Sans', 'Trebuchet MS', sans-serif;
+  font-family: 'Figtree', ui-sans-serif, sans-serif;
   font-size: 0.875rem;
   border-radius: 0.25rem;
 }
@@ -85,11 +91,74 @@ h3,
   top: 1rem;
 }
 
-/* Intentional motion — presence, not noise */
+/* Full-bleed hero atmosphere — soft room light, not stock photography */
+.hero-shell {
+  position: relative;
+  isolation: isolate;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--color-paper);
+}
+
+.hero-atmosphere {
+  position: absolute;
+  inset: -8%;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 90% 70% at 18% 12%, rgba(255, 255, 255, 0.72), transparent 55%),
+    radial-gradient(ellipse 70% 55% at 88% 18%, rgba(90, 120, 105, 0.18), transparent 50%),
+    radial-gradient(ellipse 60% 50% at 70% 88%, rgba(62, 82, 72, 0.14), transparent 55%),
+    linear-gradient(165deg, #eef2ef 0%, #e7ece9 42%, #d8e0db 100%);
+  animation: atmosphere-drift var(--dur-slow) var(--ease-out) infinite alternate;
+}
+
+.hero-atmosphere::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 1.25rem 4.5rem;
+}
+
+@media (min-width: 640px) {
+  .hero-content {
+    padding: 0 1.5rem 6rem;
+  }
+}
+
+.site-surface {
+  background-color: var(--color-paper);
+  background-image:
+    radial-gradient(ellipse 80% 40% at 0% 0%, rgba(255, 255, 255, 0.35), transparent 50%),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+}
+
+@keyframes atmosphere-drift {
+  from {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.04) translate3d(-1.2%, 0.8%, 0);
+  }
+}
+
 @keyframes rise-in {
   from {
     opacity: 0;
-    transform: translateY(0.85rem);
+    transform: translateY(1.1rem);
   }
   to {
     opacity: 1;
@@ -111,21 +180,43 @@ h3,
 }
 
 .motion-fade {
-  animation: fade-in calc(var(--dur) * 1.1) var(--ease-out) both;
+  animation: fade-in calc(var(--dur) * 1.15) var(--ease-out) both;
 }
 
 .motion-delay-1 {
-  animation-delay: 90ms;
+  animation-delay: 100ms;
 }
 
 .motion-delay-2 {
-  animation-delay: 180ms;
+  animation-delay: 200ms;
 }
 
 .motion-delay-3 {
-  animation-delay: 280ms;
+  animation-delay: 320ms;
 }
 
 a {
-  transition: color 160ms var(--ease-out);
+  transition: color 180ms var(--ease-out);
+}
+
+.nav-link {
+  position: relative;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.15rem;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 280ms var(--ease-out);
+}
+
+.nav-link:hover::after,
+.nav-link:focus-visible::after {
+  transform: scaleX(1);
 }

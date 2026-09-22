@@ -1,32 +1,33 @@
 import { SERVICES } from '../data/services'
 import { formatPrice, formatDuration } from '../lib/format'
 
-/* Returns null rather than an empty section while the price list is unknown.
-   A heading with nothing under it tells a visitor the site is unfinished, on
-   the one page whose job is to look like a real business. */
+/* Returns null rather than an empty section while the price list is unknown. */
 export default function Services() {
   if (!SERVICES.length) return null
 
   return (
-    <section id="szolgaltatasok" className="px-5 py-16 sm:py-24" aria-labelledby="services-heading">
-      <div className="mx-auto max-w-3xl">
+    <section id="szolgaltatasok" className="px-5 py-20 sm:py-28" aria-labelledby="services-heading">
+      <div className="mx-auto max-w-5xl">
         <h2
           id="services-heading"
-          className="brand motion-rise text-3xl font-semibold tracking-tight text-stone-900 sm:text-4xl"
+          className="brand text-3xl font-semibold tracking-brand text-ink sm:text-4xl"
         >
           Szolgáltatások
         </h2>
+        <p className="mt-4 max-w-md font-sans text-sage-mute leading-relaxed">
+          Időtartam és ár — egy listában.
+        </p>
 
-        <ul className="mt-10 divide-y divide-stone-200 border-t border-stone-200">
+        <ul className="mt-12 divide-y divide-line border-t border-line">
           {SERVICES.map((service) => (
-            <li key={service.id} className="flex flex-wrap items-baseline gap-x-4 gap-y-1 py-5">
-              <h3 className="text-lg font-medium text-stone-900">{service.name}</h3>
-              <span className="text-sm text-stone-500">{formatDuration(service.minutes)}</span>
-              <span className="ml-auto text-lg tabular-nums text-stone-900">
+            <li key={service.id} className="flex flex-wrap items-baseline gap-x-4 gap-y-1 py-6">
+              <h3 className="font-sans text-lg font-medium text-ink">{service.name}</h3>
+              <span className="font-sans text-sm text-sage-mute">{formatDuration(service.minutes)}</span>
+              <span className="ml-auto font-sans text-lg tabular-nums text-ink">
                 {formatPrice(service.price)}
               </span>
               {service.desc ? (
-                <p className="w-full text-sm leading-relaxed text-stone-600">{service.desc}</p>
+                <p className="w-full font-sans text-sm leading-relaxed text-sage-mute">{service.desc}</p>
               ) : null}
             </li>
           ))}

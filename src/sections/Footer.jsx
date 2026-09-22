@@ -6,21 +6,21 @@ export default function Footer() {
   const owner = BUSINESS.legalName || BUSINESS.name || 'AB Masszázs'
 
   return (
-    <footer className="border-t border-stone-200/80 px-5 py-10">
-      <div className="mx-auto flex max-w-3xl flex-wrap items-center justify-between gap-4 text-sm text-stone-500">
+    <footer className="border-t border-line/80 px-5 py-12">
+      <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4 font-sans text-sm text-sage-mute">
         <p>{`© ${year} ${owner}`}</p>
-        <div className="flex flex-wrap gap-6">
+        <div className="flex flex-wrap gap-7">
           {BUSINESS.facebook ? (
-            <a href={BUSINESS.facebook} target="_blank" rel="noopener noreferrer">
+            <a href={BUSINESS.facebook} target="_blank" rel="noopener noreferrer" className="nav-link hover:text-ink">
               Facebook
             </a>
           ) : null}
           {BUSINESS.instagram ? (
-            <a href={BUSINESS.instagram} target="_blank" rel="noopener noreferrer">
+            <a href={BUSINESS.instagram} target="_blank" rel="noopener noreferrer" className="nav-link hover:text-ink">
               Instagram
             </a>
           ) : null}
-          <Link to="/adatvedelem" className="underline underline-offset-4">
+          <Link to="/adatvedelem" className="nav-link hover:text-ink">
             Adatvédelem
           </Link>
         </div>
