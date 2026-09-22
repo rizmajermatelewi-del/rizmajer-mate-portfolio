@@ -10,62 +10,76 @@ import { BUSINESS } from '../data/business'
    is that it loads fast. */
 export default function Visit() {
   const hasAddress = Boolean(BUSINESS.street && BUSINESS.city)
-  const address = `${BUSINESS.postalCode} ${BUSINESS.city}, ${BUSINESS.street}`.trim()
+  const address = hasAddress
+    ? `${BUSINESS.postalCode ? `${BUSINESS.postalCode} ` : ''}${BUSINESS.city}, ${BUSINESS.street}`
+    : ''
   const hasAnything = hasAddress || BUSINESS.hours.length > 0 || Boolean(BUSINESS.phone)
 
   if (!hasAnything) return null
 
   return (
-    <section id="elerhetoseg" className="bg-stone-50/80 px-5 py-16 sm:py-24">
-      <div className="mx-auto grid max-w-3xl gap-10 sm:grid-cols-2">
-        {hasAddress ? (
-          <div>
-            <h2 className="text-sm font-semibold uppercase tracking-widest text-stone-500">Cím</h2>
-            <p className="mt-3 text-lg text-stone-900">{address}</p>
-            {BUSINESS.mapsUrl ? (
+    <section
+      id="elerhetoseg"
+      className="border-y border-stone-200/70 bg-stone-50/60 px-5 py-16 sm:py-24"
+      aria-labelledby="visit-heading"
+    >
+      <div className="mx-auto max-w-3xl">
+        <h2
+          id="visit-heading"
+          className="brand motion-rise text-3xl font-semibold tracking-tight text-stone-900"
+        >
+          Elérhetőség
+        </h2>
+        <div className="mt-10 grid gap-10 sm:grid-cols-2">
+          {hasAddress ? (
+            <div>
+              <h3 className="text-sm font-semibold uppercase tracking-widest text-stone-500">Cím</h3>
+              <p className="mt-3 text-lg text-stone-900">{address}</p>
+              {BUSINESS.mapsUrl ? (
+                <a
+                  href={BUSINESS.mapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-2 inline-block text-sm underline underline-offset-4"
+                >
+                  Megnyitás a térképen
+                </a>
+              ) : null}
+            </div>
+          ) : null}
+
+          {BUSINESS.hours.length ? (
+            <div>
+              <h3 className="text-sm font-semibold uppercase tracking-widest text-stone-500">
+                Nyitvatartás
+              </h3>
+              <dl className="mt-3 space-y-1">
+                {BUSINESS.hours.map(({ day, opens, closes }) => (
+                  <div key={day} className="flex justify-between gap-6 text-stone-900">
+                    <dt>{day}</dt>
+                    <dd className="tabular-nums">{`${opens} – ${closes}`}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          ) : null}
+
+          {BUSINESS.phone ? (
+            <div>
+              <h3 className="text-sm font-semibold uppercase tracking-widest text-stone-500">
+                Időpontért
+              </h3>
+              {/* Phase 1 has no booking flow. Until Phase 2 replaces this block,
+                  the honest call to action is her telephone number. */}
               <a
-                href={BUSINESS.mapsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-2 inline-block text-sm underline underline-offset-4"
+                href={`tel:${BUSINESS.phone.replace(/\s/g, '')}`}
+                className="mt-3 inline-block text-lg text-stone-900 underline underline-offset-4"
               >
-                Megnyitás a térképen
+                {BUSINESS.phone}
               </a>
-            ) : null}
-          </div>
-        ) : null}
-
-        {BUSINESS.hours.length ? (
-          <div>
-            <h2 className="text-sm font-semibold uppercase tracking-widest text-stone-500">
-              Nyitvatartás
-            </h2>
-            <dl className="mt-3 space-y-1">
-              {BUSINESS.hours.map(({ day, opens, closes }) => (
-                <div key={day} className="flex justify-between gap-6 text-stone-900">
-                  <dt>{day}</dt>
-                  <dd className="tabular-nums">{`${opens} – ${closes}`}</dd>
-                </div>
-              ))}
-            </dl>
-          </div>
-        ) : null}
-
-        {BUSINESS.phone ? (
-          <div>
-            <h2 className="text-sm font-semibold uppercase tracking-widest text-stone-500">
-              Időpontért
-            </h2>
-            {/* Phase 1 has no booking flow. Until Phase 2 replaces this block,
-                the honest call to action is her telephone number. */}
-            <a
-              href={`tel:${BUSINESS.phone.replace(/\s/g, '')}`}
-              className="mt-3 inline-block text-lg text-stone-900 underline underline-offset-4"
-            >
-              {BUSINESS.phone}
-            </a>
-          </div>
-        ) : null}
+            </div>
+          ) : null}
+        </div>
       </div>
     </section>
   )

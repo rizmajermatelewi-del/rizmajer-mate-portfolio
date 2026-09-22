@@ -3,12 +3,13 @@ import { BUSINESS } from '../data/business'
 
 export default function Footer() {
   const year = new Date().getFullYear()
+  const owner = BUSINESS.legalName || BUSINESS.name || 'AB Masszázs'
 
   return (
-    <footer className="border-t border-stone-200 px-5 py-10">
+    <footer className="border-t border-stone-200/80 px-5 py-10">
       <div className="mx-auto flex max-w-3xl flex-wrap items-center justify-between gap-4 text-sm text-stone-500">
-        <p>{`© ${year} ${BUSINESS.legalName || BUSINESS.name || 'AB Masszázs'}`}</p>
-        <div className="flex gap-6">
+        <p>{`© ${year} ${owner}`}</p>
+        <div className="flex flex-wrap gap-6">
           {BUSINESS.facebook ? (
             <a href={BUSINESS.facebook} target="_blank" rel="noopener noreferrer">
               Facebook

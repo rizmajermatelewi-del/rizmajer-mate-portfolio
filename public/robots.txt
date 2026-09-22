@@ -1,2 +1,5 @@
 User-agent: *
 Allow: /
+
+# Privacy page is noindex at launch prerender; still crawlable for humans.
+Sitemap: https://ab-masszazs.vercel.app/sitemap.xml

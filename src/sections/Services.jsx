@@ -8,9 +8,12 @@ export default function Services() {
   if (!SERVICES.length) return null
 
   return (
-    <section id="szolgaltatasok" className="px-5 py-16 sm:py-24">
+    <section id="szolgaltatasok" className="px-5 py-16 sm:py-24" aria-labelledby="services-heading">
       <div className="mx-auto max-w-3xl">
-        <h2 className="brand text-3xl font-semibold tracking-tight text-stone-900 sm:text-4xl">
+        <h2
+          id="services-heading"
+          className="brand motion-rise text-3xl font-semibold tracking-tight text-stone-900 sm:text-4xl"
+        >
           Szolgáltatások
         </h2>
 

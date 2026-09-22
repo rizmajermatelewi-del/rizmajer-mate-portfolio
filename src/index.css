@@ -2,14 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Calm stone palette on warm paper — no purple defaults, no stock imagery.
-   Atmosphere comes from type, space, and a soft radial wash, not photos. */
+/* Typographic, warm salon surface — no stock imagery, no purple defaults.
+   Atmosphere from paper grain, soft light, and type hierarchy. */
 :root {
-  --color-paper: #f7f4ef;
-  --color-ink: #1c1917;
-  --color-muted: #78716c;
-  --color-line: #e7e5e4;
-  --color-accent: #57534e;
+  --color-paper: #f3eee6;
+  --color-ink: #1a1714;
+  --color-muted: #6b645c;
+  --color-line: #ddd4c8;
+  --color-accent: #4a433c;
+  --color-focus: #2c2824;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur: 700ms;
 }
 
 html {
@@ -20,6 +23,14 @@ html {
   html {
     scroll-behavior: auto;
   }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 body {
@@ -28,19 +39,93 @@ body {
   color: var(--color-ink);
   background-color: var(--color-paper);
   background-image:
-    radial-gradient(ellipse 120% 80% at 10% -20%, rgba(168, 162, 158, 0.18), transparent 55%),
-    radial-gradient(ellipse 90% 60% at 100% 0%, rgba(214, 211, 209, 0.35), transparent 50%);
-  font-family: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
+    radial-gradient(ellipse 110% 70% at 8% -10%, rgba(180, 160, 130, 0.22), transparent 55%),
+    radial-gradient(ellipse 80% 50% at 100% 0%, rgba(200, 185, 160, 0.28), transparent 48%),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  font-family: 'Palatino Linotype', Palatino, 'Book Antiqua', 'Iowan Old Style', Georgia, serif;
 }
 
 h1,
 h2,
 h3,
 .brand {
-  font-family: 'Avenir Next', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  font-family: Futura, 'Century Gothic', 'Gill Sans', 'Trebuchet MS', sans-serif;
   letter-spacing: -0.02em;
 }
 
 .font-mono {
   font-family: ui-monospace, 'Cascadia Code', 'SF Mono', Menlo, Consolas, monospace;
+}
+
+/* Visible focus for keyboard users (SC 2.4.7 / 1.4.11) */
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -3rem;
+  z-index: 50;
+  padding: 0.5rem 0.85rem;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  text-decoration: none;
+  font-family: Futura, 'Century Gothic', 'Gill Sans', 'Trebuchet MS', sans-serif;
+  font-size: 0.875rem;
+  border-radius: 0.25rem;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* Intentional motion — presence, not noise */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.85rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.motion-rise {
+  animation: rise-in var(--dur) var(--ease-out) both;
+}
+
+.motion-fade {
+  animation: fade-in calc(var(--dur) * 1.1) var(--ease-out) both;
+}
+
+.motion-delay-1 {
+  animation-delay: 90ms;
+}
+
+.motion-delay-2 {
+  animation-delay: 180ms;
+}
+
+.motion-delay-3 {
+  animation-delay: 280ms;
+}
+
+a {
+  transition: color 160ms var(--ease-out);
 }

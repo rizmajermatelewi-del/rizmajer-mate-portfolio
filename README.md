@@ -44,15 +44,16 @@ live with blank sections.
 
 ## Hosting
 
-Use **Cloudflare Pages** or **Netlify** (commercial-friendly free tiers). Do
-**not** use Vercel Hobby for this commercial salon site.
+**Live (interim SoT):** https://ab-masszazs.vercel.app/ — separate Vercel
+project, `build:scaffold` so empty facts still deploy. Prefer Cloudflare Pages
+or Netlify for the commercial launch host later.
 
-- Build command: `SITE_ORIGIN=https://<assigned-host> npm run build`
-- Output directory: `dist`
+- Scaffold (current): `npm run build:scaffold` → `dist`
+- Launch / SEO prerender: `SITE_ORIGIN=https://<host> npm run build`
 - Node: 22+
 
-The first deploy is expected to fail until business facts and the service list
-are filled. That is the content guard working.
+The launch build fails until business facts and the service list are filled.
+That is the content guard working.
 
 ## Before launch
 
