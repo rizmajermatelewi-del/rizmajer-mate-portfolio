@@ -1,12 +1,8 @@
 import { describe, it, expect } from 'vitest'
-import { PROJECTS_FULL } from './projects'
+import { LIVE_COUNT, PROJECT_COUNT, PROJECTS_FULL, REPO_COUNT } from './projects'
 
 const CASE_FIELDS = ['year', 'role', 'problem', 'solution', 'gallery', 'github', 'live']
 
-/* Pulled out of the loop below so the negative case can call the real
-   assertions instead of restating them. Every `gallery` is still `[]`, so the
-   loop has nothing to walk; without this the guard could not fail today and
-   would reach Task 2 — where it becomes load-bearing — unproven. */
 function assertGalleryItemShape(g, label) {
   expect(typeof g, `${label} gallery item must be an object, not a bare string`).toBe('object')
   expect(g.src, `${label} gallery item is missing src`).toBeTruthy()
@@ -16,18 +12,10 @@ function assertGalleryItemShape(g, label) {
 }
 
 describe('PROJECTS_FULL', () => {
-  /* The reason two entries were deleted on 2026-08-10: both were labelled
-     'Ügyfélprojekt' and described work that had never been delivered or
-     invoiced, on the one section of the site whose entire job is proof. That is
-     not a typo you notice in review — it reads perfectly well and is simply
-     untrue, and the person who finds out is a prospect asking for a reference.
-
-     So the rule is mechanical now. Call something client work and you must be
-     able to hand over a URL or a repo. AB Masszázs is a real salon and will
-     pass this the day it ships; until then it stays out. */
   it('never claims client work without something a stranger can open', () => {
     for (const p of PROJECTS_FULL) {
-      if (p.label !== 'Ügyfélprojekt') continue
+      const labelHu = typeof p.label === 'object' ? p.label.hu : p.label
+      if (labelHu !== 'Ügyfélprojekt') continue
       expect(
         Boolean(p.live) || p.github !== '#',
         `${p.title} is labelled Ügyfélprojekt but has no live URL and no repo to back it`,
@@ -35,18 +23,16 @@ describe('PROJECTS_FULL', () => {
     }
   })
 
-  /* Named "still has four projects" until 2026-08-18, while asserting two.
-     The count was corrected when the two undelivered client entries were
-     removed on 2026-08-10 and the name was not, so the one line a reader
-     scans said the opposite of the line that runs. A test whose name lies is
-     worse than no test: it is the sentence somebody quotes in review.
-
-     What it is actually for: the number of projects is a fact this repo has
-     already let rot once, by keeping it in four files at the same time.
-     Pinning it here makes adding or removing an entry deliberate, and the
-     failure points at the copy that quotes the number. */
   it('pins the project count, so a change to the list cannot be accidental', () => {
     expect(PROJECTS_FULL).toHaveLength(2)
+    expect(PROJECT_COUNT).toBe(2)
+  })
+
+  it('keeps derived live/repo counts in sync with the array', () => {
+    expect(LIVE_COUNT).toBe(PROJECTS_FULL.filter((p) => p.live).length)
+    expect(REPO_COUNT).toBe(
+      PROJECTS_FULL.filter((p) => p.github && p.github !== '#').length,
+    )
   })
 
   it('gives every project every case-study field, so the modal never reads undefined', () => {
@@ -57,15 +43,41 @@ describe('PROJECTS_FULL', () => {
     }
   })
 
-  it('keeps github as a placeholder for this pass', () => {
+  it('ships a public live URL for every demo', () => {
     for (const p of PROJECTS_FULL) {
-      expect(p.github).toBe('#')
+      expect(p.live, `${p.title} needs a live https URL`).toMatch(/^https:\/\//)
+    }
+    expect(LIVE_COUNT).toBe(PROJECTS_FULL.length)
+  })
+
+  /* github stays '#' until the separate portfolio-demos repo is created and
+     pushed — the cloud agent cannot create GitHub repositories. When that
+     lands, flip DEMOS_REPO_READY in projects.js and expect real URLs here. */
+  it('keeps github honest: either a public URL or the # placeholder', () => {
+    for (const p of PROJECTS_FULL) {
+      if (p.github === '#') continue
+      expect(p.github).toMatch(/^https:\/\/github\.com\//)
+    }
+  })
+
+  it('labels demos as Bemutató projekt, never fake client work', () => {
+    for (const p of PROJECTS_FULL) {
+      const labelHu = typeof p.label === 'object' ? p.label.hu : p.label
+      expect(labelHu).toBe('Bemutató projekt')
+    }
+  })
+
+  it('ships a card screenshot with alt text for every demo', () => {
+    for (const p of PROJECTS_FULL) {
+      expect(p.image, `${p.title} needs a card image`).toBeTruthy()
+      expect(p.imageAlt, `${p.title} needs imageAlt`).toBeTruthy()
     }
   })
 
   it('keeps gallery an array so the modal can map over it safely', () => {
     for (const p of PROJECTS_FULL) {
       expect(Array.isArray(p.gallery)).toBe(true)
+      expect(p.gallery.length, `${p.title} needs gallery shots`).toBeGreaterThanOrEqual(2)
     }
   })
 
@@ -93,9 +105,6 @@ describe('PROJECTS_FULL', () => {
     }
   })
 
-  /* The badge means "this is the strongest one". Two of them means it means
-     nothing, and the card renders it from a plain boolean per project, so
-     nothing in the component itself would stop a second one appearing. */
   it('never marks more than one project as featured', () => {
     for (const p of PROJECTS_FULL) {
       expect(typeof p.featured, `${p.title} featured must be a boolean`).toBe('boolean')

@@ -1,98 +1,137 @@
 import { neutral } from '../i18n/t.js'
+import idopontfoglaloCard from '../assets/demos/idopontfoglalo-card.webp'
+import idopontfoglalo01 from '../assets/demos/idopontfoglalo-01.webp'
+import idopontfoglalo02 from '../assets/demos/idopontfoglalo-02.webp'
+import napiMenuCard from '../assets/demos/napi-menu-card.webp'
+import napiMenu01 from '../assets/demos/napi-menu-01.webp'
+import napiMenu02 from '../assets/demos/napi-menu-02.webp'
+import napiMenu03 from '../assets/demos/napi-menu-03.webp'
 
-/* The case-study fields below are intentionally empty. ProjectModal renders
-   each one only when it is non-empty, so filling them in later is a data edit
-   rather than a code change, and a half-filled project degrades to a short
-   clean panel instead of a page of empty headings.
+/* Demo apps live in a **separate** public repo (portfolio-demos) and each has
+   its own Vercel project. This portfolio only stores screenshots + links.
 
-   `image` / `imageAlt` are the card screenshots. Empty means ProjectMock
-   draws a labelled empty frame instead, which is the honest state: this
-   section's headline promises "valós munka, nem mockup", so a fabricated
-   preview here would contradict the page in the one place it can least
-   afford to. To fill one, put the file in src/assets, import it at the top
-   of this file, and set both fields. Nothing else needs touching.
+   `github` stays '#' until rizmajermatelewi-del/portfolio-demos exists and is
+   pushed — the agent token cannot create repositories. Do not invent a URL. */
 
-   Wanted, in priority order:
-     1. Rétes-rendelő      - the live ordering screen, 1200x750 or wider
-     2. AB Masszázs        - the booking calendar view
-     3. Business Value Builder - the pricing page
-     4. WebWise Studio     - the landing hero
-   `github` stays '#' until there are real repository URLs; projects.test.js
-   asserts that, so it fails loudly rather than shipping dead links.
+const DEMOS_REPO = 'https://github.com/rizmajermatelewi-del/portfolio-demos'
+/* Set to true in the same PR that fills github after the demos repo is public. */
+const DEMOS_REPO_READY = false
 
-   `features` and `featured` follow the same empty-by-default rule as the
-   case-study fields above. `features` is the card's "Amit tud" list and renders
-   only when non-empty; `featured` draws a "Kiemelt projekt" badge and is false
-   on all four on purpose. Nothing here has a screenshot, a live URL or a repo
-   yet, so there is no defensible basis for calling one of them the strongest —
-   a badge handed out arbitrarily is decoration, and this section's whole claim
-   is that it does not decorate. Set it on the one project that earns it once
-   the demos are deployed. */
-/* Two entries removed on 2026-08-10, both labelled 'Ügyfélprojekt': a
-   Rétes-rendelő and the AB Masszázs időpontfoglaló. Neither was delivered and
-   neither was invoiced — they described work that had not happened, on the one
-   page whose job is to prove that it had. A prospect asking "megnézhetem?" or
-   "van referencia?" would have found nothing behind either.
-
-   AB Masszázs is coming back once it exists: it is a real salon and a real
-   brief. It belongs here the day it is live, with a screenshot and a URL, and
-   not before. projects.test.js now enforces the general form of that rule —
-   nothing may call itself client work without something a stranger can open. */
-/* The empty case-study fields stay as '' rather than becoming { hu: '', en: '' }.
-   Every render site already guards them with a truthiness check, so an empty
-   string is simply not rendered and t() is never called on it — while
-   untranslatedIn() would read an empty pair as missing both languages and turn
-   four deliberate blanks into four failures.
-
-   It also fails in the right direction later: fill one in with a bare string
-   and t() throws at build time naming the field, which is the reminder to
-   supply both languages. `tech` stays bare for the opposite reason — a stack
-   name is self-evidently not copy, and untranslatedIn ignores non-field
-   leaves. */
 export const PROJECTS_FULL = [
   {
-    title: neutral('Business Value Builder'),
-    /* Was: "végigmentem az inárcsi vállalkozásokon, kiszűrtem, kiknek nincs
-       weboldaluk, és személyesen kerestem meg őket." That outreach is planned,
-       not done, so the sentence claimed a case study that does not exist yet. */
-    text: {
-      hu: 'Saját árazási oldal: azt modellezi, hogyan lehet egy környékbeli vállalkozásnak úgy árat mondani, hogy a végösszeg előre kiszámítható maradjon.',
-      en: 'My own pricing page: it models how to quote a nearby business a price whose final total stays predictable up front.',
+    title: {
+      hu: 'Időpontfoglaló — Szálka Fodrászat',
+      en: 'Booking — Szalka Hair Salon',
     },
-    tech: ['React', 'TanStack Start'],
-    features: [],
-    featured: false,
-    label: { hu: 'Saját projekt', en: 'Personal project' },
-    tone: { from: '--color-card-3', to: '--color-deep', accent: '--color-primary' },
-    image: '',
-    imageAlt: '',
-    year: '',
-    role: '',
-    problem: '',
-    solution: '',
-    gallery: [],
-    github: '#',
-    live: '',
+    text: {
+      hu: 'Bemutató időpontfoglaló fodrászatra: szolgáltatás, naptár, foglalás, admin lista. Saját kezdeményezés, nem ügyfélmunka.',
+      en: 'Demo booking flow for a salon: services, calendar, booking, admin list. My own initiative, not client work.',
+    },
+    tech: ['React', 'Vite', 'Tailwind'],
+    features: [
+      { hu: 'Dupla foglalás elleni védelem', en: 'Double-booking prevention' },
+      { hu: 'Admin lista PIN-nel', en: 'Admin list with a PIN' },
+      { hu: 'Magyar mintaadatok', en: 'Hungarian sample data' },
+    ],
+    featured: true,
+    label: { hu: 'Bemutató projekt', en: 'Demo project' },
+    tone: { from: '--color-card-1', to: '--color-deep', accent: '--color-primary' },
+    image: idopontfoglaloCard,
+    imageAlt: {
+      hu: 'Szálka Fodrászat bemutató foglaló: szolgáltatások, napválasztó és időpontok',
+      en: 'Szalka salon demo booker: services, day picker and time slots',
+    },
+    year: neutral('2026'),
+    role: {
+      hu: 'Tervezés, fejlesztés, deploy',
+      en: 'Design, build, deploy',
+    },
+    problem: {
+      hu: 'Egy kis fodrászatnak kell egy egyszerű, telefonról is használható foglaló — anélkül, hogy Excelben vagy üzenetben egyeztessen.',
+      en: 'A small salon needs a simple booker that works on a phone — without coordinating in Excel or chat.',
+    },
+    solution: {
+      hu: 'Szolgáltatásválasztó, szabad sávok, foglalási űrlap, megerősítő képernyő és admin lista. A demó localStorage-ben fut; élesben Supabase + e-mail jön.',
+      en: 'Service picker, free slots, booking form, confirmation screen and admin list. The demo uses localStorage; production would add Supabase + email.',
+    },
+    gallery: [
+      {
+        src: idopontfoglalo01,
+        alt: 'Foglalási felület: szolgáltatások és időpontválasztó',
+        width: 1280,
+        height: 800,
+      },
+      {
+        src: idopontfoglalo02,
+        alt: 'Admin lista a bemutató foglalásokkal',
+        width: 1280,
+        height: 800,
+      },
+    ],
+    github: DEMOS_REPO_READY ? `${DEMOS_REPO}/tree/main/idopontfoglalo` : '#',
+    live: 'https://demo-idopontfoglalo.vercel.app',
   },
   {
-    title: neutral('WebWise Studio'),
-    text: {
-      hu: 'Ügynökségi koncepció-oldal egyedi React/AI alapú webalkalmazásokra — saját kezdeményezésű prototípus.',
-      en: 'An agency concept site for custom React/AI web applications — a prototype I started myself.',
+    title: {
+      hu: 'Napi menü — Kispipa Büfé',
+      en: 'Daily menu — Kispipa Buffet',
     },
-    tech: ['React', 'Supabase', 'Framer Motion'],
-    features: [],
+    text: {
+      hu: 'Bemutató napi menü büfének: mai lap, heti nézet, egyszerű szerkesztő. Saját kezdeményezés, nem ügyfélmunka.',
+      en: 'Demo daily menu for a buffet: today\'s board, week view, simple editor. My own initiative, not client work.',
+    },
+    tech: ['React', 'Vite', 'Tailwind'],
+    features: [
+      { hu: 'Mai menü + hét', en: 'Today + week view' },
+      { hu: 'Tulaj-szerkesztő', en: 'Owner editor' },
+      { hu: 'Magyar mintaadatok', en: 'Hungarian sample data' },
+    ],
     featured: false,
-    label: { hu: 'Saját projekt', en: 'Personal project' },
-    tone: { from: '--color-card-4', to: '--color-deep', accent: '--color-primary-dark' },
-    image: '',
-    imageAlt: '',
-    year: '',
-    role: '',
-    problem: '',
-    solution: '',
-    gallery: [],
-    github: '#',
-    live: '',
+    label: { hu: 'Bemutató projekt', en: 'Demo project' },
+    tone: { from: '--color-card-2', to: '--color-deep', accent: '--color-primary-dark' },
+    image: napiMenuCard,
+    imageAlt: {
+      hu: 'Kispipa Büfé bemutató napi menü: leves, főételek, desszert Ft-ban',
+      en: 'Kispipa buffet demo daily menu: soup, mains, dessert in HUF',
+    },
+    year: neutral('2026'),
+    role: {
+      hu: 'Tervezés, fejlesztés, deploy',
+      en: 'Design, build, deploy',
+    },
+    problem: {
+      hu: 'A kisvendéglő a napi menüt gyakran papírlapról fotózza Facebookra — a vendég nem találja, a tulaj nehezen frissíti.',
+      en: 'A small eatery often posts the daily menu as a photo of a printout on Facebook — hard to find, hard to update.',
+    },
+    solution: {
+      hu: 'Nyilvános mai menü, heti áttekintés, jelszavas szerkesztő. A demó localStorage-ben ment; élesben Supabase auth + tábla.',
+      en: 'Public today board, week overview, password editor. The demo saves to localStorage; production would use Supabase auth + a table.',
+    },
+    gallery: [
+      {
+        src: napiMenu01,
+        alt: 'Mai menü képernyő a Kispipa Büfé bemutatóban',
+        width: 1280,
+        height: 800,
+      },
+      {
+        src: napiMenu02,
+        alt: 'Heti áttekintés a napi menükről',
+        width: 1280,
+        height: 800,
+      },
+      {
+        src: napiMenu03,
+        alt: 'Menüszerkesztő admin felület',
+        width: 1280,
+        height: 800,
+      },
+    ],
+    github: DEMOS_REPO_READY ? `${DEMOS_REPO}/tree/main/napi-menu` : '#',
+    live: 'https://demo-napi-menu.vercel.app',
   },
 ]
+
+export const PROJECT_COUNT = PROJECTS_FULL.length
+export const LIVE_COUNT = PROJECTS_FULL.filter((p) => p.live).length
+export const REPO_COUNT = PROJECTS_FULL.filter((p) => p.github && p.github !== '#').length

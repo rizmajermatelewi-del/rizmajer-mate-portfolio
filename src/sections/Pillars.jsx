@@ -43,8 +43,8 @@ export default function Pillars() {
          projects.js is empty and every `github` is '#'. It stays out until
          there are real links behind the project cards. */
       desc: {
-        hu: 'Két saját kezdeményezésű projekt. Az első ügyfélmunka most indul.',
-        en: 'Two projects I started myself. The first client job is beginning now.',
+        hu: 'Két bemutató app a repóban — időpontfoglaló és napi menü. Az első ügyfélmunka most indul.',
+        en: 'Two demo apps in the repo — booking and a daily menu. The first client job is beginning now.',
       },
     },
     {

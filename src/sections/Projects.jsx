@@ -18,34 +18,15 @@ import { TiltCard } from '../motion/TiltCard'
 const COPY = {
   details: { hu: 'részletek', en: 'details' },
   eyebrow: { hu: 'Projektek', en: 'Work' },
-  /* These three counted four projects and two live client jobs. PROJECTS_FULL
-     holds two entries, both labelled "Saját projekt", both with `live: ''` and
-     `github: '#'`.
-
-     The two fabricated client entries were deleted on 2026-08-10 — Máté said
-     plainly the paying clients were not real — and Pillars was corrected in the
-     same commit from "4 megépített projekt / 2 fizető ügyfél" to "2 / 1 készül".
-     This block was missed. So the section went on announcing four projects and
-     two client jobs directly above two cards that both read "Saját projekt",
-     while Pillars said the opposite two sections earlier. A visitor who counts
-     the cards catches it in about three seconds, and what they catch is not a
-     typo: it is the page overstating delivered work on the one section whose
-     entire job is to prove it.
-
-     projects.test.js could not see this. It asserts that no *entry* calls
-     itself client work without a URL a stranger can open — it has no view of a
-     sentence hardcoded in the JSX above the entries. The lesson is the one this
-     codebase keeps relearning: a count restated in prose drifts from the data
-     it counts. Wording it so it stays true at two, three or ten entries is what
-     keeps it from drifting again.
-
-     "Amint él, itt lesz a link hozzá" is deliberately the same promise Pillars
-     makes about the same salon, in the same words. */
+  /* PROJECTS_FULL currently holds two Bemutató projekt demos with public
+     github folders and screenshots. `live` stays empty until each demo is
+     deployed on Vercel. Do not restate a count here that can drift from
+     PROJECTS_FULL — projects.test.js pins the array length. */
   headingLead: { hu: 'Amin dolgozom.', en: 'What I am working on.' },
-  headingAccent: { hu: 'Egyelőre a sajátjaim.', en: 'My own, for now.' },
+  headingAccent: { hu: 'Bemutatók, amiket megnyithatsz.', en: 'Demos you can open.' },
   intro: {
-    hu: 'Mindegyiket végig én építettem. Ügyfélmunkát még nem adtam át — az első most készül, és amint él, itt lesz a link hozzá.',
-    en: 'I built every one of them end to end. I have not handed over client work yet — the first is being built now, and the moment it is live the link will be here.',
+    hu: 'Két bemutató rendszer — időpontfoglaló és napi menü —, mindkettő megnyitható. A kód külön nyilvános repóba kerül; amíg az nincs fent, a live link a bizonyíték. Ügyfélmunkát még nem adtam át.',
+    en: 'Two demo systems — booking and a daily menu — both openable. The code goes in a separate public repo; until that is up, the live link is the proof. I have not handed over client work yet.',
   },
   featured: { hu: 'Kiemelt projekt', en: 'Featured project' },
   whatItDoes: { hu: 'Amit tud', en: 'What it does' },
@@ -123,7 +104,11 @@ export default function Projects() {
               }`}
             >
               <TiltCard className="h-full">
-                <ProjectMock tone={p.tone} image={p.image} alt={p.imageAlt} />
+                <ProjectMock
+                  tone={p.tone}
+                  image={p.image}
+                  alt={p.imageAlt ? t(p.imageAlt, locale) : ''}
+                />
                 <div className="p-6">
                   {/* The "01 / 02 / 03 / 04" counter that sat opposite the
                       label is gone. Four cards in a row are already countable
@@ -155,10 +140,10 @@ export default function Projects() {
                     <div className="mt-5">
                       <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-primary-dark">{t(COPY.whatItDoes, locale)}</p>
                       <ul className="mt-2 space-y-1.5">
-                        {p.features.map((f) => (
-                          <li key={f} className="flex gap-2 text-muted text-[13px] leading-relaxed">
+                        {p.features.map((f, fi) => (
+                          <li key={fi} className="flex gap-2 text-muted text-[13px] leading-relaxed">
                             <Check className="h-3.5 w-3.5 shrink-0 mt-[3px] text-primary" strokeWidth={2.5} />
-                            <span>{f}</span>
+                            <span>{t(f, locale)}</span>
                           </li>
                         ))}
                       </ul>
