@@ -45,6 +45,10 @@ const COPY = {
     en: 'Upkeep for a shop is priced separately, as it depends on the traffic. It will be in the quote.',
   },
   summary: { hu: 'Összesítő', en: 'Summary' },
+  empty: {
+    hu: 'Válassz legalább egy szolgáltatást, és itt tételesen látod az árat.',
+    en: 'Pick at least one service and the price appears here, line by line.',
+  },
   total: { hu: 'Egyszeri ár, becslés', en: 'One-off price, estimate' },
   rounded: { hu: '10 ezerre felfelé kerekítve', en: 'rounded up to 10 000 Ft' },
   discount: { hu: 'Indulási kedvezmény', en: 'Launch discount' },
@@ -143,10 +147,12 @@ function ChoiceCard({ type, name, checked, onChange, children }) {
    rules them out. */
 export default function PriceCalculator({ locale, onQuote }) {
   const [step, setStep] = useState(0)
-  const [serviceIds, setServiceIds] = useState([CALC_SERVICES[0].id])
+  const [serviceIds, setServiceIds] = useState([])
   const [picked, setPicked] = useState([])
   const [pages, setPages] = useState(PAGES.included)
-  const [upkeepId, setUpkeepId] = useState(null)
+  /* Nothing is ticked in advance, upkeep included: undefined until the
+     visitor answers, null for "not for now". */
+  const [upkeepId, setUpkeepId] = useState(undefined)
   const [groupId, setGroupId] = useState(CALC_SERVICES[0].group)
   const services = serviceIds.map((id) => CALC_SERVICES.find((s) => s.id === id))
   /* The extras specific to the chosen service come first: SMS reminders
@@ -155,7 +161,8 @@ export default function PriceCalculator({ locale, onQuote }) {
   const upkeeps = upkeepFor(serviceIds)
   const upkeep = upkeeps.find((u) => u.id === upkeepId) ?? null
   const withPages = pagesApply(serviceIds)
-  const { lines, total } = breakdown(serviceIds, picked, pages)
+  const empty = serviceIds.length === 0
+  const { lines, total } = breakdown(serviceIds, picked, pages) ?? { lines: [], total: 0 }
   const discounted = services.some(isDiscounted)
   const finalHuf = discounted ? saleHuf(total) : total
   const rolling = useRollingNumber(finalHuf)
@@ -163,12 +170,10 @@ export default function PriceCalculator({ locale, onQuote }) {
   const firstYear = useRollingNumber(finalHuf + 12 * monthlyHuf)
   const extraPages = withPages && pages > PAGES.included
 
-  /* Toggles a service. The last one cannot be removed (an empty estimate
-     says nothing), and a kind of site replaces any other kind. */
+  /* Toggles a service; a kind of site replaces any other kind. */
   function toggleService(id) {
     let next
     if (serviceIds.includes(id)) {
-      if (serviceIds.length === 1) return
       next = serviceIds.filter((x) => x !== id)
     } else {
       next = [...serviceIds.filter((x) => !(SITE_KINDS.includes(id) && SITE_KINDS.includes(x))), id]
@@ -366,8 +371,9 @@ export default function PriceCalculator({ locale, onQuote }) {
           {step < COPY.steps.length - 1 && (
             <button
               type="button"
+              disabled={empty}
               onClick={() => setStep(step + 1)}
-              className="inline-flex items-center gap-1.5 rounded-full bg-ink px-4 py-2 text-sm font-semibold text-background hover:opacity-90 transition-opacity duration-200 focus-visible:outline-2 focus-visible:outline-primary"
+              className="inline-flex items-center gap-1.5 rounded-full bg-ink px-4 py-2 text-sm font-semibold text-background hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed transition-opacity duration-200 focus-visible:outline-2 focus-visible:outline-primary"
             >
               {t(COPY.next, locale)}
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -375,7 +381,7 @@ export default function PriceCalculator({ locale, onQuote }) {
           )}
           {/* On a phone the summary sits below the steps, out of sight, so
               the running total rides along with the buttons. */}
-          <span className="ml-auto lg:hidden font-display font-bold text-ink tabular-nums whitespace-nowrap" aria-hidden="true">
+          <span className={`ml-auto lg:hidden font-display font-bold text-ink tabular-nums whitespace-nowrap ${empty ? 'invisible' : ''}`} aria-hidden="true">
             {t(fmt(rolling), locale)}
           </span>
         </div>
@@ -383,6 +389,11 @@ export default function PriceCalculator({ locale, onQuote }) {
 
       <aside className="lg:sticky lg:top-24 self-start flex flex-col rounded-3xl bg-primary/10 p-6">
         <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-primary-dark">{t(COPY.summary, locale)}</p>
+
+        {empty ? (
+          <p className="mt-4 text-sm text-muted leading-relaxed">{t(COPY.empty, locale)}</p>
+        ) : (
+          <>
 
         <ul className="mt-4 space-y-2 text-[13px]">
           {lines.map((l) => (
@@ -468,6 +479,8 @@ export default function PriceCalculator({ locale, onQuote }) {
           {t(COPY.cta, locale)}
           <ArrowRight className="h-4 w-4" aria-hidden="true" />
         </a>
+          </>
+        )}
       </aside>
     </div>
   )
