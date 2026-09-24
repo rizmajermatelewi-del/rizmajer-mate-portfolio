@@ -26,7 +26,7 @@
    with the first. */
 
 import { execFileSync } from 'node:child_process'
-import { writeFile } from 'node:fs/promises'
+import { writeFile, rename } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 
@@ -228,6 +228,14 @@ for (const [file, contents] of [
   ['public/robots.txt', robots],
   ['public/llms.txt', llms],
 ]) {
-  await writeFile(path.join(root, file), contents, 'utf8')
+  /* Write-then-rename, because two test files run this script at the same
+     time (routePaths.test.js and static-output.test.js each regenerate in
+     beforeAll). A plain write truncates first, so the other file's read
+     could land on an empty llms.txt and fail the build at random — it did,
+     on 2026-09-24. A rename replaces the file in one step. */
+  const target = path.join(root, file)
+  const temp = `${target}.${process.pid}.tmp`
+  await writeFile(temp, contents, 'utf8')
+  await rename(temp, target)
   console.log(`generated ${file}`)
 }

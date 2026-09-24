@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 import { Check, ArrowRight, ArrowUpRight } from 'lucide-react'
-import { SERVICE_GROUPS, priceLabel } from '../data/services'
+import { SERVICE_GROUPS, priceLabel, salePriceLabel, isDiscounted, offerActive, LAUNCH_OFFER, LAUNCH_NOTE } from '../data/services'
 import { useInView } from '../motion/useInView'
 import { TiltCard } from '../motion/TiltCard'
 import { PriceCalculator, BuildOrSubscribe } from './ServicesExtras'
@@ -19,7 +19,10 @@ const COPY = {
   /* What competitors list per package and this page did not say at all
      (market check, 2026-09-24): what the price already covers. Said once
      for everything rather than repeated on seventeen cards. */
-  includedTitle: { hu: 'Minden projektnél benne van az árban', en: 'Included in the price of every project' },
+  includedPill: { hu: 'Minden projektnél', en: 'Every project' },
+  includedTitle: { hu: 'Ez benne van az árban', en: 'This is in the price' },
+  listPrice: { hu: 'Lista ár:', en: 'List price:' },
+  salePrice: { hu: 'Akciós ár:', en: 'Offer price:' },
   noHidden: {
     hu: 'Nincs rejtett költség: ami nincs benne az írásos ajánlatban, azt utólag nem számlázom ki.',
     en: 'No hidden costs: whatever is not in the written quote, I do not bill afterwards.',
@@ -107,7 +110,23 @@ function ServiceCard({ s, locale }) {
 
           <div className="mt-auto pt-5">
             <div className="pt-4 border-t border-divider">
-              <p className="font-display font-semibold text-xl text-ink">{t(priceLabel(s), locale)}</p>
+              {isDiscounted(s) ? (
+                <>
+                  <p className="text-[13px] text-muted">
+                    <span className="sr-only">{t(COPY.listPrice, locale)} </span>
+                    <s className="decoration-muted/70">{t(priceLabel(s), locale)}</s>
+                  </p>
+                  <p className="flex flex-wrap items-center gap-2 mt-0.5">
+                    <span className="sr-only">{t(COPY.salePrice, locale)} </span>
+                    <span className="font-display font-semibold text-xl text-ink">{t(salePriceLabel(s), locale)}</span>
+                    <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-white bg-primary px-2 py-0.5 rounded-full">
+                      −{LAUNCH_OFFER.percent}%
+                    </span>
+                  </p>
+                </>
+              ) : (
+                <p className="font-display font-semibold text-xl text-ink">{t(priceLabel(s), locale)}</p>
+              )}
               {s.timeline && <p className="text-muted text-[13px] mt-0.5">{t(s.timeline, locale)}</p>}
             </div>
             <a
@@ -167,17 +186,25 @@ export default function Services() {
           </a>
         </div>
 
-        <div className="mt-10 rounded-4xl border border-divider bg-surface/70 px-6 py-5 sm:px-8">
-          <p className="font-display font-semibold text-ink">{t(COPY.includedTitle, locale)}</p>
-          <ul className="mt-3 grid gap-x-8 gap-y-2 sm:grid-cols-2 lg:grid-cols-3">
+        {/* Same card as Projects and the offers below it, at Máté's request:
+            dark inverted surface, pill label, check list, ruled footer. */}
+        <div className="mt-10 card-invert border border-divider rounded-4xl p-6 sm:p-8 shadow-e2">
+          <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-primary-dark bg-primary/10 px-2.5 py-1 rounded-full">
+            {t(COPY.includedPill, locale)}
+          </span>
+          <h3 className="font-display font-bold text-xl text-ink tracking-tight mt-4">{t(COPY.includedTitle, locale)}</h3>
+          <ul className="mt-4 grid gap-x-8 gap-y-2.5 sm:grid-cols-2 lg:grid-cols-3">
             {COPY.included.map((x, i) => (
-              <li key={i} className="flex items-start gap-2 text-sm text-ink/90">
+              <li key={i} className="flex items-start gap-2 text-sm text-muted leading-relaxed">
                 <Check className="h-4 w-4 shrink-0 mt-0.5 text-primary" strokeWidth={2.5} aria-hidden="true" />
                 {t(x, locale)}
               </li>
             ))}
           </ul>
-          <p className="mt-4 pt-4 border-t border-divider text-sm font-semibold text-ink">{t(COPY.noHidden, locale)}</p>
+          <p className="mt-5 pt-4 border-t border-divider text-sm font-semibold text-ink">{t(COPY.noHidden, locale)}</p>
+          {offerActive() && (
+            <p className="mt-4 rounded-2xl bg-primary/15 px-4 py-3 text-sm font-semibold text-ink">{t(LAUNCH_NOTE, locale)}</p>
+          )}
         </div>
 
         {/* Scrolls sideways on a phone rather than wrapping: four chips on

@@ -1,4 +1,4 @@
-import { SERVICE_GROUPS, RETAINER, priceLabel } from '../src/data/services.js'
+import { SERVICE_GROUPS, RETAINER, priceLabel, offerActive, LAUNCH_NOTE } from '../src/data/services.js'
 import { ORDERED_SKILLS, categoryLabel } from '../src/data/skills.js'
 import { FAQ_QUESTIONS } from '../src/data/faq.js'
 import { PROTOCOL_STEPS } from '../src/data/protocol.js'
@@ -62,6 +62,9 @@ export function buildKnowledge(today = new Date(), locale = DEFAULT_LOCALE) {
       })),
     ),
     retainer: t(RETAINER, locale),
+    /* The chatbot has to know the offer the page shows, or it quotes list
+       prices to someone looking at struck-through ones. */
+    launchOffer: offerActive() ? t(LAUNCH_NOTE, locale) : '',
     process: PROTOCOL_STEPS.map((s) => ({ title: t(s.title, locale), text: t(s.text, locale) })),
     faq: FAQ_QUESTIONS.map((entry) => ({ q: t(entry.q, locale), a: t(entry.a, locale) })),
     skills: ORDERED_SKILLS.map((s) => ({

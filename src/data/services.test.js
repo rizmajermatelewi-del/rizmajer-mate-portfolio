@@ -38,3 +38,25 @@ describe('services catalogue', () => {
     expect(price('egyedi-rendszer')).toBe(TIER_FLOORS.system)
   })
 })
+
+describe('launch offer', () => {
+  it('takes the stated percentage off the list price, rounded in the buyer\'s favour', async () => {
+    const { saleHuf, LAUNCH_OFFER } = await import('./services')
+    expect(LAUNCH_OFFER.percent).toBe(20)
+    expect(saleHuf(240000)).toBe(192000)
+    expect(saleHuf(890000)).toBe(712000)
+    for (const huf of [45000, 150000, 350000, 1500000]) {
+      expect(saleHuf(huf)).toBeLessThanOrEqual(huf * 0.8)
+    }
+  })
+
+  /* A reference price has to be one the page really charged: the struck
+     figure is always the published list price, never a separate number. */
+  it('discounts one-off projects only, never monthly upkeep', async () => {
+    const { isDiscounted, offerActive } = await import('./services')
+    expect(offerActive()).toBe(true)
+    for (const s of ALL_SERVICES) {
+      expect(isDiscounted(s), s.id).toBe((s.priceUnit ?? 'from') !== 'month')
+    }
+  })
+})

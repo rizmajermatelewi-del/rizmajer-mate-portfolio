@@ -46,6 +46,40 @@ const LABELS = {
 
 export const priceLabel = (service) => LABELS[service.priceUnit ?? 'from'](service.priceHuf)
 
+/* Launch offer, 2026-09-24, at Máté's direction: 20% off for the first five
+   clients.
+
+   The struck-through figure is the list price the page has published all
+   along, never an invented one: a reference price nobody was ever charged
+   is misleading pricing under Hungarian consumer-protection law, and it is
+   the opposite of what this site sells. The offer ends on its own terms —
+   a count, not "for a limited time" forever.
+
+   slotsLeft is maintained by hand: when a discounted order is signed,
+   lower it by one. At 0 the offer disappears everywhere and the list
+   prices stand alone. One-off projects only; monthly upkeep is not
+   discounted, because it would stay discounted for as long as it runs. */
+export const LAUNCH_OFFER = {
+  percent: 20,
+  slots: 5,
+  slotsLeft: 5,
+}
+
+export const offerActive = () => LAUNCH_OFFER.slotsLeft > 0
+
+export const isDiscounted = (service) => offerActive() && (service.priceUnit ?? 'from') !== 'month'
+
+/* Rounded down to the next 1 000 Ft, so the discount is never smaller than
+   the percentage says. */
+export const saleHuf = (huf) => Math.floor((huf * (100 - LAUNCH_OFFER.percent)) / 100 / 1000) * 1000
+
+export const salePriceLabel = (service) => LABELS[service.priceUnit ?? 'from'](saleHuf(service.priceHuf))
+
+export const LAUNCH_NOTE = {
+  hu: `Indulási kedvezmény: −${LAUNCH_OFFER.percent}% minden egyszeri projektre, az első ${LAUNCH_OFFER.slots} megrendelőnek. Még ${LAUNCH_OFFER.slotsLeft} hely szabad. Utána a lista ár érvényes.`,
+  en: `Launch offer: ${LAUNCH_OFFER.percent}% off every one-off project for the first ${LAUNCH_OFFER.slots} clients. ${LAUNCH_OFFER.slotsLeft} places left. After that the list price applies.`,
+}
+
 export const SERVICE_GROUPS = [
   {
     id: 'eladas',

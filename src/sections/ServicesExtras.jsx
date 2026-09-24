@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { ArrowRight, Check } from 'lucide-react'
-import { SERVICE_GROUPS, ALL_SERVICES, priceLabel } from '../data/services'
+import { SERVICE_GROUPS, ALL_SERVICES, priceLabel, isDiscounted, saleHuf, LAUNCH_OFFER } from '../data/services'
 import { CALC_SERVICES, addonsFor, estimate, monthlyRange } from '../data/calculator'
 import { forint, priceEn } from '../data/fx'
 import { t } from '../i18n/t'
@@ -129,7 +129,7 @@ export function PriceCalculator({ locale, onQuote }) {
   function quoteName() {
     const line = (loc) => {
       const extras = chosen.map((a) => t(a.label, loc)).join(', ')
-      const price = t(priceLabel({ priceHuf: total }), loc)
+      const price = t(priceLabel({ priceHuf: isDiscounted(service) ? saleHuf(total) : total }), loc)
       return `${t(service.name, loc)}${extras ? ` + ${extras}` : ''} (${t(COPY.estimateWord, loc)}: ${price})`
     }
     return { hu: line('hu'), en: line('en') }
@@ -187,9 +187,25 @@ export function PriceCalculator({ locale, onQuote }) {
 
       <div className="flex flex-col justify-end rounded-3xl bg-primary/10 p-6">
         <p className="text-sm text-muted">{t(COPY.calcResult, locale)}</p>
-        <p className="font-display font-extrabold text-[1.75rem] leading-tight whitespace-nowrap text-ink mt-1" aria-live="polite">
-          {t(priceLabel({ priceHuf: total }), locale)}
-        </p>
+        {isDiscounted(service) ? (
+          <div aria-live="polite">
+            <p className="text-sm text-muted mt-1">
+              <s>{t(priceLabel({ priceHuf: total }), locale)}</s>
+            </p>
+            <p className="flex flex-wrap items-center gap-2">
+              <span className="font-display font-extrabold text-[1.75rem] leading-tight whitespace-nowrap text-ink">
+                {t(priceLabel({ priceHuf: saleHuf(total) }), locale)}
+              </span>
+              <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-white bg-primary px-2 py-0.5 rounded-full">
+                −{LAUNCH_OFFER.percent}%
+              </span>
+            </p>
+          </div>
+        ) : (
+          <p className="font-display font-extrabold text-[1.75rem] leading-tight whitespace-nowrap text-ink mt-1" aria-live="polite">
+            {t(priceLabel({ priceHuf: total }), locale)}
+          </p>
+        )}
         {service.timeline && <p className="text-[13px] text-muted mt-1">{t(service.timeline, locale)}</p>}
         {chosen.length > 0 && (
           <ul className="mt-4 space-y-1.5">
