@@ -116,8 +116,8 @@ export const PROJECTS_FULL = [
       {
         src: napiMenu01,
         alt: {
-          hu: 'Mai menü képernyő a Kispipa Büfé bemutatóban',
-          en: 'Today menu screen in the Kispipa buffet demo',
+          hu: 'Mai menü telefonon a Kispipa Büfé bemutatóban',
+          en: 'Today menu on a phone in the Kispipa buffet demo',
         },
         width: 1280,
         height: 800,
@@ -155,7 +155,7 @@ export const PROJECTS_FULL = [
     },
     tech: ['Vite', 'HTML', 'CSS'],
     features: [
-      { hu: 'Keretrendszer nélkül', en: 'No framework' },
+      { hu: 'Lighthouse mobil: 99 / 100 / 100 / 100', en: 'Mobile Lighthouse: 99 / 100 / 100 / 100' },
       { hu: 'Helyi keresési adat (schema.org)', en: 'Local search data (schema.org)' },
       { hu: 'Ajánlatkérő mezőnkénti hibával', en: 'Quote form with per-field errors' },
     ],
@@ -177,8 +177,8 @@ export const PROJECTS_FULL = [
       en: 'A tradesperson does not need a shop, just a page that loads instantly on a phone, says what they do and where, and can be called with one tap.',
     },
     solution: {
-      hu: 'Egy oldal sima HTML-lel és CSS-sel, egy rövid scripttel az űrlaphoz. Helyi vállalkozás schema.org adattal. A bemutató űrlapja nem küld e-mailt; élesben egy űrlapszolgáltatás kerülne mögé.',
-      en: 'One page in plain HTML and CSS, with a short script for the form. Local business schema.org data. The demo form sends no email; production would put a form service behind it.',
+      hu: 'Egy oldal sima HTML-lel és CSS-sel, keretrendszer nélkül, egy rövid scripttel az űrlaphoz. Helyi vállalkozás schema.org adattal. A bemutató űrlapja nem küld e-mailt; élesben egy űrlapszolgáltatás kerülne mögé.',
+      en: 'One page in plain HTML and CSS, no framework, with a short script for the form. Local business schema.org data. The demo form sends no email; production would put a form service behind it.',
     },
     gallery: [
       {

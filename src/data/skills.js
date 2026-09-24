@@ -142,8 +142,8 @@ export const SKILLS_FULL = [
       en: 'Visitors back out of a slow page before they have seen anything on it. So I measure speed rather than setting it by feel.',
     },
     detail: {
-      hu: 'Lighthouse és a hálózati panel alapján dolgozom, nem tippre. Képoptimalizálás, kódfelosztás és a felesleges újrarenderelések kiszűrése — a cél, hogy a mobil betöltés is a másodperc alatti tartományban maradjon.',
-      en: 'I work from Lighthouse and the network panel, not from guesswork. Image optimisation, code splitting and cutting out needless re-renders — the goal is for even the mobile load to stay under a second.',
+      hu: 'Lighthouse és a hálózati panel alapján dolgozom, nem tippre. Képoptimalizálás, kódfelosztás és a felesleges újrarenderelések kiszűrése — a cél, hogy a mobil betöltés is a másodperc alatti tartományban maradjon. A Kovács Villanyszerelés bemutató oldal mobilon Lighthouse-ban 99 / 100 / 100 / 100 (teljesítmény, akadálymentesség, bevált gyakorlatok, SEO).',
+      en: 'I work from Lighthouse and the network panel, not from guesswork. Image optimisation, code splitting and cutting out needless re-renders — the goal is for even the mobile load to stay under a second. The Kovacs Electrical demo page scores 99 / 100 / 100 / 100 in mobile Lighthouse (performance, accessibility, best practices, SEO).',
     },
   },
 ]
