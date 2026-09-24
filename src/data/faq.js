@@ -1,5 +1,5 @@
 import { forint, priceEn } from './fx.js'
-import { TIER_FLOORS } from './pricing.js'
+import { TIER_FLOORS, RETAINER_HUF } from './services.js'
 
 /* The objections an SME actually raises before hiring.
    Moved out of Faq.jsx so the knowledge generator can read the same answers
@@ -66,7 +66,7 @@ export const FAQ_QUESTIONS = [
   {
     q: { hu: 'Ki tartja karban az oldalt utána?', en: 'Who looks after the site afterwards?' },
     a: {
-      hu: `Ahogy megbeszéljük. Az oldalt úgy építem, hogy a tartalmat magad is tudd kezelni, és az átadáskor megmutatom, hogyan. Ha inkább rám bíznád, a karbantartás ${forint(25000)}/hó-tól: frissítések, biztonsági mentés, havi egy óra apró módosítás, és ha leáll, én veszem észre, nem te. Nincs hűségidő, hónapra felmondható.`,
+      hu: `Ahogy megbeszéljük. Az oldalt úgy építem, hogy a tartalmat magad is tudd kezelni, és az átadáskor megmutatom, hogyan. Ha inkább rám bíznád, a karbantartás ${forint(RETAINER_HUF)}/hó-tól: frissítések, biztonsági mentés, havi egy óra apró módosítás, és ha leáll, én veszem észre, nem te. Nincs hűségidő, hónapra felmondható.`,
       en: `Whatever we agree. I build it so you can handle the content yourself, and I show you how at handover. If you would rather leave it to me, upkeep starts at ${priceEn(25000)} a month: updates, backups, an hour of small changes, and if it goes down I notice rather than you. No minimum term, cancellable monthly.`,
     },
   },

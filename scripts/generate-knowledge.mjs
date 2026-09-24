@@ -8,12 +8,12 @@ import { buildKnowledge } from './knowledge.mjs'
 const out = path.resolve(process.cwd(), 'public/knowledge.json')
 const knowledge = buildKnowledge()
 
-if (!knowledge.pricing.tiers.length) {
-  throw new Error('knowledge.json would ship with no price tiers — refusing to write it')
+if (!knowledge.services.length) {
+  throw new Error('knowledge.json would ship with no services — refusing to write it')
 }
 
 mkdirSync(path.dirname(out), { recursive: true })
 writeFileSync(out, `${JSON.stringify(knowledge, null, 2)}\n`, 'utf8')
 console.log(
-  `knowledge.json: ${knowledge.pricing.tiers.length} tiers, ${knowledge.pricing.smallOffers.length} small offers, ${knowledge.faq.length} FAQ, ${knowledge.aiServices.length} AI services`,
+  `knowledge.json: ${knowledge.services.length} services, ${knowledge.faq.length} FAQ`,
 )

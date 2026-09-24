@@ -3,7 +3,7 @@ import { execFileSync } from 'node:child_process'
 import { readFileSync } from 'node:fs'
 import path from 'node:path'
 import { SITE_ORIGIN } from '../site.js'
-import { PRICING_TIERS } from './pricing.js'
+import { ALL_SERVICES, priceLabel } from './services.js'
 import { t } from '../i18n/t.js'
 
 /* Runs the generator for real rather than trusting it was wired up — the same
@@ -45,11 +45,11 @@ describe('llms.txt', () => {
      its own footer claimed it repeated no figure that came from a data file.
      robots.txt opens the site to assistant crawlers deliberately, so a stale
      price here is a wrong answer given to somebody asking what he charges. */
-  it('quotes every tier at the price pricing.js currently sets', () => {
+  it('quotes every service at the price services.js currently sets', () => {
     const txt = read('public/llms.txt')
-    for (const tier of PRICING_TIERS) {
-      const line = `- ${t(tier.name, 'hu')}: ${t(tier.priceNote, 'hu')}`
-      expect(txt, `llms.txt does not carry the current line for ${t(tier.name, 'hu')}`).toContain(line)
+    for (const s of ALL_SERVICES) {
+      const line = `- ${t(s.name, 'hu')}: ${t(priceLabel(s), 'hu')}`
+      expect(txt, `llms.txt does not carry the current line for ${t(s.name, 'hu')}`).toContain(line)
     }
   })
 

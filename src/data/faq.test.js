@@ -2,7 +2,8 @@ import { describe, it, expect } from 'vitest'
 import { readFileSync } from 'node:fs'
 import path from 'node:path'
 import { FAQ_QUESTIONS } from './faq'
-import { PRICING_TIERS, PRICING_RETAINER } from './pricing'
+import { TIER_FLOORS, RETAINER_HUF } from './services'
+import { forint } from './fx'
 import { t, untranslatedIn } from '../i18n/t'
 import { LOCALES } from '../i18n/locales'
 
@@ -55,8 +56,8 @@ describe('FAQ data', () => {
        already dropped, with this test green throughout. Derived, the edit that
        moves a price fails here until the FAQ catches up. */
     const figures = [
-      ...PRICING_TIERS.map((tier) => amountIn(t(tier.priceNote, 'hu'))),
-      amountIn(t(PRICING_RETAINER, 'hu')),
+      ...Object.values(TIER_FLOORS).map((huf) => amountIn(forint(huf))),
+      amountIn(forint(RETAINER_HUF)),
     ]
     for (const figure of figures) {
       expect(joined, `the FAQ no longer mentions ${figure}`).toContain(figure)

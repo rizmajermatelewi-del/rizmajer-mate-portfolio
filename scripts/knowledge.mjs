@@ -1,5 +1,4 @@
-import { PRICING_TIERS, PRICING_SMALL_OFFERS, PRICING_RETAINER } from '../src/data/pricing.js'
-import { AI_SERVICES } from '../src/data/ai.js'
+import { SERVICE_GROUPS, RETAINER, priceLabel } from '../src/data/services.js'
 import { ORDERED_SKILLS, categoryLabel } from '../src/data/skills.js'
 import { FAQ_QUESTIONS } from '../src/data/faq.js'
 import { PROTOCOL_STEPS } from '../src/data/protocol.js'
@@ -46,32 +45,23 @@ export function buildKnowledge(today = new Date(), locale = DEFAULT_LOCALE) {
   return {
     summary: SUMMARY,
     contact: { email: CONTACT_EMAIL, phone: CONTACT_PHONE },
-    pricing: {
-      tiers: PRICING_TIERS.map((tier) => ({
-        name: t(tier.name, locale),
-        floor: t(tier.priceNote, locale),
-        scope: t(tier.scope, locale),
-        desc: t(tier.desc, locale),
-        includes: tier.features.map((feature) => t(feature, locale)),
+    /* The whole catalogue, from the same list the section maps. A prospect
+       who already has a site is the largest group in the catchment, and the
+       bot has to be able to name the 45 000 Ft audit rather than quoting them
+       a new build — which it can only do if nothing is left out here. */
+    services: SERVICE_GROUPS.flatMap((g) =>
+      g.items.map((s) => ({
+        group: t(g.title, locale),
+        name: t(s.name, locale),
+        price: t(priceLabel(s), locale),
+        timeline: s.timeline ? t(s.timeline, locale) : '',
+        problem: t(s.problem, locale),
+        forWho: t(s.forWho, locale),
+        includes: s.includes.map((x) => t(x, locale)),
+        isNew: Boolean(s.isNew),
       })),
-      /* Every offer under the three tiers, read from the same list the
-         section maps. A prospect who already has a site is the largest group
-         in the catchment, and the bot has to be able to name the 45 000 Ft
-         audit rather than quoting them a new build. */
-      smallOffers: PRICING_SMALL_OFFERS.map((o) => ({
-        name: t(o.name, locale),
-        floor: t(o.priceNote, locale),
-        desc: t(o.desc, locale),
-      })),
-      retainer: t(PRICING_RETAINER, locale),
-    },
-    aiServices: AI_SERVICES.map((s) => ({
-      title: t(s.title, locale),
-      text: t(s.text, locale),
-      detail: t(s.detail, locale),
-      priceNote: t(s.priceNote, locale),
-      scope: t(s.scope, locale),
-    })),
+    ),
+    retainer: t(RETAINER, locale),
     process: PROTOCOL_STEPS.map((s) => ({ title: t(s.title, locale), text: t(s.text, locale) })),
     faq: FAQ_QUESTIONS.map((entry) => ({ q: t(entry.q, locale), a: t(entry.a, locale) })),
     skills: ORDERED_SKILLS.map((s) => ({

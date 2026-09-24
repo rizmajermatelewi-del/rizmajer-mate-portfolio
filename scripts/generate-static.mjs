@@ -37,7 +37,7 @@ const { SITE_ORIGIN, urlFor } = await load('src/site.js')
 const { ROUTE_PATHS } = await load('src/routePaths.js')
 const { t } = await load('src/i18n/t.js')
 const { stripLocale } = await load('src/i18n/locales.js')
-const { PRICING_TIERS, PRICING_ENTRY } = await load('src/data/pricing.js')
+const { ALL_SERVICES, priceLabel } = await load('src/data/services.js')
 
 /* lastmod, derived from git rather than written down.
 
@@ -182,10 +182,7 @@ Sitemap: ${SITE_ORIGIN}/sitemap.xml
 /* Every price and every URL here is derived. The old file's footer promised
    exactly this and did the opposite; now the promise is enforced by there
    being nowhere to type a number. */
-const priceLines = [
-  ...PRICING_TIERS.map((tier) => `- ${t(tier.name, 'hu')}: ${t(tier.priceNote, 'hu')}`),
-  `- ${t(PRICING_ENTRY.name, 'hu')}: ${t(PRICING_ENTRY.priceNote, 'hu')}`,
-].join('\n')
+const priceLines = ALL_SERVICES.map((s) => `- ${t(s.name, 'hu')}: ${t(priceLabel(s), 'hu')}`).join('\n')
 
 const llms = `# Rizmajer Máté Levente — full-stack fejlesztő
 

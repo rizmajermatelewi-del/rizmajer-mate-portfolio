@@ -16,8 +16,7 @@ describe('knowledge.json output', () => {
     execFileSync('node', ['scripts/generate-knowledge.mjs'], { cwd: root })
     expect(existsSync(outPath)).toBe(true)
     const parsed = JSON.parse(readFileSync(outPath, 'utf8'))
-    expect(parsed.pricing.tiers.length).toBe(buildKnowledge().pricing.tiers.length)
-    expect(parsed.pricing.smallOffers.length).toBe(buildKnowledge().pricing.smallOffers.length)
+    expect(parsed.services.length).toBe(buildKnowledge().services.length)
     expect(parsed.contact.email).toBe('rizmajermatelewi@gmail.com')
   })
 

@@ -1,7 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { buildKnowledge } from '../../scripts/knowledge.mjs'
-import { PRICING_TIERS, PRICING_SMALL_OFFERS, PRICING_RETAINER } from './pricing'
-import { AI_SERVICES } from './ai'
+import { ALL_SERVICES, RETAINER, priceLabel } from './services'
 import { ORDERED_SKILLS } from './skills'
 import { FAQ_QUESTIONS } from './faq'
 import { PROTOCOL_STEPS } from './protocol'
@@ -23,15 +22,21 @@ describe('knowledge object', () => {
   /* buildKnowledge() defaults to Hungarian, so the comparison resolves the
      Hungarian side. Comparing against the field object instead would put
      "550 000 Ft-tól" next to { hu, en } and fail for the wrong reason. */
-  it('carries every price floor from pricing.js', () => {
-    for (const tier of PRICING_TIERS) {
-      const name = t(tier.name, 'hu')
-      const match = k.pricing.tiers.find((entry) => entry.name === name)
-      expect(match, `tier "${name}" is missing from the knowledge file`).toBeTruthy()
-      expect(match.floor).toBe(t(tier.priceNote, 'hu'))
+  /* One test where there used to be three (tiers, small offers, AI
+     services): services.js is one list now, so the knowledge file either
+     carries all of it at the current price or it does not. A bot quoting
+     180 000 Ft to someone the page offers a 45 000 Ft audit is exactly the
+     drift this file exists to stop. */
+  it('carries every service at the price services.js currently sets', () => {
+    expect(k.services).toHaveLength(ALL_SERVICES.length)
+    for (const s of ALL_SERVICES) {
+      const name = t(s.name, 'hu')
+      const match = k.services.find((entry) => entry.name === name)
+      expect(match, `service "${name}" is missing from the knowledge file`).toBeTruthy()
+      expect(match.price).toBe(t(priceLabel(s), 'hu'))
+      expect(match.isNew).toBe(Boolean(s.isNew))
     }
-    expect(k.pricing.tiers).toHaveLength(PRICING_TIERS.length)
-    expect(k.pricing.retainer).toBe(t(PRICING_RETAINER, 'hu'))
+    expect(k.retainer).toBe(t(RETAINER, 'hu'))
   })
 
   /* The corpus is what a bot answers a prospect from, so the language it was
@@ -40,37 +45,8 @@ describe('knowledge object', () => {
      the failure /en was withdrawn for, moved into the chatbot. */
   it('is built in the language it was asked for', () => {
     const english = buildKnowledge(new Date('2026-08-01T00:00:00Z'), 'en')
-    expect(english.pricing.tiers.map((entry) => entry.name)).toEqual(
-      PRICING_TIERS.map((tier) => t(tier.name, 'en')),
-    )
-    expect(english.pricing.tiers[0].name).not.toBe(k.pricing.tiers[0].name)
-  })
-
-  /* The plan for this file predates the wider ladder: it covered the three
-     tiers and PRICING_ENTRY only. Three more published prices have appeared
-     since (átvilágítás, Google-megjelenés, felújítás), and a bot that quotes
-     180 000 Ft to someone who already has a site — when the page offers them
-     a 45 000 Ft audit — is exactly the drift this file exists to stop. */
-  it('carries every small offer, not just the entry one', () => {
-    expect(k.pricing.smallOffers).toHaveLength(PRICING_SMALL_OFFERS.length)
-    for (const offer of PRICING_SMALL_OFFERS) {
-      const name = t(offer.name, 'hu')
-      const match = k.pricing.smallOffers.find((o) => o.name === name)
-      expect(match, `small offer "${name}" is missing from the knowledge file`).toBeTruthy()
-      expect(match.floor).toBe(t(offer.priceNote, 'hu'))
-      expect(match.desc).toBe(t(offer.desc, 'hu'))
-    }
-  })
-
-  it('carries every AI service with its price and scope', () => {
-    expect(k.aiServices).toHaveLength(AI_SERVICES.length)
-    for (const svc of AI_SERVICES) {
-      const title = t(svc.title, 'hu')
-      const match = k.aiServices.find((s) => s.title === title)
-      expect(match, `AI service "${title}" is missing`).toBeTruthy()
-      expect(match.priceNote).toBe(t(svc.priceNote, 'hu'))
-      expect(match.scope).toBe(t(svc.scope, 'hu'))
-    }
+    expect(english.services.map((entry) => entry.name)).toEqual(ALL_SERVICES.map((s) => t(s.name, 'en')))
+    expect(english.services[0].name).not.toBe(k.services[0].name)
   })
 
   it('carries every FAQ pair and every process step', () => {
