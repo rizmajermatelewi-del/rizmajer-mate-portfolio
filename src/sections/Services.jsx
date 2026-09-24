@@ -15,6 +15,17 @@ const COPY = {
   },
   unsure: { hu: 'Nem tudod, melyik kell? Írd le a gondot, én megmondom.', en: 'Not sure which one you need? Describe the problem and I will tell you.' },
   tablist: { hu: 'Szolgáltatáscsoportok', en: 'Service groups' },
+  /* What competitors list per package and this page did not say at all
+     (market check, 2026-09-24): what the price already covers. Said once
+     for everything rather than repeated on seventeen cards. */
+  includedTitle: { hu: 'Minden projektnél benne van az árban', en: 'Included in the price of every project' },
+  included: [
+    { hu: 'Fix ár, írásban, előre', en: 'A fixed price, in writing, up front' },
+    { hu: 'Weboldalnál domain, tárhely és SSL beállítása a nevedre', en: 'For sites: domain, hosting and SSL set up in your name' },
+    { hu: 'Betanítás, hogy magad is tudd kezelni', en: 'A walkthrough, so you can run it yourself' },
+    { hu: '1 év díjmentes hibajavítás, ha az én hibámból nem működik valami', en: 'A year of free fixes for anything that breaks through my fault' },
+    { hu: 'A kód, a domain és a hozzáférések a tiéd', en: 'The code, the domain and the accounts are yours' },
+  ],
   isNew: { hu: 'Új', en: 'New' },
   demo: { hu: 'Élő demó', en: 'Live demo' },
   includes: { hu: 'Amit kapsz', en: 'What you get' },
@@ -149,6 +160,18 @@ export default function Services() {
             {t(COPY.unsure, locale)}
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </a>
+        </div>
+
+        <div className="mt-10 rounded-4xl border border-divider bg-surface/70 px-6 py-5 sm:px-8">
+          <p className="font-display font-semibold text-ink">{t(COPY.includedTitle, locale)}</p>
+          <ul className="mt-3 grid gap-x-8 gap-y-2 sm:grid-cols-2 lg:grid-cols-3">
+            {COPY.included.map((x, i) => (
+              <li key={i} className="flex items-start gap-2 text-sm text-ink/90">
+                <Check className="h-4 w-4 shrink-0 mt-0.5 text-primary" strokeWidth={2.5} aria-hidden="true" />
+                {t(x, locale)}
+              </li>
+            ))}
+          </ul>
         </div>
 
         {/* Scrolls sideways on a phone rather than wrapping: four chips on

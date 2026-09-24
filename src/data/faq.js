@@ -33,8 +33,8 @@ export const FAQ_QUESTIONS = [
       /* Closing sentence dropped: "Az ajánlatban ezt előre tételesen leírom" is
          now word for word what the pricing section's intro says, two sections
          up the page. */
-      hu: 'A domain és a tárhely éves díja — ezek nem nálam futnak, hanem a te nevedre regisztráljuk, így pontosan látod, mit fizetsz és kinek. Ezen felül csak akkor van további költség, ha kérsz karbantartást vagy új funkciót.',
-      en: 'The yearly domain and hosting fees — those do not run through me, they are registered in your name, so you can see exactly what you pay and to whom. Beyond that there is no further cost unless you ask for maintenance or a new feature.',
+      hu: 'A domain és a tárhely éves díja — egy kisvállalkozói oldalnál jellemzően évi 15–30 000 Ft. Ezek nem nálam futnak, hanem a te nevedre regisztráljuk, így pontosan látod, mit fizetsz és kinek. Ezen felül csak akkor van további költség, ha kérsz karbantartást vagy új funkciót.',
+      en: 'The yearly domain and hosting fees — typically 15–30 000 Ft a year for a small business site. Those do not run through me, they are registered in your name, so you can see exactly what you pay and to whom. Beyond that there is no further cost unless you ask for maintenance or a new feature.',
     },
   },
   {
