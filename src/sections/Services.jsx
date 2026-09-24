@@ -1,9 +1,10 @@
-import { useRef, useState } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import { Check, ArrowRight, ArrowUpRight } from 'lucide-react'
 import { SERVICE_GROUPS, priceLabel, salePriceLabel, isDiscounted, offerActive, LAUNCH_OFFER, LAUNCH_NOTE } from '../data/services'
 import { useInView } from '../motion/useInView'
 import { TiltCard } from '../motion/TiltCard'
-import { PriceCalculator, BuildOrSubscribe } from './ServicesExtras'
+import { BuildOrSubscribe } from './ServicesExtras'
+import PriceCalculator from './PriceCalculator'
 import { useLocale } from '../i18n/useLocale'
 import { t } from '../i18n/t'
 
@@ -149,6 +150,20 @@ export default function Services() {
   const locale = useLocale()
   const [active, setActive] = useState(0)
   const tabs = useRef([])
+  /* The active tab's dark pill slides to the tab you pick (the animated
+     tab indicator idea from animate-ui.com). Until it has been measured —
+     and in the prerendered HTML — the active button paints its own
+     background, so the selected tab is never unmarked. */
+  const [pill, setPill] = useState(null)
+  useLayoutEffect(() => {
+    const measure = () => {
+      const el = tabs.current[active]
+      if (el) setPill({ x: el.offsetLeft, w: el.offsetWidth })
+    }
+    measure()
+    window.addEventListener('resize', measure)
+    return () => window.removeEventListener('resize', measure)
+  }, [active])
 
   /* The WAI-ARIA tabs pattern: arrows move between tabs and activate them,
      Home/End jump to the ends, and only the selected tab is in the Tab
@@ -210,7 +225,14 @@ export default function Services() {
         {/* Scrolls sideways on a phone rather than wrapping: four chips on
             two ragged rows read as two separate controls. */}
         <div className="mt-10 sm:mt-12 -mx-6 px-6 sm:mx-0 sm:px-0 overflow-x-auto">
-          <div role="tablist" aria-label={t(COPY.tablist, locale)} className="flex gap-2 min-w-max pb-1">
+          <div role="tablist" aria-label={t(COPY.tablist, locale)} className="relative flex gap-2 min-w-max pb-1">
+            {pill && (
+              <span
+                aria-hidden="true"
+                className="absolute top-0 left-0 h-[calc(100%-0.25rem)] rounded-full bg-ink transition-[transform,width] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none"
+                style={{ width: pill.w, transform: `translateX(${pill.x}px)` }}
+              />
+            )}
             {SERVICE_GROUPS.map((g, i) => (
               <button
                 key={g.id}
@@ -223,9 +245,9 @@ export default function Services() {
                 tabIndex={active === i ? 0 : -1}
                 onClick={() => setActive(i)}
                 onKeyDown={onKeyDown}
-                className={`px-5 py-2.5 rounded-full text-sm font-semibold border transition-colors duration-200 ${
+                className={`relative px-5 py-2.5 rounded-full text-sm font-semibold border transition-colors duration-200 ${
                   active === i
-                    ? 'bg-ink text-surface border-ink'
+                    ? `text-surface border-ink ${pill ? 'bg-transparent' : 'bg-ink'}`
                     : 'bg-surface/60 border-divider text-ink hover:border-primary/60 hover:text-primary-dark'
                 }`}
               >

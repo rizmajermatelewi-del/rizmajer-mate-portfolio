@@ -31,3 +31,14 @@ describe('price calculator', () => {
     expect(estimate('nincs-ilyen')).toBeNull()
   })
 })
+
+describe('page count', () => {
+  it('charges only pages beyond the included five, capped at the maximum', async () => {
+    const { estimate, PAGES } = await import('./calculator')
+    // cegoldal 420 000; 8 pages = 3 extra x 25 000 = 495 000 -> 500 000
+    expect(estimate('cegoldal', [], 8)).toBe(500000)
+    expect(estimate('cegoldal', [], 3)).toBe(estimate('cegoldal'))
+    expect(estimate('cegoldal', [], 99)).toBe(estimate('cegoldal', [], PAGES.max))
+    expect(estimate('webshop', [], 15)).toBe(estimate('webshop'))
+  })
+})

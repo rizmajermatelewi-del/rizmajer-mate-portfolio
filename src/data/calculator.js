@@ -54,7 +54,13 @@ export const addonsFor = (serviceId) => ADDONS.filter((a) => a.appliesTo.include
    after "English" does not charge a rush premium on the translation twice
    over. Rounded up to the next 10 000 Ft: an estimate that pretends to be
    exact to the forint claims a precision it does not have. */
-export function estimate(serviceId, selectedIds = []) {
+/* Extra pages for the multi-page builds (2026-09-24): five are in the
+   floor price, each further one ~1.5 hours at the same hourly rate. */
+export const PAGES = { appliesTo: ['cegoldal', 'atepites'], included: 5, max: 20, perPageHuf: 25000 }
+
+export const pagesApply = (serviceId) => PAGES.appliesTo.includes(serviceId)
+
+export function estimate(serviceId, selectedIds = [], pages = PAGES.included) {
   const service = CALC_SERVICES.find((s) => s.id === serviceId)
   if (!service) return null
   const base = service.priceHuf
@@ -62,6 +68,10 @@ export function estimate(serviceId, selectedIds = []) {
   for (const addon of addonsFor(serviceId)) {
     if (!selectedIds.includes(addon.id)) continue
     total += addon.flatHuf ?? Math.round((base * addon.percent) / 100)
+  }
+  if (pagesApply(serviceId)) {
+    const extra = Math.min(Math.max(pages, PAGES.included), PAGES.max) - PAGES.included
+    total += extra * PAGES.perPageHuf
   }
   return Math.ceil(total / 10000) * 10000
 }
