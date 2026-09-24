@@ -3,6 +3,7 @@ import { Check, ArrowRight, ArrowUpRight } from 'lucide-react'
 import { SERVICE_GROUPS, priceLabel } from '../data/services'
 import { useInView } from '../motion/useInView'
 import { TiltCard } from '../motion/TiltCard'
+import { PriceCalculator, BuildOrSubscribe } from './ServicesExtras'
 import { useLocale } from '../i18n/useLocale'
 import { t } from '../i18n/t'
 
@@ -19,6 +20,10 @@ const COPY = {
      (market check, 2026-09-24): what the price already covers. Said once
      for everything rather than repeated on seventeen cards. */
   includedTitle: { hu: 'Minden projektnél benne van az árban', en: 'Included in the price of every project' },
+  noHidden: {
+    hu: 'Nincs rejtett költség: ami nincs benne az írásos ajánlatban, azt utólag nem számlázom ki.',
+    en: 'No hidden costs: whatever is not in the written quote, I do not bill afterwards.',
+  },
   included: [
     { hu: 'Fix ár, írásban, előre', en: 'A fixed price, in writing, up front' },
     { hu: 'Weboldalnál domain, tárhely és SSL beállítása a nevedre', en: 'For sites: domain, hosting and SSL set up in your name' },
@@ -172,6 +177,7 @@ export default function Services() {
               </li>
             ))}
           </ul>
+          <p className="mt-4 pt-4 border-t border-divider text-sm font-semibold text-ink">{t(COPY.noHidden, locale)}</p>
         </div>
 
         {/* Scrolls sideways on a phone rather than wrapping: four chips on
@@ -228,8 +234,11 @@ export default function Services() {
               ))}
             </div>
             {g.items.some((s) => s.isNew) && <p className="text-muted text-sm leading-relaxed max-w-3xl mt-6">{t(COPY.newNote, locale)}</p>}
+            {g.id === 'eladas' && <BuildOrSubscribe locale={locale} />}
           </div>
         ))}
+
+        <PriceCalculator locale={locale} onQuote={requestQuote} />
       </div>
     </section>
   )

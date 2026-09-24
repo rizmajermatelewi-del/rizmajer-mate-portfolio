@@ -10,10 +10,10 @@ export const PROTOCOL_STEPS = [
   {
     title: { hu: 'Egyeztetés', en: 'We talk it through' },
     tagline: { hu: 'Előbb beszéljünk, kötelezettség nélkül.', en: 'We talk first, with no commitment.' },
-    promise: { hu: 'Írásos terjedelem és fix ár', en: 'A written scope and a fixed price' },
+    promise: { hu: 'Fix ár írásban, ingyenes látványterv', en: 'A fixed written price, a free mock-up' },
     text: {
-      hu: 'Végigvesszük, mi az, ami ma kézzel megy, és mennyi időt visz el. Ebből írásos terjedelem és fix ár lesz: mielőtt bármit elkezdenék, tudod, mit kapsz és mennyiért. Ha kiderül, hogy nem éri meg neked, azt is megmondom.',
-      en: 'We go through what you do by hand today and how much time it takes. That becomes a written scope and a fixed price: before I start anything, you know what you are getting and what it costs. If it turns out not to be worth it for you, I will tell you that too.',
+      hu: 'Végigvesszük, mi az, ami ma kézzel megy, és mennyi időt visz el. Ebből írásos terjedelem és fix ár lesz: mielőtt bármit elkezdenék, tudod, mit kapsz és mennyiért. Ha kiderül, hogy nem éri meg neked, azt is megmondom. Weboldalnál, ha kéred, a főoldalról ingyenes látványtervet is kapsz, mielőtt döntesz.',
+      en: 'We go through what you do by hand today and how much time it takes. That becomes a written scope and a fixed price: before I start anything, you know what you are getting and what it costs. If it turns out not to be worth it for you, I will tell you that too. For a site, if you ask, you also get a free mock-up of the home page before you decide.',
     },
   },
   {

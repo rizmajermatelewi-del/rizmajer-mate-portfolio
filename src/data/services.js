@@ -420,9 +420,38 @@ export const SERVICE_GROUPS = [
         timeline: { hu: 'Jellemzően néhány nap, a hitelesítéssel együtt', en: 'Usually a few days, verification included' },
         isNew: true,
       },
+      /* Upkeep in three tiers (2026-09-24), because every competitor checked
+         sells it that way and one tier left the owner of a quiet one-pager
+         paying for hours they never use. Priced against the market check:
+         freelancer basic 10–20e, standard 15–35e, premium 30–60e a month.
+         The middle tier is the old single offer, unchanged, which is why it
+         keeps RETAINER_HUF and the FAQ keeps quoting it. `timeline` carries
+         the reply time for a fault, the thing the tiers actually differ in
+         besides hours. Webshops are quoted separately: the market charges
+         30–100e for them and a tier here would understate it. */
+      {
+        id: 'uzemeltetes-alap',
+        name: { hu: 'Karbantartás — Alap', en: 'Upkeep — Basic' },
+        problem: {
+          hu: 'Frissítések, mentés és leállásfigyelés egy csendes oldalnak, amin ritkán kell változtatni.',
+          en: 'Updates, backups and downtime monitoring for a quiet site that rarely needs changing.',
+        },
+        forWho: {
+          hu: 'Bemutatkozó oldalnak, ahol havonta nincs mit módosítani. Nincs hűségidő, hónapra felmondható.',
+          en: 'For an introductory site with nothing to change month to month. No minimum term, cancellable monthly.',
+        },
+        includes: [
+          { hu: 'Frissítések és heti biztonsági mentés', en: 'Updates and weekly backups' },
+          { hu: 'Leállásfigyelés', en: 'Downtime monitoring' },
+          { hu: 'Módosítás óradíjban, ha kell', en: 'Changes at the hourly rate, when needed' },
+        ],
+        priceHuf: 15000,
+        priceUnit: 'month',
+        timeline: { hu: 'Hibára 2 munkanapon belül reagálok', en: 'I respond to a fault within 2 working days' },
+      },
       {
         id: 'uzemeltetes',
-        name: { hu: 'Üzemeltetés és karbantartás', en: 'Hosting and upkeep' },
+        name: { hu: 'Karbantartás — Standard', en: 'Upkeep — Standard' },
         problem: {
           hu: 'Frissítések, biztonsági mentés, havi egy óra apró módosítás, és ha leáll, én veszem észre, nem te.',
           en: 'Updates, backups, an hour of small changes each month, and if it goes down I notice rather than you.',
@@ -432,13 +461,36 @@ export const SERVICE_GROUPS = [
           en: 'For anyone who would rather not think about keeping their site running. No minimum term, cancellable monthly.',
         },
         includes: [
-          { hu: 'Frissítések és biztonsági mentés', en: 'Updates and backups' },
+          { hu: 'Frissítések és napi biztonsági mentés', en: 'Updates and daily backups' },
           { hu: 'Havi egy óra apró módosítás', en: 'An hour of small changes each month' },
           { hu: 'Leállásfigyelés', en: 'Downtime monitoring' },
         ],
         priceHuf: RETAINER_HUF,
         priceUnit: 'month',
-        timeline: { hu: 'Az átadást követő hónaptól', en: 'From the month after handover' },
+        timeline: { hu: 'Hibára egy munkanapon belül reagálok', en: 'I respond to a fault within one working day' },
+      },
+      {
+        id: 'uzemeltetes-premium',
+        name: { hu: 'Karbantartás — Prémium', en: 'Upkeep — Premium' },
+        problem: {
+          hu: 'Foglaló- vagy rendelési rendszerhez, ahol egy leállás elveszett vevőt jelent, és havonta rendszeresen kell rajta dolgozni.',
+          en: 'For a booking or ordering system, where downtime means a lost customer and there is regular work on it every month.',
+        },
+        forWho: {
+          hu: 'Annak, akinek a rendszere naponta pénzt hoz. Nincs hűségidő, hónapra felmondható.',
+          en: 'For anyone whose system brings in money every day. No minimum term, cancellable monthly.',
+        },
+        includes: [
+          { hu: 'Minden, ami a Standardban', en: 'Everything in Standard' },
+          { hu: 'Havi három óra fejlesztés vagy módosítás', en: 'Three hours of changes or development each month' },
+          { hu: 'Havi rövid jelentés: mi történt, mit javítottam', en: 'A short monthly report: what happened, what I fixed' },
+        ],
+        priceHuf: 45000,
+        priceUnit: 'month',
+        timeline: {
+          hu: 'Leálláskor munkaidőben 4 órán belül nekiállok',
+          en: 'On an outage I start within 4 working hours',
+        },
       },
     ],
   },
