@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { ArrowLeft, ArrowUpRight, Mail } from 'lucide-react'
 import { ENGINEERING_APPROACH, STACK_GROUPS, STACK_LEGEND, SITE_DECISIONS } from '../data/engineering'
 import { PROJECTS_FULL } from '../data/projects'
+import { ORDERED_SKILLS } from '../data/skills'
 import { SOCIAL_LINKS } from '../data/nav'
 import { t } from '../i18n/t'
 import { UI } from '../i18n/ui'
@@ -43,6 +44,11 @@ const COPY = {
     en: 'Five areas, each with a position and the specifics behind it. What matters is not whether I know the names, but what I decide on when two solutions are both available.',
   },
 
+  skillsHeading: { hu: 'Mit csinálok', en: 'What I do' },
+  skillsIntro: {
+    hu: 'Hat terület, amiből egy működő rendszer összeáll — ahogy egy megrendelő kérdezné, nem ahogy egy önéletrajz sorolná.',
+    en: 'Six areas a working system is made of — put the way a client would ask, not the way a CV would list them.',
+  },
   stackHeading: { hu: 'Amivel dolgozom', en: 'What I work with' },
   stackIntro: {
     hu: 'Két csoportba osztva aszerint, mi ellenőrizhető. Ami ebben a repóban fut, azt meg lehet nyitni; a többit a leszállított munkából hozom. Százalékos tudásszint nincs, mert nincs mögötte semmi.',
@@ -148,7 +154,7 @@ export default function Fejleszto() {
 
         {/* ---------------- Header ----------------
             The page's only eyebrow. DESIGN.md rations them at one per three
-            sections and this page now has five, so the five section headings
+            sections and this page now has six, so the six section headings
             below stand on their own. */}
         <header>
           <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary-dark">
@@ -204,6 +210,32 @@ export default function Fejleszto() {
                 </div>
               </div>
             ))}
+          </div>
+        </section>
+
+        {/* ---------------- Skills ----------------
+            Moved here from the homepage on 2026-09-24, when the services
+            catalogue took over the job of saying what is on offer. The tiles
+            stay because their detail line is written for someone checking
+            whether the work is real — which is this page's reader. */}
+        <section aria-labelledby="kepessegek" className="mt-20 sm:mt-24">
+          <h2 id="kepessegek" className="font-display font-bold text-2xl sm:text-3xl text-ink tracking-tight">
+            {t(COPY.skillsHeading, locale)}
+          </h2>
+          <p className="text-muted leading-relaxed mt-4 max-w-2xl">{t(COPY.skillsIntro, locale)}</p>
+
+          <div className="mt-10 grid gap-5 sm:grid-cols-2">
+            {ORDERED_SKILLS.map((skill) => {
+              const Icon = skill.icon
+              return (
+                <div key={t(skill.title, locale)} className="rounded-3xl border border-divider p-6">
+                  <Icon className="h-5 w-5 text-primary-dark" strokeWidth={2} aria-hidden="true" />
+                  <h3 className="font-display font-semibold text-lg text-ink mt-4">{t(skill.title, locale)}</h3>
+                  <p className="text-ink leading-relaxed mt-2">{t(skill.text, locale)}</p>
+                  <p className="text-muted text-sm leading-relaxed mt-3">{t(skill.detail, locale)}</p>
+                </div>
+              )
+            })}
           </div>
         </section>
 

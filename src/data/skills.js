@@ -148,10 +148,9 @@ export const SKILLS_FULL = [
   },
 ]
 
-/* Display order, derived once and exported, because two places render it:
-   ServicesGrid draws the full grid and Footer lists the first four. Those two
-   read the same list in different orders as long as each derives its own, so a
-   visitor comparing the footer against the section sees them disagree. */
+/* Display order, derived once and exported: the /fejleszto page renders the
+   tiles, and the chatbot knowledge file lists them. Both read this order
+   rather than deriving their own, so the two cannot disagree. */
 export const ORDERED_SKILLS = SKILL_CATEGORIES.flatMap((category) =>
   SKILLS_FULL.filter((skill) => skill.category === category.id),
 )
