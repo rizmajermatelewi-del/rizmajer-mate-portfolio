@@ -17,7 +17,7 @@
 
    No trailing slash. Everything appending to it starts with one, and two in a
    row is a different URL to a crawler. */
-export const SITE_ORIGIN = 'https://rizmajer-mate-portfolio.vercel.app'
+export const SITE_ORIGIN = 'https://rizmajerdev.com'
 
 /* Absolute URL for a route path ('/', '/en/fejleszto'). The root keeps its
    trailing slash because that is the canonical form for a home page and the
