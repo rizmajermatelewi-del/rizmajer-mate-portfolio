@@ -187,9 +187,21 @@ export default function Services() {
         {SERVICE_GROUPS.map((g, i) => (
           <div key={g.id} id={`szolg-panel-${g.id}`} role="tabpanel" aria-labelledby={`szolg-tab-${g.id}`} hidden={active !== i} className="mt-7">
             <p className="text-muted leading-relaxed max-w-3xl">{t(g.intro, locale)}</p>
-            <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 items-stretch">
+            {/* Wrapping flex rather than a fixed grid, so a short last row is
+                centred instead of left hanging: the groups hold 3, 4 and 5
+                offers, and a three-column grid turned four of them into
+                3 + 1. Four go four across on wide screens (2 + 2 below),
+                five go 3 + 2, three go 3. */}
+            <div className="mt-6 flex flex-wrap justify-center gap-5">
               {g.items.map((s) => (
-                <ServiceCard key={s.id} s={s} locale={locale} />
+                <div
+                  key={s.id}
+                  className={`w-full sm:w-[calc(50%-0.625rem)] ${
+                    g.items.length === 4 ? 'xl:w-[calc(25%-0.9375rem)]' : 'lg:w-[calc(33.333%-0.834rem)]'
+                  }`}
+                >
+                  <ServiceCard s={s} locale={locale} />
+                </div>
               ))}
             </div>
             {g.items.some((s) => s.isNew) && <p className="text-muted text-sm leading-relaxed max-w-3xl mt-6">{t(COPY.newNote, locale)}</p>}
