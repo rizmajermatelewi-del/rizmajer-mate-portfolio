@@ -4,7 +4,9 @@ import {
   MessageSquare, Mic, Paintbrush, RefreshCw, Rocket, ShoppingCart, Sparkles, Ticket, UtensilsCrossed,
 } from 'lucide-react'
 import { SERVICE_GROUPS, priceLabel, isDiscounted, saleHuf, LAUNCH_OFFER } from '../data/services'
-import { CALC_SERVICES, SITE_KINDS, addonsFor, breakdown, PAGES, pagesApply, upkeepFor, perMonth } from '../data/calculator'
+import {
+  CALC_SERVICES, SITE_KINDS, addonsFor, breakdown, PAGES, pagesApply, upkeepFor, perMonth, hostingLabel, paymentSplit, PAYMENT,
+} from '../data/calculator'
 import { forint, priceEn } from '../data/fx'
 import { t } from '../i18n/t'
 
@@ -46,7 +48,11 @@ const COPY = {
   total: { hu: 'Egyszeri ár, becslés', en: 'One-off price, estimate' },
   rounded: { hu: '10 ezerre felfelé kerekítve', en: 'rounded up to 10 000 Ft' },
   discount: { hu: 'Indulási kedvezmény', en: 'Launch discount' },
-  firstYear: { hu: 'Első év összesen', en: 'First year in total' },
+  firstYear: { hu: 'Első év nálam összesen', en: 'First year, paid to me' },
+  payment: { hu: 'Fizetés két részletben', en: 'Paid in two parts' },
+  upfront: { hu: 'Induláskor', en: 'When work starts' },
+  onHandover: { hu: 'Átadáskor', en: 'On handover' },
+  hosting: { hu: 'Domain és tárhely, a szolgáltatónak', en: 'Domain and hosting, paid to the provider' },
   cta: { hu: 'Ajánlatot kérek erre', en: 'Get a quote for this' },
   estimateWord: { hu: 'becslés', en: 'estimate' },
   pagesWord: { hu: 'oldal', en: 'pages' },
@@ -143,7 +149,9 @@ export default function PriceCalculator({ locale, onQuote }) {
   const [upkeepId, setUpkeepId] = useState(null)
   const [groupId, setGroupId] = useState(CALC_SERVICES[0].group)
   const services = serviceIds.map((id) => CALC_SERVICES.find((s) => s.id === id))
-  const addons = addonsFor(serviceIds)
+  /* The extras specific to the chosen service come first: SMS reminders
+     matter more to a booking system than a blog does. */
+  const addons = addonsFor(serviceIds).sort((a, b) => a.appliesTo.length - b.appliesTo.length)
   const upkeeps = upkeepFor(serviceIds)
   const upkeep = upkeeps.find((u) => u.id === upkeepId) ?? null
   const withPages = pagesApply(serviceIds)
@@ -284,6 +292,7 @@ export default function PriceCalculator({ locale, onQuote }) {
                         <span className="block text-[13px] text-muted mt-0.5">
                           {a.percent ? `+${a.percent}%` : `+${t(fmt(a.flatHuf), locale)}`}
                         </span>
+                        {a.note && <span className="block text-[12px] text-muted/80 mt-1 leading-snug">{t(a.note, locale)}</span>}
                       </span>
                     </ChoiceCard>
                   ))}
@@ -417,6 +426,25 @@ export default function PriceCalculator({ locale, onQuote }) {
           {services.length === 1 && services[0].timeline && (
             <p className="text-[13px] text-muted mt-2">{t(services[0].timeline, locale)}</p>
           )}
+        </div>
+
+        <div className="mt-4 border-t border-divider pt-4 space-y-1.5 text-[13px]">
+          <p className="text-muted">
+            {t(COPY.payment, locale)} ({PAYMENT.upfrontPercent}/{100 - PAYMENT.upfrontPercent}%)
+          </p>
+          {[COPY.upfront, COPY.onHandover].map((label, i) => (
+            <p key={i} className="flex items-baseline justify-between gap-3">
+              <span className="text-ink/90">{t(label, locale)}</span>
+              <span className="text-ink tabular-nums whitespace-nowrap">{t(fmt(paymentSplit(finalHuf)[i]), locale)}</span>
+            </p>
+          ))}
+        </div>
+
+        <div className="mt-4 border-t border-divider pt-4 space-y-1.5 text-[13px]">
+          <p className="flex items-baseline justify-between gap-3">
+            <span className="text-ink/90">{t(COPY.hosting, locale)}</span>
+            <span className="text-muted tabular-nums whitespace-nowrap">{t(hostingLabel, locale)}</span>
+          </p>
         </div>
 
         {upkeep && (

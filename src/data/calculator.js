@@ -77,6 +77,66 @@ export const ADDONS = [
     flatHuf: 70000,
     appliesTo: ['idopontfoglalo', 'rendeles', 'utalvany'],
   },
+  /* Service-specific extras and the legal package, added 2026-09-24 at
+     the same hourly rate: a second language as the first, a blog ~5 hours,
+     a gallery ~2.5, SMS reminders ~3.75 (the texts themselves are billed by
+     the SMS provider), a two-way Google Calendar sync ~3, shipping carriers
+     ~5, loading the first fifty products ~2.5. The legal texts are filled
+     in from templates with the client's details, ~3 hours; a webshop must
+     have them, and the note says plainly that it is not a lawyer's work. */
+  {
+    id: 'german',
+    label: { hu: 'Német nyelvű változat is', en: 'A German version too' },
+    percent: 30,
+    appliesTo: [...WEB, ...SALES],
+  },
+  {
+    id: 'legal',
+    label: { hu: 'Jogi szövegek: ÁSZF, adatvédelem, süti-kezelés', en: 'Legal texts: terms, privacy notice, cookies' },
+    note: {
+      hu: 'Webshopnál kötelező. Sablonból, a te adataiddal; ügyvédi átnézést nem helyettesít.',
+      en: 'Required for a shop. From templates with your details; not a substitute for a lawyer.',
+    },
+    flatHuf: 50000,
+    appliesTo: [...WEB, ...SALES],
+  },
+  {
+    id: 'blog',
+    label: { hu: 'Blog vagy hírek, amit te szerkesztesz', en: 'A blog or news page you edit' },
+    flatHuf: 80000,
+    appliesTo: ['bemutatkozo', 'cegoldal', 'atepites'],
+  },
+  {
+    id: 'gallery',
+    label: { hu: 'Galéria vagy referenciák oldal', en: 'A gallery or references page' },
+    flatHuf: 40000,
+    appliesTo: WEB,
+  },
+  {
+    id: 'sms',
+    label: { hu: 'SMS-emlékeztető a vendégnek', en: 'SMS reminders for clients' },
+    note: { hu: 'Az SMS-ek díját a szolgáltató számlázza, darabonként.', en: 'The texts are billed by the provider, per message.' },
+    flatHuf: 60000,
+    appliesTo: ['idopontfoglalo'],
+  },
+  {
+    id: 'gcal',
+    label: { hu: 'Google Naptár-szinkron', en: 'Google Calendar sync' },
+    flatHuf: 50000,
+    appliesTo: ['idopontfoglalo'],
+  },
+  {
+    id: 'shipping',
+    label: { hu: 'Szállítás bekötése (Foxpost, GLS, MPL)', en: 'Shipping set up (Foxpost, GLS, MPL)' },
+    flatHuf: 80000,
+    appliesTo: ['webshop'],
+  },
+  {
+    id: 'products',
+    label: { hu: 'Az első 50 termék feltöltése', en: 'The first 50 products loaded in' },
+    flatHuf: 40000,
+    appliesTo: ['webshop'],
+  },
 ]
 
 /* One-off builds only. Monthly upkeep, the flat audit and per-process
@@ -143,6 +203,22 @@ export const estimate = (ids, selectedIds, pages) => breakdown(ids, selectedIds,
    catalogue quotes their upkeep separately (see services.js). */
 export const UPKEEP = ALL_SERVICES.filter((s) => s.priceUnit === 'month')
 export const upkeepFor = (ids) => (list(ids).includes('webshop') ? [] : UPKEEP)
+
+/* What the site costs to keep online, paid to the registrar and host in
+   the client's name, not to Máté; the same range the FAQ quotes. */
+export const HOSTING = { lo: 15000, hi: 30000 }
+export const hostingLabel = {
+  hu: `${forint(HOSTING.lo)}–${forint(HOSTING.hi)}/év`,
+  en: `${priceEn(HOSTING.lo)}–${priceEn(HOSTING.hi)} a year`,
+}
+
+/* Payment in two parts, set 2026-09-24 at Máté's direction: half when
+   work starts, the rest on handover. The written contract governs. */
+export const PAYMENT = { upfrontPercent: 50 }
+export const paymentSplit = (huf) => {
+  const upfront = Math.round((huf * PAYMENT.upfrontPercent) / 100 / 1000) * 1000
+  return [upfront, huf - upfront]
+}
 
 export const perMonth = (huf) => ({ hu: `${forint(huf)}/hó`, en: `${priceEn(huf)} a month` })
 

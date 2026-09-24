@@ -74,3 +74,23 @@ describe('combined services', () => {
     expect(breakdown(['bemutatkozo', 'nincs-ilyen'])).toBeNull()
   })
 })
+
+describe('running costs and payment', () => {
+  it('splits the price into two parts that add up exactly', async () => {
+    const { paymentSplit } = await import('./calculator')
+    for (const huf of [336000, 552000, 1008000, 1450000]) {
+      const [a, b] = paymentSplit(huf)
+      expect(a + b).toBe(huf)
+      expect(Math.abs(a - b)).toBeLessThanOrEqual(2000)
+    }
+  })
+
+  it('offers the booking and shop extras only where they belong', async () => {
+    const { addonsFor } = await import('./calculator')
+    const ids = (x) => addonsFor(x).map((a) => a.id)
+    expect(ids('idopontfoglalo')).toEqual(expect.arrayContaining(['sms', 'gcal', 'legal']))
+    expect(ids('webshop')).toEqual(expect.arrayContaining(['shipping', 'products', 'legal']))
+    expect(ids('bemutatkozo')).not.toContain('shipping')
+    expect(ids('webshop')).not.toContain('sms')
+  })
+})
