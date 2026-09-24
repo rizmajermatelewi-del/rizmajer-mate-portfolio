@@ -4,7 +4,7 @@ import {
   MessageSquare, Mic, Paintbrush, RefreshCw, Rocket, ShoppingCart, Sparkles, Ticket, UtensilsCrossed,
 } from 'lucide-react'
 import { SERVICE_GROUPS, priceLabel, isDiscounted, saleHuf, LAUNCH_OFFER } from '../data/services'
-import { CALC_SERVICES, addonsFor, breakdown, PAGES, pagesApply, upkeepFor, perMonth } from '../data/calculator'
+import { CALC_SERVICES, SITE_KINDS, addonsFor, breakdown, PAGES, pagesApply, upkeepFor, perMonth } from '../data/calculator'
 import { forint, priceEn } from '../data/fx'
 import { t } from '../i18n/t'
 
@@ -22,6 +22,10 @@ const COPY = {
   step: { hu: 'lépés', en: 'Step' },
   next: { hu: 'Tovább', en: 'Next' },
   back: { hu: 'Vissza', en: 'Back' },
+  multi: {
+    hu: 'Többet is választhatsz, például weboldalt foglalóval és chatbottal. Weboldal-típusból egyet.',
+    en: 'You can pick several, say a site with bookings and a chatbot. One kind of site, though.',
+  },
   none: { hu: 'Ehhez nincs választható kiegészítő.', en: 'There are no extras for this one.' },
   pages: { hu: 'Hány aloldal kell?', en: 'How many pages?' },
   pagesNote: {
@@ -133,28 +137,37 @@ function ChoiceCard({ type, name, checked, onChange, children }) {
    rules them out. */
 export default function PriceCalculator({ locale, onQuote }) {
   const [step, setStep] = useState(0)
-  const [serviceId, setServiceId] = useState(CALC_SERVICES[0].id)
+  const [serviceIds, setServiceIds] = useState([CALC_SERVICES[0].id])
   const [picked, setPicked] = useState([])
   const [pages, setPages] = useState(PAGES.included)
   const [upkeepId, setUpkeepId] = useState(null)
   const [groupId, setGroupId] = useState(CALC_SERVICES[0].group)
-  const service = CALC_SERVICES.find((s) => s.id === serviceId)
-  const addons = addonsFor(serviceId)
-  const upkeeps = upkeepFor(serviceId)
+  const services = serviceIds.map((id) => CALC_SERVICES.find((s) => s.id === id))
+  const addons = addonsFor(serviceIds)
+  const upkeeps = upkeepFor(serviceIds)
   const upkeep = upkeeps.find((u) => u.id === upkeepId) ?? null
-  const withPages = pagesApply(serviceId)
-  const { lines, total } = breakdown(serviceId, picked, pages)
-  const discounted = isDiscounted(service)
+  const withPages = pagesApply(serviceIds)
+  const { lines, total } = breakdown(serviceIds, picked, pages)
+  const discounted = services.some(isDiscounted)
   const finalHuf = discounted ? saleHuf(total) : total
   const rolling = useRollingNumber(finalHuf)
   const monthlyHuf = upkeep?.priceHuf ?? 0
   const firstYear = useRollingNumber(finalHuf + 12 * monthlyHuf)
   const extraPages = withPages && pages > PAGES.included
 
-  function choose(id) {
-    setServiceId(id)
-    setPicked((p) => p.filter((a) => addonsFor(id).some((x) => x.id === a)))
-    if (!upkeepFor(id).length) setUpkeepId(null)
+  /* Toggles a service. The last one cannot be removed (an empty estimate
+     says nothing), and a kind of site replaces any other kind. */
+  function toggleService(id) {
+    let next
+    if (serviceIds.includes(id)) {
+      if (serviceIds.length === 1) return
+      next = serviceIds.filter((x) => x !== id)
+    } else {
+      next = [...serviceIds.filter((x) => !(SITE_KINDS.includes(id) && SITE_KINDS.includes(x))), id]
+    }
+    setServiceIds(next)
+    setPicked((p) => p.filter((a) => addonsFor(next).some((x) => x.id === a)))
+    if (!upkeepFor(next).length) setUpkeepId(null)
   }
   const toggle = (id) => setPicked((p) => (p.includes(id) ? p.filter((x) => x !== id) : [...p, id]))
 
@@ -166,7 +179,7 @@ export default function PriceCalculator({ locale, onQuote }) {
       if (extraPages) parts.push(`${pages} ${t(COPY.pagesWord, loc)}`)
       if (upkeep) parts.push(`${t(upkeep.name, loc)} (${t(perMonth(upkeep.priceHuf), loc)})`)
       const price = t(priceLabel({ priceHuf: finalHuf }), loc)
-      return `${t(service.name, loc)}${parts.length ? ` + ${parts.join(', ')}` : ''} (${t(COPY.estimateWord, loc)}: ${price})`
+      return `${services.map((s) => t(s.name, loc)).join(' + ')}${parts.length ? ` + ${parts.join(', ')}` : ''} (${t(COPY.estimateWord, loc)}: ${price})`
     }
     return { hu: line('hu'), en: line('en') }
   }
@@ -211,6 +224,7 @@ export default function PriceCalculator({ locale, onQuote }) {
 
           {step === 0 && (
             <div className="mt-4">
+              <p className="text-[13px] text-muted mb-3">{t(COPY.multi, locale)}</p>
               {/* The groups filter the cards rather than stacking all
                   fourteen; the choice itself survives switching groups. */}
               <div className="flex flex-wrap gap-2">
@@ -225,6 +239,9 @@ export default function PriceCalculator({ locale, onQuote }) {
                     }`}
                   >
                     {t(g.title, locale)}
+                    {serviceIds.some((id) => CALC_SERVICES.find((s) => s.id === id).group === g.id) && (
+                      <span className="ml-1.5 inline-block h-1.5 w-1.5 rounded-full bg-primary align-middle" aria-hidden="true" />
+                    )}
                   </button>
                 ))}
               </div>
@@ -238,7 +255,7 @@ export default function PriceCalculator({ locale, onQuote }) {
                       {items.map((s) => {
                         const Icon = ICONS[s.id] ?? Sparkles
                         return (
-                          <ChoiceCard key={s.id} type="radio" name="calc-service" checked={serviceId === s.id} onChange={() => choose(s.id)}>
+                          <ChoiceCard key={s.id} type="checkbox" name="calc-service" checked={serviceIds.includes(s.id)} onChange={() => toggleService(s.id)}>
                             <Icon className="h-5 w-5 shrink-0 text-primary mt-0.5" aria-hidden="true" />
                             <span className="pr-6">
                               <span className="block font-semibold leading-snug">{t(s.name, locale)}</span>
@@ -361,9 +378,9 @@ export default function PriceCalculator({ locale, onQuote }) {
         <ul className="mt-4 space-y-2 text-[13px]">
           {lines.map((l) => (
             <li key={l.id} className="flex items-baseline justify-between gap-3">
-              <span className={l.id === 'base' ? 'font-semibold text-ink' : 'text-ink/90'}>{t(l.label, locale)}</span>
+              <span className={l.kind === 'service' ? 'font-semibold text-ink' : 'text-ink/90'}>{t(l.label, locale)}</span>
               <span className="text-muted tabular-nums whitespace-nowrap">
-                {l.id === 'base' ? t(fmt(l.huf), locale) : `+${t(fmt(l.huf), locale)}`}
+                {l.kind === 'service' ? t(fmt(l.huf), locale) : `+${t(fmt(l.huf), locale)}`}
               </span>
             </li>
           ))}
@@ -395,7 +412,11 @@ export default function PriceCalculator({ locale, onQuote }) {
             )}
           </p>
           <p className="text-[12px] text-muted mt-0.5">{t(COPY.rounded, locale)}</p>
-          {service.timeline && <p className="text-[13px] text-muted mt-2">{t(service.timeline, locale)}</p>}
+          {/* One service has one delivery time; for a combination the honest
+              answer comes with the written quote. */}
+          {services.length === 1 && services[0].timeline && (
+            <p className="text-[13px] text-muted mt-2">{t(services[0].timeline, locale)}</p>
+          )}
         </div>
 
         {upkeep && (

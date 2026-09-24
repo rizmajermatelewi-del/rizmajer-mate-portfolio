@@ -48,7 +48,7 @@ describe('breakdown and upkeep', () => {
     const { breakdown } = await import('./calculator')
     const b = breakdown('cegoldal', ['english', 'seo'], 7)
     // 420 000 + 126 000 english + 50 000 seo + 2 x 25 000 pages = 646 000 -> 650 000
-    expect(b.lines.map((l) => l.id)).toEqual(['base', 'english', 'seo', 'pages'])
+    expect(b.lines.map((l) => l.id)).toEqual(['cegoldal', 'english', 'seo', 'pages'])
     expect(b.lines.reduce((a, l) => a + l.huf, 0)).toBe(646000)
     expect(b.total).toBe(650000)
     expect(untranslatedIn(b.lines.map((l) => l.label))).toEqual([])
@@ -59,5 +59,18 @@ describe('breakdown and upkeep', () => {
     expect(UPKEEP.map((s) => s.id)).toEqual(['uzemeltetes-alap', 'uzemeltetes', 'uzemeltetes-premium'])
     expect(upkeepFor('webshop')).toEqual([])
     expect(upkeepFor('bemutatkozo')).toBe(UPKEEP)
+  })
+})
+
+describe('combined services', () => {
+  it('sums the services, charges a flat extra once and a percentage on what it covers', async () => {
+    const { breakdown, addonsFor } = await import('./calculator')
+    // bemutatkozo 240 000 + idopontfoglalo 690 000 + chatbot 150 000 = 1 080 000
+    // payment flat 90 000 once; english 30% of 240 000 + 690 000 (chatbot not covered) = 279 000
+    const b = breakdown(['bemutatkozo', 'idopontfoglalo', 'chatbot'], ['payment', 'english'])
+    expect(b.lines.reduce((a, l) => a + l.huf, 0)).toBe(1080000 + 90000 + 279000)
+    expect(b.total).toBe(1450000)
+    expect(addonsFor(['bemutatkozo', 'google']).some((a) => a.id === 'google')).toBe(false)
+    expect(breakdown(['bemutatkozo', 'nincs-ilyen'])).toBeNull()
   })
 })

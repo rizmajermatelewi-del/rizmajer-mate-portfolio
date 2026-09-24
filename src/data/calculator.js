@@ -84,34 +84,49 @@ export const ADDONS = [
    through a calculator would only add a step. */
 export const CALC_SERVICES = ALL_SERVICES.filter((s) => (s.priceUnit ?? 'from') === 'from')
 
-export const addonsFor = (serviceId) => ADDONS.filter((a) => a.appliesTo.includes(serviceId))
+/* Several services can be combined (2026-09-24): a site with a booking
+   system and a chatbot is one project. Every function below takes one id
+   or a list of them. The one combination that makes no sense is two
+   different main sites, so SITE_KINDS are mutually exclusive: picking one
+   replaces the other. */
+export const SITE_KINDS = ['bemutatkozo', 'cegoldal', 'felujitas', 'atepites']
+const list = (ids) => [].concat(ids)
 
-/* Percentages apply to the base, not to each other, so ticking "rush"
-   after "English" does not charge a rush premium on the translation twice
-   over. Rounded up to the next 10 000 Ft: an estimate that pretends to be
-   exact to the forint claims a precision it does not have. */
+/* The Google-profile extra is the Google catalogue offer; when that offer
+   is itself chosen, the extra would charge for it twice. */
+export const addonsFor = (ids) =>
+  ADDONS.filter((a) => list(ids).some((id) => a.appliesTo.includes(id)) && !(a.id === 'google' && list(ids).includes('google')))
+
 /* Extra pages for the multi-page builds (2026-09-24): five are in the
    floor price, each further one ~1.5 hours at the same hourly rate. */
 export const PAGES = { appliesTo: ['cegoldal', 'atepites'], included: 5, max: 20, perPageHuf: 25000 }
 
-export const pagesApply = (serviceId) => PAGES.appliesTo.includes(serviceId)
+export const pagesApply = (ids) => list(ids).some((id) => PAGES.appliesTo.includes(id))
 
 /* The estimate line by line, so the summary can show what the number is
-   made of rather than asking the visitor to trust it. */
-export function breakdown(serviceId, selectedIds = [], pages = PAGES.included) {
-  const service = CALC_SERVICES.find((s) => s.id === serviceId)
-  if (!service) return null
-  const base = service.priceHuf
-  const lines = [{ id: 'base', label: service.name, huf: base }]
-  for (const addon of addonsFor(serviceId)) {
+   made of rather than asking the visitor to trust it.
+
+   Percentages apply to the base of the services they cover, not to each
+   other, so ticking "rush" after "English" does not charge a rush premium
+   on the translation twice over. A flat extra is charged once however many
+   services it covers: one card integration serves the site and the
+   booking alike. Rounded up to the next 10 000 Ft: an estimate that
+   pretends to be exact to the forint claims a precision it does not have. */
+export function breakdown(ids, selectedIds = [], pages = PAGES.included) {
+  const services = list(ids).map((id) => CALC_SERVICES.find((s) => s.id === id))
+  if (!services.length || services.some((s) => !s)) return null
+  const lines = services.map((s) => ({ id: s.id, kind: 'service', label: s.name, huf: s.priceHuf }))
+  for (const addon of addonsFor(ids)) {
     if (!selectedIds.includes(addon.id)) continue
-    lines.push({ id: addon.id, label: addon.label, huf: addon.flatHuf ?? Math.round((base * addon.percent) / 100) })
+    const base = services.filter((s) => addon.appliesTo.includes(s.id)).reduce((a, s) => a + s.priceHuf, 0)
+    lines.push({ id: addon.id, kind: 'addon', label: addon.label, huf: addon.flatHuf ?? Math.round((base * addon.percent) / 100) })
   }
-  if (pagesApply(serviceId)) {
+  if (pagesApply(ids)) {
     const extra = Math.min(Math.max(pages, PAGES.included), PAGES.max) - PAGES.included
     if (extra > 0) {
       lines.push({
         id: 'pages',
+        kind: 'addon',
         label: { hu: `${extra} további aloldal`, en: `${extra} more page${extra > 1 ? 's' : ''}` },
         huf: extra * PAGES.perPageHuf,
       })
@@ -121,13 +136,13 @@ export function breakdown(serviceId, selectedIds = [], pages = PAGES.included) {
   return { lines, total: Math.ceil(sum / 10000) * 10000 }
 }
 
-export const estimate = (serviceId, selectedIds, pages) => breakdown(serviceId, selectedIds, pages)?.total ?? null
+export const estimate = (ids, selectedIds, pages) => breakdown(ids, selectedIds, pages)?.total ?? null
 
 /* Upkeep is a choice in the calculator, not a line in the one-off price:
    it is monthly and never discounted. Webshops get none here, because the
    catalogue quotes their upkeep separately (see services.js). */
 export const UPKEEP = ALL_SERVICES.filter((s) => s.priceUnit === 'month')
-export const upkeepFor = (serviceId) => (serviceId === 'webshop' ? [] : UPKEEP)
+export const upkeepFor = (ids) => (list(ids).includes('webshop') ? [] : UPKEEP)
 
 export const perMonth = (huf) => ({ hu: `${forint(huf)}/hó`, en: `${priceEn(huf)} a month` })
 
