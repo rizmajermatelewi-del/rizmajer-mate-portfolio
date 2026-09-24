@@ -202,7 +202,7 @@ export const STACK_GROUPS = [
          suite and fails if it stops matching. Adding a test file therefore
          breaks the build until this line is updated — which is the whole
          argument this page makes, applied to the page itself. */
-      { name: neutral('Vitest'), where: 'here', note: { hu: '151 teszt, 23 fájlban', en: '151 tests across 23 files' } },
+      { name: neutral('Vitest'), where: 'here', note: { hu: '153 teszt, 23 fájlban', en: '153 tests across 23 files' } },
       { name: neutral('Testing Library'), where: 'here', note: { hu: 'Komponensek viselkedése', en: 'Component behaviour' } },
       { name: neutral('oxlint'), where: 'here', note: { hu: 'Minden commit előtt', en: 'Before every commit' } },
     ],

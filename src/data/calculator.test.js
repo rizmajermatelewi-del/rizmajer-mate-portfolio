@@ -42,3 +42,22 @@ describe('page count', () => {
     expect(estimate('webshop', [], 15)).toBe(estimate('webshop'))
   })
 })
+
+describe('breakdown and upkeep', () => {
+  it('lists every charged line and totals them, rounded up', async () => {
+    const { breakdown } = await import('./calculator')
+    const b = breakdown('cegoldal', ['english', 'seo'], 7)
+    // 420 000 + 126 000 english + 50 000 seo + 2 x 25 000 pages = 646 000 -> 650 000
+    expect(b.lines.map((l) => l.id)).toEqual(['base', 'english', 'seo', 'pages'])
+    expect(b.lines.reduce((a, l) => a + l.huf, 0)).toBe(646000)
+    expect(b.total).toBe(650000)
+    expect(untranslatedIn(b.lines.map((l) => l.label))).toEqual([])
+  })
+
+  it('offers monthly upkeep, except for the webshop', async () => {
+    const { UPKEEP, upkeepFor } = await import('./calculator')
+    expect(UPKEEP.map((s) => s.id)).toEqual(['uzemeltetes-alap', 'uzemeltetes', 'uzemeltetes-premium'])
+    expect(upkeepFor('webshop')).toEqual([])
+    expect(upkeepFor('bemutatkozo')).toBe(UPKEEP)
+  })
+})

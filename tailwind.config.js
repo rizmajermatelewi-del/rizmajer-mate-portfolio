@@ -52,8 +52,13 @@ export default {
         'blink': 'blink 1s step-end infinite',
         'float': 'float 6s ease-in-out infinite',
         'marquee': 'marquee 28s linear infinite',
+        'step-in': 'step-in 320ms cubic-bezier(0.22, 1, 0.36, 1)',
       },
       keyframes: {
+        'step-in': {
+          '0%': { opacity: '0', transform: 'translateY(6px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
         blink: {
           '0%, 100%': { opacity: '1' },
           '50%': { opacity: '0' },
