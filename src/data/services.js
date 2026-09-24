@@ -27,7 +27,7 @@ import { forint, priceEn } from './fx.js'
 export const TIER_FLOORS = {
   intro: 240000,
   booking: 690000,
-  system: 1200000,
+  system: 1500000,
 }
 
 export const RETAINER_HUF = 25000
@@ -156,7 +156,7 @@ export const SERVICE_GROUPS = [
           { hu: 'A régi címek átirányítva, hogy ne vesszen el a keresőforgalom', en: 'Old addresses redirected, so search traffic is not lost' },
           { hu: 'Költözés a domainnel és e-mailekkel együtt', en: 'The move, including your domain and e-mail' },
         ],
-        priceHuf: 290000,
+        priceHuf: 350000,
         timeline: { hu: 'Átadás jellemzően 2-4 hét', en: 'Delivered in 2-4 weeks, typically' },
         isNew: true,
       },
@@ -302,7 +302,7 @@ export const SERVICE_GROUPS = [
           { hu: 'Egységes, logós PDF egy gombnyomásra', en: 'A consistent, branded PDF at one tap' },
           { hu: 'Kiküldött ajánlatok listája, állapottal', en: 'A list of quotes sent, with their status' },
         ],
-        priceHuf: 390000,
+        priceHuf: 590000,
         timeline: { hu: 'Átadás jellemzően 2-4 hét', en: 'Delivered in 2-4 weeks, typically' },
         isNew: true,
       },
