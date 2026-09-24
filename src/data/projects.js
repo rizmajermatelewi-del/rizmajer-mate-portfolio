@@ -6,6 +6,9 @@ import napiMenuCard from '../assets/demos/napi-menu-card.webp'
 import napiMenu01 from '../assets/demos/napi-menu-01.webp'
 import napiMenu02 from '../assets/demos/napi-menu-02.webp'
 import napiMenu03 from '../assets/demos/napi-menu-03.webp'
+import bemutatkozoCard from '../assets/demos/bemutatkozo-card.webp'
+import bemutatkozo01 from '../assets/demos/bemutatkozo-01.webp'
+import bemutatkozo02 from '../assets/demos/bemutatkozo-02.webp'
 
 /* Demo apps live in a **separate** public repo (DEMOS) and each has its own
    Vercel project. This portfolio only stores screenshots + links. */
@@ -23,7 +26,7 @@ export const PROJECTS_FULL = [
       hu: 'Bemutató időpontfoglaló fodrászatra: szolgáltatás, naptár, foglalás, admin lista. Saját kezdeményezés, nem ügyfélmunka.',
       en: 'Demo booking flow for a salon: services, calendar, booking, admin list. My own initiative, not client work.',
     },
-    tech: ['React', 'Vite', 'Tailwind'],
+    tech: ['React', 'Vite'],
     features: [
       { hu: 'Dupla foglalás elleni védelem', en: 'Double-booking prevention' },
       { hu: 'Admin lista PIN-nel', en: 'Admin list with a PIN' },
@@ -82,7 +85,7 @@ export const PROJECTS_FULL = [
       hu: 'Bemutató napi menü büfének: mai lap, heti nézet, egyszerű szerkesztő. Saját kezdeményezés, nem ügyfélmunka.',
       en: 'Demo daily menu for a buffet: today\'s board, week view, simple editor. My own initiative, not client work.',
     },
-    tech: ['React', 'Vite', 'Tailwind'],
+    tech: ['React', 'Vite'],
     features: [
       { hu: 'Mai menü + hét', en: 'Today + week view' },
       { hu: 'Tulaj-szerkesztő', en: 'Owner editor' },
@@ -140,6 +143,65 @@ export const PROJECTS_FULL = [
     ],
     github: DEMOS_REPO_READY ? `${DEMOS_REPO}/tree/main/napi-menu` : '#',
     live: 'https://demo-napi-menu.vercel.app',
+  },
+  {
+    title: {
+      hu: 'Bemutatkozó oldal — Kovács Villanyszerelés',
+      en: 'One-page site — Kovacs Electrical',
+    },
+    text: {
+      hu: 'Bemutató egyoldalas oldal villanyszerelőnek: mit vállal, hol, hívás gomb, ajánlatkérő. Saját kezdeményezés, nem ügyfélmunka.',
+      en: 'Demo one-page site for an electrician: services, area, call button, quote form. My own initiative, not client work.',
+    },
+    tech: ['Vite', 'HTML', 'CSS'],
+    features: [
+      { hu: 'Keretrendszer nélkül', en: 'No framework' },
+      { hu: 'Helyi keresési adat (schema.org)', en: 'Local search data (schema.org)' },
+      { hu: 'Ajánlatkérő mezőnkénti hibával', en: 'Quote form with per-field errors' },
+    ],
+    featured: false,
+    label: { hu: 'Bemutató projekt', en: 'Demo project' },
+    tone: { from: '--color-card-3', to: '--color-deep', accent: '--color-primary' },
+    image: bemutatkozoCard,
+    imageAlt: {
+      hu: 'Kovács Villanyszerelés bemutató oldal: név, szolgáltatások röviden, ajánlatkérés és hívás gomb',
+      en: 'Kovacs Electrical demo page: name, services in brief, quote and call buttons',
+    },
+    year: neutral('2026'),
+    role: {
+      hu: 'Tervezés, fejlesztés, deploy',
+      en: 'Design, build, deploy',
+    },
+    problem: {
+      hu: 'Egy szakiparosnak nem webshop kell, hanem egy oldal, ami telefonon azonnal betölt, megmondja, mit vállal és hol, és egy koppintással hívható.',
+      en: 'A tradesperson does not need a shop, just a page that loads instantly on a phone, says what they do and where, and can be called with one tap.',
+    },
+    solution: {
+      hu: 'Egy oldal sima HTML-lel és CSS-sel, egy rövid scripttel az űrlaphoz. Helyi vállalkozás schema.org adattal. A bemutató űrlapja nem küld e-mailt; élesben egy űrlapszolgáltatás kerülne mögé.',
+      en: 'One page in plain HTML and CSS, with a short script for the form. Local business schema.org data. The demo form sends no email; production would put a form service behind it.',
+    },
+    gallery: [
+      {
+        src: bemutatkozo01,
+        alt: {
+          hu: 'Szolgáltatások listája: négy tétel rövid leírással',
+          en: 'Services list: four items with short descriptions',
+        },
+        width: 1280,
+        height: 800,
+      },
+      {
+        src: bemutatkozo02,
+        alt: {
+          hu: 'Ajánlatkérő űrlap mezőnkénti hibaüzenetekkel',
+          en: 'Quote form with per-field error messages',
+        },
+        width: 1280,
+        height: 800,
+      },
+    ],
+    github: DEMOS_REPO_READY ? `${DEMOS_REPO}/tree/main/bemutatkozo` : '#',
+    live: 'https://demo-bemutatkozo.vercel.app',
   },
 ]
 

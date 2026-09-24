@@ -3,6 +3,7 @@ import CountUp from '../components/CountUp'
 import { useInView } from '../motion/useInView'
 import { useLocale } from '../i18n/useLocale'
 import { t, neutral } from '../i18n/t'
+import { PROJECT_COUNT } from '../data/projects'
 
 const COPY = {
   eyebrow: { hu: 'Számokban', en: 'In numbers' },
@@ -34,16 +35,17 @@ export default function Pillars() {
          kezdeményezés". The two client projects were removed from projects.js
          on 2026-08-10 because neither had been delivered or invoiced, so this
          numeral counted work that did not exist. Two own projects, no client
-         work yet — which is what the section now actually contains. */
-      target: 2,
+         work yet — which is what the section now actually contains. Read from
+         PROJECTS_FULL so the numeral cannot drift from the cards again. */
+      target: PROJECT_COUNT,
       suffix: neutral(''),
       label: { hu: 'megépített projekt', en: 'projects built' },
       /* Third sentence used to claim every project was openable while
          live/github were empty. It stays out of the delivered-count card;
          openable demos are listed under Projects with real live URLs. */
       desc: {
-        hu: 'Két bemutató app — időpontfoglaló és napi menü. Az első ügyfélmunka most indul.',
-        en: 'Two demo apps — booking and a daily menu. The first client job is beginning now.',
+        hu: 'Bemutató appok: időpontfoglaló, napi menü, egyoldalas bemutatkozó. Az első ügyfélmunka most indul.',
+        en: 'Demo apps: booking, a daily menu, a one-page business site. The first client job is beginning now.',
       },
     },
     {

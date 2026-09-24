@@ -90,8 +90,8 @@ export const SKILLS_FULL = [
       en: 'What works behind the screen: the booking actually reserves, the order actually arrives, and only the people who should can see the data.',
     },
     detail: {
-      hu: 'Node.js és Express, REST végpontokkal és JWT-alapú munkamenet-kezeléssel. A validáció a szerveren is lefut, nem csak a böngészőben, és minden hibaághoz tartozik egyértelmű válasz.',
-      en: 'Node.js and Express, with REST endpoints and JWT-based sessions. Validation runs on the server as well, not only in the browser, and every error path has a clear response.',
+      hu: 'Node.js és Express, REST végpontokkal és JWT-alapú munkamenet-kezeléssel. A validáció a szerveren is lefut, nem csak a böngészőben, és minden hibaághoz tartozik egyértelmű válasz. Az Időpontfoglaló demóban a szabad sávot mentéskor újraszámolom, így két vendég nem kaphatja meg ugyanazt az időpontot, a foglalások listája pedig PIN mögött van.',
+      en: 'Node.js and Express, with REST endpoints and JWT-based sessions. Validation runs on the server as well, not only in the browser, and every error path has a clear response. In the booking demo the free slot is recomputed at the moment of saving, so two customers cannot get the same time, and the booking list sits behind a PIN.',
     },
   },
   {

@@ -76,12 +76,30 @@ describe('sitemap.xml', () => {
      shallow clone — where every path reports the same commit — it omits the
      field instead of publishing a date it cannot stand behind.
 
-     changefreq and priority stay banned. Google ignores both outright. */
+     changefreq and priority stay banned. Google ignores both outright.
+
+     The shallow-clone case has to be asserted, not just survived. Vercel
+     clones shallow, the generator correctly wrote no dates, and this test —
+     which demanded a date on every entry unconditionally — failed every
+     production build from 2026-08-19 on, so nothing after 65159a7 shipped.
+     With full history: a date on every entry. Without: none at all. */
   it('publishes a lastmod on every entry, and never changefreq or priority', () => {
     expect(sitemap).not.toContain('<changefreq>')
     expect(sitemap).not.toContain('<priority>')
 
     const dates = [...sitemap.matchAll(/<lastmod>([^<]*)<\/lastmod>/g)].map((m) => m[1])
+    let fullHistory = false
+    try {
+      fullHistory =
+        execFileSync('git', ['rev-parse', '--is-shallow-repository'], { cwd: root, encoding: 'utf8', stdio: 'pipe' }).trim() ===
+        'false'
+    } catch {
+      /* no git at all (tarball build) — same as shallow */
+    }
+    if (!fullHistory) {
+      expect(dates, 'shallow clone must publish no lastmod rather than a guessed one').toHaveLength(0)
+      return
+    }
     expect(dates.length, 'sitemap has fewer lastmod dates than URLs').toBe(locs.length)
 
     const today = new Date().toISOString().slice(0, 10)

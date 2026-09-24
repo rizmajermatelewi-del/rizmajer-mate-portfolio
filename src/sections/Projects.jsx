@@ -18,15 +18,14 @@ import { TiltCard } from '../motion/TiltCard'
 const COPY = {
   details: { hu: 'részletek', en: 'details' },
   eyebrow: { hu: 'Projektek', en: 'Work' },
-  /* PROJECTS_FULL currently holds two Bemutató projekt demos with public
-     github folders and screenshots. `live` stays empty until each demo is
-     deployed on Vercel. Do not restate a count here that can drift from
-     PROJECTS_FULL — projects.test.js pins the array length. */
+  /* PROJECTS_FULL holds Bemutató projekt demos, each with a live URL and a
+     folder in the public DEMOS repo. Do not restate a count here that can
+     drift from PROJECTS_FULL — projects.test.js pins the array length. */
   headingLead: { hu: 'Amin dolgozom.', en: 'What I am working on.' },
   headingAccent: { hu: 'Bemutatók, amiket megnyithatsz.', en: 'Demos you can open.' },
   intro: {
-    hu: 'Két bemutató rendszer — időpontfoglaló és napi menü —, mindkettő megnyitható. A kód külön nyilvános repóba kerül; amíg az nincs fent, a live link a bizonyíték. Ügyfélmunkát még nem adtam át.',
-    en: 'Two demo systems — booking and a daily menu — both openable. The code goes in a separate public repo; until that is up, the live link is the proof. I have not handed over client work yet.',
+    hu: 'Mindegyik megnyitható, és a kódja nyilvános. Kitalált vállalkozások, valós problémákkal. Ügyfélmunkát még nem adtam át.',
+    en: 'Every one can be opened, and its code is public. Invented businesses, real problems. I have not handed over client work yet.',
   },
   featured: { hu: 'Kiemelt projekt', en: 'Featured project' },
   whatItDoes: { hu: 'Amit tud', en: 'What it does' },
@@ -117,7 +116,7 @@ export default function Projects() {
                     <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-primary-dark bg-primary/10 px-2.5 py-1 rounded-full">
                       {t(p.label, locale)}
                     </span>
-                {p.featured && (
+                    {p.featured && (
                       <span className="inline-flex items-center gap-1 font-mono text-[9px] uppercase tracking-[0.2em] text-white bg-primary px-2.5 py-1 rounded-full">
                         <Star className="h-2.5 w-2.5" strokeWidth={2.5} />
                         {t(COPY.featured, locale)}
