@@ -4,15 +4,15 @@
   "framework": "vite",
   "redirects": [
     {
-      "source": "/:path*",
+      "source": "/(.*)",
       "has": [{ "type": "host", "value": "rizmajer-mate-portfolio.vercel.app" }],
-      "destination": "https://rizmajerdev.com/:path*",
+      "destination": "https://rizmajerdev.com/$1",
       "permanent": true
     },
     {
-      "source": "/:path*",
+      "source": "/(.*)",
       "has": [{ "type": "host", "value": "www.rizmajerdev.com" }],
-      "destination": "https://rizmajerdev.com/:path*",
+      "destination": "https://rizmajerdev.com/$1",
       "permanent": true
     }
   ],
