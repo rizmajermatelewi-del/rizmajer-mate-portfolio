@@ -19,14 +19,14 @@ import { t } from '../i18n/t'
    so a translator can decide which word carries the emphasis instead of
    inheriting whichever one lands in that position. */
 const COPY = {
-  headingLead: { hu: 'Három lépés, semmi', en: 'Three steps, no' },
-  headingAccent: { hu: 'meglepetés', en: 'surprises' },
+  headingLead: { hu: 'Így', en: 'How I' },
+  headingAccent: { hu: 'dolgozom', en: 'work' },
 }
 
 /* Positional, like the steps themselves. PROTOCOL_STEPS is an ordered list of
    exactly three and protocol.test.js holds it to that, so an index is enough
    and the data file stays free of presentation. */
-const STEP_VARIANTS = ['planning', 'build', 'handover']
+const STEP_VARIANTS = ['planning', 'build', 'handover', 'support']
 
 /* ----------------------------------------------------------------
    Protocol — Sticky Stacking Cards

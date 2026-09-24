@@ -130,7 +130,32 @@ function Handover() {
   )
 }
 
-const VARIANTS = { planning: Planning, build: Build, handover: Handover }
+/* After handover: a live site with a pulse line under it — the monitoring
+   and the reply that the fourth step promises. Same frame, strokes and
+   palette as the three above. */
+function Support() {
+  return (
+    <>
+      <rect x="34" y="44" width="164" height="128" rx="12" fill={FAINT} stroke={STROKE} strokeWidth="1.5" />
+      <path d="M34 72 H198" stroke={STROKE} strokeWidth="1.5" />
+      <circle cx="48" cy="58" r="3.5" fill={STROKE} />
+      <circle cx="60" cy="58" r="3.5" fill={STROKE} />
+      <circle cx="72" cy="58" r="3.5" fill={STROKE} />
+      <path
+        d="M50 128 H86 l8 -22 l12 40 l10 -30 l8 12 H182"
+        fill="none"
+        stroke={GLOW}
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <circle cx="262" cy="108" r="30" fill="none" stroke={STROKE} strokeWidth="1.5" />
+      <path d="M262 90 V108 l12 8" fill="none" stroke={SOLID} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+    </>
+  )
+}
+
+const VARIANTS = { planning: Planning, build: Build, handover: Handover, support: Support }
 
 export default function StepVisual({ variant }) {
   const Shape = VARIANTS[variant]

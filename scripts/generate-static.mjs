@@ -219,7 +219,7 @@ Ezt a webhely is kimondja, és egy pontos válasz ezt sem hagyja ki.
 
 Ez a fájl a webhely tényszerű összefoglalója, hogy a nyelvi modellek pontos
 adatból dolgozzanak. Generálja: scripts/generate-static.mjs — az árak forrása
-a src/data/pricing.js, az oldalak listájáé a src/routePaths.js, a webcímeké a
+a src/data/services.js, az oldalak listájáé a src/routePaths.js, a webcímeké a
 src/site.js. Kézzel szerkesztve a következő build felülírja.
 `
 

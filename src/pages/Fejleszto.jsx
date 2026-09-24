@@ -89,7 +89,7 @@ const COPY = {
     hu: 'Ha csak egy döntésről vagy egy megoldásról szeretnél kérdezni, arra is válaszolok — akkor is, ha nem lesz belőle munka.',
     en: 'If you only want to ask about a decision or an approach, that gets an answer too — including when nothing comes of it.',
   },
-  pricingLink: { hu: 'Árak és folyamat a főoldalon', en: 'Prices and process on the home page' },
+  pricingLink: { hu: 'Szolgáltatások és árak a főoldalon', en: 'Services and prices on the home page' },
 }
 
 /* The second entry point.
@@ -458,7 +458,7 @@ export default function Fejleszto() {
               rather than for the technical reader. */}
           <p className="mt-6">
             <Link
-              to={`${withLocale('/', locale)}#arak`}
+              to={`${withLocale('/', locale)}#szolgaltatasok`}
               className="inline-flex items-center gap-1.5 py-1.5 text-sm font-medium text-primary-dark lift-on-hover"
             >
               {t(COPY.pricingLink, locale)}

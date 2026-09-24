@@ -17,8 +17,8 @@
    central bag holding every string on the site would be worse than the
    problem it solved.
 
-   Free of JSX and of any React import: pricing.js imports this, and
-   scripts/knowledge.mjs reads pricing.js in plain Node. */
+   Free of JSX and of any React import, so plain-Node build scripts can
+   import any data module that uses it. */
 export const UI = {
   /* The primary call to action, everywhere it appears.
 

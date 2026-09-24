@@ -5,13 +5,8 @@ import Navbar from './sections/Navbar'
 import Hero from './sections/Hero'
 import Projects from './sections/Projects'
 import About from './sections/About'
-import Features from './sections/Features'
-import Pillars from './sections/Pillars'
 import Protocol from './sections/Protocol'
-import ServicesGrid from './sections/ServicesGrid'
-import AiServices from './sections/AiServices'
 import Services from './sections/Services'
-import Pricing from './sections/Pricing'
 import Faq from './sections/Faq'
 import Testimonial from './sections/Testimonial'
 import ContactForm from './sections/ContactForm'
@@ -74,31 +69,16 @@ export default function App() {
         <Hero />
         <Testimonial />
         <About />
-        <Features />
-        <Pillars />
-        {/* Projects used to sit directly under the hero, which meant the second
-            thing anyone saw was four empty frames reading "Képernyőkép
-            hamarosan" under a headline claiming four built projects. Leading
-            with the section that has the least to show is the worst available
-            order while the demo screenshots do not exist.
-
-            It lands after Pillars on purpose: that section states the count, so
-            the cards now arrive as the thing the number refers to. Move it back
-            up once the demos are deployed and the cards carry screenshots, live
-            links and repos — at that point it is the strongest section on the
-            page and belongs near the top. */}
+        {/* Rebuilt on 2026-09-24 around one services catalogue. Pillars
+            (the numbers), Features (three promises), ServicesGrid, AiServices
+            and Pricing are gone: the offer and its prices live in Services,
+            and the promises and the reply time are steps in Protocol.
+            Projects comes before Services so the offer arrives after the
+            proof, and the FAQ answers what is left before the form. */}
         <Projects />
         <Services />
         <Protocol />
-        <ServicesGrid />
-        <AiServices />
-        {/* Objections, then price, then the form. The price used to come
-            before the FAQ, which meant the number landed while "mennyibe
-            kerül", "mennyi idő" and "kié lesz a kód" were still open
-            questions. Answering those first gives the figure something to
-            stand on, and it pushes the price further down the page. */}
         <Faq />
-        <Pricing />
         <ContactForm />
       </main>
       <Footer />

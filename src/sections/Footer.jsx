@@ -6,7 +6,7 @@ import { t } from '../i18n/t'
 import { useLocale } from '../i18n/useLocale'
 import { withLocale } from '../i18n/locales'
 import { UI } from '../i18n/ui'
-import { ORDERED_SKILLS } from '../data/skills'
+import { SERVICE_GROUPS } from '../data/services'
 import { useInView } from '../motion/useInView'
 import { ScrambleText } from '../motion/ScrambleText'
 import { Magnetic } from '../motion/Magnetic'
@@ -40,7 +40,7 @@ const COPY = {
     hu: 'Weboldalak és foglalási rendszerek kis- és középvállalkozásoknak. Az ötlettől az élő oldalig, egy kézben.',
     en: 'Websites and booking systems for small and medium businesses. From the idea to the live site, in one pair of hands.',
   },
-  skillsHeading: { hu: 'Készségek', en: 'Skills' },
+  servicesHeading: { hu: 'Szolgáltatások', en: 'Services' },
   pagesHeading: { hu: 'Oldalak', en: 'Pages' },
   contactHeading: { hu: 'Kapcsolat', en: 'Contact' },
   country: { hu: 'Magyarország', en: 'Hungary' },
@@ -66,8 +66,8 @@ const labelFor = (href) => NAV_LINKS.find((link) => link.href === href)?.label
 const PAGE_LINKS = [
   { href: '#projektek', label: labelFor('#projektek') },
   { href: '#rolam', label: labelFor('#rolam') },
+  { href: '#szolgaltatasok', label: labelFor('#szolgaltatasok') },
   { href: '#folyamat', label: labelFor('#folyamat') },
-  { href: '#arak', label: labelFor('#arak') },
   { href: '#kapcsolat', label: COPY.contactHeading },
 ]
 
@@ -140,14 +140,14 @@ export default function Footer() {
           </div>
 
           <div>
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary-dark mb-4">{t(COPY.skillsHeading, locale)}</p>
+            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary-dark mb-4">{t(COPY.servicesHeading, locale)}</p>
             <ul className="space-y-2.5">
-              {/* Same order as the Készségek section, not authoring order, so
-                  the two lists cannot disagree about what comes first. */}
-              {ORDERED_SKILLS.slice(0, 4).map((s) => (
-                <li key={t(s.title, locale)}>
-                  <a href="#keszsegek" className="inline-block py-1 text-muted hover:text-primary-dark transition text-sm">
-                    <ScrambleText text={t(s.title, locale)} trigger="hover" />
+              {/* The catalogue's own groups, in its own order, so the two
+                  lists cannot disagree about what is on offer. */}
+              {SERVICE_GROUPS.map((g) => (
+                <li key={g.id}>
+                  <a href="#szolgaltatasok" className="inline-block py-1 text-muted hover:text-primary-dark transition text-sm">
+                    <ScrambleText text={t(g.title, locale)} trigger="hover" />
                   </a>
                 </li>
               ))}

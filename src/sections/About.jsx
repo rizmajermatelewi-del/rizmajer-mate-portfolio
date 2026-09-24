@@ -21,8 +21,8 @@ const BIO_PARAGRAPHS = [
     en: 'I am Rizmajer Máté Levente, a full-stack developer. I trained as a software developer, but I learned the craft on real projects: the code only came together in my head when I had to solve an actual problem with it, not when it sat on a worksheet.',
   },
   {
-    hu: 'Kis- és középvállalkozásokkal dolgozom, és a megkeresések nagy része ugyanarról szól: a foglalás, a rendelés vagy az ügyfelek nyilvántartása telefonon és táblázatban megy, ez pedig minden nap elvisz egy órát. Ilyenkor nem szebb weboldal kell, hanem folyamat, ami magától működik — gyors, mobilon is használható, és utána te is tudod kezelni.',
-    en: 'I work with small and medium businesses, and most enquiries are about the same thing: bookings, orders or customer records run on the phone and in a spreadsheet, and that costs an hour every day. What is needed then is not a prettier website but a process that runs on its own — quick, usable on a phone, and something you can handle yourself afterwards.',
+    hu: 'Kis- és középvállalkozásokkal dolgozom, és a megkeresések nagy része ugyanarról szól: a foglalás, a rendelés vagy az ügyfelek nyilvántartása telefonon és táblázatban megy, ez pedig minden nap elvisz egy órát. Ilyenkor nem szebb weboldal kell, hanem folyamat, ami magától működik — gyors, mobilon is használható, és utána te is tudod kezelni. Nincs alvállalkozó, nincs projektmenedzser: akitől kérdezel, az építi meg, és ugyanő veszi fel a telefont fél év múlva is.',
+    en: 'I work with small and medium businesses, and most enquiries are about the same thing: bookings, orders or customer records run on the phone and in a spreadsheet, and that costs an hour every day. What is needed then is not a prettier website but a process that runs on its own — quick, usable on a phone, and something you can handle yourself afterwards. There is no subcontractor and no project manager: the person you ask is the person who builds it, and the same person who picks up the phone six months later.',
   },
 ]
 

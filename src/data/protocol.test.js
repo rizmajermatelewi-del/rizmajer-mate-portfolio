@@ -14,8 +14,8 @@ describe('Protocol steps data', () => {
   /* The `num` field ('01'…'03') was dropped rather than translated: the
      watermark numeral it fed was removed for contrast reasons and nothing has
      rendered it since. */
-  it('carries three steps whose text is filled in, in every language', () => {
-    expect(PROTOCOL_STEPS.length).toBe(3)
+  it('carries four steps whose text is filled in, in every language', () => {
+    expect(PROTOCOL_STEPS.length).toBe(4)
     expect(untranslatedIn(PROTOCOL_STEPS)).toEqual([])
 
     for (const locale of LOCALES) {

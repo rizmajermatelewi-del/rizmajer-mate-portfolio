@@ -9,26 +9,34 @@
 export const PROTOCOL_STEPS = [
   {
     title: { hu: 'Egyeztetés', en: 'We talk it through' },
-    tagline: { hu: 'Először meghallgatlak.', en: 'First I listen.' },
+    tagline: { hu: 'Előbb beszéljünk, kötelezettség nélkül.', en: 'We talk first, with no commitment.' },
     text: {
-      hu: 'Végigvesszük, mi az, ami ma kézzel megy, és mennyi időt visz el. Ebből írásos terjedelem és fix ár lesz: mielőtt bármit elkezdenék, tudod, mit kapsz és mennyiért.',
-      en: 'We go through what you do by hand today and how much time it takes. That becomes a written scope and a fixed price: before I start anything, you know what you are getting and what it costs.',
+      hu: 'Végigvesszük, mi az, ami ma kézzel megy, és mennyi időt visz el. Ebből írásos terjedelem és fix ár lesz: mielőtt bármit elkezdenék, tudod, mit kapsz és mennyiért. Ha kiderül, hogy nem éri meg neked, azt is megmondom.',
+      en: 'We go through what you do by hand today and how much time it takes. That becomes a written scope and a fixed price: before I start anything, you know what you are getting and what it costs. If it turns out not to be worth it for you, I will tell you that too.',
     },
   },
   {
     title: { hu: 'Tervezés és fejlesztés', en: 'Design and build' },
     tagline: { hu: 'Menet közben látod, hol tart.', en: 'You watch it take shape.' },
     text: {
-      hu: 'Kapsz egy linket, amin az épülő oldal végig megnézhető. Nem a végén szembesülsz az eredménnyel: amíg alakul, olcsó változtatni rajta.',
-      en: 'You get a link where you can see the site as it is being built. You are not handed the finished thing at the end and asked to approve it: while it is still moving, changing it is cheap.',
+      hu: 'Kapsz egy linket, amin az épülő oldal végig megnézhető. Nem a végén szembesülsz az eredménnyel: amíg alakul, olcsó változtatni rajta. Nem egy megvásárolt sablonra épül, ezért később bővíteni lehet, nem elölről kezdeni.',
+      en: 'You get a link where you can see the site as it is being built. You are not handed the finished thing at the end and asked to approve it: while it is still moving, changing it is cheap. It is not built on a bought template, so later it can be extended rather than started over.',
     },
   },
   {
-    title: { hu: 'Átadás és támogatás', en: 'Handover and support' },
+    title: { hu: 'Tesztelés és átadás', en: 'Testing and handover' },
+    tagline: { hu: 'Tesztelve adom ki.', en: 'It ships tested.' },
+    text: {
+      hu: 'Minden változtatás után automatikusan lefutnak az ellenőrzések, élesítés előtt pedig telefonon, tableten és több böngészőben is végigmegyek rajta. Ha valami elromlik, az nálam derül ki, nem akkor, amikor egy vevőd épp fizetne. Átadom a hozzáféréseket, és megmutatom, hogyan kezeld. A domain és a kód a tiéd marad.',
+      en: 'Automated checks run after every change, and before launch I go through it on a phone, on a tablet and in several browsers. If something breaks, I find out rather than a customer of yours halfway through paying. I hand over the accounts and show you how to run it. The domain and the code stay yours.',
+    },
+  },
+  {
+    title: { hu: 'Utána', en: 'Afterwards' },
     tagline: { hu: 'A leadás után sem tűnök el.', en: 'I do not disappear at delivery.' },
     text: {
-      hu: 'Élesítés előtt telefonon, tableten és több böngészőben is végigmegyek rajta. Átadom a hozzáféréseket, és megmutatom, hogyan kezeld. A domain és a kód a tiéd marad.',
-      en: 'Before launch I go through it on a phone, on a tablet and in several browsers. I hand over the accounts and show you how to run it. The domain and the code stay yours.',
+      hu: 'Kérdésre, hibára vagy bővítésre egy munkanapon belül reagálok — akkor is, ha nincs karbantartási szerződésed. Ha szeretnéd, az üzemeltetést is átveszem havidíjért: frissítések, mentés, apró módosítások, és ha leáll, én veszem észre.',
+      en: 'I answer a question, a fault or a request for more within one working day — maintenance contract or not. If you want, I take over running it for a monthly fee: updates, backups, small changes, and if it goes down I notice first.',
     },
   },
 ]
