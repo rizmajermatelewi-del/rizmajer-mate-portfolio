@@ -5,7 +5,7 @@ import { t, untranslatedIn } from '../i18n/t'
 
 describe('services catalogue', () => {
   it('has four groups and every string in both languages', () => {
-    expect(SERVICE_GROUPS.map((g) => g.id)).toEqual(['weboldalak', 'eladas', 'rendszerek', 'folyamatos'])
+    expect(SERVICE_GROUPS.map((g) => g.id)).toEqual(['eladas', 'weboldalak', 'rendszerek', 'folyamatos'])
     expect(untranslatedIn(SERVICE_GROUPS)).toEqual([])
   })
 

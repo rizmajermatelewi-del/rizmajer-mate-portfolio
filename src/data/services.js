@@ -48,6 +48,102 @@ export const priceLabel = (service) => LABELS[service.priceUnit ?? 'from'](servi
 
 export const SERVICE_GROUPS = [
   {
+    id: 'eladas',
+    title: { hu: 'Foglalás, rendelés, eladás', en: 'Bookings, orders, sales' },
+    intro: {
+      hu: 'Ha a foglalás, a rendelés vagy a fizetés ma telefonon, üzenetben és kézzel megy.',
+      en: 'When bookings, orders or payments run by phone, by message and by hand today.',
+    },
+    items: [
+      {
+        id: 'idopontfoglalo',
+        name: { hu: 'Időpontfoglaló', en: 'Appointment booking' },
+        problem: {
+          hu: 'A vendég maga választ szolgáltatást és szabad időpontot, te pedig egy listában látod, ki jön és mikor.',
+          en: 'Customers pick a service and a free slot themselves, and you see who is coming and when in one list.',
+        },
+        forWho: {
+          hu: 'Annak, aki a telefonálgatást, az üzenetváltást és a kézi időpont-felvételt szeretné kiváltani.',
+          en: 'For anyone who wants to stop taking bookings by phone, by message, and by hand.',
+        },
+        includes: [
+          { hu: 'Online időpontfoglalás', en: 'Booking online' },
+          { hu: 'Adminfelület, amit te is használsz', en: 'An admin screen you will actually use' },
+          { hu: 'Automatikus e-mail értesítések', en: 'Notifications by e-mail, automatically' },
+          { hu: 'Kapacitás- és időpontkezelés, hogy ne legyen ütközés', en: 'Capacity and slot handling, so nothing collides' },
+        ],
+        priceHuf: TIER_FLOORS.booking,
+        timeline: { hu: 'Átadás jellemzően 3-6 hét', en: 'Delivered in 3-6 weeks, typically' },
+        demo: 'https://demo-idopontfoglalo.vercel.app',
+        proof: {
+          hu: 'A bemutatóban a szabad sávot mentéskor újraszámolja, így két vendég nem kaphatja meg ugyanazt az időpontot.',
+          en: 'In the demo the free slot is recomputed at the moment of saving, so two customers cannot get the same time.',
+        },
+      },
+      {
+        id: 'rendeles',
+        name: { hu: 'Rendelésfelvétel, napi menü', en: 'Ordering and daily menus' },
+        problem: {
+          hu: 'A mai menü és az árak a weboldaladon, nem egy lefotózott papírlapon — és a rendelés is ott érkezik be.',
+          en: 'Today\'s menu and prices on your site rather than on a photographed sheet of paper — and orders come in there too.',
+        },
+        forWho: {
+          hu: 'Büfének, étteremnek, cukrászdának, ahol naponta változik a kínálat.',
+          en: 'For a buffet, restaurant or bakery whose offer changes daily.',
+        },
+        includes: [
+          { hu: 'Mai és heti menü, amit te szerkesztesz', en: 'Today\'s and this week\'s menu, edited by you' },
+          { hu: 'Rendelésfelvétel vagy előrendelés', en: 'Orders or pre-orders taken online' },
+          { hu: 'Értesítés minden új rendelésről', en: 'A notification for every new order' },
+        ],
+        priceHuf: TIER_FLOORS.booking,
+        timeline: { hu: 'Átadás jellemzően 3-6 hét', en: 'Delivered in 3-6 weeks, typically' },
+        demo: 'https://demo-napi-menu.vercel.app',
+      },
+      {
+        id: 'webshop',
+        name: { hu: 'Webshop', en: 'Online shop' },
+        problem: {
+          hu: 'Termékek, kosár, bankkártyás fizetés és számla — anélkül, hogy egy havidíjas platform szabályaihoz kellene igazodnod.',
+          en: 'Products, a basket, card payments and invoices — without bending to a subscription platform\'s rules.',
+        },
+        forWho: {
+          hu: 'Annak, aki kisebb termékkörrel online akar eladni, és a saját oldalán szeretné.',
+          en: 'For anyone selling a modest range of products online, who wants it on their own site.',
+        },
+        includes: [
+          { hu: 'Bankkártyás fizetés (Barion vagy SimplePay)', en: 'Card payments (Barion or SimplePay)' },
+          { hu: 'Automatikus számla (Számlázz.hu vagy Billingo)', en: 'Invoices issued automatically (Számlázz.hu or Billingo)' },
+          { hu: 'Termék- és készletkezelés, amit te használsz', en: 'Product and stock management you run yourself' },
+          { hu: 'Rendelési értesítők neked és a vevőnek', en: 'Order e-mails for you and the customer' },
+        ],
+        priceHuf: 890000,
+        timeline: { hu: 'Átadás jellemzően 4-8 hét', en: 'Delivered in 4-8 weeks, typically' },
+        isNew: true,
+      },
+      {
+        id: 'utalvany',
+        name: { hu: 'Utalvány, bérlet, jegy online', en: 'Vouchers, passes and tickets online' },
+        problem: {
+          hu: 'Ajándékutalványt, bérletet vagy jegyet adsz el online, a vevő azonnal megkapja e-mailben, te pedig beváltáskor egy kattintással ellenőrzöd.',
+          en: 'You sell gift vouchers, passes or tickets online; the buyer gets theirs by e-mail at once, and you check it with one click when it is redeemed.',
+        },
+        forWho: {
+          hu: 'Szalonnak, stúdiónak, edzőteremnek, rendezvényszervezőnek.',
+          en: 'For a salon, studio, gym or event organiser.',
+        },
+        includes: [
+          { hu: 'Online vásárlás bankkártyával', en: 'Bought online by card' },
+          { hu: 'Egyedi kód vagy QR e-mailben', en: 'A unique code or QR sent by e-mail' },
+          { hu: 'Beváltás és egyenleg nyomon követése', en: 'Redemptions and balances tracked' },
+        ],
+        priceHuf: 320000,
+        timeline: { hu: 'Átadás jellemzően 2-3 hét', en: 'Delivered in 2-3 weeks, typically' },
+        isNew: true,
+      },
+    ],
+  },
+  {
     id: 'weboldalak',
     title: { hu: 'Weboldalak', en: 'Websites' },
     intro: {
@@ -158,102 +254,6 @@ export const SERVICE_GROUPS = [
         ],
         priceHuf: 350000,
         timeline: { hu: 'Átadás jellemzően 2-4 hét', en: 'Delivered in 2-4 weeks, typically' },
-        isNew: true,
-      },
-    ],
-  },
-  {
-    id: 'eladas',
-    title: { hu: 'Foglalás, rendelés, eladás', en: 'Bookings, orders, sales' },
-    intro: {
-      hu: 'Ha a foglalás, a rendelés vagy a fizetés ma telefonon, üzenetben és kézzel megy.',
-      en: 'When bookings, orders or payments run by phone, by message and by hand today.',
-    },
-    items: [
-      {
-        id: 'idopontfoglalo',
-        name: { hu: 'Időpontfoglaló', en: 'Appointment booking' },
-        problem: {
-          hu: 'A vendég maga választ szolgáltatást és szabad időpontot, te pedig egy listában látod, ki jön és mikor.',
-          en: 'Customers pick a service and a free slot themselves, and you see who is coming and when in one list.',
-        },
-        forWho: {
-          hu: 'Annak, aki a telefonálgatást, az üzenetváltást és a kézi időpont-felvételt szeretné kiváltani.',
-          en: 'For anyone who wants to stop taking bookings by phone, by message, and by hand.',
-        },
-        includes: [
-          { hu: 'Online időpontfoglalás', en: 'Booking online' },
-          { hu: 'Adminfelület, amit te is használsz', en: 'An admin screen you will actually use' },
-          { hu: 'Automatikus e-mail értesítések', en: 'Notifications by e-mail, automatically' },
-          { hu: 'Kapacitás- és időpontkezelés, hogy ne legyen ütközés', en: 'Capacity and slot handling, so nothing collides' },
-        ],
-        priceHuf: TIER_FLOORS.booking,
-        timeline: { hu: 'Átadás jellemzően 3-6 hét', en: 'Delivered in 3-6 weeks, typically' },
-        demo: 'https://demo-idopontfoglalo.vercel.app',
-        proof: {
-          hu: 'A bemutatóban a szabad sávot mentéskor újraszámolja, így két vendég nem kaphatja meg ugyanazt az időpontot.',
-          en: 'In the demo the free slot is recomputed at the moment of saving, so two customers cannot get the same time.',
-        },
-      },
-      {
-        id: 'rendeles',
-        name: { hu: 'Rendelésfelvétel, napi menü', en: 'Ordering and daily menus' },
-        problem: {
-          hu: 'A mai menü és az árak a weboldaladon, nem egy lefotózott papírlapon — és a rendelés is ott érkezik be.',
-          en: 'Today\'s menu and prices on your site rather than on a photographed sheet of paper — and orders come in there too.',
-        },
-        forWho: {
-          hu: 'Büfének, étteremnek, cukrászdának, ahol naponta változik a kínálat.',
-          en: 'For a buffet, restaurant or bakery whose offer changes daily.',
-        },
-        includes: [
-          { hu: 'Mai és heti menü, amit te szerkesztesz', en: 'Today\'s and this week\'s menu, edited by you' },
-          { hu: 'Rendelésfelvétel vagy előrendelés', en: 'Orders or pre-orders taken online' },
-          { hu: 'Értesítés minden új rendelésről', en: 'A notification for every new order' },
-        ],
-        priceHuf: TIER_FLOORS.booking,
-        timeline: { hu: 'Átadás jellemzően 3-6 hét', en: 'Delivered in 3-6 weeks, typically' },
-        demo: 'https://demo-napi-menu.vercel.app',
-      },
-      {
-        id: 'webshop',
-        name: { hu: 'Webshop', en: 'Online shop' },
-        problem: {
-          hu: 'Termékek, kosár, bankkártyás fizetés és számla — anélkül, hogy egy havidíjas platform szabályaihoz kellene igazodnod.',
-          en: 'Products, a basket, card payments and invoices — without bending to a subscription platform\'s rules.',
-        },
-        forWho: {
-          hu: 'Annak, aki kisebb termékkörrel online akar eladni, és a saját oldalán szeretné.',
-          en: 'For anyone selling a modest range of products online, who wants it on their own site.',
-        },
-        includes: [
-          { hu: 'Bankkártyás fizetés (Barion vagy SimplePay)', en: 'Card payments (Barion or SimplePay)' },
-          { hu: 'Automatikus számla (Számlázz.hu vagy Billingo)', en: 'Invoices issued automatically (Számlázz.hu or Billingo)' },
-          { hu: 'Termék- és készletkezelés, amit te használsz', en: 'Product and stock management you run yourself' },
-          { hu: 'Rendelési értesítők neked és a vevőnek', en: 'Order e-mails for you and the customer' },
-        ],
-        priceHuf: 890000,
-        timeline: { hu: 'Átadás jellemzően 4-8 hét', en: 'Delivered in 4-8 weeks, typically' },
-        isNew: true,
-      },
-      {
-        id: 'utalvany',
-        name: { hu: 'Utalvány, bérlet, jegy online', en: 'Vouchers, passes and tickets online' },
-        problem: {
-          hu: 'Ajándékutalványt, bérletet vagy jegyet adsz el online, a vevő azonnal megkapja e-mailben, te pedig beváltáskor egy kattintással ellenőrzöd.',
-          en: 'You sell gift vouchers, passes or tickets online; the buyer gets theirs by e-mail at once, and you check it with one click when it is redeemed.',
-        },
-        forWho: {
-          hu: 'Szalonnak, stúdiónak, edzőteremnek, rendezvényszervezőnek.',
-          en: 'For a salon, studio, gym or event organiser.',
-        },
-        includes: [
-          { hu: 'Online vásárlás bankkártyával', en: 'Bought online by card' },
-          { hu: 'Egyedi kód vagy QR e-mailben', en: 'A unique code or QR sent by e-mail' },
-          { hu: 'Beváltás és egyenleg nyomon követése', en: 'Redemptions and balances tracked' },
-        ],
-        priceHuf: 320000,
-        timeline: { hu: 'Átadás jellemzően 2-3 hét', en: 'Delivered in 2-3 weeks, typically' },
         isNew: true,
       },
     ],

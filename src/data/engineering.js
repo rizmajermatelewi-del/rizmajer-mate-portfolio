@@ -191,7 +191,7 @@ export const STACK_GROUPS = [
     items: [
       { name: neutral('PostgreSQL'), where: 'projects', note: { hu: 'Kötött szerkezetű adat, migrációkkal', en: 'Fixed-shape data, with migrations' } },
       { name: neutral('MongoDB'), where: 'projects', note: { hu: 'Változó alakú dokumentumok', en: 'Documents whose shape varies' } },
-      { name: neutral('Supabase'), where: 'projects', note: { hu: 'WebWise Studio', en: 'WebWise Studio' } },
+      { name: neutral('Supabase'), where: 'projects', note: { hu: 'Saját projektekben', en: 'In my own projects' } },
     ],
   },
   {

@@ -23,7 +23,7 @@ const COPY = {
   based: { hu: 'Székhely', en: 'Based in' },
   country: { hu: 'Magyarország', en: 'Hungary' },
   responseTime: { hu: 'Válaszidő', en: 'Response time' },
-  within24: { hu: '24 órán belül', en: 'Within 24 hours' },
+  within24: { hu: 'Egy munkanapon belül', en: 'Within one working day' },
   dataHeading: { hu: 'Adatkezelés', en: 'Your data' },
   dataBody: {
     /* Was: "…harmadik féllel nem osztom meg őket." Not true, and untrue in a

@@ -38,7 +38,7 @@ const COPY = {
     en: 'I am working towards TypeScript and a broader testing practice at the moment, which is why neither appears in the stack below: I do not write production code in them yet. I am open to developer roles and to contract work. If there is a technical detail you want that is not here, write to me; a specific question gets a specific answer.',
   },
 
-  approachHeading: { hu: 'Így dolgozom', en: 'How I build' },
+  approachHeading: { hu: 'Hogyan építek', en: 'How I build' },
   approachIntro: {
     hu: 'Öt terület, mindegyikhez egy álláspont és a hozzá tartozó konkrétumok. Nem az számít, ismerem-e a neveket, hanem hogy mi alapján döntök, amikor két megoldás is kínálja magát.',
     en: 'Five areas, each with a position and the specifics behind it. What matters is not whether I know the names, but what I decide on when two solutions are both available.',
