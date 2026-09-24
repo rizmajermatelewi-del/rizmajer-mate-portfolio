@@ -86,6 +86,9 @@ const HU_ALLOWED_ON_EN = [
      and translating it would name a town that does not exist. Listed rather
      than the rule weakened, like every other entry here. */
   /Inárcs/g,
+  /* A product name, like Barion or Billingo beside it in the webshop card:
+     the invoicing service is called Számlázz.hu in English too. */
+  /Számlázz\.hu/g,
   /Adatvédelmi tájékoztató/g,
   /Adatkezelési tájékoztató/g,
   /Adatvédelem/g,

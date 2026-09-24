@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, AlertCircle, CheckCircle2, Upload, Mail, MapPin, Clock, Phone } from 'lucide-react'
 import Field from '../components/Field'
@@ -128,6 +128,8 @@ const ALLOWED_TYPES = [
   'application/msword',
   'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
 ]
+const PREFILL = { hu: 'Érdekel:', en: 'Interested in:' }
+
 const isAllowedType = (file) => file.type.startsWith('image/') || ALLOWED_TYPES.includes(file.type)
 
 export default function ContactForm() {
@@ -140,6 +142,23 @@ export default function ContactForm() {
   const [consent, setConsent] = useState(false)
   const [fileNotice, setFileNotice] = useState('')
   const honeypotRef = useRef(null)
+
+  /* "Ajánlatot kérek erre" in the services catalogue says which offer the
+     visitor came from. It only writes into an empty message, or replaces a
+     line it wrote itself on an earlier click — never over what they typed. */
+  useEffect(() => {
+    function onPrefill(e) {
+      const line = `${t(PREFILL, locale)} ${t(e.detail.name, locale)}`
+      setForm((f) => {
+        const text = f.message.trim()
+        const own = text === '' || (!text.includes('\n') && Object.values(PREFILL).some((p) => text.startsWith(p)))
+        return own ? { ...f, message: `${line}\n\n` } : f
+      })
+      requestAnimationFrame(() => document.getElementById('message')?.focus({ preventScroll: true }))
+    }
+    window.addEventListener('quote:prefill', onPrefill)
+    return () => window.removeEventListener('quote:prefill', onPrefill)
+  }, [locale])
 
   const handleSubmit = async (e) => {
     e.preventDefault()

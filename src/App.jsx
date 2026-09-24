@@ -10,6 +10,7 @@ import Pillars from './sections/Pillars'
 import Protocol from './sections/Protocol'
 import ServicesGrid from './sections/ServicesGrid'
 import AiServices from './sections/AiServices'
+import Services from './sections/Services'
 import Pricing from './sections/Pricing'
 import Faq from './sections/Faq'
 import Testimonial from './sections/Testimonial'
@@ -87,6 +88,7 @@ export default function App() {
             links and repos — at that point it is the strongest section on the
             page and belongs near the top. */}
         <Projects />
+        <Services />
         <Protocol />
         <ServicesGrid />
         <AiServices />
