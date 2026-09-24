@@ -1,7 +1,8 @@
 import { useRef, useState } from 'react'
-import { Check, ArrowRight, ArrowUpRight, ChevronDown } from 'lucide-react'
+import { Check, ArrowRight, ArrowUpRight } from 'lucide-react'
 import { SERVICE_GROUPS, priceLabel } from '../data/services'
 import { useInView } from '../motion/useInView'
+import { TiltCard } from '../motion/TiltCard'
 import { useLocale } from '../i18n/useLocale'
 import { t } from '../i18n/t'
 
@@ -16,8 +17,8 @@ const COPY = {
   tablist: { hu: 'Szolgáltatáscsoportok', en: 'Service groups' },
   isNew: { hu: 'Új', en: 'New' },
   demo: { hu: 'Élő demó', en: 'Live demo' },
-  details: { hu: 'Részletek', en: 'Details' },
-  forWho: { hu: 'Kinek való:', en: 'Who it is for:' },
+  includes: { hu: 'Amit kapsz', en: 'What you get' },
+  openDemo: { hu: 'Megnyitom a demót', en: 'Open the demo' },
   cta: { hu: 'Ajánlatot kérek erre', en: 'Get a quote for this' },
   /* The sentence the AI section used to carry for its three offers, now
      applied to every offer it is true of. Once per group rather than on each
@@ -35,81 +36,75 @@ function requestQuote(name) {
   window.dispatchEvent(new CustomEvent('quote:prefill', { detail: { name } }))
 }
 
-/* A card per offer, carrying only what decides "is this mine": what it
-   solves, what it costs, how long, and the button. Everything else is one
-   click further, inside the card.
+/* The same card as "Amin dolgozom" above, at Máté's request (2026-09-24):
+   dark inverted surface, the lift and tilt on hover, the pill labels, the
+   check list and the ruled footer. What differs is only what a service has
+   and a project does not — a price and a quote button — and what a project
+   has and a service does not: a screenshot. Only three of seventeen offers
+   have a demo to show, and a drawn stand-in on the other fourteen would be
+   the fake product chrome the page rules out.
 
-   History, so the shape is not re-litigated: the first catalogue (2026-09-24)
-   showed all eight blocks on dark cards, ~3000px per tab on a phone; the
-   second turned them into rows, which read well but lost the scannable grid
-   Máté wanted back. This keeps the grid and the short read.
-
-   Native <details> for the extra: keyboard and screen-reader behaviour for
-   free, and the closed content is still in the prerendered HTML. Cards in a
-   row stretch to one height so the prices line up while closed — the state
-   nearly every visitor sees; opening one grows its row, which is the
-   cheaper trade. */
+   "Kinek való" stayed in the data (the chatbot and llms.txt read it) but
+   left the card: the problem sentence already answers it, and a sixth block
+   is what made the first catalogue too long to scan. */
 function ServiceCard({ s, locale }) {
   return (
-    <article className="flex flex-col rounded-4xl bg-surface border border-divider p-6 sm:p-7 shadow-e2 hover:border-primary/50 hover:shadow-e3 transition-[border-color,box-shadow] duration-300">
-      <div className="flex flex-wrap items-center gap-2 min-h-[1.5rem]">
-        {s.demo && (
-          <a
-            href={s.demo}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 text-xs font-semibold text-white bg-primary px-2.5 py-1 rounded-full hover:bg-primary-dark transition-colors"
-          >
-            {t(COPY.demo, locale)}
-            <ArrowUpRight className="h-3 w-3" strokeWidth={2.5} aria-hidden="true" />
-          </a>
-        )}
-        {s.isNew && (
-          <span className="text-xs font-semibold text-primary-dark border border-primary/50 px-2.5 py-0.5 rounded-full">{t(COPY.isNew, locale)}</span>
-        )}
-      </div>
+    <article className="group h-full card-invert border border-divider rounded-4xl overflow-hidden card-motion shadow-e2 hover:border-primary/60 hover:-translate-y-1.5 hover:shadow-e4">
+      <TiltCard className="h-full">
+        <div className="flex h-full flex-col p-6">
+          <div className="mb-3.5 flex flex-wrap items-center gap-1.5 min-h-[1.375rem]">
+            {s.demo && (
+              <a
+                href={s.demo}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${t(COPY.openDemo, locale)}: ${t(s.name, locale)}`}
+                className="inline-flex items-center gap-1 font-mono text-[9px] uppercase tracking-[0.2em] text-white bg-primary px-2.5 py-1 rounded-full hover:bg-primary-dark transition-colors"
+              >
+                {t(COPY.demo, locale)}
+                <ArrowUpRight className="h-2.5 w-2.5" strokeWidth={2.5} aria-hidden="true" />
+              </a>
+            )}
+            {s.isNew && (
+              <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-primary-dark bg-primary/10 px-2.5 py-1 rounded-full">
+                {t(COPY.isNew, locale)}
+              </span>
+            )}
+          </div>
 
-      <h3 className="font-display font-bold text-xl text-ink mt-4 [text-wrap:balance]">{t(s.name, locale)}</h3>
-      <p className="text-muted text-[0.95rem] mt-2.5 leading-relaxed [text-wrap:pretty]">{t(s.problem, locale)}</p>
+          <h3 className="font-display font-bold text-lg text-ink leading-snug tracking-tight">{t(s.name, locale)}</h3>
+          <p className="text-muted text-sm mt-2.5 leading-relaxed">{t(s.problem, locale)}</p>
 
-      <div className="mt-auto pt-6">
-        <p className="font-display font-semibold text-2xl text-ink">{t(priceLabel(s), locale)}</p>
-        {s.timeline && <p className="text-sm text-muted mt-1">{t(s.timeline, locale)}</p>}
-
-        <a
-          href="#kapcsolat"
-          onClick={() => requestQuote(s.name)}
-          className="mt-5 flex w-full items-center justify-center gap-2 px-5 py-3 rounded-full font-semibold bg-ink text-surface hover:bg-primary transition-colors duration-300"
-        >
-          {t(COPY.cta, locale)}
-          <ArrowRight className="h-4 w-4" aria-hidden="true" />
-        </a>
-
-        <details className="group mt-4 border-t border-divider pt-3">
-          <summary className="list-none [&::-webkit-details-marker]:hidden cursor-pointer flex items-center justify-between py-1.5 text-sm font-semibold text-primary-dark rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
-            {t(COPY.details, locale)}
-            <ChevronDown
-              className="h-4 w-4 transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-open:rotate-180 motion-reduce:transition-none"
-              strokeWidth={2.25}
-              aria-hidden="true"
-            />
-          </summary>
-          <div className="pt-3 pb-1">
-            <ul className="space-y-2">
+          <div className="mt-5">
+            <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-primary-dark">{t(COPY.includes, locale)}</p>
+            <ul className="mt-2 space-y-1.5">
               {s.includes.map((x, i) => (
-                <li key={i} className="flex items-start gap-2.5 text-sm text-ink/90">
-                  <Check className="h-4 w-4 text-primary mt-0.5 shrink-0" strokeWidth={2.5} aria-hidden="true" />
-                  {t(x, locale)}
+                <li key={i} className="flex gap-2 text-muted text-[13px] leading-relaxed">
+                  <Check className="h-3.5 w-3.5 shrink-0 mt-[3px] text-primary" strokeWidth={2.5} aria-hidden="true" />
+                  <span>{t(x, locale)}</span>
                 </li>
               ))}
             </ul>
-            <p className="text-sm text-muted mt-4 leading-relaxed">
-              <span className="font-semibold text-ink">{t(COPY.forWho, locale)}</span> {t(s.forWho, locale)}
-            </p>
-            {s.proof && <p className="mt-3 rounded-2xl bg-primary/10 px-3.5 py-2.5 text-sm text-ink leading-relaxed">{t(s.proof, locale)}</p>}
           </div>
-        </details>
-      </div>
+
+          {s.proof && <p className="mt-4 rounded-2xl bg-primary/10 px-3.5 py-2.5 text-[13px] text-ink leading-relaxed">{t(s.proof, locale)}</p>}
+
+          <div className="mt-auto pt-5">
+            <div className="pt-4 border-t border-divider">
+              <p className="font-display font-semibold text-xl text-ink">{t(priceLabel(s), locale)}</p>
+              {s.timeline && <p className="text-muted text-[13px] mt-0.5">{t(s.timeline, locale)}</p>}
+            </div>
+            <a
+              href="#kapcsolat"
+              onClick={() => requestQuote(s.name)}
+              className="mt-5 flex w-full items-center justify-center gap-2 px-5 py-3 rounded-full font-semibold bg-primary text-white shadow-lg shadow-primary/25 hover:bg-primary-dark transition-colors duration-300"
+            >
+              {t(COPY.cta, locale)}
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </a>
+          </div>
+        </div>
+      </TiltCard>
     </article>
   )
 }
@@ -188,9 +183,7 @@ export default function Services() {
             prerendered HTML — what search engines read — carries the whole
             catalogue, not just tab one.
 
-            Light cards on purpose: Projects above is dark slabs of work
-            already built, and this is what is for sale. Two different jobs,
-            and the page used to make them look identical. */}
+            The cards match Projects on purpose (see ServiceCard). */}
         {SERVICE_GROUPS.map((g, i) => (
           <div key={g.id} id={`szolg-panel-${g.id}`} role="tabpanel" aria-labelledby={`szolg-tab-${g.id}`} hidden={active !== i} className="mt-7">
             <p className="text-muted leading-relaxed max-w-3xl">{t(g.intro, locale)}</p>
