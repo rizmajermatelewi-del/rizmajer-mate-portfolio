@@ -41,7 +41,7 @@ function ServiceCard({ s, locale }) {
     <article className="card-invert border border-divider rounded-5xl p-7 sm:p-8 flex h-full flex-col hover:border-primary/60 transition-colors duration-300">
       <div className="flex flex-wrap items-center gap-2 min-h-[1.5rem]">
         {s.isNew && (
-          <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-primary-dark bg-primary/10 px-2.5 py-1 rounded-full">
+          <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-ink border border-primary/60 px-2.5 py-1 rounded-full">
             {t(COPY.isNew, locale)}
           </span>
         )}
