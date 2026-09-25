@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import portraitSunset from '../assets/portrait-sunset.jpg'
+import portraitSunset from '../assets/portrait-sunset.webp'
 import { SOCIAL_LINKS } from '../data/nav'
 import { t } from '../i18n/t'
 import { useLocale } from '../i18n/useLocale'
