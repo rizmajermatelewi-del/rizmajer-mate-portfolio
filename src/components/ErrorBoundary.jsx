@@ -68,10 +68,10 @@ export default class ErrorBoundary extends Component {
           </h1>
           <p className="text-muted mt-5 leading-relaxed">{t(COPY.body, locale)}</p>
           <a
-            href="mailto:rizmajermatelewi@gmail.com"
+            href="mailto:info@rizmajerdev.com"
             className="mt-8 inline-flex items-center justify-center bg-primary text-white font-semibold px-7 py-4 rounded-full shadow-lg shadow-primary/30"
           >
-            rizmajermatelewi@gmail.com
+            info@rizmajerdev.com
           </a>
         </div>
       </main>

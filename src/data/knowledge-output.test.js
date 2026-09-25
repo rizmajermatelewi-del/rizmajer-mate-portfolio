@@ -17,7 +17,7 @@ describe('knowledge.json output', () => {
     expect(existsSync(outPath)).toBe(true)
     const parsed = JSON.parse(readFileSync(outPath, 'utf8'))
     expect(parsed.services.length).toBe(buildKnowledge().services.length)
-    expect(parsed.contact.email).toBe('rizmajermatelewi@gmail.com')
+    expect(parsed.contact.email).toBe('info@rizmajerdev.com')
   })
 
   it('is generated before vite copies public/', () => {

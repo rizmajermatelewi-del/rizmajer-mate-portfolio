@@ -43,7 +43,7 @@ export default function Terms() {
           </p>
           <h2 className="font-display font-semibold text-xl text-ink mt-8">Kapcsolat</h2>
           <p>
-            Kérdés esetén keress bizalommal az rizmajermatelewi@gmail.com e-mail címen.
+            Kérdés esetén keress bizalommal az info@rizmajerdev.com e-mail címen.
           </p>
         </div>
       </div>

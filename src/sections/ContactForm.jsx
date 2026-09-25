@@ -265,13 +265,13 @@ export default function ContactForm() {
                   the page scrolled sideways, in the section the site exists
                   to convert into. Measured on the built page at 320px, which
                   is where it appears; at 360px and above it never did. */}
-              <a href="mailto:rizmajermatelewi@gmail.com" className="lift-on-hover flex items-center gap-4 group">
+              <a href="mailto:info@rizmajerdev.com" className="lift-on-hover flex items-center gap-4 group">
                 <span className="h-12 w-12 shrink-0 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:bg-primary transition">
                   <Mail className="h-5 w-5 text-primary group-hover:text-white" />
                 </span>
                 <span className="min-w-0">
                   <span className="block font-mono text-[10px] uppercase tracking-widest text-muted">{t(COPY.emailMe, locale)}</span>
-                  <span className="font-display font-semibold text-ink text-base sm:text-lg break-all">rizmajermatelewi@gmail.com</span>
+                  <span className="font-display font-semibold text-ink text-base sm:text-lg break-all">info@rizmajerdev.com</span>
                 </span>
               </a>
 
@@ -328,8 +328,8 @@ export default function ContactForm() {
                   <AlertCircle className="h-5 w-5 text-accent-dark shrink-0 mt-0.5" />
                   <p className="text-sm text-accent-dark leading-relaxed">
                     {t(COPY.sendError, locale)}{' '}
-                    <a href="mailto:rizmajermatelewi@gmail.com" className="underline font-medium">
-                      rizmajermatelewi@gmail.com
+                    <a href="mailto:info@rizmajerdev.com" className="underline font-medium">
+                      info@rizmajerdev.com
                     </a>{' '}
                     {t(COPY.sendErrorTail, locale)}
                   </p>

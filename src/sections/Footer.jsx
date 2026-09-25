@@ -173,8 +173,8 @@ export default function Footer() {
             <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary-dark mb-4">{t(COPY.contactHeading, locale)}</p>
             <ul className="space-y-2.5">
               <li>
-                <a href="mailto:rizmajermatelewi@gmail.com" className="inline-block py-1 text-muted hover:text-primary-dark transition text-sm">
-                  rizmajermatelewi@gmail.com
+                <a href="mailto:info@rizmajerdev.com" className="inline-block py-1 text-muted hover:text-primary-dark transition text-sm">
+                  info@rizmajerdev.com
                 </a>
               </li>
               <li className="text-muted text-sm">{t(COPY.country, locale)}</li>

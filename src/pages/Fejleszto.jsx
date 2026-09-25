@@ -464,11 +464,11 @@ export default function Fejleszto() {
                 at text-base with px-6 the button ends 2px past the viewport.
                 One step down on both, above the sm breakpoint only. */}
             <a
-              href="mailto:rizmajermatelewi@gmail.com"
+              href="mailto:info@rizmajerdev.com"
               className="inline-flex items-center gap-2 bg-primary text-white font-semibold text-sm sm:text-base px-5 sm:px-6 py-3.5 rounded-full shadow-lg shadow-primary/30"
             >
               <Mail className="h-4 w-4" strokeWidth={2} aria-hidden="true" />
-              rizmajermatelewi@gmail.com
+              info@rizmajerdev.com
             </a>
             {SOCIAL_LINKS.map(({ Icon, href, label }) => (
               <a

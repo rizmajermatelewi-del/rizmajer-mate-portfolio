@@ -20,7 +20,7 @@ export default function PrivacyPolicy() {
         <div className="space-y-6 text-muted leading-relaxed">
           <p>
             Ez a tájékoztató leírja, hogyan kezelem a weboldalon keresztül megadott személyes
-            adataidat. Adatkezelőként Rizmajer Máté Levente (rizmajermatelewi@gmail.com) jár el.
+            adataidat. Adatkezelőként Rizmajer Máté Levente (info@rizmajerdev.com) jár el.
           </p>
           <h2 className="font-display font-semibold text-xl text-ink mt-8">Milyen adatokat gyűjtök</h2>
           <p>
@@ -127,7 +127,7 @@ export default function PrivacyPolicy() {
           <h2 className="font-display font-semibold text-xl text-ink mt-8">Jogaid</h2>
           <p>
             Bármikor kérheted a rólad tárolt adatok betekintését, helyesbítését vagy törlését az
-            rizmajermatelewi@gmail.com e-mail címen keresztül.
+            info@rizmajerdev.com e-mail címen keresztül.
           </p>
         </div>
       </div>

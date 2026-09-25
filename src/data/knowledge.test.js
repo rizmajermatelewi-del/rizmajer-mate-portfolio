@@ -68,7 +68,7 @@ describe('knowledge object', () => {
   })
 
   it('states the contact address and an ISO build date', () => {
-    expect(k.contact.email).toBe('rizmajermatelewi@gmail.com')
+    expect(k.contact.email).toBe('info@rizmajerdev.com')
     expect(k.generated).toBe('2026-08-01')
   })
 })

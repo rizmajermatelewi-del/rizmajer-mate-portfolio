@@ -8,4 +8,4 @@
 
    Displayed exactly as written; the tel: href strips the spaces. */
 export const CONTACT_PHONE = '+36 30 13 14 353'
-export const CONTACT_EMAIL = 'rizmajermatelewi@gmail.com'
+export const CONTACT_EMAIL = 'info@rizmajerdev.com'

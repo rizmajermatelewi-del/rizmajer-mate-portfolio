@@ -193,7 +193,7 @@ const llms = `# Rizmajer Máté Levente — full-stack fejlesztő
 > projektmenedzser nélkül.
 
 Nyelv: magyar. Ügyfélkör: magyar kis- és középvállalkozások.
-Kapcsolat: rizmajermatelewi@gmail.com
+Kapcsolat: info@rizmajerdev.com
 
 ## Oldalak
 
