@@ -56,8 +56,11 @@ export default function PrivacyPolicy() {
                   — formspree.io/legal/terms-of-service/ and /legal/privacy-policy/
                 AWS United States hosting, and reliance on the Standard
                   Contractual Clauses as a processor — formspree.io/security/
-                Vercel Inc., its address, and the EU-U.S. Data Privacy
-                  Framework certification — vercel.com/legal/privacy-policy
+                Cloudflare, Inc., its address, and the EU-U.S. Data Privacy
+                  Framework certification — cloudflare.com/privacypolicy/
+                  (checked 2026-09-25, after the move off Vercel)
+                Web Analytics "does not collect or use your visitors' personal
+                  data" — developers.cloudflare.com/web-analytics/about/
 
               No postal address is given for Formspree because none appears
               on any of their own legal pages; third-party directories list
@@ -102,15 +105,19 @@ export default function PrivacyPolicy() {
           </p>
           <h2 className="font-display font-semibold text-xl text-ink mt-8">Tárhelyszolgáltató</h2>
           <p>
-            Az oldal a Vercel Inc. (440 N Barranca Avenue #4133, Covina, CA 91723, Egyesült
+            Az oldal a Cloudflare, Inc. (101 Townsend St, San Francisco, CA 94107, Egyesült
             Államok) tárhelyén fut, ezért minden oldalletöltéskor a látogató IP-címe és a kérés
-            technikai adatai a szolgáltatóhoz kerülnek. A Vercel tájékoztatása szerint
+            technikai adatai a szolgáltatóhoz kerülnek. A Cloudflare tájékoztatása szerint
             tanúsíttatta magát az EU–USA adatvédelmi keretrendszer (EU-U.S. Data Privacy
             Framework) szerint.
           </p>
+          <p>
+            A látogatottságot a Cloudflare Web Analytics méri, amely a Cloudflare közlése szerint
+            nem gyűjti és nem használja a látogatók személyes adatait.
+          </p>
           <p className="text-sm">
             A szolgáltatókról szóló fenti adatok a saját nyilvános tájékoztatóikból származnak,
-            a 2026. augusztusi állapot szerint.
+            a 2026. szeptemberi állapot szerint.
           </p>
           <h2 className="font-display font-semibold text-xl text-ink mt-8">Adatmegőrzés</h2>
           <p>

@@ -213,7 +213,7 @@ export const STACK_GROUPS = [
     items: [
       { name: neutral('Git'), where: 'here', note: { hu: 'Ág funkciónként, kis commitok', en: 'A branch per feature, small commits' } },
       { name: neutral('GitHub'), where: 'here', note: { hu: 'Nyilvános forrás', en: 'Public source' } },
-      { name: neutral('Vercel'), where: 'here', note: { hu: 'Élesítés a main ágról', en: 'Deploys from the main branch' } },
+      { name: neutral('Cloudflare Pages'), where: 'here', note: { hu: 'Élesítés a main ágról', en: 'Deploys from the main branch' } },
       { name: neutral('npm'), where: 'here', note: { hu: 'Build pipeline', en: 'Build pipeline' } },
     ],
   },
