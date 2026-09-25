@@ -605,10 +605,15 @@ async function main() {
        all of it is correct rather than merely convenient. */
     if (templateOrigin !== origin) page = page.split(templateOrigin).join(origin)
 
+    /* `/fejleszto` is written as fejleszto.html, not fejleszto/index.html.
+       Cloudflare Pages serves a directory index only at the slashed URL and
+       308s /fejleszto to /fejleszto/, while every canonical and the sitemap
+       publish the unslashed form. A flat .html file is served at the clean
+       URL on Cloudflare, and on Vercel through cleanUrls in vercel.json. */
     const outFile =
       route === '/'
         ? path.join(distDir, 'index.html')
-        : path.join(distDir, route.replace(/^\//, ''), 'index.html')
+        : path.join(distDir, `${route.replace(/^\//, '')}.html`)
 
     await mkdir(path.dirname(outFile), { recursive: true })
     await writeFile(outFile, page, 'utf8')
