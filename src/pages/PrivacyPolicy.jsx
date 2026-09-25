@@ -10,7 +10,7 @@ export default function PrivacyPolicy() {
       <div className="max-w-3xl mx-auto">
         {/* flex w-fit, not inline-flex — see the same note in Terms.jsx: as an
             inline box the eyebrow below shared this link's line. */}
-        <Link to="/" className="flex w-fit items-center gap-2 text-sm font-medium text-primary-dark lift-on-hover mb-10">
+        <Link to="/" className="flex w-fit items-center gap-2 py-3 text-sm font-medium text-primary-dark lift-on-hover mb-7">
           <ArrowLeft className="h-4 w-4" /> Vissza a főoldalra
         </Link>
         <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary-dark">╱ Jogi információ</span>

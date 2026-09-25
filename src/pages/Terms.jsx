@@ -11,7 +11,7 @@ export default function Terms() {
         {/* flex w-fit, not inline-flex: as an inline box the eyebrow below sat
             on the same line as this link, so the page opened with "Vissza a
             főoldalra╱ Jogi információ" run together. */}
-        <Link to="/" className="flex w-fit items-center gap-2 text-sm font-medium text-primary-dark lift-on-hover mb-10">
+        <Link to="/" className="flex w-fit items-center gap-2 py-3 text-sm font-medium text-primary-dark lift-on-hover mb-7">
           <ArrowLeft className="h-4 w-4" /> Vissza a főoldalra
         </Link>
         <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary-dark">╱ Jogi információ</span>

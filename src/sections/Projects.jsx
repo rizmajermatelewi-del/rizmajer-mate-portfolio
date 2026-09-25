@@ -113,11 +113,11 @@ export default function Projects() {
                       label is gone. Four cards in a row are already countable
                       and the number carried no other meaning. */}
                   <div className="mb-3.5 flex flex-wrap items-center gap-1.5">
-                    <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-primary-dark bg-primary/10 px-2.5 py-1 rounded-full">
+                    <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-primary-dark bg-primary/10 px-2.5 py-1 rounded-full">
                       {t(p.label, locale)}
                     </span>
                     {p.featured && (
-                      <span className="inline-flex items-center gap-1 font-mono text-[9px] uppercase tracking-[0.2em] text-white bg-primary px-2.5 py-1 rounded-full">
+                      <span className="inline-flex items-center gap-1 font-mono text-[11px] uppercase tracking-[0.2em] text-white bg-primary px-2.5 py-1 rounded-full">
                         <Star className="h-2.5 w-2.5" strokeWidth={2.5} />
                         {t(COPY.featured, locale)}
                       </span>
@@ -135,7 +135,7 @@ export default function Projects() {
                       once. */}
                   {p.features.length > 0 && (
                     <div className="mt-5">
-                      <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-primary-dark">{t(COPY.whatItDoes, locale)}</p>
+                      <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-primary-dark">{t(COPY.whatItDoes, locale)}</p>
                       <ul className="mt-2 space-y-1.5">
                         {p.features.map((f, fi) => (
                           <li key={fi} className="flex gap-2 text-muted text-[13px] leading-relaxed">
@@ -154,7 +154,7 @@ export default function Projects() {
                     {p.tech.map((techName) => (
                       <span
                         key={techName}
-                        className="font-mono text-[9px] uppercase tracking-wide text-muted bg-background border border-divider px-2 py-0.5 rounded-full"
+                        className="font-mono text-[11px] uppercase tracking-wide text-muted bg-background border border-divider px-2 py-0.5 rounded-full"
                       >
                         {techName}
                       </span>

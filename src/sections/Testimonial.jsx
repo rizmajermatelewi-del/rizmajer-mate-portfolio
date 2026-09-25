@@ -29,7 +29,7 @@ export default function Testimonial() {
             </blockquote>
             <figcaption className="mt-7 pt-6 border-t border-divider">
               <p className="font-display font-semibold text-ink">{t.name}</p>
-              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary-dark mt-1.5">
+              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-primary-dark mt-1.5">
                 {t.role}
                 {t.company && ` · ${t.company}`}
               </p>

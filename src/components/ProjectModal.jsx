@@ -119,7 +119,7 @@ export default function ProjectModal({ project, originRect, onClose }) {
           <X className="h-5 w-5" strokeWidth={2} />
         </button>
 
-        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary-dark">
+        <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-primary-dark">
           {t(project.label, locale)}
           {project.year && ` · ${t(project.year, locale)}`}
         </span>
@@ -172,7 +172,7 @@ export default function ProjectModal({ project, originRect, onClose }) {
           {project.tech.map((techName, i) => (
             <span
               key={i}
-              className="font-mono text-[9px] uppercase tracking-wide text-muted bg-background border border-divider px-2 py-0.5 rounded-full"
+              className="font-mono text-[11px] uppercase tracking-wide text-muted bg-background border border-divider px-2 py-0.5 rounded-full"
             >
               {techName}
             </span>

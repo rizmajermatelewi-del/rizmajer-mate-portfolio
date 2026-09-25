@@ -270,7 +270,7 @@ export default function Fejleszto() {
                   <div className="space-y-5">
                     {buckets.map(([where, items]) => (
                       <div key={where}>
-                        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-primary-dark">
+                        <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-primary-dark">
                           {t(STACK_LEGEND[where], locale)}
                         </p>
                         <ul className="mt-2.5 space-y-1.5">
@@ -353,7 +353,7 @@ export default function Fejleszto() {
                 )}
 
                 {p.label && (
-                  <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-primary-dark">
+                  <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-primary-dark">
                     {t(p.label, locale)}
                   </p>
                 )}
@@ -364,7 +364,7 @@ export default function Fejleszto() {
 
                 {p.problem && (
                   <div className="mt-4">
-                    <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-primary-dark">
+                    <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-primary-dark">
                       {t(COPY.problemLabel, locale)}
                     </p>
                     <p className="text-muted text-sm leading-relaxed mt-1.5">{t(p.problem, locale)}</p>
@@ -373,7 +373,7 @@ export default function Fejleszto() {
 
                 {p.solution && (
                   <div className="mt-4">
-                    <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-primary-dark">
+                    <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-primary-dark">
                       {t(COPY.solutionLabel, locale)}
                     </p>
                     <p className="text-muted text-sm leading-relaxed mt-1.5">{t(p.solution, locale)}</p>
@@ -387,7 +387,7 @@ export default function Fejleszto() {
                       {p.tech.map((techName) => (
                         <li
                           key={techName}
-                          className="font-mono text-[10px] uppercase tracking-wider text-muted border border-divider rounded-full px-2.5 py-1"
+                          className="font-mono text-[11px] uppercase tracking-wider text-muted border border-divider rounded-full px-2.5 py-1"
                         >
                           {techName}
                         </li>
@@ -403,7 +403,7 @@ export default function Fejleszto() {
                         href={p.live}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-sm font-medium text-primary-dark"
+                        className="inline-flex items-center gap-1 py-3 text-sm font-medium text-primary-dark"
                       >
                         {t(UI.openLink, locale)}
                         <span className="sr-only"> — {t(p.title, locale)}</span>
@@ -415,7 +415,7 @@ export default function Fejleszto() {
                         href={p.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-sm font-medium text-primary-dark"
+                        className="inline-flex items-center gap-1 py-3 text-sm font-medium text-primary-dark"
                       >
                         {/* Names the project, because "GitHub" on every card
                             gives a screen-reader user a list of identical

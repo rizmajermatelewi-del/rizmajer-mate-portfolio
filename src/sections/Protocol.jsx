@@ -53,7 +53,7 @@ export default function Protocol() {
               <TiltCard className="h-full">
                 <div className="flex h-full flex-col p-6">
                   <div>
-                    <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-primary-dark bg-primary/10 px-2.5 py-1 rounded-full">
+                    <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-primary-dark bg-primary/10 px-2.5 py-1 rounded-full">
                       {locale === 'hu' ? `${i + 1}. ${t(COPY.step, locale)}` : `${t(COPY.step, locale)} ${i + 1}`}
                     </span>
                   </div>

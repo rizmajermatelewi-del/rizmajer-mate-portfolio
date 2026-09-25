@@ -250,7 +250,7 @@ export default function ContactForm() {
                     <Phone className="h-5 w-5 text-primary group-hover:text-white" />
                   </span>
                   <span>
-                    <span className="block font-mono text-[10px] uppercase tracking-widest text-muted">{t(COPY.callMe, locale)}</span>
+                    <span className="block font-mono text-[11px] uppercase tracking-widest text-muted">{t(COPY.callMe, locale)}</span>
                     <span className="font-display font-semibold text-ink text-lg">{CONTACT_PHONE}</span>
                   </span>
                 </a>
@@ -270,7 +270,7 @@ export default function ContactForm() {
                   <Mail className="h-5 w-5 text-primary group-hover:text-white" />
                 </span>
                 <span className="min-w-0">
-                  <span className="block font-mono text-[10px] uppercase tracking-widest text-muted">{t(COPY.emailMe, locale)}</span>
+                  <span className="block font-mono text-[11px] uppercase tracking-widest text-muted">{t(COPY.emailMe, locale)}</span>
                   <span className="font-display font-semibold text-ink text-base sm:text-lg break-all">info@rizmajerdev.com</span>
                 </span>
               </a>
@@ -280,7 +280,7 @@ export default function ContactForm() {
                   <MapPin className="h-5 w-5 text-primary" />
                 </span>
                 <span>
-                  <span className="block font-mono text-[10px] uppercase tracking-widest text-muted">{t(COPY.based, locale)}</span>
+                  <span className="block font-mono text-[11px] uppercase tracking-widest text-muted">{t(COPY.based, locale)}</span>
                   <span className="font-display font-semibold text-ink text-lg">{t(COPY.country, locale)}</span>
                 </span>
               </div>
@@ -290,14 +290,14 @@ export default function ContactForm() {
                   <Clock className="h-5 w-5 text-primary" />
                 </span>
                 <span>
-                  <span className="block font-mono text-[10px] uppercase tracking-widest text-muted">{t(COPY.responseTime, locale)}</span>
+                  <span className="block font-mono text-[11px] uppercase tracking-widest text-muted">{t(COPY.responseTime, locale)}</span>
                   <span className="font-display font-semibold text-ink text-lg">{t(COPY.within24, locale)}</span>
                 </span>
               </div>
             </div>
 
             <div className="mt-10 p-5 rounded-3xl bg-primary/5 border border-primary/15">
-              <p className="font-mono text-[10px] uppercase tracking-widest text-primary-dark mb-2">{t(COPY.dataHeading, locale)}</p>
+              <p className="font-mono text-[11px] uppercase tracking-widest text-primary-dark mb-2">{t(COPY.dataHeading, locale)}</p>
               <p className="text-sm text-muted leading-relaxed">
                 {t(COPY.dataBody, locale)}
               </p>

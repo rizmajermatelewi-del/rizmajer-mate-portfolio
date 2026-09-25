@@ -140,7 +140,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary-dark mb-4">{t(COPY.servicesHeading, locale)}</p>
+            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-primary-dark mb-4">{t(COPY.servicesHeading, locale)}</p>
             <ul className="space-y-2.5">
               {/* The catalogue's own groups, in its own order, so the two
                   lists cannot disagree about what is on offer. */}
@@ -157,7 +157,7 @@ export default function Footer() {
           <div>
             {/* "Oldalak", not "Rólam". The group used to be named after one of
                 its own five items, which made the label useless as a heading. */}
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary-dark mb-4">{t(COPY.pagesHeading, locale)}</p>
+            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-primary-dark mb-4">{t(COPY.pagesHeading, locale)}</p>
             <ul className="space-y-2.5">
               {PAGE_LINKS.map(({ href, label }) => (
                 <li key={href}>
@@ -170,7 +170,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary-dark mb-4">{t(COPY.contactHeading, locale)}</p>
+            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-primary-dark mb-4">{t(COPY.contactHeading, locale)}</p>
             <ul className="space-y-2.5">
               <li>
                 <a href="mailto:info@rizmajerdev.com" className="inline-block py-1 text-muted hover:text-primary-dark transition text-sm">
@@ -189,7 +189,7 @@ export default function Footer() {
               status that never changes. */}
           <div className="flex items-center gap-2.5">
             <span className="h-1.5 w-1.5 rounded-full bg-primary-dark" />
-            <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-muted">
+            <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-muted">
               {t(COPY.available, locale)}
             </span>
           </div>
@@ -211,9 +211,9 @@ export default function Footer() {
           </div>
 
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-muted text-xs font-mono">
-            <Link to={withLocale('/fejleszto', locale)} className="inline-block py-1 hover:text-primary-dark transition">{t(COPY.devProfile, locale)}</Link>
-            <Link to="/adatvedelem" className="inline-block py-1 hover:text-primary-dark transition">{t(COPY.privacy, locale)}</Link>
-            <Link to="/aszf" className="inline-block py-1 hover:text-primary-dark transition">ÁSZF</Link>
+            <Link to={withLocale('/fejleszto', locale)} className="inline-block py-3 hover:text-primary-dark transition">{t(COPY.devProfile, locale)}</Link>
+            <Link to="/adatvedelem" className="inline-block py-3 hover:text-primary-dark transition">{t(COPY.privacy, locale)}</Link>
+            <Link to="/aszf" className="inline-block py-3 hover:text-primary-dark transition">ÁSZF</Link>
             <span>© 2026 Rizmajer Máté Levente</span>
           </div>
         </div>

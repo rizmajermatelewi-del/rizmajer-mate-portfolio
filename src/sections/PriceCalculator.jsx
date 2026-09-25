@@ -223,7 +223,7 @@ export default function PriceCalculator({ locale, onQuote }) {
                     }`}
                   />
                 </span>
-                <span className={`mt-2 block font-mono text-[9px] uppercase tracking-[0.2em] ${i === step ? 'text-primary-dark' : 'text-muted'}`}>
+                <span className={`mt-2 block font-mono text-[11px] uppercase tracking-[0.2em] ${i === step ? 'text-primary-dark' : 'text-muted'}`}>
                   {stepLabel(i)}
                 </span>
                 <span className={`hidden sm:block text-[13px] font-semibold ${i === step ? 'text-ink' : 'text-muted'}`}>{t(s, locale)}</span>
@@ -388,7 +388,7 @@ export default function PriceCalculator({ locale, onQuote }) {
       </div>
 
       <aside className="lg:sticky lg:top-24 self-start flex flex-col rounded-3xl bg-primary/10 p-6">
-        <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-primary-dark">{t(COPY.summary, locale)}</p>
+        <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-primary-dark">{t(COPY.summary, locale)}</p>
 
         {empty ? (
           <p className="mt-4 text-sm text-muted leading-relaxed">{t(COPY.empty, locale)}</p>
@@ -426,7 +426,7 @@ export default function PriceCalculator({ locale, onQuote }) {
               {t(fmt(rolling), locale)}
             </span>
             {discounted && (
-              <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-white bg-primary px-2 py-0.5 rounded-full">
+              <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-white bg-primary px-2 py-0.5 rounded-full">
                 −{LAUNCH_OFFER.percent}%
               </span>
             )}

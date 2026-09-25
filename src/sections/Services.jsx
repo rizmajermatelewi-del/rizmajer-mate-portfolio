@@ -79,14 +79,14 @@ function ServiceCard({ s, locale }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`${t(COPY.openDemo, locale)}: ${t(s.name, locale)}`}
-                className="inline-flex items-center gap-1 font-mono text-[9px] uppercase tracking-[0.2em] text-white bg-primary px-2.5 py-1 rounded-full hover:bg-primary-dark transition-colors"
+                className="relative inline-flex items-center gap-1 font-mono text-[11px] uppercase tracking-[0.2em] text-white bg-primary px-2.5 py-1 rounded-full after:absolute after:-inset-2.5 after:content-[''] hover:bg-primary-dark transition-colors"
               >
                 {t(COPY.demo, locale)}
                 <ArrowUpRight className="h-2.5 w-2.5" strokeWidth={2.5} aria-hidden="true" />
               </a>
             )}
             {s.isNew && (
-              <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-primary-dark bg-primary/10 px-2.5 py-1 rounded-full">
+              <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-primary-dark bg-primary/10 px-2.5 py-1 rounded-full">
                 {t(COPY.isNew, locale)}
               </span>
             )}
@@ -96,7 +96,7 @@ function ServiceCard({ s, locale }) {
           <p className="text-muted text-sm mt-2.5 leading-relaxed">{t(s.problem, locale)}</p>
 
           <div className="mt-5">
-            <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-primary-dark">{t(COPY.includes, locale)}</p>
+            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-primary-dark">{t(COPY.includes, locale)}</p>
             <ul className="mt-2 space-y-1.5">
               {s.includes.map((x, i) => (
                 <li key={i} className="flex gap-2 text-muted text-[13px] leading-relaxed">
@@ -120,7 +120,7 @@ function ServiceCard({ s, locale }) {
                   <p className="flex flex-wrap items-center gap-2 mt-0.5">
                     <span className="sr-only">{t(COPY.salePrice, locale)} </span>
                     <span className="font-display font-semibold text-xl text-ink">{t(salePriceLabel(s), locale)}</span>
-                    <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-white bg-primary px-2 py-0.5 rounded-full">
+                    <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-white bg-primary px-2 py-0.5 rounded-full">
                       −{LAUNCH_OFFER.percent}%
                     </span>
                   </p>
@@ -204,7 +204,7 @@ export default function Services() {
         {/* Same card as Projects and the offers below it, at Máté's request:
             dark inverted surface, pill label, check list, ruled footer. */}
         <div className="mt-10 card-invert border border-divider rounded-4xl p-6 sm:p-8 shadow-e2">
-          <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-primary-dark bg-primary/10 px-2.5 py-1 rounded-full">
+          <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-primary-dark bg-primary/10 px-2.5 py-1 rounded-full">
             {t(COPY.includedPill, locale)}
           </span>
           <h3 className="font-display font-bold text-xl text-ink tracking-tight mt-4">{t(COPY.includedTitle, locale)}</h3>

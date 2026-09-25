@@ -123,7 +123,7 @@ export default function About() {
             <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4">
               {facts.map((f, i) => (
                 <div key={i} className="rounded-2xl border border-divider bg-surface p-4">
-                  <p className="font-mono text-[9px] uppercase tracking-widest text-primary-dark">{f.label}</p>
+                  <p className="font-mono text-[11px] uppercase tracking-widest text-primary-dark">{f.label}</p>
                   <p className="font-display font-semibold text-ink text-sm mt-1">{f.value}</p>
                 </div>
               ))}
