@@ -119,15 +119,51 @@ export default function PrivacyPolicy() {
             A szolgáltatókról szóló fenti adatok a saját nyilvános tájékoztatóikból származnak,
             a 2026. szeptemberi állapot szerint.
           </p>
+          {/* Added 2026-09-25, the day cold outreach started: GDPR Art. 14
+              requires telling people whose data was not collected from them
+              where it came from, why, and how to object. The outreach mail
+              links nowhere in particular, so this section is the notice. */}
+          <h2 className="font-display font-semibold text-xl text-ink mt-8">Üzleti megkeresések</h2>
+          <p>
+            Helyi vállalkozásoknak e-mailben egyszeri üzleti ajánlatot küldök. Ehhez a vállalkozás
+            nevét, települését és a saját weboldalán vagy más nyilvános forrásban (például
+            OpenStreetMap) közzétett e-mail címét használom. Jogalap: jogos érdek (GDPR 6. cikk
+            (1) f) pont) — egy vállalkozás megkeresése a saját nyilvános elérhetőségén, üzleti
+            ajánlattal.
+          </p>
+          <p>
+            Ha nem szeretnél több levelet, elég egy „nem” válasz: a címedet azonnal törlöm a
+            listáról, és csak annyit őrzök meg belőle egy tiltólistán, amennyi ahhoz kell, hogy
+            ne írjak újra. A megkeresés adatait legfeljebb 2 évig őrzöm, ha nem lesz belőle
+            együttműködés.
+          </p>
+          <h2 className="font-display font-semibold text-xl text-ink mt-8">Jogalap</h2>
+          <p>
+            Az űrlapon vagy e-mailben küldött megkeresést azért kezelem, hogy válaszolhassak rá és
+            ajánlatot adhassak: ez a szerződés megkötését megelőző lépés (GDPR 6. cikk (1) b) pont).
+            Ha szerződést kötünk, a számlázási adatokat a számviteli törvény írja elő (GDPR 6. cikk
+            (1) c) pont).
+          </p>
+          <h2 className="font-display font-semibold text-xl text-ink mt-8">Sütik</h2>
+          <p>
+            Az oldal nem használ sem nyomkövető, sem hirdetési sütiket, ezért nincs süti-sáv sem.
+          </p>
           <h2 className="font-display font-semibold text-xl text-ink mt-8">Adatmegőrzés</h2>
           <p>
-            Az adataidat addig őrzöm meg, amíg az a kapcsolatfelvétel és az esetleges együttműködés
-            szempontjából szükséges, ezt követően törlöm őket.
+            Ha a megkeresésből nem lesz együttműködés, az adataidat az utolsó üzenetváltástól
+            számított 1 év után törlöm. Ha szerződést kötünk, a szerződést és a számlákat a
+            számviteli törvény (2000. évi C. törvény 169. §) szerint 8 évig őrzöm meg.
           </p>
           <h2 className="font-display font-semibold text-xl text-ink mt-8">Jogaid</h2>
           <p>
-            Bármikor kérheted a rólad tárolt adatok betekintését, helyesbítését vagy törlését az
-            info@rizmajerdev.com e-mail címen keresztül.
+            Kérheted a rólad tárolt adatok másolatát, helyesbítését, törlését vagy kezelésük
+            korlátozását, és tiltakozhatsz a jogos érdeken alapuló adatkezelés ellen. Írj az
+            info@rizmajerdev.com címre; 30 napon belül válaszolok.
+          </p>
+          <p>
+            Ha úgy érzed, megsértettem a jogaidat, panaszt tehetsz a Nemzeti Adatvédelmi és
+            Információszabadság Hatóságnál (NAIH, 1055 Budapest, Falk Miksa utca 9–11.; postacím:
+            1363 Budapest, Pf. 9.; ugyfelszolgalat@naih.hu; naih.hu), vagy bírósághoz fordulhatsz.
           </p>
         </div>
       </div>
