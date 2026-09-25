@@ -41,6 +41,7 @@ const ALLOWED = [
   /Adatvédelem/,
   /Általános Szerződési Feltételek/,
   /ÁSZF/,
+  /Inárcs/, // a place name, same in English; prerender.mjs allows it on /en too
 ]
 
 const HUNGARIAN = /[áéíóöőúüűÁÉÍÓÖŐÚÜŰ]/

@@ -340,6 +340,13 @@
   animation: preloader-failsafe 400ms ease 4s forwards;
 }
 
+/* No cover on phones (2026-09-25): the hero skips its entrance there (Hero.jsx),
+   so there is no rebuild to hide, and the cover was what held mobile LCP at 3.5s.
+   The brand moment stays on larger screens, where LCP is 0.7s with it. */
+@media (max-width: 767px) {
+  #preloader { display: none; }
+}
+
 /* Set by src/preloader.js. The element is removed a beat later; the class
    exists so the removal is a fade rather than a cut. */
 #preloader.is-done {

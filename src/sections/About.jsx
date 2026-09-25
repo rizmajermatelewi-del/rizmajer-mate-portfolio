@@ -27,14 +27,14 @@ const BIO_PARAGRAPHS = [
 ]
 
 const COPY = {
-  headingLead: { hu: 'Néhány szó', en: 'A few words' },
-  headingAccent: { hu: 'rólam', en: 'about me' },
+  headingLead: { hu: 'Webfejlesztő', en: 'A web developer' },
+  headingAccent: { hu: 'Pest megyéből', en: 'from Pest County' },
   photoAlt: {
     hu: 'Rizmajer Máté Levente naplementében, egy sziklán ülve',
     en: 'Rizmajer Máté Levente at sunset, sitting on a rock',
   },
   factBase: { hu: 'Székhely', en: 'Based in' },
-  factBaseValue: { hu: 'Magyarország', en: 'Hungary' },
+  factBaseValue: { hu: 'Inárcs, Pest vármegye', en: 'Inárcs, Pest County' },
   factFocus: { hu: 'Fókusz', en: 'Focus' },
   factFocusValue: { hu: 'Full-stack fejlesztés', en: 'Full-stack development' },
   factAvailability: { hu: 'Elérhetőség', en: 'Availability' },

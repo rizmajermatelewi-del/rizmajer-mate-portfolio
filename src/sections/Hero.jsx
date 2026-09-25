@@ -45,8 +45,8 @@ const COPY = {
      capability, because the emphasis should land on what the buyer gets rid
      of, not on what I am good at. */
   introLead: {
-    hu: 'Weboldalak, foglalási, rendelési és belső rendszerek kis- és középvállalkozásoknak —',
-    en: 'Websites, booking, ordering and internal systems for small and medium businesses —',
+    hu: 'Weboldalak, foglalási, rendelési és belső rendszerek kis- és középvállalkozásoknak Pest megyében és Budapesten —',
+    en: 'Websites, booking, ordering and internal systems for small and medium businesses in Pest County and Budapest —',
   },
   introAccent: { hu: 'kevesebb kézi adminisztrációval', en: 'with less done by hand' },
   /* "Munkáim" -> "Munkáim megtekintése". The secondary CTA now reads as an
@@ -83,16 +83,23 @@ export default function Hero() {
         return
       }
 
-      gsap.from('.hero-line-1', { y: 40, opacity: 0, duration: 1, ease: 'power3.out', delay: 0.3 })
-      gsap.from('.hero-line-2', { y: 60, opacity: 0, duration: 1.2, ease: 'power3.out', delay: 0.5 })
-      gsap.from('.hero-cta, .hero-meta', {
-        y: 24,
-        opacity: 0,
-        duration: 0.8,
-        ease: 'power3.out',
-        delay: 0.8,
-        stagger: 0.12,
-      })
+      /* Phones skip the entrance (2026-09-25 SEO audit). There the prerendered
+         hero is shown straight away with no cover (index.css), and animating it
+         in from opacity 0 would hide the LCP text for the length of the bundle
+         download: Lighthouse measured 2.9s of render delay on mobile. The
+         markup React renders is the same as the prerender, so nothing moves. */
+      if (!window.matchMedia('(max-width: 767px)').matches) {
+        gsap.from('.hero-line-1', { y: 40, opacity: 0, duration: 1, ease: 'power3.out', delay: 0.3 })
+        gsap.from('.hero-line-2', { y: 60, opacity: 0, duration: 1.2, ease: 'power3.out', delay: 0.5 })
+        gsap.from('.hero-cta, .hero-meta', {
+          y: 24,
+          opacity: 0,
+          duration: 0.8,
+          ease: 'power3.out',
+          delay: 0.8,
+          stagger: 0.12,
+        })
+      }
 
       /* Depth on scroll. The photograph drifts slower than the page and the
          copy drifts faster, so the two separate as you leave the hero and

@@ -32,13 +32,14 @@ import { neutral } from './t.js'
    is where a machine looks for it. It is out of the title tag, which is where
    a human decides in one line whether this page is for them. */
 export const HOME_META = {
-  /* 63 characters. Google truncates a title around 60, so the name sits after
-     the pipe: if anything is cut it should be the part a reader can already
+  /* 65 characters (2026-09-25 SEO audit): the search term and the area lead,
+     because nobody searches for the name before they know it. Google truncates
+     a title around 60, so the name sits after the pipe: if anything is cut it should be the part a reader can already
      see in the URL and the result's site name, not the part that says what is
      sold. */
   title: {
-    hu: 'Rizmajer Máté Levente — weboldalak és üzleti rendszerek KKV-knak',
-    en: 'Rizmajer Máté Levente — websites and business systems for SMEs',
+    hu: 'Weboldal készítés KKV-knak – Pest megye, Budapest | Rizmajer Máté',
+    en: 'Websites for small businesses near Budapest | Rizmajer Máté',
   },
 
   /* The <meta name="description"> — what a search result shows under the
@@ -46,8 +47,8 @@ export const HOME_META = {
      because that is the question a reader is answering at that moment. Under
      170 characters so it is not truncated mid-clause. */
   description: {
-    hu: 'Egyedi weboldalak, időpontfoglaló, rendelési és belső rendszerek magyar vállalkozásoknak. Kevesebb kézi adminisztráció, átlátható fejlesztés, előre egyeztetett ár.',
-    en: 'Custom websites, booking, ordering and internal systems for Hungarian businesses. Less admin done by hand, development you can follow, and a price agreed up front.',
+    hu: 'Weboldal készítés, időpontfoglaló és rendelési rendszerek kisvállalkozásoknak Pest megyében és Budapesten. Kevesebb kézi adminisztráció, előre rögzített ár.',
+    en: 'Websites, booking and ordering systems for small businesses in Pest County and Budapest. Less admin done by hand, and a price fixed up front.',
   },
 
   /* og: and twitter: descriptions, i.e. the link preview in a chat window

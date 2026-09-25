@@ -21,7 +21,7 @@ const COPY = {
   callMe: { hu: 'Hívj fel', en: 'Call me' },
   emailMe: { hu: 'Írj emailt', en: 'Email me' },
   based: { hu: 'Székhely', en: 'Based in' },
-  country: { hu: 'Magyarország', en: 'Hungary' },
+  country: { hu: 'Inárcs, Pest vármegye', en: 'Inárcs, Pest County' },
   responseTime: { hu: 'Válaszidő', en: 'Response time' },
   within24: { hu: 'Egy munkanapon belül', en: 'Within one working day' },
   dataHeading: { hu: 'Adatkezelés', en: 'Your data' },

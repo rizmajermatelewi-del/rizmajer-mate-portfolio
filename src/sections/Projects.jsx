@@ -21,7 +21,7 @@ const COPY = {
   /* PROJECTS_FULL holds Bemutató projekt demos, each with a live URL and a
      folder in the public DEMOS repo. Do not restate a count here that can
      drift from PROJECTS_FULL — projects.test.js pins the array length. */
-  headingLead: { hu: 'Amin dolgozom.', en: 'What I am working on.' },
+  headingLead: { hu: 'Weboldalak, amiket építettem.', en: 'Sites I have built.' },
   headingAccent: { hu: 'Bemutatók, amiket megnyithatsz.', en: 'Demos you can open.' },
   intro: {
     hu: 'Mindegyik megnyitható, és a kódja nyilvános. Kitalált vállalkozások, valós problémákkal. Ügyfélmunkát még nem adtam át.',

@@ -16,8 +16,8 @@ const COPY = {
   headlineAccent: { hu: 'viszi el', en: 'eats the most' },
   headlineTail: { hu: 'a legtöbb időd.', en: 'of your time.' },
   strapline: {
-    hu: 'Rizmajer Máté Levente — full-stack fejlesztő Magyarországról, elérhető távoli és helyi projektekre egyaránt.',
-    en: 'Rizmajer Máté Levente — full-stack developer from Hungary, available for remote and local projects alike.',
+    hu: 'Rizmajer Máté Levente — webfejlesztő Inárcsról, Pest vármegyéből, elérhető távoli és helyi projektekre egyaránt.',
+    en: 'Rizmajer Máté Levente — web developer from Inárcs, Pest County, available for remote and local projects alike.',
   },
   /* Was: "Full-stack fejlesztő. React, Node.js és modern web-technológiák.
      Ötlettől a működő termékig." Three problems in one line, all of them the
@@ -43,7 +43,7 @@ const COPY = {
   servicesHeading: { hu: 'Szolgáltatások', en: 'Services' },
   pagesHeading: { hu: 'Oldalak', en: 'Pages' },
   contactHeading: { hu: 'Kapcsolat', en: 'Contact' },
-  country: { hu: 'Magyarország', en: 'Hungary' },
+  country: { hu: 'Inárcs, Pest vármegye', en: 'Inárcs, Pest County' },
   available: { hu: 'Elérhető új projektekre', en: 'Available for new projects' },
   /* Both legal links keep their Hungarian names on the English page, because
      both documents are Hungarian-only by decision. An English label over a
