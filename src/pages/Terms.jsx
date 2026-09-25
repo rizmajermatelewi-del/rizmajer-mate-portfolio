@@ -125,7 +125,13 @@ export default function Terms() {
         <h1 className="font-display font-bold text-3xl sm:text-5xl text-ink mt-4 mb-4 tracking-tight">
           Általános Szerződési Feltételek
         </h1>
-        <p className="text-sm text-muted mb-10">Hatályos: {UPDATED}</p>
+        {/* The first <p> becomes the meta description (see i18n/meta.js), so
+            it has to be a sentence about the page, not the date. */}
+        <p className="text-muted leading-relaxed mb-3">
+          A weboldal-, rendszerfejlesztési és üzemeltetési munkák feltételei: ajánlat, fizetés,
+          átadás, szerzői jog, hibajavítás, felelősség és panaszkezelés.
+        </p>
+        <div className="text-sm text-muted mb-10">Hatályos: {UPDATED}</div>
         <div className="space-y-4 text-muted leading-relaxed">
           {SECTIONS.map((s) => (
             <section key={s.title} className="space-y-3">

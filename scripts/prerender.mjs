@@ -266,7 +266,7 @@ function withSchema(html, { entries, locale, siteName, schema, t, breadcrumb }) 
            that live in pricing.js, and prose restating a number is what let
            llms.txt publish a tier two revisions stale. */
         if (node['@type'] === 'ProfessionalService') {
-          return [{ ...node, areaServed: { ...node.areaServed, name: t(schema.areaServed, locale) } }]
+          return [{ ...node, areaServed: schema.areaServed.map((a) => ({ '@type': a.type, name: t(a.name, locale) })) }]
         }
 
         if (node['@type'] !== 'FAQPage') return [node]

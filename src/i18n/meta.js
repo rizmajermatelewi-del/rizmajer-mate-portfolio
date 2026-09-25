@@ -180,7 +180,13 @@ export const SCHEMA = {
      template, and the prerender's leak scan reads the whole finished page —
      JSON-LD included — so a hardcoded "Magyarorszag" with its real diacritics
      would fail the build on /en, correctly. */
-  areaServed: { hu: 'Magyarország', en: 'Hungary' },
+  /* Pest county and Budapest first: that is where the clients are, and a
+     local search ("weboldal készítés Pest megye") is how they look. */
+  areaServed: [
+    { type: 'AdministrativeArea', name: { hu: 'Pest vármegye', en: 'Pest County' } },
+    { type: 'City', name: { hu: 'Budapest', en: 'Budapest' } },
+    { type: 'Country', name: { hu: 'Magyarország', en: 'Hungary' } },
+  ],
 
   knowsAbout: [
     { hu: 'Webfejlesztés', en: 'Web development' },
