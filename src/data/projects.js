@@ -18,6 +18,12 @@ import cukraszda02 from '../assets/demos/cukraszda-02.webp'
 import vasboltCard from '../assets/demos/vasbolt-card.webp'
 import vasbolt01 from '../assets/demos/vasbolt-01.webp'
 import vasbolt02 from '../assets/demos/vasbolt-02.webp'
+import edzoteremCard from '../assets/demos/edzoterem-card.webp'
+import edzoterem01 from '../assets/demos/edzoterem-01.webp'
+import edzoterem02 from '../assets/demos/edzoterem-02.webp'
+import fogaszatCard from '../assets/demos/fogaszat-card.webp'
+import fogaszat01 from '../assets/demos/fogaszat-01.webp'
+import fogaszat02 from '../assets/demos/fogaszat-02.webp'
 import konyveloCard from '../assets/demos/konyvelo-card.webp'
 import konyvelo01 from '../assets/demos/konyvelo-01.webp'
 import konyvelo02 from '../assets/demos/konyvelo-02.webp'
@@ -588,6 +594,100 @@ export const PROJECTS_FULL = [
     ],
     github: DEMOS_REPO_READY ? `${DEMOS_REPO}/tree/main/asztalos` : '#',
     live: 'https://demo-asztalos.vercel.app',
+  },
+  {
+    title: { hu: "Bérlet a rúdon — Súlypont Edzőterem", en: "Membership on the bar — Sulypont Gym" },
+    text: {
+      hu: "Bemutató edzőterem: a bérletet súlytárcsákként pakolod a rúdra, minden extra egy színes tárcsa, a rúd súlya mellett a havidíj. Mai órák szabad hellyel. Saját kezdeményezés, nem ügyfélmunka.",
+      en: "Demo gym: you load the membership onto a barbell, every extra is a coloured bumper plate, and the monthly fee sits next to the bar weight. Today's classes with free spots. My own initiative, not client work.",
+    },
+    tech: ['Vite', 'JavaScript'],
+    features: [
+      { hu: "Bérlet súlytárcsákból", en: "Membership built from bumper plates" },
+      { hu: "Mai órák élő szabad hellyel", en: "Today's classes with live free spots" },
+      { hu: "Ingyenes első edzés a bérlettel csatolva", en: "Free first session with the membership attached" },
+    ],
+    featured: false,
+    label: { hu: 'Bemutató projekt', en: 'Demo project' },
+    tone: { from: '--color-card-3', to: '--color-deep', accent: '--color-primary' },
+    image: edzoteremCard,
+    imageAlt: {
+      hu: "Súlypont Edzőterem bemutató: nagy, fekete-piros kondenzált cím és egy felhúzásra készülő sportoló fotója",
+      en: "Sulypont Gym demo: large black and red condensed headline and a photo of a lifter setting up a deadlift",
+    },
+    year: neutral('2026'),
+    role: { hu: 'Tervezés, fejlesztés, deploy', en: 'Design, build, deploy' },
+    problem: {
+      hu: "Az edzőtermek árlistája általában öt bérlettípus egy táblázatban. Aki csak gépezni és néha szaunázni jár, nem tudja, melyik az övé, és fizet azért is, amit nem használ.",
+      en: "Gym price lists are usually five membership types in a table. Someone who only lifts and sometimes uses the sauna cannot tell which is theirs, and pays for things they never use.",
+    },
+    solution: {
+      hu: "Az alapbérlet a rúd, az extrák tárcsák a súlyemelő színkódja szerint; a legnehezebb kerül a zárhoz, mindkét oldalra. Hűségkedvezmény, mai órák szabad hellyel, ingyenes próbaedzés. A számítás tesztelt modul.",
+      en: "The base membership is the bar, extras are plates in the weightlifting colour code, heaviest next to the collar on both sides. Commitment discount, today's classes with free spots, a free trial. The pricing is a tested module.",
+    },
+    gallery: [
+      {
+        src: edzoterem01,
+        alt: { hu: "Nyitóoldal: nagy cím, két gomb és egy sportoló a gumipadlón", en: "Landing: big headline, two buttons and a lifter on a rubber floor" },
+        width: 1280,
+        height: 800,
+      },
+      {
+        src: edzoterem02,
+        alt: { hu: "A rúd: személyi edzés, csoportos órák, szauna és törölköző tárcsaként, mellette a havidíj", en: "The bar: personal training, classes, sauna and towel as plates, next to the monthly fee" },
+        width: 1280,
+        height: 800,
+      },
+    ],
+    github: DEMOS_REPO_READY ? `${DEMOS_REPO}/tree/main/edzoterem` : '#',
+    live: 'https://demo-edzoterem.vercel.app',
+  },
+  {
+    title: { hu: "Fogszín-skála — Zománc Fogászat", en: "Shade guide — Zomanc Dental" },
+    text: {
+      hu: "Bemutató fogászat: a fogorvosi színskálán beállítod a mostani és a kívánt fogszínt, a mosoly átszíneződik, és kiírja a fehérítés árát. Mellé a következő sürgősségi időpont. Saját kezdeményezés, nem ügyfélmunka.",
+      en: "Demo dental practice: set your current and wished tooth shade on the dental shade guide, the smile recolours and the whitening is priced. Plus the next emergency slot. My own initiative, not client work.",
+    },
+    tech: ['Vite', 'JavaScript'],
+    features: [
+      { hu: "VITA fogszín-skála mosoly-előnézettel", en: "VITA shade guide with a smile preview" },
+      { hu: "Fehérítési terv és ár", en: "Whitening plan and price" },
+      { hu: "Következő sürgősségi időpont", en: "Next emergency slot" },
+    ],
+    featured: false,
+    label: { hu: 'Bemutató projekt', en: 'Demo project' },
+    tone: { from: '--color-card-4', to: '--color-deep', accent: '--color-primary' },
+    image: fogaszatCard,
+    imageAlt: {
+      hu: "Zománc Fogászat bemutató: türkiz-sötétzöld cím és egy fogorvos, aki a mosolygó pácienssel beszélget",
+      en: "Zomanc Dental demo: teal and dark green headline and a dentist talking with a smiling patient",
+    },
+    year: neutral('2026'),
+    role: { hu: 'Tervezés, fejlesztés, deploy', en: 'Design, build, deploy' },
+    problem: {
+      hu: "Fogorvoshoz sokan félve mennek, két kérdéssel: mi fog történni, és mennyibe kerül. Fehérítésnél azt sem tudják, mennyit várhatnak.",
+      en: "Many people go to the dentist nervous, with two questions: what will happen and what it costs. For whitening they do not even know what to expect.",
+    },
+    solution: {
+      hu: "A 16 árnyalatú skálán csúszkával vagy kattintással állítható a szín, a mosoly-rajz átszíneződik, és kiírja az alkalmak számát és az árat. A sürgősségi időpontot a valódi órából számolja. Mindkettő tesztelt modul.",
+      en: "The 16-shade guide is set with sliders or by clicking, the smile drawing recolours, and it shows the number of sessions and the price. The emergency slot comes from the real clock. Both are tested modules.",
+    },
+    gallery: [
+      {
+        src: fogaszat01,
+        alt: { hu: "Nyitóoldal: cím, két gomb, a rendelő fotója és a sürgősségi sáv", en: "Landing: headline, two buttons, a photo of the surgery and the emergency band" },
+        width: 1280,
+        height: 800,
+      },
+      {
+        src: fogaszat02,
+        alt: { hu: "A fogszín-skála: A3-ról A1-re három alkalom, a mosoly már a cél színében", en: "The shade guide: A3 to A1 in three sessions, the smile already in the target shade" },
+        width: 1280,
+        height: 800,
+      },
+    ],
+    github: DEMOS_REPO_READY ? `${DEMOS_REPO}/tree/main/fogaszat` : '#',
+    live: 'https://demo-fogaszat.vercel.app',
   },
 ]
 
