@@ -29,8 +29,8 @@ describe('PROJECTS_FULL', () => {
   })
 
   it('pins the project count, so a change to the list cannot be accidental', () => {
-    expect(PROJECTS_FULL).toHaveLength(6)
-    expect(PROJECT_COUNT).toBe(6)
+    expect(PROJECTS_FULL).toHaveLength(10)
+    expect(PROJECT_COUNT).toBe(10)
   })
 
   it('keeps derived live/repo counts in sync with the array', () => {
