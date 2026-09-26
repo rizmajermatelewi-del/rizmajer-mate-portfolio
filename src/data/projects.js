@@ -32,22 +32,22 @@ export const PROJECTS_FULL = [
       en: 'Booking — Szalka Hair Salon',
     },
     text: {
-      hu: 'Bemutató időpontfoglaló fodrászatra: szolgáltatás, naptár, foglalás, admin lista. Saját kezdeményezés, nem ügyfélmunka.',
-      en: 'Demo booking flow for a salon: services, calendar, booking, admin list. My own initiative, not client work.',
+      hu: 'Bemutató időpontfoglaló fodrászatra: az időpontválasztó egy fésű, fél óránként egy foggal, a foglalt fog letört. Saját kezdeményezés, nem ügyfélmunka.',
+      en: 'Demo booking flow for a salon: the time picker is a comb, one tooth per half hour, with booked teeth broken off. My own initiative, not client work.',
     },
     tech: ['React', 'Vite'],
     features: [
+      { hu: 'Fésű alakú időpontválasztó', en: 'Comb-shaped time picker' },
       { hu: 'Dupla foglalás elleni védelem', en: 'Double-booking prevention' },
       { hu: 'Admin lista PIN-nel', en: 'Admin list with a PIN' },
-      { hu: 'Magyar mintaadatok', en: 'Hungarian sample data' },
     ],
     featured: true,
     label: { hu: 'Bemutató projekt', en: 'Demo project' },
     tone: { from: '--color-card-1', to: '--color-deep', accent: '--color-primary' },
     image: idopontfoglaloCard,
     imageAlt: {
-      hu: 'Szálka Fodrászat bemutató foglaló: szolgáltatások, napválasztó és időpontok',
-      en: 'Szalka salon demo booker: services, day picker and time slots',
+      hu: 'Szálka Fodrászat bemutató: zöld-rózsaszín plakátcím és kör alakú fotó egy hajszárításról',
+      en: 'Szalka salon demo: green and pink poster headline with a round photo of a blow-dry',
     },
     year: neutral('2026'),
     role: {
@@ -66,8 +66,8 @@ export const PROJECTS_FULL = [
       {
         src: idopontfoglalo01,
         alt: {
-          hu: 'Foglalási felület: szolgáltatások és időpontválasztó',
-          en: 'Booking UI: services and time-slot picker',
+          hu: 'Nyitóoldal: a szalon neve plakátbetűkkel, foglalás gomb és fotó',
+          en: 'Landing: the salon name in poster type, booking button and photo',
         },
         width: 1280,
         height: 800,
@@ -75,8 +75,8 @@ export const PROJECTS_FULL = [
       {
         src: idopontfoglalo02,
         alt: {
-          hu: 'Admin lista a bemutató foglalásokkal',
-          en: 'Admin list of sample bookings',
+          hu: 'A fésű: egy 90 perces festés három foga kiemelkedik, a zárás előtti fogak sötétek, mert oda már nem fér be',
+          en: 'The comb: three teeth rise for a 90-minute colour, the teeth before closing are dark because it no longer fits',
         },
         width: 1280,
         height: 800,
@@ -91,22 +91,22 @@ export const PROJECTS_FULL = [
       en: 'Daily menu — Kispipa Buffet',
     },
     text: {
-      hu: 'Bemutató napi menü büfének: mai lap, heti nézet, egyszerű szerkesztő. Saját kezdeményezés, nem ügyfélmunka.',
-      en: 'Demo daily menu for a buffet: today\'s board, week view, simple editor. My own initiative, not client work.',
+      hu: 'Bemutató napi menü büfének: a menü betűtáblán jelenik meg, betűnként kitűzve, heti nézettel és szerkesztővel. Saját kezdeményezés, nem ügyfélmunka.',
+      en: 'Demo daily menu for a buffet: the menu appears on a felt letterboard, pinned letter by letter, with a week view and an editor. My own initiative, not client work.',
     },
     tech: ['React', 'Vite'],
     features: [
-      { hu: 'Mai menü + hét', en: 'Today + week view' },
-      { hu: 'Tulaj-szerkesztő', en: 'Owner editor' },
-      { hu: 'Magyar mintaadatok', en: 'Hungarian sample data' },
+      { hu: 'Betűtábla, betűnként kitűzve', en: 'Felt letterboard, pinned letter by letter' },
+      { hu: 'Szerkesztő élő tábla-előnézettel', en: 'Editor with a live board preview' },
+      { hu: 'Hétvégén már a hétfői menü látszik', en: 'On weekends the board shows Monday' },
     ],
     featured: false,
     label: { hu: 'Bemutató projekt', en: 'Demo project' },
     tone: { from: '--color-card-2', to: '--color-deep', accent: '--color-primary-dark' },
     image: napiMenuCard,
     imageAlt: {
-      hu: 'Kispipa Büfé bemutató napi menü: leves, főételek, desszert Ft-ban',
-      en: 'Kispipa buffet demo daily menu: soup, mains, dessert in HUF',
+      hu: 'Kispipa Büfé bemutató: a menü fehér betűkkel egy tölgyfakeretes filctáblán, sárga kockás abroszon',
+      en: 'Kispipa buffet demo: the menu in white letters on an oak-framed felt board, on a yellow gingham cloth',
     },
     year: neutral('2026'),
     role: {
@@ -125,8 +125,8 @@ export const PROJECTS_FULL = [
       {
         src: napiMenu01,
         alt: {
-          hu: 'Mai menü telefonon a Kispipa Büfé bemutatóban',
-          en: 'Today menu on a phone in the Kispipa buffet demo',
+          hu: 'Nyitóoldal: a következő nyitvatartási nap menüje a betűtáblán',
+          en: 'Landing: the next open day\'s menu on the letterboard',
         },
         width: 1280,
         height: 800,
@@ -134,8 +134,8 @@ export const PROJECTS_FULL = [
       {
         src: napiMenu02,
         alt: {
-          hu: 'Heti áttekintés a napi menükről',
-          en: 'Week overview of daily menus',
+          hu: 'Heti nézet: napválasztó fülek, a tábla minden napnál újra kirakva',
+          en: 'Week view: day tabs, the board set again for each day',
         },
         width: 1280,
         height: 800,
@@ -143,8 +143,8 @@ export const PROJECTS_FULL = [
       {
         src: napiMenu03,
         alt: {
-          hu: 'Menüszerkesztő admin felület',
-          en: 'Menu editor admin screen',
+          hu: 'Szerkesztő: az űrlap mellett élőben látszik, hogyan kerül ki a menü a táblára',
+          en: 'Editor: next to the form, a live preview of the menu on the board',
         },
         width: 1280,
         height: 800,
@@ -159,22 +159,22 @@ export const PROJECTS_FULL = [
       en: 'One-page site — Kovacs Electrical',
     },
     text: {
-      hu: 'Bemutató egyoldalas oldal villanyszerelőnek: mit vállal, hol, hívás gomb, ajánlatkérő. Saját kezdeményezés, nem ügyfélmunka.',
-      en: 'Demo one-page site for an electrician: services, area, call button, quote form. My own initiative, not client work.',
+      hu: 'Bemutató egyoldalas oldal villanyszerelőnek: az ajánlatkérőben kismegszakítók felkapcsolásával választod ki a munkát. Saját kezdeményezés, nem ügyfélmunka.',
+      en: 'Demo one-page site for an electrician: in the quote form you pick the job by flipping circuit breakers. My own initiative, not client work.',
     },
     tech: ['Vite', 'HTML', 'CSS'],
     features: [
+      { hu: 'Ajánlatkérő kismegszakítókkal', en: 'Quote form with circuit breakers' },
+      { hu: 'Élő státusz-LED a nyitvatartásból', en: 'Live status LED from the opening hours' },
       { hu: 'Lighthouse mobil: 99 / 100 / 100 / 100', en: 'Mobile Lighthouse: 99 / 100 / 100 / 100' },
-      { hu: 'Helyi keresési adat (schema.org)', en: 'Local search data (schema.org)' },
-      { hu: 'Ajánlatkérő mezőnkénti hibával', en: 'Quote form with per-field errors' },
     ],
     featured: false,
     label: { hu: 'Bemutató projekt', en: 'Demo project' },
     tone: { from: '--color-card-3', to: '--color-deep', accent: '--color-primary' },
     image: bemutatkozoCard,
     imageAlt: {
-      hu: 'Kovács Villanyszerelés bemutató oldal: név, szolgáltatások röviden, ajánlatkérés és hívás gomb',
-      en: 'Kovacs Electrical demo page: name, services in brief, quote and call buttons',
+      hu: 'Kovács Villanyszerelés bemutató: nagy nagybetűs cím szürke dobozszínen, státusz-LED és fotó egy mérésről',
+      en: 'Kovacs Electrical demo: big uppercase headline on enclosure grey, a status LED and a photo of a measurement',
     },
     year: neutral('2026'),
     role: {
@@ -193,8 +193,8 @@ export const PROJECTS_FULL = [
       {
         src: bemutatkozo01,
         alt: {
-          hu: 'Szolgáltatások listája: négy tétel rövid leírással',
-          en: 'Services list: four items with short descriptions',
+          hu: 'Nyitóoldal: cím, ajánlatkérés és hívás gomb, fejlécben a státusz-LED',
+          en: 'Landing: headline, quote and call buttons, the status LED in the header',
         },
         width: 1280,
         height: 800,
@@ -202,8 +202,8 @@ export const PROJECTS_FULL = [
       {
         src: bemutatkozo02,
         alt: {
-          hu: 'Ajánlatkérő űrlap mezőnkénti hibaüzenetekkel',
-          en: 'Quote form with per-field error messages',
+          hu: 'Elosztótábla az ajánlatkérőben: két kismegszakító felkapcsolva, a LED-jük és a leírásuk világít',
+          en: 'Breaker panel in the quote form: two breakers on, their LEDs and descriptions lit',
         },
         width: 1280,
         height: 800,
@@ -232,8 +232,8 @@ export const PROJECTS_FULL = [
     tone: { from: '--color-card-4', to: '--color-deep', accent: '--color-primary' },
     image: autoszervizCard,
     imageAlt: {
-      hu: 'Kormos Autószerviz bemutató: munkák árral és időtartammal, napválasztó és leadási időpontok',
-      en: 'Kormos Garage demo: jobs with price and duration, day picker and drop-off times',
+      hu: 'Kormos Autószerviz bemutató: papír munkalap munkákkal és árakkal, mellette egy szerelő fotója',
+      en: 'Kormos Garage demo: a paper work order with jobs and prices, next to a photo of a mechanic',
     },
     year: neutral('2026'),
     role: {
@@ -252,8 +252,8 @@ export const PROJECTS_FULL = [
       {
         src: autoszerviz01,
         alt: {
-          hu: 'Időpontfoglalás: munkák listája, kiválasztott fékbetét-csere és nap',
-          en: 'Booking: list of jobs, brake pad change and a day selected',
+          hu: 'Munkalap: elvégzendő munkák árral és időtartammal, mellette a műhely fotója',
+          en: 'Work order: jobs with price and duration, next to a photo of the workshop',
         },
         width: 1280,
         height: 800,
@@ -261,8 +261,8 @@ export const PROJECTS_FULL = [
       {
         src: autoszerviz02,
         alt: {
-          hu: 'Árajánlatkérés rendszámmal, autóval és a hiba leírásával',
-          en: 'Quote request with plate, car and a description of the fault',
+          hu: 'Leadási nap és időpont, alatta az autó és az ügyfél adatai a munkalapon',
+          en: 'Drop-off day and time, with the car and customer fields below on the work order',
         },
         width: 1280,
         height: 800,
@@ -291,8 +291,8 @@ export const PROJECTS_FULL = [
     tone: { from: '--color-card-1', to: '--color-deep', accent: '--color-primary-dark' },
     image: cukraszdaCard,
     imageAlt: {
-      hu: 'Habcsók Cukrászda bemutató: tortakínálat, kosár felirattal és átvételi napválasztó',
-      en: 'Habcsok patisserie demo: cakes on offer, basket with inscription and pickup day picker',
+      hu: 'Habcsók Cukrászda bemutató: retró kirakat napellenzővel, neon felirat és egy szelet torta',
+      en: 'Habcsok patisserie demo: retro shop front with an awning, a neon sign and a slice of cake',
     },
     year: neutral('2026'),
     role: {
@@ -311,8 +311,8 @@ export const PROJECTS_FULL = [
       {
         src: cukraszda01,
         alt: {
-          hu: 'Kínálat és kosár: málnás torta felirattal, somlói tál, kiválasztott átvételi nap',
-          en: 'Offer and basket: raspberry cake with inscription, somloi tray, pickup day chosen',
+          hu: 'Nyitóoldal: napellenzős kirakat, neon felirat és egy szelet torta',
+          en: 'Landing: striped awning, neon sign and a slice of cake',
         },
         width: 1280,
         height: 800,
@@ -320,8 +320,8 @@ export const PROJECTS_FULL = [
       {
         src: cukraszda02,
         alt: {
-          hu: 'Pult nézet: rendelések átvételi nap szerint, napi tortaszámmal',
-          en: 'Counter view: orders by pickup day with the daily cake count',
+          hu: 'Tortakínálat szeletszámmal, mellette a doboz: átvételi nap, időpont és adatok',
+          en: 'Cakes with slice counts, next to the box: pickup day, time and details',
         },
         width: 1280,
         height: 800,
@@ -336,13 +336,13 @@ export const PROJECTS_FULL = [
       en: 'Stock and hold-for-pickup — Barany Hardware',
     },
     text: {
-      hu: 'Bemutató helyi bolt: termékkatalógus élő készlettel, nyitva/zárva jelzés, félretétel a pultnál. Saját kezdeményezés, nem ügyfélmunka.',
-      en: 'Demo local shop: product catalogue with live stock, open/closed badge, hold for pickup at the counter. My own initiative, not client work.',
+      hu: 'Bemutató helyi bolt: a katalógus egy szerszámtábla, ahol ami elfogyott, annak csak a körvonala marad. Élő készlet, félretétel a pultnál. Saját kezdeményezés, nem ügyfélmunka.',
+      en: 'Demo local shop: the catalogue is a pegboard where a sold-out item leaves only its outline. Live stock, hold for pickup at the counter. My own initiative, not client work.',
     },
     tech: ['React', 'Vite'],
     features: [
+      { hu: 'Árnyéktábla: az elfogyott áru helye üres', en: 'Shadow board: sold-out items leave an outline' },
       { hu: 'Keresés ékezet nélkül is', en: 'Search that ignores accents' },
-      { hu: 'Készlet: van / kevés / elfogyott, érkezéssel', en: 'Stock: in / low / out, with arrival date' },
       { hu: 'Félretétel webshop helyett', en: 'Hold for pickup instead of a web shop' },
     ],
     featured: false,
@@ -350,8 +350,8 @@ export const PROJECTS_FULL = [
     tone: { from: '--color-card-2', to: '--color-deep', accent: '--color-primary' },
     image: vasboltCard,
     imageAlt: {
-      hu: 'Bárány Vas-Műszaki bemutató: nyitva jelzés, keresés, kategóriák és készletjelzős termékkártyák',
-      en: 'Barany Hardware demo: open badge, search, categories and product cards with stock labels',
+      hu: 'Bárány Vas-Műszaki bemutató: lyukacsos farost tábla, kampón lógó termékek árcédulával, Dymo-címkés kategóriák',
+      en: 'Barany Hardware demo: a pegboard with products hanging on hooks over price tags, Dymo-tape categories',
     },
     year: neutral('2026'),
     role: {
@@ -370,8 +370,8 @@ export const PROJECTS_FULL = [
       {
         src: vasbolt01,
         alt: {
-          hu: 'Félretétel ablak: mennyiség, név és telefon, a katalógus fölött',
-          en: 'Hold dialog: quantity, name and phone over the catalogue',
+          hu: 'Nyitóoldal: cím a táblán, keresés, Dymo-címkés kategóriák és a raktáron-kapcsoló',
+          en: 'Landing: headline on the board, search, Dymo-tape categories and the in-stock lever',
         },
         width: 1280,
         height: 800,
@@ -379,8 +379,8 @@ export const PROJECTS_FULL = [
       {
         src: vasbolt02,
         alt: {
-          hu: 'Bolt nézet: félretett áruk és készlet plusz-mínusz gombokkal',
-          en: 'Shop view: items on hold and stock with plus and minus buttons',
+          hu: 'A tábla: kampón lógó termékek árcédulával, az elfogyott szilikonnak csak a szaggatott körvonala látszik',
+          en: 'The board: products on hooks with price tags, the sold-out sealant shows only its dashed outline',
         },
         width: 1280,
         height: 800,
