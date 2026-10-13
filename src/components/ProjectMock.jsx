@@ -31,7 +31,7 @@ export default function ProjectMock({ tone, image, alt = '' }) {
 
   if (image) {
     return (
-      <div className="relative h-48 w-full overflow-hidden bg-deep">
+      <div className="relative aspect-[16/10] w-full overflow-hidden bg-deep">
         <img
           src={image}
           alt={alt}
@@ -51,7 +51,7 @@ export default function ProjectMock({ tone, image, alt = '' }) {
 
   return (
     <div
-      className="relative h-48 w-full overflow-hidden"
+      className="relative aspect-[16/10] w-full overflow-hidden"
       style={{ background: `linear-gradient(160deg, rgb(var(${tone.from})) 0%, rgb(var(${tone.to})) 100%)` }}
     >
       <span

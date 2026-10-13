@@ -2,10 +2,61 @@ import { useRef, useEffect } from 'react'
 import { gsap } from 'gsap'
 import { ArrowRight, ArrowDown } from 'lucide-react'
 import { useReducedMotion } from '../motion/useReducedMotion'
-import heroShot from '../assets/demos/idopontfoglalo-01.webp'
+import phoneSzalka from '../assets/demos/hero-phone-szalka.webp'
+import phoneKispipa from '../assets/demos/hero-phone-kispipa.webp'
+import phoneKormos from '../assets/demos/hero-phone-kormos.webp'
+import phoneKovacs from '../assets/demos/hero-phone-kovacs.webp'
+import phoneVirag from '../assets/demos/hero-phone-virag.webp'
+import phoneMasszazs from '../assets/demos/hero-phone-masszazs.webp'
 import { useLocale } from '../i18n/useLocale'
 import { t } from '../i18n/t'
 import { UI } from '../i18n/ui'
+
+/* Six live demos, captured at 390px, each linking to the live site. Six
+   trades rather than one, because the buyer is looking for their own. Links are
+   labelled by trade, not business name, so the label translates. Kept
+   in column pairs: the wall lays them out as three staggered columns, and the
+   swipe row below xl takes all six in order. */
+const PHONES = [
+  [
+    { src: phoneSzalka, href: 'https://demo-idopontfoglalo.vercel.app', name: { hu: 'Fodrászat', en: 'Hair salon' } },
+    { src: phoneKovacs, href: 'https://demo-bemutatkozo.vercel.app', name: { hu: 'Villanyszerelő', en: 'Electrician' } },
+  ],
+  [
+    { src: phoneKispipa, href: 'https://demo-napi-menu.vercel.app', name: { hu: 'Büfé napi menüvel', en: 'Snack bar with a daily menu' } },
+    { src: phoneVirag, href: 'https://demo-viragbolt.vercel.app', name: { hu: 'Virágbolt', en: 'Florist' } },
+  ],
+  [
+    { src: phoneKormos, href: 'https://demo-szerviz.vercel.app', name: { hu: 'Autószerviz', en: 'Car service' } },
+    { src: phoneMasszazs, href: 'https://demo-masszazs.vercel.app', name: { hu: 'Masszázsstúdió', en: 'Massage studio' } },
+  ],
+]
+const COLUMN_OFFSET = ['translate-y-3', '-translate-y-5', 'translate-y-6']
+const OPENS = { hu: 'bemutató, új lapon nyílik', en: 'demo, opens in a new tab' }
+
+/* One phone screenshot as a link to the live demo. Cropped to the top of the
+   page (9:14), which is the part that says what the business is. */
+function Phone({ phone, locale, className = '' }) {
+  return (
+    <a
+      href={phone.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`${t(phone.name, locale)} ${t(OPENS, locale)}`}
+      className={`block overflow-hidden rounded-[1.5rem] border border-white/15 shadow-e3 transition-colors duration-300 hover:border-white/40 ${className}`}
+    >
+      <img
+        src={phone.src}
+        alt=""
+        width={440}
+        height={952}
+        loading="lazy"
+        decoding="async"
+        className="aspect-[9/14] w-full object-cover object-top"
+      />
+    </a>
+  )
+}
 
 const COPY = {
   /* The Hungarian comma is grammar — the "ami" clause requires one. The
@@ -162,20 +213,22 @@ export default function Hero() {
               WebkitMaskImage: 'radial-gradient(85% 75% at 70% 42%, #000 15%, transparent 80%)',
             }}
           />
-          {/* A real screenshot of real work (the Szálka booking demo), not a
-              drawn wireframe: DESIGN.md forbids fake product chrome. Desktop
-              only, and lazy, so phones never download it. */}
-          <div className="absolute right-[6%] top-1/2 hidden w-[40%] max-w-[720px] -translate-y-1/2 lg:block">
-            <img
-              src={heroShot}
-              alt=""
-              width={1280}
-              height={800}
-              loading="lazy"
-              decoding="async"
-              className="w-full rounded-4xl border border-divider shadow-e3"
-            />
-          </div>
+        </div>
+        {/* Real work, not drawn chrome (DESIGN.md): six live demos at phone
+            size, because the buyer arrives on a phone. Static on purpose:
+            PRODUCT.md rules out decorative loops, so no marquee. Outside the
+            parallax layer, whose 1.12 pre-scale pushed the old screenshot off
+            the right edge. Wide screens only (xl): below 1280px the wall
+            collides with the headline, and the strip under the buttons takes
+            over. z-20 lifts the links above the full-width copy layer. */}
+        <div className="absolute right-[5%] top-1/2 z-20 hidden -translate-y-1/2 gap-2.5 xl:flex">
+          {PHONES.map((column, ci) => (
+            <div key={ci} className={`${COLUMN_OFFSET[ci]} flex w-[clamp(8.5rem,11vw,13rem)] flex-col gap-2.5`}>
+              {column.map((phone) => (
+                <Phone key={phone.href} phone={phone} locale={locale} />
+              ))}
+            </div>
+          ))}
         </div>
         {/* Scrim weighted left, where the headline sits, so the panels keep the
             right of the frame instead of being flattened everywhere. */}
@@ -191,7 +244,7 @@ export default function Hero() {
       {/* Left-aligned, not centred. The scrim is heaviest on the left, so the
           copy sits where it is most legible and the photograph keeps the
           right half of the frame. */}
-      <div className="relative z-10 flex min-h-viewport flex-col justify-center px-6 sm:px-10 lg:px-16">
+      <div className="relative z-10 flex min-h-viewport flex-col justify-center px-6 pb-36 pt-28 sm:px-10 lg:px-16 xl:py-0">
         <div className="hero-copy w-full max-w-4xl will-change-transform">
           {/* One sentence across two lines, not two separate promises. It used
               to read "Weboldal, amit megtalálnak." / "Rendszer, ami dolgozik."
@@ -269,6 +322,17 @@ export default function Hero() {
               {t(COPY.seeWork, locale)}
               <ArrowDown className="h-4 w-4 transition-transform duration-200 group-hover:translate-y-0.5" />
             </a>
+          </div>
+
+          {/* Below xl the wall is hidden, so the evidence comes here instead,
+              after both buttons so it can never push them below the fold. All
+              six, in a row you swipe: native scroll-snap, no script. The row
+              bleeds to the screen edge (-mx-6 / px-6) so the cut-off phone on
+              the right says there is more. */}
+          <div className="-mx-6 mt-10 flex snap-x snap-mandatory scroll-px-6 gap-2.5 overflow-x-auto px-6 pb-2 [scrollbar-width:none] sm:-mx-10 sm:px-10 lg:-mx-16 lg:px-16 xl:hidden">
+            {PHONES.flat().map((phone) => (
+              <Phone key={phone.href} phone={phone} locale={locale} className="w-[38%] max-w-[11rem] shrink-0 snap-start" />
+            ))}
           </div>
         </div>
       </div>

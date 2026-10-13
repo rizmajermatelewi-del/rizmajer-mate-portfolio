@@ -60,7 +60,11 @@ export default function Projects() {
   return (
     <section id="projektek" ref={sectionRef} className="relative py-20 sm:py-28 px-6 sm:px-10 lg:px-16">
       <div className="max-w-7xl mx-auto">
-        <div className="max-w-3xl mb-16 sm:mb-20">
+        {/* Heading left, intro right on wide screens, so the header spans the
+            same width as the grid under it instead of leaving the right third
+            of the section empty. Phones stack as before. */}
+        <div className="mb-14 sm:mb-16 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,26rem)] lg:items-end lg:gap-16">
+          <div className="max-w-3xl">
           <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary-dark">╱ {t(COPY.eyebrow, locale)}</span>
           <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink mt-4 leading-[1.05] tracking-tight">
             {/* "Valós munka, nem mockup" used a word the buyer does not have.
@@ -78,12 +82,15 @@ export default function Projects() {
                 and the gap was visible there. */}{' '}
             <span className="block font-display font-semibold text-primary-dark mt-1">{t(COPY.headingAccent, locale)}</span>
           </h2>
-          <p className="text-muted text-lg mt-6 leading-relaxed max-w-xl">
+          </div>
+          <p className="text-muted text-lg mt-6 lg:mt-0 leading-relaxed max-w-xl">
             {t(COPY.intro, locale)}
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-5xl">
+        {/* Full container width. It was capped at max-w-5xl with no centring,
+            which left ~280px empty on the right at 1366px. */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 lg:gap-6">
           {PROJECTS_FULL.map((p, i) => (
             <button
               key={t(p.title, locale)}
