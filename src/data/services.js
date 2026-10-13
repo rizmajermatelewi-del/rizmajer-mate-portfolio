@@ -58,11 +58,14 @@ export const priceLabel = (service) => LABELS[service.priceUnit ?? 'from'](servi
    slotsLeft is maintained by hand: when a discounted order is signed,
    lower it by one. At 0 the offer disappears everywhere and the list
    prices stand alone. One-off projects only; monthly upkeep is not
-   discounted, because it would stay discounted for as long as it runs. */
+   discounted, because it would stay discounted for as long as it runs.
+
+   Ended 2026-10-13 at Máté's direction: the first client pays list price,
+   so the page quotes list price too. */
 export const LAUNCH_OFFER = {
   percent: 20,
   slots: 5,
-  slotsLeft: 5,
+  slotsLeft: 0,
 }
 
 export const offerActive = () => LAUNCH_OFFER.slotsLeft > 0

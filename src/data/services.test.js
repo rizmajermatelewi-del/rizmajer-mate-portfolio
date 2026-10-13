@@ -54,9 +54,10 @@ describe('launch offer', () => {
      figure is always the published list price, never a separate number. */
   it('discounts one-off projects only, never monthly upkeep', async () => {
     const { isDiscounted, offerActive } = await import('./services')
-    expect(offerActive()).toBe(true)
+    // Ended 2026-10-13: list prices stand alone everywhere.
+    expect(offerActive()).toBe(false)
     for (const s of ALL_SERVICES) {
-      expect(isDiscounted(s), s.id).toBe((s.priceUnit ?? 'from') !== 'month')
+      expect(isDiscounted(s), s.id).toBe(offerActive() && (s.priceUnit ?? 'from') !== 'month')
     }
   })
 })
