@@ -26,7 +26,7 @@
    with the first. */
 
 import { execFileSync } from 'node:child_process'
-import { writeFile, rename } from 'node:fs/promises'
+import { writeFile, rename, rm } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 
@@ -232,10 +232,26 @@ for (const [file, contents] of [
      time (routePaths.test.js and static-output.test.js each regenerate in
      beforeAll). A plain write truncates first, so the other file's read
      could land on an empty llms.txt and fail the build at random — it did,
-     on 2026-09-24. A rename replaces the file in one step. */
+     on 2026-09-24. A rename replaces the file in one step.
+
+     On Windows that rename fails with EPERM while the other process has the
+     target open, which failed the build at random and left the .tmp behind
+     (2026-10-13). So it retries briefly, and on a real failure removes the
+     temp file before throwing. */
   const target = path.join(root, file)
   const temp = `${target}.${process.pid}.tmp`
   await writeFile(temp, contents, 'utf8')
-  await rename(temp, target)
+  for (let attempt = 1; ; attempt++) {
+    try {
+      await rename(temp, target)
+      break
+    } catch (err) {
+      if (attempt >= 5 || !['EPERM', 'EBUSY', 'EACCES'].includes(err.code)) {
+        await rm(temp, { force: true })
+        throw err
+      }
+      await new Promise((resolve) => setTimeout(resolve, 100 * attempt))
+    }
+  }
   console.log(`generated ${file}`)
 }
