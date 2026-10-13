@@ -12,6 +12,12 @@ import bemutatkozo02 from '../assets/demos/bemutatkozo-02.webp'
 import autoszervizCard from '../assets/demos/autoszerviz-card.webp'
 import autoszerviz01 from '../assets/demos/autoszerviz-01.webp'
 import autoszerviz02 from '../assets/demos/autoszerviz-02.webp'
+import viragboltCard from '../assets/demos/viragbolt-card.webp'
+import viragbolt01 from '../assets/demos/viragbolt-01.webp'
+import viragbolt02 from '../assets/demos/viragbolt-02.webp'
+import masszazsCard from '../assets/demos/masszazs-card.webp'
+import masszazs01 from '../assets/demos/masszazs-01.webp'
+import masszazs02 from '../assets/demos/masszazs-02.webp'
 
 /* Demo apps live in a **separate** public repo (DEMOS) and each has its own
    Vercel project. This portfolio only stores screenshots + links.
@@ -268,6 +274,100 @@ export const PROJECTS_FULL = [
     ],
     github: DEMOS_REPO_READY ? `${DEMOS_REPO}/tree/main/autoszerviz` : '#',
     live: 'https://demo-szerviz.vercel.app',
+  },
+  {
+    title: { hu: "Pipacs Virágkötészet: csokorkötő", en: "Pipacs Florist: bouquet builder" },
+    text: {
+      hu: "Bemutató virágbolt: a csokrot szálanként rakod össze a mai készletből, és élőben kötődik a kraftpapírban. A kártya szövege a masnira kötött cédulán jelenik meg. Saját kezdeményezés, nem ügyfélmunka.",
+      en: "Demo florist: you build the bouquet stem by stem from today's stock and it is tied live in kraft paper. The card text appears on a tag at the bow. My own initiative, not client work.",
+    },
+    tech: ['Vite', 'JavaScript'],
+    features: [
+      { hu: "Élő SVG-csokor szálanként", en: "Live SVG bouquet, stem by stem" },
+      { hu: "Mai készlet és ár szálanként", en: "Today's stock and price per stem" },
+      { hu: "Átvételi nap, vasárnap zárva", en: "Pickup day, closed on Sundays" },
+    ],
+    featured: false,
+    label: { hu: 'Bemutató projekt', en: 'Demo project' },
+    tone: { from: '--color-card-4', to: '--color-deep', accent: '--color-primary' },
+    image: viragboltCard,
+    imageAlt: {
+      hu: "Pipacs Virágkötészet bemutató: zsályazöld oldal, dőlt pipacspiros cím és egy virágkötő fotója íves keretben",
+      en: "Pipacs Florist demo: sage page, italic poppy-red headline and a photo of a florist in an arched frame",
+    },
+    year: neutral('2026'),
+    role: { hu: 'Tervezés, fejlesztés, deploy', en: 'Design, build, deploy' },
+    problem: {
+      hu: "Egy kis virágbolt oldalán általában fotógaléria és telefonszám van. Aki csokrot akar, felhív, és szóban próbálja elmagyarázni, mit szeretne.",
+      en: "A small florist site usually has a photo gallery and a phone number. Anyone who wants a bouquet calls and tries to describe it in words.",
+    },
+    solution: {
+      hu: "Csokorkötő a mai vödrökből: a virágok középre, a zöldek szélre kerülnek, a szálak átcsúsznak az új helyükre. Csomagolás, kártya, átvételi nap és napszak. A csokor logikája tesztelt modul.",
+      en: "A bouquet builder from today's buckets: flowers go to the middle, greens to the edge, and stems glide to their new place. Wrapping, card, pickup day and time. The bouquet logic is a tested module.",
+    },
+    gallery: [
+      {
+        src: viragbolt01,
+        alt: { hu: "Nyitóoldal: cím, csokor-gomb és a bolt fotója", en: "Landing: headline, bouquet button and a photo of the shop" },
+        width: 1280,
+        height: 800,
+      },
+      {
+        src: viragbolt02,
+        alt: { hu: "A csokorkötő: vödrök szálárral és készlettel, mellette a kraftpapíros csokor a kártyával", en: "The builder: buckets with price per stem and stock, next to the kraft-paper bouquet with its card" },
+        width: 1280,
+        height: 800,
+      },
+    ],
+    github: DEMOS_REPO_READY ? `${DEMOS_REPO}/tree/main/viragbolt` : '#',
+    live: 'https://demo-viragbolt.vercel.app',
+  },
+  {
+    title: { hu: "Oldó Masszázsstúdió: „Hol fáj?”", en: "Oldo Massage Studio: where does it hurt?" },
+    text: {
+      hu: "Bemutató masszázsstúdió: a testtérképen megjelölöd, hol fáj, és kezelést, időtartamot, árat és első szabad időpontot kapsz. Saját kezdeményezés, nem ügyfélmunka.",
+      en: "Demo massage studio: mark where it hurts on a body map and get a treatment, length, price and the first free slots. My own initiative, not client work.",
+    },
+    tech: ['Vite', 'JavaScript'],
+    features: [
+      { hu: "Testtérkép kezelésajánlással", en: "Body map that recommends a treatment" },
+      { hu: "Szabad időpontok a kezelés hosszához", en: "Free slots that fit the treatment length" },
+      { hu: "Sötét, lassú, nyugodt felület", en: "Dark, slow, calm interface" },
+    ],
+    featured: false,
+    label: { hu: 'Bemutató projekt', en: 'Demo project' },
+    tone: { from: '--color-card-1', to: '--color-deep', accent: '--color-primary' },
+    image: masszazsCard,
+    imageAlt: {
+      hu: "Oldó Masszázsstúdió bemutató: sötét palaszürke oldal, terrakotta cím és egy masszázsfotó kavics alakú keretben",
+      en: "Oldo Massage demo: dark slate page, terracotta headline and a massage photo in a pebble-shaped frame",
+    },
+    year: neutral('2026'),
+    role: { hu: 'Tervezés, fejlesztés, deploy', en: 'Design, build, deploy' },
+    problem: {
+      hu: "Aki masszázsra jelentkezik, ritkán tudja, hogy svéd, sport vagy talp kell neki. Azt tudja, hol fáj. A legtöbb szalon oldala mégis a kezelések nevével kezd.",
+      en: "People booking a massage rarely know whether they need Swedish, sports or foot massage. They know where it hurts. Most salon sites still start with treatment names.",
+    },
+    solution: {
+      hu: "A fájó zónák és az erősség alapján ajánl kezelést, egy mondat indoklással, majd a kezelés hosszához illő szabad időpontokat mutat, zárás előtt befejezve. Mindkettő tesztelt modul.",
+      en: "From the sore zones and how bad it is, it recommends a treatment with a one-line reason, then shows free slots that fit its length and end before closing. Both are tested modules.",
+    },
+    gallery: [
+      {
+        src: masszazs01,
+        alt: { hu: "Nyitóoldal: cím, két gomb és a masszázsfotó egy légző gyűrűben", en: "Landing: headline, two buttons and the massage photo inside a breathing ring" },
+        width: 1280,
+        height: 800,
+      },
+      {
+        src: masszazs02,
+        alt: { hu: "A testtérkép: a váll és a derék felmelegszik, az ajánlás hát- és derékmasszázs 45 percre", en: "The body map: shoulders and lower back warm up, the recommendation is a 45-minute back massage" },
+        width: 1280,
+        height: 800,
+      },
+    ],
+    github: DEMOS_REPO_READY ? `${DEMOS_REPO}/tree/main/masszazs` : '#',
+    live: 'https://demo-masszazs.vercel.app',
   },
 ]
 

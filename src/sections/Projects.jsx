@@ -90,7 +90,7 @@ export default function Projects() {
 
         {/* Full container width. It was capped at max-w-5xl with no centring,
             which left ~280px empty on the right at 1366px. */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 lg:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
           {PROJECTS_FULL.map((p, i) => (
             <button
               key={t(p.title, locale)}
@@ -103,8 +103,8 @@ export default function Projects() {
               onFocus={preloadModal}
               aria-label={`${t(p.title, locale)}, ${t(COPY.details, locale)}`}
               style={{ transitionDelay: visible ? `${i * 120}ms` : '0ms' }}
-              /* Two columns since the 2026-10-13 trim to four demos: three
-                 columns left a lone fourth card. */
+              /* Six demos since 2026-10-13: three columns on desktop, two on
+                 a tablet, so neither leaves a lone card. */
               className={`proj-card group w-full text-left card-invert border border-divider rounded-4xl overflow-hidden card-motion shadow-e2 hover:border-primary/60 hover:-translate-y-1.5 hover:shadow-e4 ${
                 visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
               }`}
