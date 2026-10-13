@@ -2,6 +2,7 @@ import { neutral } from '../i18n/t.js'
 import idopontfoglaloCard from '../assets/demos/idopontfoglalo-card.webp'
 import idopontfoglalo01 from '../assets/demos/idopontfoglalo-01.webp'
 import idopontfoglalo02 from '../assets/demos/idopontfoglalo-02.webp'
+import idopontfoglalo03 from '../assets/demos/idopontfoglalo-03.webp'
 import napiMenuCard from '../assets/demos/napi-menu-card.webp'
 import napiMenu01 from '../assets/demos/napi-menu-01.webp'
 import napiMenu02 from '../assets/demos/napi-menu-02.webp'
@@ -32,26 +33,26 @@ const DEMOS_REPO_READY = true
 export const PROJECTS_FULL = [
   {
     title: {
-      hu: 'Szálka Fodrászat: időpontfoglaló',
-      en: 'Szalka Hair Salon: booking',
+      hu: 'Szálka Fodrászat: szalonoldal foglalással',
+      en: 'Szalka Hair Salon: site with booking',
     },
     text: {
-      hu: 'Bemutató időpontfoglaló fodrászatra: az időpontválasztó egy fésű, fél óránként egy foggal, a foglalt fog letört. Fodrászt is választhatsz, mindegyiknek saját naptára van. Saját kezdeményezés, nem ügyfélmunka.',
-      en: 'Demo booking flow for a salon: the time picker is a comb, one tooth per half hour, with booked teeth broken off. You can pick a stylist, each with their own calendar. My own initiative, not client work.',
+      hu: 'Bemutató szalonoldal: az árak egy hajszínkártyán, a fodrászok kerek tükörben a saját legközelebbi szabad időpontjukkal, az időpontválasztó pedig egy fésű, fél óránként egy foggal. Saját kezdeményezés, nem ügyfélmunka.',
+      en: 'Demo salon site: prices on a hair-colour swatch ring, stylists in round mirrors with their own next free time, and a comb for picking the time, one tooth per half hour. My own initiative, not client work.',
     },
     tech: ['React', 'Vite'],
     features: [
       { hu: 'Fésű alakú időpontválasztó', en: 'Comb-shaped time picker' },
-      { hu: 'Dupla foglalás elleni védelem', en: 'Double-booking prevention' },
-      { hu: 'Fodrászválasztó, külön naptárakkal', en: 'Pick a stylist, each with a calendar' },
+      { hu: 'Árak hajszínkártyán', en: 'Prices on a swatch ring' },
+      { hu: 'Élő következő szabad időpont fodrászonként', en: 'Live next free time per stylist' },
     ],
     featured: true,
     label: { hu: 'Bemutató projekt', en: 'Demo project' },
     tone: { from: '--color-card-1', to: '--color-deep', accent: '--color-primary' },
     image: idopontfoglaloCard,
     imageAlt: {
-      hu: 'Szálka Fodrászat bemutató: zöld-rózsaszín plakátcím és kör alakú fotó egy hajszárításról',
-      en: 'Szalka salon demo: green and pink poster headline with a round photo of a blow-dry',
+      hu: 'Szálka Fodrászat bemutató: nagy fekete cím piros hajszál-vonallal, mellette fotó egy hajvágásról',
+      en: 'Szalka salon demo: large black headline with a red strand line, next to a photo of a haircut',
     },
     year: neutral('2026'),
     role: {
@@ -70,8 +71,8 @@ export const PROJECTS_FULL = [
       {
         src: idopontfoglalo01,
         alt: {
-          hu: 'Nyitóoldal: a szalon neve plakátbetűkkel, foglalás gomb és fotó',
-          en: 'Landing: the salon name in poster type, booking button and photo',
+          hu: 'Nyitóoldal: a szalon neve, foglalás gomb, a legközelebbi szabad időpont és egy hajvágás fotója',
+          en: 'Landing: the salon name, booking button, the next free time and a photo of a haircut',
         },
         width: 1280,
         height: 800,
@@ -79,8 +80,17 @@ export const PROJECTS_FULL = [
       {
         src: idopontfoglalo02,
         alt: {
-          hu: 'A fésű: egy 90 perces festés három foga kiemelkedik, a zárás előtti fogak sötétek, mert oda már nem fér be',
-          en: 'The comb: three teeth rise for a 90-minute colour, the teeth before closing are dark because it no longer fits',
+          hu: 'A hajszínkártya: hat tincs egy tűn, mindegyik egy kezelés árral, a kiválasztott balayage kártyája mellette',
+          en: 'The swatch ring: six strands on one pin, each a treatment with its price, the chosen balayage card beside it',
+        },
+        width: 1280,
+        height: 800,
+      },
+      {
+        src: idopontfoglalo03,
+        alt: {
+          hu: 'A fésű: egy 90 perces festés három foga pirosra vált, a szürke fogakba a kezelés már nem fér bele',
+          en: 'The comb: three teeth turn red for a 90-minute colour, the grey teeth are where it no longer fits',
         },
         width: 1280,
         height: 800,
