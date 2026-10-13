@@ -162,6 +162,11 @@ export const SERVICE_GROUPS = [
         ],
         priceHuf: TIER_FLOORS.booking,
         timeline: { hu: 'Átadás jellemzően 3-6 hét', en: 'Delivered in 3-6 weeks, typically' },
+        demo: 'https://demo-napi-menu.vercel.app',
+        proof: {
+          hu: 'A bemutatóban átvételi időt csak annyira előre ad, amennyi a konyhának kell, és a pult nézetben látod a blokkot.',
+          en: 'In the demo, pickup times start only as early as the kitchen needs, and the counter view shows the slip.',
+        },
       },
     ],
   },

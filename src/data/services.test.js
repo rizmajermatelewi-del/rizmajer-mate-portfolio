@@ -28,7 +28,7 @@ describe('services catalogue', () => {
       expect(live, s.id).toContain(s.demo)
       expect(s.isNew, `${s.id} cannot be both new and demoed`).toBeFalsy()
     }
-    expect(ALL_SERVICES.filter((s) => s.demo)).toHaveLength(3)
+    expect(ALL_SERVICES.filter((s) => s.demo)).toHaveLength(4)
   })
 
   it('keeps the tier floors on the matching catalogue items', () => {
