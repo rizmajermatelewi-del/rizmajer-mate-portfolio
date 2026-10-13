@@ -39,8 +39,8 @@ export const TIER_FLOORS = {
 export const RETAINER_HUF = 25000
 
 export const RETAINER = {
-  hu: `Karbantartás, ha kéred: ${forint(RETAINER_HUF)}/hó-tól — frissítések, biztonsági mentés, havi egy óra apró módosítás, és ha leáll, én veszem észre, nem te. Nincs hűségidő, hónapra felmondható.`,
-  en: `Upkeep if you want it: from ${priceEn(RETAINER_HUF)} a month — updates, backups, an hour of small changes each month, and if it goes down I notice rather than you. No minimum term, cancellable monthly.`,
+  hu: `Karbantartás, ha kéred: ${forint(RETAINER_HUF)}/hó-tól: frissítések, biztonsági mentés, havi egy óra apró módosítás, és ha leáll, én veszem észre, nem te. Nincs hűségidő, hónapra felmondható.`,
+  en: `Upkeep if you want it: from ${priceEn(RETAINER_HUF)} a month: updates, backups, an hour of small changes each month, and if it goes down I notice rather than you. No minimum term, cancellable monthly.`,
 }
 
 const LABELS = {
@@ -206,8 +206,8 @@ export const SERVICE_GROUPS = [
           en: 'You keep the site you have, it just starts working: quick to load, and the button that matters where people look for it.',
         },
         forWho: {
-          hu: 'Akkor éri meg, ha a tartalom és a megjelenés alapvetően jó — ha nem, azt az átvilágításban megmondom, és inkább újat javaslok.',
-          en: 'Worth doing when the content and the look are basically sound — if they are not, I say so in the audit and suggest building new instead.',
+          hu: 'Akkor éri meg, ha a tartalom és a megjelenés alapvetően jó. Ha nem, azt az átvilágításban megmondom, és inkább újat javaslok.',
+          en: 'Worth doing when the content and the look are basically sound. If they are not, I say so in the audit and suggest building new instead.',
         },
         includes: [
           { hu: 'Gyorsítás, mobilos javítások', en: 'Speed and phone fixes' },
@@ -256,7 +256,7 @@ export const SERVICE_GROUPS = [
          reply time for a fault, the thing the tiers differ in besides hours. */
       {
         id: 'uzemeltetes-alap',
-        name: { hu: 'Karbantartás — Alap', en: 'Upkeep — Basic' },
+        name: { hu: 'Alap karbantartás', en: 'Basic upkeep' },
         problem: {
           hu: 'Frissítések, mentés és leállásfigyelés egy csendes oldalnak, amin ritkán kell változtatni.',
           en: 'Updates, backups and downtime monitoring for a quiet site that rarely needs changing.',
@@ -276,7 +276,7 @@ export const SERVICE_GROUPS = [
       },
       {
         id: 'uzemeltetes',
-        name: { hu: 'Karbantartás — Standard', en: 'Upkeep — Standard' },
+        name: { hu: 'Standard karbantartás', en: 'Standard upkeep' },
         problem: {
           hu: 'Frissítések, biztonsági mentés, havi egy óra apró módosítás, és ha leáll, én veszem észre, nem te.',
           en: 'Updates, backups, an hour of small changes each month, and if it goes down I notice rather than you.',

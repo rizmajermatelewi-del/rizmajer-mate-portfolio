@@ -1,9 +1,8 @@
 import { useRef, useEffect } from 'react'
 import { gsap } from 'gsap'
 import { ArrowRight, ArrowDown } from 'lucide-react'
-import { Magnetic } from '../motion/Magnetic'
 import { useReducedMotion } from '../motion/useReducedMotion'
-import HeroVisual from '../components/HeroVisual'
+import heroShot from '../assets/demos/idopontfoglalo-01.webp'
 import { useLocale } from '../i18n/useLocale'
 import { t } from '../i18n/t'
 import { UI } from '../i18n/ui'
@@ -45,8 +44,8 @@ const COPY = {
      capability, because the emphasis should land on what the buyer gets rid
      of, not on what I am good at. */
   introLead: {
-    hu: 'Weboldalak, foglalási, rendelési és belső rendszerek kis- és középvállalkozásoknak Pest megyében és Budapesten —',
-    en: 'Websites, booking, ordering and internal systems for small and medium businesses in Pest County and Budapest —',
+    hu: 'Weboldalak, foglalási, rendelési és belső rendszerek kis- és középvállalkozásoknak Pest megyében és Budapesten,',
+    en: 'Websites, booking, ordering and internal systems for small and medium businesses in Pest County and Budapest,',
   },
   introAccent: { hu: 'kevesebb kézi adminisztrációval', en: 'with less done by hand' },
   /* "Munkáim" -> "Munkáim megtekintése". The secondary CTA now reads as an
@@ -75,31 +74,10 @@ export default function Hero() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      /* Entrance. Under reduced motion the copy is placed, not animated:
-         gsap.set leaves it at its final values so nothing is ever gated
-         behind a transition that will not run. */
-      if (reduce) {
-        gsap.set('.hero-line-1, .hero-line-2, .hero-cta, .hero-meta', { y: 0, opacity: 1 })
-        return
-      }
-
-      /* Phones skip the entrance (2026-09-25 SEO audit). There the prerendered
-         hero is shown straight away with no cover (index.css), and animating it
-         in from opacity 0 would hide the LCP text for the length of the bundle
-         download: Lighthouse measured 2.9s of render delay on mobile. The
-         markup React renders is the same as the prerender, so nothing moves. */
-      if (!window.matchMedia('(max-width: 767px)').matches) {
-        gsap.from('.hero-line-1', { y: 40, opacity: 0, duration: 1, ease: 'power3.out', delay: 0.3 })
-        gsap.from('.hero-line-2', { y: 60, opacity: 0, duration: 1.2, ease: 'power3.out', delay: 0.5 })
-        gsap.from('.hero-cta, .hero-meta', {
-          y: 24,
-          opacity: 0,
-          duration: 0.8,
-          ease: 'power3.out',
-          delay: 0.8,
-          stagger: 0.12,
-        })
-      }
+      /* No entrance (2026-10-13): DESIGN.md rules out intro animation
+         between the visitor and the call to action, so the copy is simply
+         there. Under reduced motion the scroll depth below is skipped too. */
+      if (reduce) return
 
       /* Depth on scroll. The photograph drifts slower than the page and the
          copy drifts faster, so the two separate as you leave the hero and
@@ -157,15 +135,12 @@ export default function Hero() {
             snapshot carrying another studio's watermark, then a night shot of
             somebody else's barber shop — atmosphere borrowed from a business
             that is not this one. What a developer's hero can honestly show is
-            the work itself, so it is drawn: a measured plan sheet, a wireframe
-            and code. 130 kB of JPEG left with it. (It was a browser window
-            until 2026-08-19; HeroVisual.jsx records why that had to go.)
+            the work itself. Until 2026-10-13 that was a drawn wireframe, which
+            DESIGN.md calls fake product chrome; now it is a screenshot of a
+            real demo (below).
 
-            .hero-backdrop stays on this element because two other modules
-            select it — gsap parallaxes it, and preloader.js waits on it before
-            lifting the cover (its heroDecoded() guards on
-            `typeof decode === 'function'`, so a div resolves immediately). The
-            1.12 pre-scale is the headroom the parallax translate consumes. */}
+            .hero-backdrop is what gsap parallaxes. The 1.12 pre-scale is the
+            headroom the parallax translate consumes. */}
         <div
           aria-hidden="true"
           className="hero-backdrop absolute inset-0 scale-[1.12] will-change-transform"
@@ -187,7 +162,20 @@ export default function Hero() {
               WebkitMaskImage: 'radial-gradient(85% 75% at 70% 42%, #000 15%, transparent 80%)',
             }}
           />
-          <HeroVisual />
+          {/* A real screenshot of real work (the Szálka booking demo), not a
+              drawn wireframe: DESIGN.md forbids fake product chrome. Desktop
+              only, and lazy, so phones never download it. */}
+          <div className="absolute right-[6%] top-1/2 hidden w-[40%] max-w-[720px] -translate-y-1/2 lg:block">
+            <img
+              src={heroShot}
+              alt=""
+              width={1280}
+              height={800}
+              loading="lazy"
+              decoding="async"
+              className="w-full rounded-4xl border border-divider shadow-e3"
+            />
+          </div>
         </div>
         {/* Scrim weighted left, where the headline sits, so the panels keep the
             right of the frame instead of being flattened everywhere. */}
@@ -262,15 +250,13 @@ export default function Hero() {
               work instead gives the visitor who is not ready to write
               somewhere to go. */}
           <div className="hero-cta mt-9 flex flex-col sm:flex-row gap-4">
-            <Magnetic className="w-full sm:w-auto">
-              <a
-                href="#kapcsolat"
-                className="magnetic-btn group inline-flex w-full sm:w-auto items-center justify-center gap-2 bg-primary text-white font-semibold px-7 py-4 rounded-full shadow-2xl shadow-primary/30 transition-shadow duration-300 hover:shadow-primary/50"
-              >
-                {t(UI.ctaQuote, locale)}
-                <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
-              </a>
-            </Magnetic>
+            <a
+              href="#kapcsolat"
+              className="magnetic-btn group inline-flex w-full sm:w-auto items-center justify-center gap-2 bg-primary text-white font-semibold px-7 py-4 rounded-full shadow-2xl shadow-primary/30 transition-shadow duration-300 hover:shadow-primary/50"
+            >
+              {t(UI.ctaQuote, locale)}
+              <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+            </a>
             {/* Was content-width while the primary beside it was full-width, so
                 on a phone the two buttons were visibly different sizes in the
                 same stack. The arrow is a down-arrow, not a right-arrow: this

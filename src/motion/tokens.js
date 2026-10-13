@@ -30,6 +30,4 @@ export const easeCss = {
 
 export const limit = {
   lift: -4,
-  tilt: 8,
-  magnet: 12,
 }

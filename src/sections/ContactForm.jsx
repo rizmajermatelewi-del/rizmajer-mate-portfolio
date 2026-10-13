@@ -4,7 +4,6 @@ import { ArrowRight, AlertCircle, CheckCircle2, Upload, Mail, MapPin, Clock, Pho
 import Field from '../components/Field'
 import { CONTACT_PHONE } from '../data/nav'
 import { useInView } from '../motion/useInView'
-import { Magnetic } from '../motion/Magnetic'
 import { useLocale } from '../i18n/useLocale'
 import { t } from '../i18n/t'
 
@@ -36,8 +35,8 @@ const COPY = {
        What replaces it keeps the part that IS true (nothing is sold or used
        for marketing) and names the mechanism. /adatvedelem carries the fuller
        version, with a TODO on the parts that need a qualified eye. */
-    hu: 'Az űrlapot a Formspree továbbítja az e-mail címemre. Kizárólag a megkeresésed kapcsán veszem fel veled a kapcsolatot — nem adom el az adataidat és nem használom marketingre.',
-    en: 'The form is delivered to my inbox by Formspree. I contact you only about your enquiry — I do not sell your details or use them for marketing.',
+    hu: 'Az űrlapot a Formspree továbbítja az e-mail címemre. Kizárólag a megkeresésed kapcsán veszem fel veled a kapcsolatot. Nem adom el az adataidat és nem használom marketingre.',
+    en: 'The form is delivered to my inbox by Formspree. I contact you only about your enquiry. I do not sell your details or use them for marketing.',
   },
   sendError: {
     hu: 'Hiba történt a küldés során. Próbáld újra, vagy írj emailt közvetlenül a',
@@ -83,8 +82,8 @@ const COPY = {
 /* Takes the file limit rather than restating it, so the hint and the rule it
    describes cannot drift apart. */
 const DROP_HINT = (max) => ({
-  hu: `Kattints vagy húzd ide a fájlokat — legfeljebb ${max} db, egyenként 8 MB. Kép, PDF vagy Word.`,
-  en: `Click or drag files here — up to ${max}, 8 MB each. Images, PDF or Word.`,
+  hu: `Kattints vagy húzd ide a fájlokat, legfeljebb ${max} db, egyenként 8 MB. Kép, PDF vagy Word.`,
+  en: `Click or drag files here, up to ${max}, 8 MB each. Images, PDF or Word.`,
 })
 
 /* These take a count, so they are functions returning a field rather than
@@ -93,7 +92,7 @@ const DROP_HINT = (max) => ({
 const REASON = {
   wrongType: (n) => ({
     hu: `${n} fájl típusa nem támogatott (kép, PDF vagy Word megy)`,
-    en: `${n} file(s) of an unsupported type — images, PDF or Word only`,
+    en: `${n} file(s) of an unsupported type. Images, PDF or Word only`,
   }),
   tooBig: (n) => ({
     hu: `${n} fájl nagyobb 8 MB-nál`,
@@ -466,16 +465,14 @@ export default function ContactForm() {
 
                   <div className="mt-7 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                     <p className="text-xs text-muted">{t(COPY.requiredNote, locale)}</p>
-                    <Magnetic>
-                      <button
-                        type="submit"
-                        disabled={status === 'sending' || !consent}
-                        className="magnetic-btn inline-flex items-center gap-2 bg-primary text-white font-semibold px-7 py-3.5 rounded-full shadow-lg shadow-primary/30 disabled:opacity-50 disabled:cursor-not-allowed"
-                      >
-                        {status === 'sending' ? t(COPY.sending, locale) : t(COPY.submit, locale)}
-                        <ArrowRight className="h-4 w-4" />
-                      </button>
-                    </Magnetic>
+                    <button
+                      type="submit"
+                      disabled={status === 'sending' || !consent}
+                      className="magnetic-btn inline-flex items-center gap-2 bg-primary text-white font-semibold px-7 py-3.5 rounded-full shadow-lg shadow-primary/30 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {status === 'sending' ? t(COPY.sending, locale) : t(COPY.submit, locale)}
+                      <ArrowRight className="h-4 w-4" />
+                    </button>
                   </div>
                 </>
               ) : (

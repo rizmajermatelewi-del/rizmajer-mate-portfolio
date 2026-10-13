@@ -1,12 +1,11 @@
 import { useState, lazy, Suspense } from 'react'
-import { Star, Check } from 'lucide-react'
+import { Check } from 'lucide-react'
 import { PROJECTS_FULL } from '../data/projects'
 import { useLocale } from '../i18n/useLocale'
 import { t } from '../i18n/t'
 
 import ProjectMock from '../components/ProjectMock'
 import { useInView } from '../motion/useInView'
-import { TiltCard } from '../motion/TiltCard'
 
 /* This section's own strings, as opposed to the project data.
    ---------------------------------------------------------------------
@@ -27,7 +26,6 @@ const COPY = {
     hu: 'Mindegyik megnyitható, és a kódja nyilvános. Kitalált vállalkozások, valós problémákkal. Ügyfélmunkát még nem adtam át.',
     en: 'Every one can be opened, and its code is public. Invented businesses, real problems. I have not handed over client work yet.',
   },
-  featured: { hu: 'Kiemelt projekt', en: 'Featured project' },
   whatItDoes: { hu: 'Amit tud', en: 'What it does' },
 }
 
@@ -96,7 +94,7 @@ export default function Projects() {
                  Focus counts as intent too — keyboard users never hover. */
               onPointerEnter={preloadModal}
               onFocus={preloadModal}
-              aria-label={`${t(p.title, locale)} — ${t(COPY.details, locale)}`}
+              aria-label={`${t(p.title, locale)}, ${t(COPY.details, locale)}`}
               style={{ transitionDelay: visible ? `${i * 120}ms` : '0ms' }}
               /* Two columns since the 2026-10-13 trim to four demos: three
                  columns left a lone fourth card. */
@@ -104,27 +102,13 @@ export default function Projects() {
                 visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
               }`}
             >
-              <TiltCard className="h-full">
+              <div className="h-full">
                 <ProjectMock
                   tone={p.tone}
                   image={p.image}
                   alt={p.imageAlt ? t(p.imageAlt, locale) : ''}
                 />
                 <div className="p-6">
-                  {/* The "01 / 02 / 03 / 04" counter that sat opposite the
-                      label is gone. Four cards in a row are already countable
-                      and the number carried no other meaning. */}
-                  <div className="mb-3.5 flex flex-wrap items-center gap-1.5">
-                    <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-primary-dark bg-primary/10 px-2.5 py-1 rounded-full">
-                      {t(p.label, locale)}
-                    </span>
-                    {p.featured && (
-                      <span className="inline-flex items-center gap-1 font-mono text-[11px] uppercase tracking-[0.2em] text-white bg-primary px-2.5 py-1 rounded-full">
-                        <Star className="h-2.5 w-2.5" strokeWidth={2.5} />
-                        {t(COPY.featured, locale)}
-                      </span>
-                    )}
-                  </div>
                   <h3 className="font-display font-bold text-lg text-ink leading-snug tracking-tight">{t(p.title, locale)}</h3>
                   {/* 13px of muted grey is below where this stays comfortable
                       on a phone, and the phone is the primary viewport. 14px at
@@ -163,7 +147,7 @@ export default function Projects() {
                     ))}
                   </div>
                 </div>
-              </TiltCard>
+              </div>
             </button>
           ))}
         </div>

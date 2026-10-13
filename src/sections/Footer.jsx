@@ -9,15 +9,14 @@ import { UI } from '../i18n/ui'
 import { SERVICE_GROUPS } from '../data/services'
 import { useInView } from '../motion/useInView'
 import { ScrambleText } from '../motion/ScrambleText'
-import { Magnetic } from '../motion/Magnetic'
 
 const COPY = {
   headlineLead: { hu: 'Mondd el, mi', en: 'Tell me what' },
   headlineAccent: { hu: 'viszi el', en: 'eats the most' },
   headlineTail: { hu: 'a legtöbb időd.', en: 'of your time.' },
   strapline: {
-    hu: 'Rizmajer Máté Levente — webfejlesztő Inárcsról, Pest vármegyéből, elérhető távoli és helyi projektekre egyaránt.',
-    en: 'Rizmajer Máté Levente — web developer from Inárcs, Pest County, available for remote and local projects alike.',
+    hu: 'Rizmajer Máté Levente, webfejlesztő Inárcsról, Pest vármegyéből, elérhető távoli és helyi projektekre egyaránt.',
+    en: 'Rizmajer Máté Levente, web developer from Inárcs, Pest County, available for remote and local projects alike.',
   },
   /* Was: "Full-stack fejlesztő. React, Node.js és modern web-technológiák.
      Ötlettől a működő termékig." Three problems in one line, all of them the
@@ -188,7 +187,6 @@ export default function Footer() {
               place it broke, and the infinite animation drew the eye to a
               status that never changes. */}
           <div className="flex items-center gap-2.5">
-            <span className="h-1.5 w-1.5 rounded-full bg-primary-dark" />
             <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-muted">
               {t(COPY.available, locale)}
             </span>
@@ -196,17 +194,16 @@ export default function Footer() {
 
           <div className="flex items-center gap-1.5">
             {SOCIAL_LINKS.map(({ Icon, href, label }) => (
-              <Magnetic key={t(label)}>
-                <a
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={t(label)}
-                  className="p-2 rounded-full text-muted hover:text-primary-dark hover:scale-110 transition-all duration-300"
-                >
-                  <Icon className="h-4 w-4" strokeWidth={2} />
-                </a>
-              </Magnetic>
+              <a
+                key={t(label)}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={t(label)}
+                className="p-2 rounded-full text-muted hover:text-primary-dark hover:scale-110 transition-all duration-300"
+              >
+                <Icon className="h-4 w-4" strokeWidth={2} />
+              </a>
             ))}
           </div>
 

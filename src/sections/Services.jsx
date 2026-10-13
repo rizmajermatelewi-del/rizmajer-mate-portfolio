@@ -2,7 +2,6 @@ import { useLayoutEffect, useRef, useState } from 'react'
 import { Check, ArrowRight, ArrowUpRight } from 'lucide-react'
 import { SERVICE_GROUPS, priceLabel, salePriceLabel, isDiscounted, offerActive, LAUNCH_OFFER, LAUNCH_NOTE } from '../data/services'
 import { useInView } from '../motion/useInView'
-import { TiltCard } from '../motion/TiltCard'
 import { BuildOrSubscribe } from './ServicesExtras'
 import PriceCalculator from './PriceCalculator'
 import { useLocale } from '../i18n/useLocale'
@@ -12,8 +11,8 @@ const COPY = {
   headingLead: { hu: 'Mit építhetek', en: 'What I can build' },
   headingAccent: { hu: 'neked.', en: 'for you.' },
   intro: {
-    hu: 'Válaszd ki, mi a gond, és megmutatom, mivel oldanám meg. Az árak indulóárak: a végleges árat a munka megkezdése előtt rögzítjük — írásban, tételesen. Utólag nem jön hozzá semmi.',
-    en: 'Pick what the problem is and I will show you how I would solve it. These are starting prices: the final one is fixed before any work begins — in writing and itemised. Nothing gets added afterwards.',
+    hu: 'Válaszd ki, mi a gond, és megmutatom, mivel oldanám meg. Az árak indulóárak: a végleges árat a munka megkezdése előtt rögzítjük, írásban és tételesen. Utólag nem jön hozzá semmi.',
+    en: 'Pick what the problem is and I will show you how I would solve it. These are starting prices: the final one is fixed before any work begins, in writing and itemised. Nothing gets added afterwards.',
   },
   unsure: { hu: 'Nem tudod, melyik kell, vagy nagyobb, egyedi rendszer kellene? Írd le a gondot, és megmondom, megéri-e.', en: 'Not sure which one you need, or need a bigger system of your own? Describe the problem and I will tell you whether it pays off.' },
   tablist: { hu: 'Szolgáltatáscsoportok', en: 'Service groups' },
@@ -70,7 +69,7 @@ function requestQuote(name) {
 function ServiceCard({ s, locale }) {
   return (
     <article className="group h-full card-invert border border-divider rounded-4xl overflow-hidden card-motion shadow-e2 hover:border-primary/60 hover:-translate-y-1.5 hover:shadow-e4">
-      <TiltCard className="h-full">
+      <div className="h-full">
         <div className="flex h-full flex-col p-6">
           <div className="mb-3.5 flex flex-wrap items-center gap-1.5 min-h-[1.375rem]">
             {s.demo && (
@@ -140,7 +139,7 @@ function ServiceCard({ s, locale }) {
             </a>
           </div>
         </div>
-      </TiltCard>
+      </div>
     </article>
   )
 }

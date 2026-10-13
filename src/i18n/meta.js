@@ -38,7 +38,7 @@ export const HOME_META = {
      see in the URL and the result's site name, not the part that says what is
      sold. */
   title: {
-    hu: 'Weboldal készítés KKV-knak – Pest megye, Budapest | Rizmajer Máté',
+    hu: 'Weboldal készítés KKV-knak, Pest megye, Budapest | Rizmajer Máté',
     en: 'Websites for small businesses near Budapest | Rizmajer Máté',
   },
 
@@ -57,8 +57,8 @@ export const HOME_META = {
      link to, who needs the pitch rather than the keywords — so this one is the
      hero's positioning line, which is the shortest true version of it. */
   social: {
-    hu: 'Weboldalak, foglalási, rendelési és belső rendszerek kis- és középvállalkozásoknak — kevesebb kézi adminisztrációval.',
-    en: 'Websites, booking, ordering and internal systems for small and medium businesses — with less done by hand.',
+    hu: 'Weboldalak, foglalási, rendelési és belső rendszerek kis- és középvállalkozásoknak, kevesebb kézi adminisztrációval.',
+    en: 'Websites, booking, ordering and internal systems for small and medium businesses, with less done by hand.',
   },
 
   /* The alt text on the link-preview image, which index.html carries twice —
@@ -67,8 +67,8 @@ export const HOME_META = {
      and applied to both, on every route: the card image is the same picture
      everywhere, so its description does not vary by page, only by language. */
   imageAlt: {
-    hu: 'Rizmajer Máté Levente — full-stack fejlesztő portfólió',
-    en: 'Rizmajer Máté Levente — full-stack developer portfolio',
+    hu: 'Rizmajer Máté Levente | full-stack fejlesztő portfólió',
+    en: 'Rizmajer Máté Levente | full-stack developer portfolio',
   },
 }
 
@@ -103,8 +103,8 @@ export const PAGE_META = {
        result once they have. The home page's title leads with what is sold
        instead, because its reader is buying rather than hiring. */
     title: {
-      hu: 'Full-stack fejlesztő — Rizmajer Máté Levente',
-      en: 'Full-stack developer — Rizmajer Máté Levente',
+      hu: 'Full-stack fejlesztő | Rizmajer Máté Levente',
+      en: 'Full-stack developer | Rizmajer Máté Levente',
     },
     description: {
       hu: 'React és Node.js alapú webalkalmazások: mérnöki döntések, tesztelt kód és élesítési szemlélet. Az oldal a saját forrásából mutatja meg, hogyan épült.',

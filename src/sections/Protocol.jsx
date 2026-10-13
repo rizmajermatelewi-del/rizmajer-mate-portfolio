@@ -1,7 +1,6 @@
 import { Check } from 'lucide-react'
 import { PROTOCOL_STEPS } from '../data/protocol'
 import { useInView } from '../motion/useInView'
-import { TiltCard } from '../motion/TiltCard'
 import { useLocale } from '../i18n/useLocale'
 import { t } from '../i18n/t'
 
@@ -50,7 +49,7 @@ export default function Protocol() {
                 visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
               }`}
             >
-              <TiltCard className="h-full">
+              <div className="h-full">
                 <div className="flex h-full flex-col p-6">
                   <div>
                     <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-primary-dark bg-primary/10 px-2.5 py-1 rounded-full">
@@ -69,7 +68,7 @@ export default function Protocol() {
                     </p>
                   </div>
                 </div>
-              </TiltCard>
+              </div>
             </li>
           ))}
         </ol>

@@ -18,8 +18,6 @@ describe('motion tokens', () => {
   })
 
   it('caps motion distances to the agreed limits', () => {
-    expect(limit.tilt).toBe(8)
-    expect(limit.magnet).toBe(12)
     expect(limit.lift).toBe(-4)
   })
 })

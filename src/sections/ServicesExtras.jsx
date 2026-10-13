@@ -24,8 +24,8 @@ const COPY = {
   once: { hu: 'egyszer', en: 'once' },
   threeYears: { hu: '3 év alatt', en: 'over 3 years' },
   honest: {
-    hu: 'Ha egy dobozos megoldás tudja, amit kell, azt javaslom — három év alatt olcsóbb. Egyedi akkor éri meg, ha a szabályaid nem férnek bele, ha a vevőid adata nálad kell legyen, vagy ha nem akarsz örökké havidíjat fizetni.',
-    en: 'If a ready-made one does what you need, I will recommend it — over three years it costs less. Building your own pays off when your rules do not fit, when your customers\' data has to stay with you, or when you do not want to pay a monthly fee forever.',
+    hu: 'Ha egy dobozos megoldás tudja, amit kell, azt javaslom, mert három év alatt olcsóbb. Egyedi akkor éri meg, ha a szabályaid nem férnek bele, ha a vevőid adata nálad kell legyen, vagy ha nem akarsz örökké havidíjat fizetni.',
+    en: 'If a ready-made one does what you need, I will recommend it, because over three years it costs less. Building your own pays off when your rules do not fit, when your customers\' data has to stay with you, or when you do not want to pay a monthly fee forever.',
   },
 }
 
@@ -64,7 +64,7 @@ export function BuildOrSubscribe({ locale }) {
                 <td className="py-3 pr-4">
                   {t(monthlyRange(r.range[0], r.range[1]), locale)}
                   <span className="block text-[13px]">
-                    {t(COPY.threeYears, locale)}: {t(fmt(r.range[0] * 36), locale)}–{t(fmt(r.range[1] * 36), locale)}
+                    {t(COPY.threeYears, locale)}: {t(fmt(r.range[0] * 36), locale)}-{t(fmt(r.range[1] * 36), locale)}
                   </span>
                 </td>
                 <td className="py-3 text-ink">

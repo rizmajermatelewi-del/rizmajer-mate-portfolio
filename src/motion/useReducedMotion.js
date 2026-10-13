@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 
 const REDUCED = '(prefers-reduced-motion: reduce)'
-const FINE = '(pointer: fine)'
 
 function useMediaQuery(query) {
   const [matches, setMatches] = useState(
@@ -23,10 +22,4 @@ function useMediaQuery(query) {
    primitive must consult this and degrade to a static or fade-only state. */
 export function useReducedMotion() {
   return useMediaQuery(REDUCED)
-}
-
-/* True only for precise pointers (mouse, trackpad). Gates cursor, tilt and
-   magnetic effects off on touch devices. */
-export function useFinePointer() {
-  return useMediaQuery(FINE)
 }

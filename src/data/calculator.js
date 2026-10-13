@@ -226,8 +226,8 @@ export const UPKEEP = ALL_SERVICES.filter((s) => s.priceUnit === 'month')
    the client's name, not to Máté; the same range the FAQ quotes. */
 export const HOSTING = { lo: 15000, hi: 30000 }
 export const hostingLabel = {
-  hu: `${forint(HOSTING.lo)}–${forint(HOSTING.hi)}/év`,
-  en: `${priceEn(HOSTING.lo)}–${priceEn(HOSTING.hi)} a year`,
+  hu: `${forint(HOSTING.lo)}-${forint(HOSTING.hi)}/év`,
+  en: `${priceEn(HOSTING.lo)}-${priceEn(HOSTING.hi)} a year`,
 }
 
 /* Payment in two parts, set 2026-09-24 at Máté's direction: half when
@@ -244,6 +244,6 @@ export const perMonth = (huf) => ({ hu: `${forint(huf)}/hó`, en: `${priceEn(huf
    table. Here rather than in the component so that the Hungarian suffixes
    stay in a data module, where the i18n guard expects them. */
 export const monthlyRange = (lo, hi) => ({
-  hu: `${forint(lo)}–${forint(hi)}/hó`,
-  en: `${priceEn(lo)}–${priceEn(hi)} a month`,
+  hu: `${forint(lo)}-${forint(hi)}/hó`,
+  en: `${priceEn(lo)}-${priceEn(hi)} a month`,
 })

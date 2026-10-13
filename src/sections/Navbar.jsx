@@ -10,7 +10,7 @@ import { t } from '../i18n/t'
 import { UI } from '../i18n/ui'
 
 const COPY = {
-  homeLink: { hu: 'Rizmajer Máté Levente — kezdőlap', en: 'Rizmajer Máté Levente — home' },
+  homeLink: { hu: 'Rizmajer Máté Levente, kezdőlap', en: 'Rizmajer Máté Levente, home' },
   openMenu: { hu: 'Menü megnyitása', en: 'Open menu' },
   closeMenu: { hu: 'Menü bezárása', en: 'Close menu' },
   /* The accessible name, in the language of the page it is on — not in the

@@ -26,8 +26,8 @@ const DEMOS_REPO_READY = true
 export const PROJECTS_FULL = [
   {
     title: {
-      hu: 'Időpontfoglaló — Szálka Fodrászat',
-      en: 'Booking — Szalka Hair Salon',
+      hu: 'Szálka Fodrászat: időpontfoglaló',
+      en: 'Szalka Hair Salon: booking',
     },
     text: {
       hu: 'Bemutató időpontfoglaló fodrászatra: az időpontválasztó egy fésű, fél óránként egy foggal, a foglalt fog letört. Saját kezdeményezés, nem ügyfélmunka.',
@@ -53,8 +53,8 @@ export const PROJECTS_FULL = [
       en: 'Design, build, deploy',
     },
     problem: {
-      hu: 'Egy kis fodrászatnak kell egy egyszerű, telefonról is használható foglaló — anélkül, hogy Excelben vagy üzenetben egyeztessen.',
-      en: 'A small salon needs a simple booker that works on a phone — without coordinating in Excel or chat.',
+      hu: 'Egy kis fodrászatnak kell egy egyszerű, telefonról is használható foglaló, anélkül, hogy Excelben vagy üzenetben egyeztessen.',
+      en: 'A small salon needs a simple booker that works on a phone, without coordinating in Excel or chat.',
     },
     solution: {
       hu: 'Szolgáltatásválasztó, szabad sávok, foglalási űrlap, megerősítő képernyő és admin lista. A demó localStorage-ben fut; élesben Supabase + e-mail jön.',
@@ -85,8 +85,8 @@ export const PROJECTS_FULL = [
   },
   {
     title: {
-      hu: 'Napi menü — Kispipa Büfé',
-      en: 'Daily menu — Kispipa Buffet',
+      hu: 'Kispipa Büfé: napi menü',
+      en: 'Kispipa Buffet: daily menu',
     },
     text: {
       hu: 'Bemutató napi menü büfének: a menü betűtáblán jelenik meg, betűnként kitűzve, heti nézettel és szerkesztővel. Saját kezdeményezés, nem ügyfélmunka.',
@@ -112,8 +112,8 @@ export const PROJECTS_FULL = [
       en: 'Design, build, deploy',
     },
     problem: {
-      hu: 'A kisvendéglő a napi menüt gyakran papírlapról fotózza Facebookra — a vendég nem találja, a tulaj nehezen frissíti.',
-      en: 'A small eatery often posts the daily menu as a photo of a printout on Facebook — hard to find, hard to update.',
+      hu: 'A kisvendéglő a napi menüt gyakran papírlapról fotózza Facebookra. A vendég nem találja, a tulaj nehezen frissíti.',
+      en: 'A small eatery often posts the daily menu as a photo of a printout on Facebook: hard to find, hard to update.',
     },
     solution: {
       hu: 'Nyilvános mai menü, heti áttekintés, jelszavas szerkesztő. A demó localStorage-ben ment; élesben Supabase auth + tábla.',
@@ -153,8 +153,8 @@ export const PROJECTS_FULL = [
   },
   {
     title: {
-      hu: 'Bemutatkozó oldal — Kovács Villanyszerelés',
-      en: 'One-page site — Kovacs Electrical',
+      hu: 'Kovács Villanyszerelés: bemutatkozó oldal',
+      en: 'Kovacs Electrical: one-page site',
     },
     text: {
       hu: 'Bemutató egyoldalas oldal villanyszerelőnek: az ajánlatkérőben kismegszakítók felkapcsolásával választod ki a munkát. Saját kezdeményezés, nem ügyfélmunka.',
@@ -212,8 +212,8 @@ export const PROJECTS_FULL = [
   },
   {
     title: {
-      hu: 'Időpont és árajánlat — Kormos Autószerviz',
-      en: 'Booking and quotes — Kormos Garage',
+      hu: 'Kormos Autószerviz: időpont és árajánlat',
+      en: 'Kormos Garage: booking and quotes',
     },
     text: {
       hu: 'Bemutató autószerviz-oldal: műhelyidő foglalása rendszámmal, árajánlatkérés a hiba leírásával, műhely nézet. Saját kezdeményezés, nem ügyfélmunka.',

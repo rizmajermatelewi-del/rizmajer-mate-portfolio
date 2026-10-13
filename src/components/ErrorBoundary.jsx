@@ -15,8 +15,8 @@ const COPY = {
   eyebrow: { hu: 'Hiba történt', en: 'Something went wrong' },
   heading: { hu: 'Az oldal betöltése félbeszakadt.', en: 'The page stopped loading partway.' },
   body: {
-    hu: 'Ez az én hibám, nem a tiéd. Amíg javítom, írj közvetlenül — ugyanúgy válaszolok egy munkanapon belül.',
-    en: 'This is my fault, not yours. While I fix it, write to me directly — I answer within one working day either way.',
+    hu: 'Ez az én hibám, nem a tiéd. Amíg javítom, írj közvetlenül, ugyanúgy válaszolok egy munkanapon belül.',
+    en: 'This is my fault, not yours. While I fix it, write to me directly. I answer within one working day either way.',
   },
 }
 
