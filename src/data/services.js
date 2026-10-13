@@ -16,6 +16,13 @@ import { forint, priceEn } from './fx.js'
    from, why the audit is flat) is in that history and was not re-litigated.
    New offers were priced on 2026-09-24 at Máté's direction.
 
+   Trimmed on 2026-10-13, at Máté's direction, to the offers with something
+   behind them: seventeen cards, half of them marked "never delivered", read
+   as a shotgun rather than a specialist (PRODUCT.md: show less rather than
+   imitate evidence). The cut offers live in git history. The daily menu was
+   split from ordering the same day, at 350 000, so a buffet that only wants
+   the menu board is not quoted the ordering system.
+
    `isNew` means no paying client has bought this kind of work yet. It is
    shown on the card, and the section states once per group what it means —
    the same honesty the AI section used to carry, applied wherever it is
@@ -27,7 +34,6 @@ import { forint, priceEn } from './fx.js'
 export const TIER_FLOORS = {
   intro: 240000,
   booking: 690000,
-  system: 1500000,
 }
 
 export const RETAINER_HUF = 25000
@@ -118,65 +124,44 @@ export const SERVICE_GROUPS = [
         },
       },
       {
-        id: 'rendeles',
-        name: { hu: 'Rendelésfelvétel, napi menü', en: 'Ordering and daily menus' },
+        id: 'napi-menu',
+        name: { hu: 'Napi menü a weboldalon', en: 'A daily menu on your site' },
         problem: {
-          hu: 'A mai menü és az árak a weboldaladon, nem egy lefotózott papírlapon — és a rendelés is ott érkezik be.',
-          en: 'Today\'s menu and prices on your site rather than on a photographed sheet of paper — and orders come in there too.',
+          hu: 'A mai menü és az árak a weboldaladon, nem egy lefotózott papírlapon. Reggel telefonról beírod, és a vendég már látja.',
+          en: 'Today\'s menu and prices on your site rather than on a photographed sheet of paper. You type it in from your phone in the morning, and guests see it straight away.',
         },
         forWho: {
-          hu: 'Büfének, étteremnek, cukrászdának, ahol naponta változik a kínálat.',
-          en: 'For a buffet, restaurant or bakery whose offer changes daily.',
+          hu: 'Büfének, étteremnek, ahol naponta változik a kínálat, de a rendelés továbbra is telefonon vagy helyben megy.',
+          en: 'For a buffet or restaurant whose offer changes daily, where orders still come by phone or at the counter.',
         },
         includes: [
           { hu: 'Mai és heti menü, amit te szerkesztesz', en: 'Today\'s and this week\'s menu, edited by you' },
-          { hu: 'Rendelésfelvétel vagy előrendelés', en: 'Orders or pre-orders taken online' },
-          { hu: 'Értesítés minden új rendelésről', en: 'A notification for every new order' },
+          { hu: 'Szerkesztés telefonról, jelszóval', en: 'Edited from your phone, behind a password' },
+          { hu: 'Nyitvatartás és elérhetőség ugyanott', en: 'Opening hours and contact details on the same page' },
         ],
-        priceHuf: TIER_FLOORS.booking,
-        timeline: { hu: 'Átadás jellemzően 3-6 hét', en: 'Delivered in 3-6 weeks, typically' },
+        priceHuf: 350000,
+        timeline: { hu: 'Átadás jellemzően 1-2 hét', en: 'Delivered in 1-2 weeks, typically' },
         demo: 'https://demo-napi-menu.vercel.app',
       },
       {
-        id: 'webshop',
-        name: { hu: 'Webshop', en: 'Online shop' },
+        id: 'rendeles',
+        name: { hu: 'Rendelésfelvétel', en: 'Taking orders online' },
         problem: {
-          hu: 'Termékek, kosár, bankkártyás fizetés és számla — anélkül, hogy egy havidíjas platform szabályaihoz kellene igazodnod.',
-          en: 'Products, a basket, card payments and invoices — without bending to a subscription platform\'s rules.',
+          hu: 'A napi menü mellé a rendelés is a weboldaladon érkezik be, nem telefonon és Messengeren szétszórva.',
+          en: 'Beyond the daily menu, orders come in on your site too, rather than scattered across phone calls and Messenger.',
         },
         forWho: {
-          hu: 'Annak, aki kisebb termékkörrel online akar eladni, és a saját oldalán szeretné.',
-          en: 'For anyone selling a modest range of products online, who wants it on their own site.',
+          hu: 'Büfének, étteremnek, cukrászdának, ahol a telefonos rendelés már elviszi a napot.',
+          en: 'For a buffet, restaurant or bakery where phone orders already eat up the day.',
         },
         includes: [
-          { hu: 'Bankkártyás fizetés (Barion vagy SimplePay)', en: 'Card payments (Barion or SimplePay)' },
-          { hu: 'Automatikus számla (Számlázz.hu vagy Billingo)', en: 'Invoices issued automatically (Számlázz.hu or Billingo)' },
-          { hu: 'Termék- és készletkezelés, amit te használsz', en: 'Product and stock management you run yourself' },
-          { hu: 'Rendelési értesítők neked és a vevőnek', en: 'Order e-mails for you and the customer' },
+          { hu: 'Minden, ami a napi menüben', en: 'Everything in the daily menu' },
+          { hu: 'Rendelésfelvétel vagy előrendelés', en: 'Orders or pre-orders taken online' },
+          { hu: 'Értesítés minden új rendelésről', en: 'A notification for every new order' },
+          { hu: 'Rendelési lista, amit te kezelsz', en: 'An order list you run yourself' },
         ],
-        priceHuf: 890000,
-        timeline: { hu: 'Átadás jellemzően 4-8 hét', en: 'Delivered in 4-8 weeks, typically' },
-        isNew: true,
-      },
-      {
-        id: 'utalvany',
-        name: { hu: 'Utalvány, bérlet, jegy online', en: 'Vouchers, passes and tickets online' },
-        problem: {
-          hu: 'Ajándékutalványt, bérletet vagy jegyet adsz el online, a vevő azonnal megkapja e-mailben, te pedig beváltáskor egy kattintással ellenőrzöd.',
-          en: 'You sell gift vouchers, passes or tickets online; the buyer gets theirs by e-mail at once, and you check it with one click when it is redeemed.',
-        },
-        forWho: {
-          hu: 'Szalonnak, stúdiónak, edzőteremnek, rendezvényszervezőnek.',
-          en: 'For a salon, studio, gym or event organiser.',
-        },
-        includes: [
-          { hu: 'Online vásárlás bankkártyával', en: 'Bought online by card' },
-          { hu: 'Egyedi kód vagy QR e-mailben', en: 'A unique code or QR sent by e-mail' },
-          { hu: 'Beváltás és egyenleg nyomon követése', en: 'Redemptions and balances tracked' },
-        ],
-        priceHuf: 320000,
-        timeline: { hu: 'Átadás jellemzően 2-3 hét', en: 'Delivered in 2-3 weeks, typically' },
-        isNew: true,
+        priceHuf: TIER_FLOORS.booking,
+        timeline: { hu: 'Átadás jellemzően 3-6 hét', en: 'Delivered in 3-6 weeks, typically' },
       },
     ],
   },
@@ -214,47 +199,6 @@ export const SERVICE_GROUPS = [
         },
       },
       {
-        id: 'landing',
-        name: { hu: 'Kampány- vagy landing oldal', en: 'Campaign or landing page' },
-        problem: {
-          hu: 'Egy ajánlat, egy cél: ahová a hirdetésed visz, és ahol a látogató egy dolgot tud tenni — jelentkezik, foglal, vásárol.',
-          en: 'One offer, one goal: where your ad lands people, and where they can do exactly one thing — sign up, book, buy.',
-        },
-        forWho: {
-          hu: 'Annak, aki hirdet, akciót indít vagy egy új szolgáltatást vezet be, és tudni akarja, működik-e.',
-          en: 'For anyone running ads, a promotion or a new service, who wants to know whether it works.',
-        },
-        includes: [
-          { hu: 'Egy oldal egy ajánlatra, gyors betöltéssel', en: 'One page for one offer, quick to load' },
-          { hu: 'Jelentkezés vagy ajánlatkérés, ami hozzád fut be', en: 'Sign-ups or enquiries that come straight to you' },
-          { hu: 'Mérés: hányan jöttek, hányan jelentkeztek', en: 'Measured: how many came, how many signed up' },
-        ],
-        priceHuf: 150000,
-        timeline: { hu: 'Átadás jellemzően 1 hét', en: 'Delivered in about a week, typically' },
-        isNew: true,
-      },
-      {
-        id: 'cegoldal',
-        name: { hu: 'Többoldalas céges oldal, saját szerkesztéssel', en: 'Multi-page business site you edit yourself' },
-        problem: {
-          hu: 'Több szolgáltatás, csapat, referenciák, hírek — és a szöveget, képeket te cseréled, nem kell minden vesszőért engem hívnod.',
-          en: 'Several services, a team, references, news — and you change the text and pictures yourself, without calling me for every comma.',
-        },
-        forWho: {
-          hu: 'Annak, akinek egy oldal már kevés, és rendszeresen frissülő tartalma van.',
-          en: 'For anyone who has outgrown one page and has content that changes regularly.',
-        },
-        includes: [
-          { hu: 'Szolgáltatásonként külön oldal, hogy keresőből is megtaláljanak', en: 'A page per service, so search finds each one' },
-          { hu: 'Szerkesztőfelület szövegre, képre, hírekre', en: 'An editor for text, pictures and news' },
-          { hu: 'Betanítás, hogy magad is boldogulj vele', en: 'A walkthrough, so you can run it yourself' },
-          { hu: 'Élesítés és átadás', en: 'Put live and handed over' },
-        ],
-        priceHuf: 420000,
-        timeline: { hu: 'Átadás jellemzően 2-4 hét', en: 'Delivered in 2-4 weeks, typically' },
-        isNew: true,
-      },
-      {
         id: 'felujitas',
         name: { hu: 'Meglévő weboldal felújítása', en: 'Overhauling the site you have' },
         problem: {
@@ -272,140 +216,6 @@ export const SERVICE_GROUPS = [
         ],
         priceHuf: 150000,
         timeline: { hu: 'Átadás jellemzően 1-2 hét', en: 'Delivered in 1-2 weeks, typically' },
-      },
-      {
-        id: 'atepites',
-        name: { hu: 'Meglévő oldal átépítése', en: 'Rebuilding the site you have' },
-        problem: {
-          hu: 'Ha a mostani oldal lassú sablon vagy elavult WordPress, amihez már hozzányúlni is kockázat: újraépítem, a tartalmad és a keresőben elért helyed megtartásával.',
-          en: 'When the current site is a slow template or an ageing WordPress install that is risky to touch: I rebuild it, keeping your content and the place you have earned in search.',
-        },
-        forWho: {
-          hu: 'Annak, akinek már van oldala, de a felújítás nem elég.',
-          en: 'For anyone who already has a site, where an overhaul is not enough.',
-        },
-        includes: [
-          { hu: 'Új, gyors oldal a meglévő tartalomra', en: 'A new, fast site around your existing content' },
-          { hu: 'A régi címek átirányítva, hogy ne vesszen el a keresőforgalom', en: 'Old addresses redirected, so search traffic is not lost' },
-          { hu: 'Költözés a domainnel és e-mailekkel együtt', en: 'The move, including your domain and e-mail' },
-        ],
-        priceHuf: 350000,
-        timeline: { hu: 'Átadás jellemzően 2-4 hét', en: 'Delivered in 2-4 weeks, typically' },
-        isNew: true,
-      },
-    ],
-  },
-  {
-    id: 'rendszerek',
-    title: { hu: 'Rendszerek és automatizálás', en: 'Systems and automation' },
-    intro: {
-      hu: 'Ha a munkád táblázatokban, jegyzetekben és kézzel átmásolt adatokban él.',
-      en: 'When your work lives in spreadsheets, notes and data copied across by hand.',
-    },
-    items: [
-      {
-        id: 'egyedi-rendszer',
-        name: { hu: 'Egyedi üzleti rendszer', en: 'A business system of your own' },
-        problem: {
-          hu: 'Ügyfelek, munkák, határidők, munkatársak egy helyen — a te folyamatodra szabva, nem egy dobozos szoftverre.',
-          en: 'Customers, jobs, deadlines and staff in one place — built around your process, not a boxed product\'s.',
-        },
-        forWho: {
-          hu: 'Annak, aki több belső folyamatot, adatot vagy munkatársat szeretne egy saját rendszerben kezelni.',
-          en: 'For anyone who needs several internal processes, or their data and staff, handled in one system of their own.',
-        },
-        includes: [
-          { hu: 'Egyedi adminfelület a te folyamataidra', en: 'An admin system built around your processes' },
-          { hu: 'Több munkatárs, külön jogosultságokkal', en: 'Several people, each with their own permissions' },
-          { hu: 'Amit ma kézzel másolsz át, magától megy', en: 'What you copy across by hand today happens on its own' },
-          { hu: 'A meglévő programjaid összekötve', en: 'The programs you already run, wired together' },
-        ],
-        priceHuf: TIER_FLOORS.system,
-        timeline: { hu: 'Ütemezés a terjedelemtől függ', en: 'Timeline depends on the scope' },
-      },
-      {
-        id: 'arajanlat',
-        name: { hu: 'Árajánlat-készítő', en: 'Quote builder' },
-        problem: {
-          hu: 'A helyszínen, telefonról összeállítod a tételes árajánlatot a saját árlistádból, és az ügyfél még aznap megkapja PDF-ben.',
-          en: 'On site, from your phone, you put together an itemised quote from your own price list, and the customer has it as a PDF the same day.',
-        },
-        forWho: {
-          hu: 'Szakiparosnak, kivitelezőnek, szerviznek, aki ma este, Wordben írja az ajánlatokat.',
-          en: 'For tradespeople, contractors and repair shops who write quotes in Word, in the evening.',
-        },
-        includes: [
-          { hu: 'Saját árlista és tételsablonok', en: 'Your own price list and line-item templates' },
-          { hu: 'Egységes, logós PDF egy gombnyomásra', en: 'A consistent, branded PDF at one tap' },
-          { hu: 'Kiküldött ajánlatok listája, állapottal', en: 'A list of quotes sent, with their status' },
-        ],
-        priceHuf: 590000,
-        timeline: { hu: 'Átadás jellemzően 2-4 hét', en: 'Delivered in 2-4 weeks, typically' },
-        isNew: true,
-      },
-      {
-        id: 'automatizalas',
-        name: { hu: 'Egy folyamat automatizálása', en: 'Automating one process' },
-        problem: {
-          hu: 'A meglévő eszközeid beszéljenek egymással. A rendelés magától a táblázatba kerül, az értesítő magától kimegy, a számla magától elkészül.',
-          en: 'Getting the tools you already use to talk to each other. The order writes itself into the spreadsheet, the notification sends itself, the invoice makes itself.',
-        },
-        forWho: {
-          hu: 'Ha egy nagyobb rendszer most túl nagy lépés: kezdjük egyetlen dologgal, ami ma kézzel megy.',
-          en: 'If a bigger system is too big a step right now: we start with one thing that runs by hand today.',
-        },
-        includes: [
-          { hu: 'Egy konkrét, naponta ismétlődő kézi lépés megszüntetve', en: 'One specific manual step you repeat daily, gone' },
-          { hu: 'Folyamatonként árazva, nem kell egyben megrendelni mindent', en: 'Priced per process, so you need not order it all at once' },
-          { hu: 'E-mail, táblázat, számlázó, naptár összekötve', en: 'E-mail, spreadsheets, invoicing and calendars joined up' },
-        ],
-        priceHuf: 90000,
-        priceUnit: 'process',
-        timeline: { hu: 'Folyamatonként · jellemzően néhány nap', en: 'Per process · usually a few days' },
-        isNew: true,
-      },
-      {
-        id: 'chatbot',
-        name: { hu: 'Chatbot a weboldaladon', en: 'A chatbot on your site' },
-        problem: {
-          hu: 'A saját anyagaidból válaszol: árak, nyitvatartás, szolgáltatások, gyakori kérdések. Amit nem tud, azt átadja neked ahelyett, hogy kitalálná.',
-          en: 'It answers from your own material: prices, opening hours, services, common questions. What it does not know, it hands to you rather than inventing.',
-        },
-        forWho: {
-          hu: 'Annak, akihez naponta ugyanaz a néhány kérdés fut be, gyakran munkaidőn túl.',
-          en: 'For anyone who gets the same few questions every day, often out of hours.',
-        },
-        includes: [
-          { hu: 'A te tartalmaidra épül, nem egy általános modell találgat', en: 'Built on your content, not a general model guessing' },
-          { hu: 'Beállítod, mikor kell embert hívnia', en: 'You decide when it has to fetch a person' },
-          { hu: 'A beszélgetések visszanézhetők', en: 'Conversations you can read back' },
-        ],
-        priceHuf: 150000,
-        timeline: {
-          hu: `Bevezetés 1-2 hét · üzemeltetés ${forint(35000)}/hó + modellköltség`,
-          en: `Set up in 1-2 weeks · running it ${priceEn(35000)} a month, plus model usage`,
-        },
-        isNew: true,
-      },
-      {
-        id: 'hangasszisztens',
-        name: { hu: 'Hangalapú asszisztens', en: 'A voice assistant' },
-        problem: {
-          hu: 'Felveszi a telefont, amikor te nem tudod. Foglalást rögzít, kérdésre válaszol, és minden hívásról kapsz egy leiratot.',
-          en: 'It picks up the phone when you cannot. It takes a booking, answers a question, and you get a transcript of every call.',
-        },
-        forWho: {
-          hu: 'Annak, aki munka közben nem tudja felvenni a telefont, és emiatt vevőt veszít.',
-          en: 'For anyone who cannot answer the phone while working, and loses customers because of it.',
-        },
-        includes: [
-          { hu: 'Magyar nyelvű hangmodell, telefonszámra kötve', en: 'A Hungarian-language voice model on your phone number' },
-          { hu: 'Egy szűk, jól körülhatárolt esettel kezdünk', en: 'We start with one narrow, well-bounded case' },
-          { hu: 'Leirat minden hívásról', en: 'A transcript of every call' },
-        ],
-        priceHuf: 400000,
-        timeline: { hu: 'Terjedelemtől függ · a hívásdíj külön költség', en: 'Depends on the scope · call charges are separate' },
-        isNew: true,
       },
     ],
   },
@@ -437,35 +247,13 @@ export const SERVICE_GROUPS = [
         priceUnit: 'flat',
         timeline: { hu: 'Jellemzően néhány nap', en: 'Usually a few days' },
       },
-      {
-        id: 'google',
-        name: { hu: 'Google-megjelenés és helyi keresés', en: 'Google listing and local search' },
-        problem: {
-          hu: 'Hogy amikor valaki a környéken rád keres, meg is találjon: cégprofil, térkép, nyitvatartás, telefonszám, képek — kitöltve és rendben tartva.',
-          en: 'So that when somebody nearby searches for you, they actually find you: business profile, map, opening hours, phone number, photographs — filled in and kept straight.',
-        },
-        forWho: {
-          hu: 'Ha még nincs profilod, létrehozom; ha van, de elavult, rendbe rakom.',
-          en: 'If you have no profile yet I create one; if you have one that has gone stale, I put it right.',
-        },
-        includes: [
-          { hu: 'Google Cégprofil létrehozása vagy rendbetétele', en: 'Google Business Profile created or put right' },
-          { hu: 'Kategóriák, szolgáltatáslista, nyitvatartás, képek', en: 'Categories, services, opening hours, photographs' },
-          { hu: 'A hitelesítés végigvitele', en: 'The verification seen through' },
-        ],
-        priceHuf: 60000,
-        timeline: { hu: 'Jellemzően néhány nap, a hitelesítéssel együtt', en: 'Usually a few days, verification included' },
-        isNew: true,
-      },
-      /* Upkeep in three tiers (2026-09-24), because every competitor checked
-         sells it that way and one tier left the owner of a quiet one-pager
-         paying for hours they never use. Priced against the market check:
-         freelancer basic 10–20e, standard 15–35e, premium 30–60e a month.
-         The middle tier is the old single offer, unchanged, which is why it
-         keeps RETAINER_HUF and the FAQ keeps quoting it. `timeline` carries
-         the reply time for a fault, the thing the tiers actually differ in
-         besides hours. Webshops are quoted separately: the market charges
-         30–100e for them and a tier here would understate it. */
+      /* Upkeep in two tiers. Three from 2026-09-24, because one tier left the
+         owner of a quiet one-pager paying for hours they never use; the
+         premium tier went with the 2026-10-13 trim. Priced against the
+         market check: freelancer basic 10–20e, standard 15–35e a month.
+         Standard is the old single offer, unchanged, which is why it keeps
+         RETAINER_HUF and the FAQ keeps quoting it. `timeline` carries the
+         reply time for a fault, the thing the tiers differ in besides hours. */
       {
         id: 'uzemeltetes-alap',
         name: { hu: 'Karbantartás — Alap', en: 'Upkeep — Basic' },
@@ -505,29 +293,6 @@ export const SERVICE_GROUPS = [
         priceHuf: RETAINER_HUF,
         priceUnit: 'month',
         timeline: { hu: 'Hibára egy munkanapon belül reagálok', en: 'I respond to a fault within one working day' },
-      },
-      {
-        id: 'uzemeltetes-premium',
-        name: { hu: 'Karbantartás — Prémium', en: 'Upkeep — Premium' },
-        problem: {
-          hu: 'Foglaló- vagy rendelési rendszerhez, ahol egy leállás elveszett vevőt jelent, és havonta rendszeresen kell rajta dolgozni.',
-          en: 'For a booking or ordering system, where downtime means a lost customer and there is regular work on it every month.',
-        },
-        forWho: {
-          hu: 'Annak, akinek a rendszere naponta pénzt hoz. Nincs hűségidő, hónapra felmondható.',
-          en: 'For anyone whose system brings in money every day. No minimum term, cancellable monthly.',
-        },
-        includes: [
-          { hu: 'Minden, ami a Standardban', en: 'Everything in Standard' },
-          { hu: 'Havi három óra fejlesztés vagy módosítás', en: 'Three hours of changes or development each month' },
-          { hu: 'Havi rövid jelentés: mi történt, mit javítottam', en: 'A short monthly report: what happened, what I fixed' },
-        ],
-        priceHuf: 45000,
-        priceUnit: 'month',
-        timeline: {
-          hu: 'Leálláskor munkaidőben 4 órán belül nekiállok',
-          en: 'On an outage I start within 4 working hours',
-        },
       },
     ],
   },

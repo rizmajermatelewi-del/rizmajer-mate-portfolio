@@ -4,8 +4,8 @@ import { PROJECTS_FULL } from './projects'
 import { t, untranslatedIn } from '../i18n/t'
 
 describe('services catalogue', () => {
-  it('has four groups and every string in both languages', () => {
-    expect(SERVICE_GROUPS.map((g) => g.id)).toEqual(['eladas', 'weboldalak', 'rendszerek', 'folyamatos'])
+  it('has three groups and every string in both languages', () => {
+    expect(SERVICE_GROUPS.map((g) => g.id)).toEqual(['eladas', 'weboldalak', 'folyamatos'])
     expect(untranslatedIn(SERVICE_GROUPS)).toEqual([])
   })
 
@@ -35,7 +35,7 @@ describe('services catalogue', () => {
     const price = (id) => ALL_SERVICES.find((s) => s.id === id).priceHuf
     expect(price('bemutatkozo')).toBe(TIER_FLOORS.intro)
     expect(price('idopontfoglalo')).toBe(TIER_FLOORS.booking)
-    expect(price('egyedi-rendszer')).toBe(TIER_FLOORS.system)
+    expect(price('rendeles')).toBe(TIER_FLOORS.booking)
   })
 })
 

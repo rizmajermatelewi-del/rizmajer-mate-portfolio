@@ -9,13 +9,12 @@ import { t } from '../i18n/t'
 const COPY = {
   compareTitle: { hu: 'Egyedi, vagy havidíjas?', en: 'Built for you, or a subscription?' },
   compareIntro: {
-    hu: 'Foglalásra és webshopra van kész, havidíjas megoldás is. Így néz ki a kettő egymás mellett, három évre számolva.',
-    en: 'Bookings and shops also come ready-made, for a monthly fee. This is how the two compare over three years.',
+    hu: 'Foglalásra van kész, havidíjas megoldás is. Így néz ki a kettő egymás mellett, három évre számolva.',
+    en: 'Bookings also come ready-made, for a monthly fee. This is how the two compare over three years.',
   },
   colSaas: { hu: 'Havidíjas szolgáltatás', en: 'Subscription service' },
   colMine: { hu: 'Egyedi, nálam', en: 'Built for you, by me' },
   rowBooking: { hu: 'Időpontfoglaló', en: 'Booking' },
-  rowShop: { hu: 'Webshop', en: 'Online shop' },
   rowRules: { hu: 'Szabályok', en: 'Rules' },
   rowData: { hu: 'Az adataid', en: 'Your data' },
   saasRules: { hu: 'Amit a szolgáltató enged', en: 'Whatever the provider allows' },
@@ -33,19 +32,16 @@ const COPY = {
 const fmt = (huf) => ({ hu: forint(huf), en: priceEn(huf) })
 
 /* Published monthly prices, checked 2026-09-24: idopontok.hu Pro 4 900 and
-   Vállalati 12 900 Ft/month; Shoprenter / UNAS / Shopify plans roughly
-   5 000–50 000 Ft/month. Literal because they are someone else's prices —
+   Vállalati 12 900 Ft/month. Literal because they are someone else's prices —
    recheck them before trusting this table a year from now. */
 const SAAS = {
   booking: [4900, 12900],
-  shop: [5000, 50000],
 }
 const priceOf = (id) => ALL_SERVICES.find((s) => s.id === id)
 
 export function BuildOrSubscribe({ locale }) {
   const rows = [
     { label: COPY.rowBooking, range: SAAS.booking, mine: priceOf('idopontfoglalo') },
-    { label: COPY.rowShop, range: SAAS.shop, mine: priceOf('webshop') },
   ]
 
   return (

@@ -23,8 +23,8 @@ export const FAQ_QUESTIONS = [
          these answers into the FAQPage structured data, which is the copy
          Google reproduces in a search result. A visitor could be quoted one
          price by the listing and another by the page. */
-      hu: `Egy bemutatkozó weboldal ${forint(TIER_FLOORS.intro)}-tól, egy foglalási vagy rendelési rendszer ${forint(TIER_FLOORS.booking)}-tól, egy egyedi üzleti rendszer ${forint(TIER_FLOORS.system)}-tól indul. Ezek indulóárak: a végleges árat a funkciók és a projekt összetettsége alapján, a munka megkezdése előtt rögzítjük — írásban, tételesen.`,
-      en: `An introductory website starts at ${priceEn(TIER_FLOORS.intro)}, a booking or ordering system at ${priceEn(TIER_FLOORS.booking)}, and a business system of your own at ${priceEn(TIER_FLOORS.system)}. Those are starting prices: the final one is set from the features and the complexity of the project, in writing and itemised, before any work begins.`,
+      hu: `Egy bemutatkozó weboldal ${forint(TIER_FLOORS.intro)}-tól, egy foglalási vagy rendelési rendszer ${forint(TIER_FLOORS.booking)}-tól indul. Nagyobb, egyedi rendszernél az ár a terjedelemtől függ; az első egyeztetés után írásban adom meg. Ezek indulóárak: a végleges árat a funkciók és a projekt összetettsége alapján, a munka megkezdése előtt rögzítjük — írásban, tételesen.`,
+      en: `An introductory website starts at ${priceEn(TIER_FLOORS.intro)}, and a booking or ordering system at ${priceEn(TIER_FLOORS.booking)}. For a bigger system of your own the price depends on the scope; I put it in writing after the first call. Those are starting prices: the final one is set from the features and the complexity of the project, in writing and itemised, before any work begins.`,
     },
   },
   {

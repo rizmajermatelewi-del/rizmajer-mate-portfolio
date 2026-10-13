@@ -15,11 +15,11 @@ const COPY = {
     hu: 'Válaszd ki, mi a gond, és megmutatom, mivel oldanám meg. Az árak indulóárak: a végleges árat a munka megkezdése előtt rögzítjük — írásban, tételesen. Utólag nem jön hozzá semmi.',
     en: 'Pick what the problem is and I will show you how I would solve it. These are starting prices: the final one is fixed before any work begins — in writing and itemised. Nothing gets added afterwards.',
   },
-  unsure: { hu: 'Nem tudod, melyik kell? Írd le a gondot, én megmondom.', en: 'Not sure which one you need? Describe the problem and I will tell you.' },
+  unsure: { hu: 'Nem tudod, melyik kell, vagy nagyobb, egyedi rendszer kellene? Írd le a gondot, és megmondom, megéri-e.', en: 'Not sure which one you need, or need a bigger system of your own? Describe the problem and I will tell you whether it pays off.' },
   tablist: { hu: 'Szolgáltatáscsoportok', en: 'Service groups' },
   /* What competitors list per package and this page did not say at all
      (market check, 2026-09-24): what the price already covers. Said once
-     for everything rather than repeated on seventeen cards. */
+     for everything rather than repeated on every card. */
   includedPill: { hu: 'Minden projektnél', en: 'Every project' },
   includedTitle: { hu: 'Ez benne van az árban', en: 'This is in the price' },
   listPrice: { hu: 'Lista ár:', en: 'List price:' },

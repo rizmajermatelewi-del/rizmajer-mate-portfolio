@@ -1,11 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
 import {
-  ArrowLeft, ArrowRight, Boxes, Building2, CalendarCheck, Check, FileText, Globe, MapPin,
-  MessageSquare, Mic, Paintbrush, RefreshCw, Rocket, ShoppingCart, Sparkles, Ticket, UtensilsCrossed,
+  ArrowLeft, ArrowRight, CalendarCheck, Check, ClipboardList, Globe, Paintbrush, Sparkles, UtensilsCrossed,
 } from 'lucide-react'
 import { SERVICE_GROUPS, priceLabel, isDiscounted, saleHuf, LAUNCH_OFFER } from '../data/services'
 import {
-  CALC_SERVICES, SITE_KINDS, addonsFor, breakdown, PAGES, pagesApply, upkeepFor, perMonth, hostingLabel, paymentSplit, PAYMENT,
+  CALC_SERVICES, SITE_KINDS, MENU_KINDS, addonsFor, breakdown, UPKEEP, perMonth, hostingLabel, paymentSplit, PAYMENT,
 } from '../data/calculator'
 import { forint, priceEn } from '../data/fx'
 import { t } from '../i18n/t'
@@ -25,25 +24,16 @@ const COPY = {
   next: { hu: 'Tovább', en: 'Next' },
   back: { hu: 'Vissza', en: 'Back' },
   multi: {
-    hu: 'Többet is választhatsz, például weboldalt foglalóval és chatbottal. Weboldal-típusból egyet.',
-    en: 'You can pick several, say a site with bookings and a chatbot. One kind of site, though.',
+    hu: 'Többet is választhatsz, például weboldalt foglalóval. Weboldal-típusból egyet.',
+    en: 'You can pick several, say a site with bookings. One kind of site, though.',
   },
   none: { hu: 'Ehhez nincs választható kiegészítő.', en: 'There are no extras for this one.' },
-  pages: { hu: 'Hány aloldal kell?', en: 'How many pages?' },
-  pagesNote: {
-    hu: `${PAGES.included} oldal benne van az árban, minden további +${forint(PAGES.perPageHuf)}.`,
-    en: `${PAGES.included} pages are in the price, each further one +${priceEn(PAGES.perPageHuf)}.`,
-  },
   upkeepIntro: {
     hu: 'Kérsz karbantartást az átadás után? Nincs hűségidő, hónapra felmondható.',
     en: 'Do you want upkeep after handover? No minimum term, cancellable monthly.',
   },
   noUpkeep: { hu: 'Most nem kérek', en: 'Not for now' },
   noUpkeepNote: { hu: 'Később bármikor kérheted.', en: 'You can ask for it any time later.' },
-  shopUpkeep: {
-    hu: 'Webshop karbantartását külön árazom, mert a forgalomtól függ. Az ajánlatban benne lesz.',
-    en: 'Upkeep for a shop is priced separately, as it depends on the traffic. It will be in the quote.',
-  },
   summary: { hu: 'Összesítő', en: 'Summary' },
   empty: {
     hu: 'Válassz legalább egy szolgáltatást, és itt tételesen látod az árat.',
@@ -59,24 +49,14 @@ const COPY = {
   hosting: { hu: 'Domain és tárhely, a szolgáltatónak', en: 'Domain and hosting, paid to the provider' },
   cta: { hu: 'Ajánlatot kérek erre', en: 'Get a quote for this' },
   estimateWord: { hu: 'becslés', en: 'estimate' },
-  pagesWord: { hu: 'oldal', en: 'pages' },
 }
 
 const ICONS = {
   idopontfoglalo: CalendarCheck,
-  rendeles: UtensilsCrossed,
-  webshop: ShoppingCart,
-  utalvany: Ticket,
+  'napi-menu': UtensilsCrossed,
+  rendeles: ClipboardList,
   bemutatkozo: Globe,
-  landing: Rocket,
-  cegoldal: Building2,
   felujitas: Paintbrush,
-  atepites: RefreshCw,
-  'egyedi-rendszer': Boxes,
-  arajanlat: FileText,
-  chatbot: MessageSquare,
-  hangasszisztens: Mic,
-  google: MapPin,
 }
 
 const fmt = (huf) => ({ hu: forint(huf), en: priceEn(huf) })
@@ -149,7 +129,6 @@ export default function PriceCalculator({ locale, onQuote }) {
   const [step, setStep] = useState(0)
   const [serviceIds, setServiceIds] = useState([])
   const [picked, setPicked] = useState([])
-  const [pages, setPages] = useState(PAGES.included)
   /* Nothing is ticked in advance, upkeep included: undefined until the
      visitor answers, null for "not for now". */
   const [upkeepId, setUpkeepId] = useState(undefined)
@@ -158,17 +137,14 @@ export default function PriceCalculator({ locale, onQuote }) {
   /* The extras specific to the chosen service come first: SMS reminders
      matter more to a booking system than a blog does. */
   const addons = addonsFor(serviceIds).sort((a, b) => a.appliesTo.length - b.appliesTo.length)
-  const upkeeps = upkeepFor(serviceIds)
-  const upkeep = upkeeps.find((u) => u.id === upkeepId) ?? null
-  const withPages = pagesApply(serviceIds)
+  const upkeep = UPKEEP.find((u) => u.id === upkeepId) ?? null
   const empty = serviceIds.length === 0
-  const { lines, total } = breakdown(serviceIds, picked, pages) ?? { lines: [], total: 0 }
+  const { lines, total } = breakdown(serviceIds, picked) ?? { lines: [], total: 0 }
   const discounted = services.some(isDiscounted)
   const finalHuf = discounted ? saleHuf(total) : total
   const rolling = useRollingNumber(finalHuf)
   const monthlyHuf = upkeep?.priceHuf ?? 0
   const firstYear = useRollingNumber(finalHuf + 12 * monthlyHuf)
-  const extraPages = withPages && pages > PAGES.included
 
   /* Toggles a service; a kind of site replaces any other kind. */
   function toggleService(id) {
@@ -176,20 +152,19 @@ export default function PriceCalculator({ locale, onQuote }) {
     if (serviceIds.includes(id)) {
       next = serviceIds.filter((x) => x !== id)
     } else {
-      next = [...serviceIds.filter((x) => !(SITE_KINDS.includes(id) && SITE_KINDS.includes(x))), id]
+      const sameKind = (x) => [SITE_KINDS, MENU_KINDS].some((k) => k.includes(id) && k.includes(x))
+      next = [...serviceIds.filter((x) => !sameKind(x)), id]
     }
     setServiceIds(next)
     setPicked((p) => p.filter((a) => addonsFor(next).some((x) => x.id === a)))
-    if (!upkeepFor(next).length) setUpkeepId(null)
   }
   const toggle = (id) => setPicked((p) => (p.includes(id) ? p.filter((x) => x !== id) : [...p, id]))
 
-  /* What lands in the enquiry: the offer, the extras, pages, upkeep and the
+  /* What lands in the enquiry: the offer, the extras, upkeep and the
      estimate, so the first reply starts from the number the visitor saw. */
   function quoteName() {
     const line = (loc) => {
       const parts = addons.filter((a) => picked.includes(a.id)).map((a) => t(a.label, loc))
-      if (extraPages) parts.push(`${pages} ${t(COPY.pagesWord, loc)}`)
       if (upkeep) parts.push(`${t(upkeep.name, loc)} (${t(perMonth(upkeep.priceHuf), loc)})`)
       const price = t(priceLabel({ priceHuf: finalHuf }), loc)
       return `${services.map((s) => t(s.name, loc)).join(' + ')}${parts.length ? ` + ${parts.join(', ')}` : ''} (${t(COPY.estimateWord, loc)}: ${price})`
@@ -286,7 +261,7 @@ export default function PriceCalculator({ locale, onQuote }) {
 
           {step === 1 && (
             <div className="mt-4">
-              {addons.length === 0 && !withPages ? (
+              {addons.length === 0 ? (
                 <p className="text-sm text-muted">{t(COPY.none, locale)}</p>
               ) : (
                 <div className="grid gap-2.5 sm:grid-cols-2">
@@ -304,55 +279,29 @@ export default function PriceCalculator({ locale, onQuote }) {
                 </div>
               )}
 
-              {withPages && (
-                <div className="mt-6 max-w-md rounded-2xl border border-divider p-4">
-                  <div className="flex items-baseline justify-between">
-                    <label htmlFor="calc-pages" className="text-sm font-semibold text-ink">
-                      {t(COPY.pages, locale)}
-                    </label>
-                    <span className="font-display font-semibold text-ink tabular-nums">{pages}</span>
-                  </div>
-                  <input
-                    id="calc-pages"
-                    type="range"
-                    min={1}
-                    max={PAGES.max}
-                    value={pages}
-                    onChange={(e) => setPages(Number(e.target.value))}
-                    className="mt-2 w-full accent-[rgb(var(--color-primary))]"
-                  />
-                  <p className="text-[13px] text-muted mt-1">{t(COPY.pagesNote, locale)}</p>
-                </div>
-              )}
             </div>
           )}
 
           {step === 2 && (
             <div className="mt-4">
-              {upkeeps.length === 0 ? (
-                <p className="text-sm text-muted max-w-xl">{t(COPY.shopUpkeep, locale)}</p>
-              ) : (
-                <>
-                  <p className="text-sm text-muted">{t(COPY.upkeepIntro, locale)}</p>
-                  <div className="mt-3 grid gap-2.5 sm:grid-cols-2">
-                    <ChoiceCard type="radio" name="calc-upkeep" checked={upkeepId === null} onChange={() => setUpkeepId(null)}>
+                <p className="text-sm text-muted">{t(COPY.upkeepIntro, locale)}</p>
+                <div className="mt-3 grid gap-2.5 sm:grid-cols-2">
+                  <ChoiceCard type="radio" name="calc-upkeep" checked={upkeepId === null} onChange={() => setUpkeepId(null)}>
+                    <span className="pr-6">
+                      <span className="block font-semibold leading-snug">{t(COPY.noUpkeep, locale)}</span>
+                      <span className="block text-[13px] text-muted mt-0.5">{t(COPY.noUpkeepNote, locale)}</span>
+                    </span>
+                  </ChoiceCard>
+                  {UPKEEP.map((u) => (
+                    <ChoiceCard key={u.id} type="radio" name="calc-upkeep" checked={upkeepId === u.id} onChange={() => setUpkeepId(u.id)}>
                       <span className="pr-6">
-                        <span className="block font-semibold leading-snug">{t(COPY.noUpkeep, locale)}</span>
-                        <span className="block text-[13px] text-muted mt-0.5">{t(COPY.noUpkeepNote, locale)}</span>
+                        <span className="block font-semibold leading-snug">{t(u.name, locale)}</span>
+                        <span className="block text-[13px] text-ink/90 mt-0.5">{t(perMonth(u.priceHuf), locale)}</span>
+                        <span className="block text-[13px] text-muted mt-1 leading-snug">{t(u.timeline, locale)}</span>
                       </span>
                     </ChoiceCard>
-                    {upkeeps.map((u) => (
-                      <ChoiceCard key={u.id} type="radio" name="calc-upkeep" checked={upkeepId === u.id} onChange={() => setUpkeepId(u.id)}>
-                        <span className="pr-6">
-                          <span className="block font-semibold leading-snug">{t(u.name, locale)}</span>
-                          <span className="block text-[13px] text-ink/90 mt-0.5">{t(perMonth(u.priceHuf), locale)}</span>
-                          <span className="block text-[13px] text-muted mt-1 leading-snug">{t(u.timeline, locale)}</span>
-                        </span>
-                      </ChoiceCard>
-                    ))}
-                  </div>
-                </>
-              )}
+                  ))}
+                </div>
             </div>
           )}
         </fieldset>

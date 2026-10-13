@@ -85,7 +85,7 @@ export default function Projects() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-5xl">
           {PROJECTS_FULL.map((p, i) => (
             <button
               key={t(p.title, locale)}
@@ -98,10 +98,11 @@ export default function Projects() {
               onFocus={preloadModal}
               aria-label={`${t(p.title, locale)} — ${t(COPY.details, locale)}`}
               style={{ transitionDelay: visible ? `${i * 120}ms` : '0ms' }}
-              /* A lone card in the last row of three sits in the middle column. */
+              /* Two columns since the 2026-10-13 trim to four demos: three
+                 columns left a lone fourth card. */
               className={`proj-card group w-full text-left card-invert border border-divider rounded-4xl overflow-hidden card-motion shadow-e2 hover:border-primary/60 hover:-translate-y-1.5 hover:shadow-e4 ${
-                i === PROJECTS_FULL.length - 1 && PROJECTS_FULL.length % 3 === 1 ? 'lg:col-start-2' : ''
-              } ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+                visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+              }`}
             >
               <TiltCard className="h-full">
                 <ProjectMock

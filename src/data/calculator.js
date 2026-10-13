@@ -13,9 +13,8 @@ import { forint, priceEn } from './fx.js'
    still a floor ("-tól"), and the section says the final price is written
    down after the first call. */
 
-const WEB = ['bemutatkozo', 'landing', 'cegoldal', 'atepites']
-const SALES = ['idopontfoglalo', 'rendeles', 'webshop', 'utalvany']
-const byId = (id) => ALL_SERVICES.find((s) => s.id === id)
+const WEB = ['bemutatkozo']
+const SALES = ['idopontfoglalo', 'napi-menu', 'rendeles']
 
 export const ADDONS = [
   {
@@ -34,19 +33,18 @@ export const ADDONS = [
     id: 'payment',
     label: { hu: 'Online bankkártyás fizetés', en: 'Card payments online' },
     flatHuf: 90000,
-    appliesTo: ['bemutatkozo', 'cegoldal', 'idopontfoglalo', 'rendeles'],
+    appliesTo: ['bemutatkozo', 'idopontfoglalo', 'rendeles'],
   },
   {
     id: 'rush',
     label: { hu: 'Sürgős: a szokásos idő feléért', en: 'Rush: in half the usual time' },
     percent: 25,
-    appliesTo: [...WEB, ...SALES, 'egyedi-rendszer', 'arajanlat', 'chatbot'],
+    appliesTo: [...WEB, ...SALES],
   },
   /* Added 2026-09-24 at the same hourly rate: keyword research and per-page
      SEO ~3 hours, image selection and editing ~2, a newsletter signup wired
-     to Brevo or Mailchimp ~2.5, automatic invoicing ~4.5 (the webshop
-     already includes it). The Google listing is the catalogue offer itself,
-     so its price comes from there rather than being typed twice. */
+     to Brevo or Mailchimp ~2.5, automatic invoicing ~4.5, the Google
+     listing set up ~4. */
   {
     id: 'seo',
     label: { hu: 'Bővített keresőoptimalizálás', en: 'Extended search optimisation' },
@@ -56,7 +54,7 @@ export const ADDONS = [
   {
     id: 'google',
     label: { hu: 'Google-cégprofil beállítása', en: 'Google Business Profile set up' },
-    flatHuf: byId('google').priceHuf,
+    flatHuf: 60000,
     appliesTo: [...WEB, ...SALES],
   },
   {
@@ -75,15 +73,14 @@ export const ADDONS = [
     id: 'invoice',
     label: { hu: 'Automatikus számlázás', en: 'Automatic invoicing' },
     flatHuf: 70000,
-    appliesTo: ['idopontfoglalo', 'rendeles', 'utalvany'],
+    appliesTo: ['idopontfoglalo', 'rendeles'],
   },
   /* Service-specific extras and the legal package, added 2026-09-24 at
      the same hourly rate: a second language as the first, a blog ~5 hours,
      a gallery ~2.5, SMS reminders ~3.75 (the texts themselves are billed by
-     the SMS provider), a two-way Google Calendar sync ~3, shipping carriers
-     ~5, loading the first fifty products ~2.5. The legal texts are filled
-     in from templates with the client's details, ~3 hours; a webshop must
-     have them, and the note says plainly that it is not a lawyer's work. */
+     the SMS provider), a two-way Google Calendar sync ~3. The legal texts
+     are filled in from templates with the client's details, ~3 hours; the
+     note says plainly that it is not a lawyer's work. */
   {
     id: 'german',
     label: { hu: 'Német nyelvű változat is', en: 'A German version too' },
@@ -94,8 +91,8 @@ export const ADDONS = [
     id: 'legal',
     label: { hu: 'Jogi szövegek: ÁSZF, adatvédelem, süti-kezelés', en: 'Legal texts: terms, privacy notice, cookies' },
     note: {
-      hu: 'Webshopnál kötelező. Sablonból, a te adataiddal; ügyvédi átnézést nem helyettesít.',
-      en: 'Required for a shop. From templates with your details; not a substitute for a lawyer.',
+      hu: 'Sablonból, a te adataiddal; ügyvédi átnézést nem helyettesít.',
+      en: 'From templates with your details; not a substitute for a lawyer.',
     },
     flatHuf: 50000,
     appliesTo: [...WEB, ...SALES],
@@ -104,7 +101,7 @@ export const ADDONS = [
     id: 'blog',
     label: { hu: 'Blog vagy hírek, amit te szerkesztesz', en: 'A blog or news page you edit' },
     flatHuf: 80000,
-    appliesTo: ['bemutatkozo', 'cegoldal', 'atepites'],
+    appliesTo: ['bemutatkozo'],
   },
   {
     id: 'gallery',
@@ -125,17 +122,58 @@ export const ADDONS = [
     flatHuf: 50000,
     appliesTo: ['idopontfoglalo'],
   },
+  /* Added 2026-10-13 at Máté's direction, at the same hourly rate, so the
+     calculator carries the options the trimmed card grid no longer does:
+     a review request after the visit ~3 hours, a calendar per staff member
+     ~4, an online deposit ~3, allergens on the menu ~2, a printable menu QR
+     ~1, delivery zones ~4, moving the old site's content across ~3. */
   {
-    id: 'shipping',
-    label: { hu: 'Szállítás bekötése (Foxpost, GLS, MPL)', en: 'Shipping set up (Foxpost, GLS, MPL)' },
-    flatHuf: 80000,
-    appliesTo: ['webshop'],
+    id: 'review',
+    label: { hu: 'Google-értékelés kérése a látogatás után', en: 'A Google review request after the visit' },
+    note: {
+      hu: 'Automatikus e-mail vagy SMS a vendégnek, az értékelés linkjével.',
+      en: 'An automatic e-mail or text to the client, with the review link.',
+    },
+    flatHuf: 50000,
+    appliesTo: ['idopontfoglalo'],
   },
   {
-    id: 'products',
-    label: { hu: 'Az első 50 termék feltöltése', en: 'The first 50 products loaded in' },
-    flatHuf: 40000,
-    appliesTo: ['webshop'],
+    id: 'staff',
+    label: { hu: 'Több munkatárs vagy szék, külön naptárral', en: 'Several staff or chairs, each with a calendar' },
+    flatHuf: 60000,
+    appliesTo: ['idopontfoglalo'],
+  },
+  {
+    id: 'deposit',
+    label: { hu: 'Foglalási előleg online', en: 'An online booking deposit' },
+    note: { hu: 'Kevesebb vendég marad el szó nélkül.', en: 'Fewer clients fail to turn up.' },
+    flatHuf: 50000,
+    appliesTo: ['idopontfoglalo'],
+  },
+  {
+    id: 'allergens',
+    label: { hu: 'Allergének és jelölések a menün', en: 'Allergens and labels on the menu' },
+    flatHuf: 30000,
+    appliesTo: ['napi-menu', 'rendeles'],
+  },
+  {
+    id: 'qr',
+    label: { hu: 'Nyomtatható QR-kód a menühöz', en: 'A printable QR code for the menu' },
+    note: { hu: 'Asztalra, ajtóra, szórólapra.', en: 'For the tables, the door, a flyer.' },
+    flatHuf: 15000,
+    appliesTo: ['napi-menu', 'rendeles'],
+  },
+  {
+    id: 'delivery',
+    label: { hu: 'Kiszállítási zónák és díjak', en: 'Delivery zones and fees' },
+    flatHuf: 60000,
+    appliesTo: ['rendeles'],
+  },
+  {
+    id: 'migration',
+    label: { hu: 'Tartalom átköltöztetése a régi oldalról', en: 'Content moved across from the old site' },
+    flatHuf: 50000,
+    appliesTo: ['bemutatkozo', 'felujitas'],
   },
 ]
 
@@ -148,20 +186,13 @@ export const CALC_SERVICES = ALL_SERVICES.filter((s) => (s.priceUnit ?? 'from') 
    system and a chatbot is one project. Every function below takes one id
    or a list of them. The one combination that makes no sense is two
    different main sites, so SITE_KINDS are mutually exclusive: picking one
-   replaces the other. */
-export const SITE_KINDS = ['bemutatkozo', 'cegoldal', 'felujitas', 'atepites']
+   replaces the other. The menu and ordering are the same kind for the same
+   reason: ordering already includes the menu. */
+export const SITE_KINDS = ['bemutatkozo', 'felujitas']
+export const MENU_KINDS = ['napi-menu', 'rendeles']
 const list = (ids) => [].concat(ids)
 
-/* The Google-profile extra is the Google catalogue offer; when that offer
-   is itself chosen, the extra would charge for it twice. */
-export const addonsFor = (ids) =>
-  ADDONS.filter((a) => list(ids).some((id) => a.appliesTo.includes(id)) && !(a.id === 'google' && list(ids).includes('google')))
-
-/* Extra pages for the multi-page builds (2026-09-24): five are in the
-   floor price, each further one ~1.5 hours at the same hourly rate. */
-export const PAGES = { appliesTo: ['cegoldal', 'atepites'], included: 5, max: 20, perPageHuf: 25000 }
-
-export const pagesApply = (ids) => list(ids).some((id) => PAGES.appliesTo.includes(id))
+export const addonsFor = (ids) => ADDONS.filter((a) => list(ids).some((id) => a.appliesTo.includes(id)))
 
 /* The estimate line by line, so the summary can show what the number is
    made of rather than asking the visitor to trust it.
@@ -172,7 +203,7 @@ export const pagesApply = (ids) => list(ids).some((id) => PAGES.appliesTo.includ
    services it covers: one card integration serves the site and the
    booking alike. Rounded up to the next 10 000 Ft: an estimate that
    pretends to be exact to the forint claims a precision it does not have. */
-export function breakdown(ids, selectedIds = [], pages = PAGES.included) {
+export function breakdown(ids, selectedIds = []) {
   const services = list(ids).map((id) => CALC_SERVICES.find((s) => s.id === id))
   if (!services.length || services.some((s) => !s)) return null
   const lines = services.map((s) => ({ id: s.id, kind: 'service', label: s.name, huf: s.priceHuf }))
@@ -181,28 +212,15 @@ export function breakdown(ids, selectedIds = [], pages = PAGES.included) {
     const base = services.filter((s) => addon.appliesTo.includes(s.id)).reduce((a, s) => a + s.priceHuf, 0)
     lines.push({ id: addon.id, kind: 'addon', label: addon.label, huf: addon.flatHuf ?? Math.round((base * addon.percent) / 100) })
   }
-  if (pagesApply(ids)) {
-    const extra = Math.min(Math.max(pages, PAGES.included), PAGES.max) - PAGES.included
-    if (extra > 0) {
-      lines.push({
-        id: 'pages',
-        kind: 'addon',
-        label: { hu: `${extra} további aloldal`, en: `${extra} more page${extra > 1 ? 's' : ''}` },
-        huf: extra * PAGES.perPageHuf,
-      })
-    }
-  }
   const sum = lines.reduce((a, l) => a + l.huf, 0)
   return { lines, total: Math.ceil(sum / 10000) * 10000 }
 }
 
-export const estimate = (ids, selectedIds, pages) => breakdown(ids, selectedIds, pages)?.total ?? null
+export const estimate = (ids, selectedIds) => breakdown(ids, selectedIds)?.total ?? null
 
 /* Upkeep is a choice in the calculator, not a line in the one-off price:
-   it is monthly and never discounted. Webshops get none here, because the
-   catalogue quotes their upkeep separately (see services.js). */
+   it is monthly and never discounted. */
 export const UPKEEP = ALL_SERVICES.filter((s) => s.priceUnit === 'month')
-export const upkeepFor = (ids) => (list(ids).includes('webshop') ? [] : UPKEEP)
 
 /* What the site costs to keep online, paid to the registrar and host in
    the client's name, not to Máté; the same range the FAQ quotes. */
