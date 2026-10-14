@@ -10,15 +10,19 @@ import napiMenu03 from '../assets/demos/napi-menu-03.webp'
 import bemutatkozoCard from '../assets/demos/bemutatkozo-card.webp'
 import bemutatkozo01 from '../assets/demos/bemutatkozo-01.webp'
 import bemutatkozo02 from '../assets/demos/bemutatkozo-02.webp'
+import bemutatkozo03 from '../assets/demos/bemutatkozo-03.webp'
 import autoszervizCard from '../assets/demos/autoszerviz-card.webp'
 import autoszerviz01 from '../assets/demos/autoszerviz-01.webp'
 import autoszerviz02 from '../assets/demos/autoszerviz-02.webp'
+import autoszerviz03 from '../assets/demos/autoszerviz-03.webp'
 import viragboltCard from '../assets/demos/viragbolt-card.webp'
 import viragbolt01 from '../assets/demos/viragbolt-01.webp'
 import viragbolt02 from '../assets/demos/viragbolt-02.webp'
+import viragbolt03 from '../assets/demos/viragbolt-03.webp'
 import masszazsCard from '../assets/demos/masszazs-card.webp'
 import masszazs01 from '../assets/demos/masszazs-01.webp'
 import masszazs02 from '../assets/demos/masszazs-02.webp'
+import masszazs03 from '../assets/demos/masszazs-03.webp'
 
 /* Demo apps live in a **separate** public repo (DEMOS) and each has its own
    Vercel project. This portfolio only stores screenshots + links.
@@ -169,18 +173,18 @@ export const PROJECTS_FULL = [
   },
   {
     title: {
-      hu: 'Kovács Villanyszerelés: bemutatkozó oldal',
-      en: 'Kovacs Electrical: one-page site',
+      hu: 'Kovács Villanyszerelés: villanyszerelő oldal',
+      en: 'Kovacs Electrical: electrician site',
     },
     text: {
-      hu: 'Bemutató egyoldalas oldal villanyszerelőnek: az ajánlatkérőben kismegszakítók felkapcsolásával választod ki a munkát. Saját kezdeményezés, nem ügyfélmunka.',
-      en: 'Demo one-page site for an electrician: in the quote form you pick the job by flipping circuit breakers. My own initiative, not client work.',
+      hu: 'Bemutató oldal villanyszerelőnek: az árak egy mérőműszer tárcsáján, előtte-utána csúszka, a munkamenet érszínekkel, az ajánlatkérőben pedig kismegszakítókat kapcsolsz fel. Saját kezdeményezés, nem ügyfélmunka.',
+      en: 'Demo site for an electrician: prices on a multimeter dial, a before and after slider, the process in wire colours, and a quote form where you flip circuit breakers. My own initiative, not client work.',
     },
     tech: ['Vite', 'HTML', 'CSS'],
     features: [
       { hu: 'Ajánlatkérő kismegszakítókkal', en: 'Quote form with circuit breakers' },
-      { hu: 'Élő státusz-LED a nyitvatartásból', en: 'Live status LED from the opening hours' },
-      { hu: 'Lighthouse mobil: 99 / 100 / 100 / 100', en: 'Mobile Lighthouse: 99 / 100 / 100 / 100' },
+      { hu: 'Árak egy mérőműszer tárcsáján', en: 'Prices on a multimeter dial' },
+      { hu: 'Előtte-utána csúszka', en: 'Before and after slider' },
     ],
     featured: false,
     label: { hu: 'Bemutató projekt', en: 'Demo project' },
@@ -216,6 +220,15 @@ export const PROJECTS_FULL = [
       {
         src: bemutatkozo02,
         alt: {
+          hu: 'A mérőműszer: a gomb a táblacserére fordítva, a kijelzőn az alsó ár és az idő',
+          en: 'The multimeter: the knob turned to a panel swap, the display shows the starting price and the time',
+        },
+        width: 1280,
+        height: 800,
+      },
+      {
+        src: bemutatkozo03,
+        alt: {
           hu: 'Elosztótábla az ajánlatkérőben: két kismegszakító felkapcsolva, a LED-jük és a leírásuk világít',
           en: 'Breaker panel in the quote form: two breakers on, their LEDs and descriptions lit',
         },
@@ -232,22 +245,22 @@ export const PROJECTS_FULL = [
       en: 'Kormos Garage: booking and quotes',
     },
     text: {
-      hu: 'Bemutató autószerviz-oldal: műhelyidő foglalása rendszámmal, árajánlatkérés a hiba leírásával, műhely nézet. Saját kezdeményezés, nem ügyfélmunka.',
-      en: 'Demo garage site: book a workshop slot by number plate, request a quote by describing the fault, workshop view. My own initiative, not client work.',
+      hu: 'Bemutató autószerviz-oldal: a műhely fehértáblája a mai emelőkkel és a következő szabad leadással, műhelyidő foglalása rendszámmal, árajánlatkérés, vizsga előtti ellenőrzőlista. Saját kezdeményezés, nem ügyfélmunka.',
+      en: 'Demo garage site: the workshop whiteboard with the lifts of the day and the next free drop-off, booking a slot by number plate, quote requests and a pre-inspection checklist. My own initiative, not client work.',
     },
     tech: ['React', 'Vite'],
     features: [
       { hu: 'Csak az a sáv látszik, amibe a munka belefér', en: 'Only slots the whole job fits into' },
       { hu: 'Rendszám-ellenőrzés (régi és új formátum)', en: 'Hungarian plate check (old and new format)' },
-      { hu: 'Foglalás és ajánlatkérés egy műhelylistában', en: 'Bookings and quote requests in one workshop list' },
+      { hu: 'Fehértábla a mai emelőkkel', en: 'Whiteboard with the lifts of the day' },
     ],
     featured: false,
     label: { hu: 'Bemutató projekt', en: 'Demo project' },
     tone: { from: '--color-card-4', to: '--color-deep', accent: '--color-primary' },
     image: autoszervizCard,
     imageAlt: {
-      hu: 'Kormos Autószerviz bemutató: papír munkalap munkákkal és árakkal, mellette egy szerelő fotója',
-      en: 'Kormos Garage demo: a paper work order with jobs and prices, next to a photo of a mechanic',
+      hu: 'Kormos Autószerviz bemutató: nagy cím a három emelőről, mellette a műhely esti fotója',
+      en: 'Kormos Garage demo: a big headline about three lifts, next to an evening photo of the workshop',
     },
     year: neutral('2026'),
     role: {
@@ -266,8 +279,8 @@ export const PROJECTS_FULL = [
       {
         src: autoszerviz01,
         alt: {
-          hu: 'Munkalap: elvégzendő munkák árral és időtartammal, mellette a műhely fotója',
-          en: 'Work order: jobs with price and duration, next to a photo of the workshop',
+          hu: 'Nyitóoldal: cím, foglalás és ajánlatkérés gomb, a műhely fotója',
+          en: 'Landing: headline, booking and quote buttons, a photo of the workshop',
         },
         width: 1280,
         height: 800,
@@ -275,8 +288,17 @@ export const PROJECTS_FULL = [
       {
         src: autoszerviz02,
         alt: {
-          hu: 'Leadási nap és időpont, alatta az autó és az ügyfél adatai a munkalapon',
-          en: 'Drop-off day and time, with the car and customer fields below on the work order',
+          hu: 'A fehértábla: három emelő rendszám-mágnesekkel állapot szerint, alul a következő szabad leadás',
+          en: 'The whiteboard: three lifts with number plate magnets by status, the next free drop-off below',
+        },
+        width: 1280,
+        height: 800,
+      },
+      {
+        src: autoszerviz03,
+        alt: {
+          hu: 'Munkalap: elvégzendő munkák árral és időtartammal, mellette egy szerelő fotója',
+          en: 'Work order: jobs with price and duration, next to a photo of a mechanic',
         },
         width: 1280,
         height: 800,
@@ -288,14 +310,14 @@ export const PROJECTS_FULL = [
   {
     title: { hu: "Pipacs Virágkötészet: csokorkötő", en: "Pipacs Florist: bouquet builder" },
     text: {
-      hu: "Bemutató virágbolt: a csokrot szálanként rakod össze a mai készletből, és élőben kötődik a kraftpapírban. A kártya szövege a masnira kötött cédulán jelenik meg. Saját kezdeményezés, nem ügyfélmunka.",
-      en: "Demo florist: you build the bouquet stem by stem from today's stock and it is tied live in kraft paper. The card text appears on a tag at the bow. My own initiative, not client work.",
+      hu: "Bemutató virágbolt: kész csokrok zsinegen, amelyek egy koppintással a csokorkötőbe kerülnek, ott szálanként rakod össze a mai készletből. Szezonnaptár és ápolási kártya. Saját kezdeményezés, nem ügyfélmunka.",
+      en: "Demo florist: ready bouquets on twine that load into the builder with one tap, where you put the bouquet together stem by stem from today's stock. A season calendar and a care card. My own initiative, not client work.",
     },
     tech: ['Vite', 'JavaScript'],
     features: [
       { hu: "Élő SVG-csokor szálanként", en: "Live SVG bouquet, stem by stem" },
-      { hu: "Mai készlet és ár szálanként", en: "Today's stock and price per stem" },
-      { hu: "Átvételi nap, vasárnap zárva", en: "Pickup day, closed on Sundays" },
+      { hu: "Kész csokrok, betölthetők a kötőbe", en: "Ready bouquets that load into the builder" },
+      { hu: "Szezonnaptár hónapokra", en: "Season calendar by month" },
     ],
     featured: false,
     label: { hu: 'Bemutató projekt', en: 'Demo project' },
@@ -324,7 +346,13 @@ export const PROJECTS_FULL = [
       },
       {
         src: viragbolt02,
-        alt: { hu: "A csokorkötő: vödrök szálárral és készlettel, mellette a kraftpapíros csokor a kártyával", en: "The builder: buckets with price per stem and stock, next to the kraft-paper bouquet with its card" },
+        alt: { hu: "Kész csokrok kraft árcédulán, zsinegre akasztva, árral és összetétellel", en: "Ready bouquets on kraft price tags hung from twine, with price and mix" },
+        width: 1280,
+        height: 800,
+      },
+      {
+        src: viragbolt03,
+        alt: { hu: "A csokorkötő egy betöltött csokorral: vödrök, a kraftpapíros csokor a kártyával és az összeg", en: "The builder with a loaded bouquet: buckets, the kraft-paper bouquet with its card and the total" },
         width: 1280,
         height: 800,
       },
@@ -335,14 +363,14 @@ export const PROJECTS_FULL = [
   {
     title: { hu: "Oldó Masszázsstúdió: „Hol fáj?”", en: "Oldo Massage Studio: where does it hurt?" },
     text: {
-      hu: "Bemutató masszázsstúdió: a testtérképen megjelölöd, hol fáj, és kezelést, időtartamot, árat és első szabad időpontot kapsz. Saját kezdeményezés, nem ügyfélmunka.",
-      en: "Demo massage studio: mark where it hurts on a body map and get a treatment, length, price and the first free slots. My own initiative, not client work.",
+      hu: "Bemutató masszázsstúdió: a testtérképen megjelölöd, hol fáj, és kezelést, árat és első szabad időpontot kapsz. Ajándékutalvány élő előnézettel, az első alkalom lépései kőrakásként. Saját kezdeményezés, nem ügyfélmunka.",
+      en: "Demo massage studio: mark where it hurts on a body map and get a treatment, price and the first free slots. A gift voucher with a live preview, and the first visit as a stack of stones. My own initiative, not client work.",
     },
     tech: ['Vite', 'JavaScript'],
     features: [
       { hu: "Testtérkép kezelésajánlással", en: "Body map that recommends a treatment" },
       { hu: "Szabad időpontok a kezelés hosszához", en: "Free slots that fit the treatment length" },
-      { hu: "Sötét, lassú, nyugodt felület", en: "Dark, slow, calm interface" },
+      { hu: "Ajándékutalvány élő előnézettel", en: "Gift voucher with a live preview" },
     ],
     featured: false,
     label: { hu: 'Bemutató projekt', en: 'Demo project' },
@@ -372,6 +400,12 @@ export const PROJECTS_FULL = [
       {
         src: masszazs02,
         alt: { hu: "A testtérkép: a váll és a derék felmelegszik, az ajánlás hát- és derékmasszázs 45 percre", en: "The body map: shoulders and lower back warm up, the recommendation is a 45-minute back massage" },
+        width: 1280,
+        height: 800,
+      },
+      {
+        src: masszazs03,
+        alt: { hu: "Ajándékutalvány: a beírt név és üzenet azonnal megjelenik a kártyán, egyéves érvényességgel", en: "Gift voucher: the name and note appear on the card as you type, valid for one year" },
         width: 1280,
         height: 800,
       },
