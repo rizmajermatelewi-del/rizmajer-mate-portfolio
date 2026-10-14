@@ -105,14 +105,14 @@ export const PROJECTS_FULL = [
       en: 'Kispipa Buffet: daily menu',
     },
     text: {
-      hu: 'Bemutató napi menü büfének: a menü betűtáblán jelenik meg, betűnként kitűzve. Elvitelre előre lehet rendelni, a pult nézetben a konyha látja a blokkokat. Saját kezdeményezés, nem ügyfélmunka.',
-      en: 'Demo daily menu for a buffet: the menu appears on a felt letterboard, pinned letter by letter. Takeaway can be ordered ahead, and the counter view shows the kitchen the slips. My own initiative, not client work.',
+      hu: 'Bemutató napi menü büfének: a mai menü betűtáblán, allergénszűrővel. Elvitelre előre lehet rendelni, minden rendelés egy pecsét a telefonos törzskártyán, a hét letéphető naptárlapokon. Saját kezdeményezés, nem ügyfélmunka.',
+      en: 'Demo daily menu for a buffet: today\'s menu on a felt letterboard, with an allergen filter. Takeaway can be ordered ahead, every order is a stamp on a loyalty card kept on the phone, and the week sits on tear-off calendar pages. My own initiative, not client work.',
     },
     tech: ['React', 'Vite'],
     features: [
-      { hu: 'Betűtábla, betűnként kitűzve', en: 'Felt letterboard, pinned letter by letter' },
-      { hu: 'Szerkesztő élő tábla-előnézettel', en: 'Editor with a live board preview' },
+      { hu: 'Betűtábla allergénszűrővel', en: 'Letterboard with an allergen filter' },
       { hu: 'Elviteles rendelés, pult nézettel', en: 'Takeaway orders with a counter view' },
+      { hu: 'Pecsétkártya, tizedik ebéd ingyen', en: 'Stamp card, the tenth lunch free' },
     ],
     featured: false,
     label: { hu: 'Bemutató projekt', en: 'Demo project' },
@@ -139,8 +139,8 @@ export const PROJECTS_FULL = [
       {
         src: napiMenu01,
         alt: {
-          hu: 'Nyitóoldal: a következő nyitvatartási nap menüje a betűtáblán',
-          en: 'Landing: the next open day\'s menu on the letterboard',
+          hu: 'Nyitóoldal: a mai menü a betűtáblán, alatta az allergénszűrő',
+          en: 'Landing: today\'s menu on the letterboard, the allergen filter below it',
         },
         width: 1280,
         height: 800,
@@ -148,8 +148,8 @@ export const PROJECTS_FULL = [
       {
         src: napiMenu02,
         alt: {
-          hu: 'Heti nézet: napválasztó fülek, a tábla minden napnál újra kirakva',
-          en: 'Week view: day tabs, the board set again for each day',
+          hu: 'A hét letéphető naptárlapokon, alatta a nyitva tábla a tűzhely fotóján',
+          en: 'The week on tear-off calendar pages, the open sign hanging on a photo of the stove below',
         },
         width: 1280,
         height: 800,
@@ -157,8 +157,8 @@ export const PROJECTS_FULL = [
       {
         src: napiMenu03,
         alt: {
-          hu: 'Szerkesztő: az űrlap mellett élőben látszik, hogyan kerül ki a menü a táblára',
-          en: 'Editor: next to the form, a live preview of the menu on the board',
+          hu: 'Pecsétkártya: tíz kör, a tizedik ebéd ingyen, alatta a hét ételei fotón',
+          en: 'Stamp card: ten circles, the tenth lunch free, with photos of the week\'s dishes below',
         },
         width: 1280,
         height: 800,
