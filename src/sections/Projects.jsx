@@ -41,6 +41,13 @@ const COPY = {
 const ProjectModal = lazy(() => import('../components/ProjectModal'))
 const preloadModal = () => import('../components/ProjectModal')
 
+// Last card alone on its row: 2 columns from sm, 3 from lg (the grid below).
+const N = PROJECTS_FULL.length
+const lone2 = (i) => i === N - 1 && N % 2 === 1
+const lone3 = (i) => i === N - 1 && N % 3 === 1
+const wideClass = (i) => [lone2(i) && 'sm:col-span-2', lone3(i) ? 'lg:col-span-3' : lone2(i) && 'lg:col-span-1'].filter(Boolean).join(' ')
+const wideInner = (i) => [lone2(i) && 'sm:grid sm:grid-cols-2 sm:items-center', !lone3(i) && lone2(i) && 'lg:block'].filter(Boolean).join(' ')
+
 export default function Projects() {
   const locale = useLocale()
   const [sectionRef, visible] = useInView(0.1)
@@ -103,13 +110,14 @@ export default function Projects() {
               onFocus={preloadModal}
               aria-label={`${t(p.title, locale)}, ${t(COPY.details, locale)}`}
               style={{ transitionDelay: visible ? `${i * 120}ms` : '0ms' }}
-              /* Six demos since 2026-10-13: three columns on desktop, two on
-                 a tablet, so neither leaves a lone card. */
-              className={`proj-card group w-full text-left card-invert border border-divider rounded-4xl overflow-hidden card-motion shadow-e2 hover:border-primary/60 hover:-translate-y-1.5 hover:shadow-e4 ${
+              /* A card that would sit alone on the last row spans the row
+                 instead, image beside text, so the grid never ends on an
+                 orphan (seven cards since 2026-10-16). */
+              className={`proj-card group w-full text-left ${wideClass(i)} card-invert border border-divider rounded-4xl overflow-hidden card-motion shadow-e2 hover:border-primary/60 hover:-translate-y-1.5 hover:shadow-e4 ${
                 visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
               }`}
             >
-              <div className="h-full">
+              <div className={`h-full ${wideInner(i)}`}>
                 <ProjectMock
                   tone={p.tone}
                   image={p.image}

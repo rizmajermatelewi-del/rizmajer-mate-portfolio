@@ -23,6 +23,10 @@ import masszazsCard from '../assets/demos/masszazs-card.webp'
 import masszazs01 from '../assets/demos/masszazs-01.webp'
 import masszazs02 from '../assets/demos/masszazs-02.webp'
 import masszazs03 from '../assets/demos/masszazs-03.webp'
+import szallasCard from '../assets/demos/szallas-card.webp'
+import szallas01 from '../assets/demos/szallas-01.webp'
+import szallas02 from '../assets/demos/szallas-02.webp'
+import szallas03 from '../assets/demos/szallas-03.webp'
 
 /* Demo apps live in a **separate** public repo (DEMOS) and each has its own
    Vercel project. This portfolio only stores screenshots + links.
@@ -412,6 +416,59 @@ export const PROJECTS_FULL = [
     ],
     github: DEMOS_REPO_READY ? `${DEMOS_REPO}/tree/main/masszazs` : '#',
     live: 'https://demo-masszazs.vercel.app',
+  },
+  {
+    title: { hu: 'Diófa Vendégház: kulcstábla és közvetlen foglalás', en: 'Diofa Guesthouse: a key rack and direct booking' },
+    text: {
+      hu: 'Bemutató vendégház: a recepciós kulcstáblán csak a kiválasztott napokra szabad szobák kulcsa lóg, az ár IFA-val együtt számolódik, és egymás mellett látszik, mennyivel olcsóbb közvetlenül foglalni, mint portálon. Saját kezdeményezés, nem ügyfélmunka.',
+      en: 'Demo guesthouse: only the keys of rooms free on the chosen dates hang on the reception key rack, the price includes the tourist tax, and the direct price sits next to the portal price. My own initiative, not client work.',
+    },
+    tech: ['Vite', 'JavaScript'],
+    features: [
+      { hu: 'Kulcstábla a szabad szobákkal', en: 'Key rack of the free rooms' },
+      { hu: 'Portálár és közvetlen ár egymás mellett', en: 'Portal price next to the direct price' },
+      { hu: 'Foglalási kérés SZÉP-kártyás előleggel', en: 'Booking request with a SZEP card deposit' },
+    ],
+    featured: false,
+    label: { hu: 'Bemutató projekt', en: 'Demo project' },
+    tone: { from: '--color-card-1', to: '--color-deep', accent: '--color-primary' },
+    image: szallasCard,
+    imageAlt: {
+      hu: 'Diófa Vendégház bemutató: fedett tornác hosszú fa asztallal, mellette a nagy zöld cím és a dióbarna recepciós pult a dátummal és a létszámmal',
+      en: 'Diofa Guesthouse demo: a covered porch with a long wooden table, the large green name and the walnut reception desk with dates and guests',
+    },
+    year: neutral('2026'),
+    role: { hu: 'Tervezés, fejlesztés, deploy', en: 'Design, build, deploy' },
+    problem: {
+      hu: 'Egy kis vendégház a vendégei nagy részét portálokon kapja, és minden foglalás után kb. 15% jutalékot fizet. A saját oldala többnyire csak fotógaléria telefonszámmal: nem látszik, van-e szabad szoba, mennyibe kerül, és miért érné meg közvetlenül foglalni.',
+      en: 'A small guesthouse gets most guests through booking portals and pays about 15% commission on each. Its own site is usually a photo gallery with a phone number: no availability, no price, no reason to book direct.',
+    },
+    solution: {
+      hu: 'A dátum, a létszám és a kutya alapján csak a jó szobák kulcsa lóg a táblán, a foglaltaknál krétával ott van, mikortól szabadok. A szállásjegy soronként számol, az IFA-t csak a felnőttekre. Ha semmi sem jó, egy gomb az első szabad napra ugrik. A kérés végén látszik, mit kap a vendég, és mit lát a gazda: jutalék 0 Ft. A számolás tesztelt modul.',
+      en: 'Given the dates, guests and a dog, only the keys of suitable rooms hang; booked hooks say in chalk when they free up. The ticket prices line by line, with tourist tax for adults only. If nothing fits, one button jumps to the first free date. The request ends by showing what the guest gets and what the owner sees: zero commission. The pricing is a tested module.',
+    },
+    gallery: [
+      {
+        src: szallas01,
+        alt: { hu: 'Nyitóoldal: a tornác fotója, a Diófa Vendégház cím és a recepciós pult érkezéssel, éjszakákkal és létszámmal', en: 'Landing: the porch photo, the Diofa Guesthouse name and the reception desk with arrival, nights and guests' },
+        width: 1280,
+        height: 800,
+      },
+      {
+        src: szallas02,
+        alt: { hu: 'A kulcstábla: két szabad kulcs sárgaréz címkével, két üres kampó krétával, hogy mikortól szabad, mellette a padlásszoba', en: 'The key rack: two free keys with brass tags, two empty hooks with chalk notes on when they free up, and the attic room beside it' },
+        width: 1280,
+        height: 800,
+      },
+      {
+        src: szallas03,
+        alt: { hu: 'Elküldött kérés: a vendég visszaigazoló e-mailje és a gazda telefonos nézete, jutalék 0 Ft', en: 'Request sent: the guest confirmation e-mail and the owner phone view, zero commission' },
+        width: 1280,
+        height: 800,
+      },
+    ],
+    github: DEMOS_REPO_READY ? `${DEMOS_REPO}/tree/main/szallas` : '#',
+    live: 'https://demo-szallas.vercel.app',
   },
 ]
 
