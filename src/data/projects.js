@@ -27,6 +27,38 @@ import szallasCard from '../assets/demos/szallas-card.webp'
 import szallas01 from '../assets/demos/szallas-01.webp'
 import szallas02 from '../assets/demos/szallas-02.webp'
 import szallas03 from '../assets/demos/szallas-03.webp'
+import kavezoCard from '../assets/demos/kavezo-card.webp'
+import kavezo01 from '../assets/demos/kavezo-01.webp'
+import kavezo02 from '../assets/demos/kavezo-02.webp'
+import kavezo03 from '../assets/demos/kavezo-03.webp'
+import ajandekboltCard from '../assets/demos/ajandekbolt-card.webp'
+import ajandekbolt01 from '../assets/demos/ajandekbolt-01.webp'
+import ajandekbolt02 from '../assets/demos/ajandekbolt-02.webp'
+import ajandekbolt03 from '../assets/demos/ajandekbolt-03.webp'
+import javitoCard from '../assets/demos/javito-card.webp'
+import javito01 from '../assets/demos/javito-01.webp'
+import javito02 from '../assets/demos/javito-02.webp'
+import javito03 from '../assets/demos/javito-03.webp'
+import bicikliCard from '../assets/demos/bicikli-card.webp'
+import bicikli01 from '../assets/demos/bicikli-01.webp'
+import bicikli02 from '../assets/demos/bicikli-02.webp'
+import bicikli03 from '../assets/demos/bicikli-03.webp'
+import optikaCard from '../assets/demos/optika-card.webp'
+import optika01 from '../assets/demos/optika-01.webp'
+import optika02 from '../assets/demos/optika-02.webp'
+import optika03 from '../assets/demos/optika-03.webp'
+import allatorvosCard from '../assets/demos/allatorvos-card.webp'
+import allatorvos01 from '../assets/demos/allatorvos-01.webp'
+import allatorvos02 from '../assets/demos/allatorvos-02.webp'
+import allatorvos03 from '../assets/demos/allatorvos-03.webp'
+import ugyvedCard from '../assets/demos/ugyved-card.webp'
+import ugyved01 from '../assets/demos/ugyved-01.webp'
+import ugyved02 from '../assets/demos/ugyved-02.webp'
+import ugyved03 from '../assets/demos/ugyved-03.webp'
+import tetovaloCard from '../assets/demos/tetovalo-card.webp'
+import tetovalo01 from '../assets/demos/tetovalo-01.webp'
+import tetovalo02 from '../assets/demos/tetovalo-02.webp'
+import tetovalo03 from '../assets/demos/tetovalo-03.webp'
 
 /* Demo apps live in a **separate** public repo (DEMOS) and each has its own
    Vercel project. This portfolio only stores screenshots + links.
@@ -469,6 +501,430 @@ export const PROJECTS_FULL = [
     ],
     github: DEMOS_REPO_READY ? `${DEMOS_REPO}/tree/main/szallas` : '#',
     live: 'https://demo-szallas.vercel.app',
+  },
+  {
+    title: { hu: 'Szemközt kávézó és borbár: nappal kávé, este bor', en: 'Szemkozt cafe and wine bar: coffee by day, wine at night' },
+    text: {
+      hu: 'Bemutató kávézó, ami este borbár: a nap ívén húzott idő átváltja az oldalt nappaliból estébe, és vele a kínálatot is. Az esti programokra szabad hellyel lehet asztalt kérni. Saját kezdeményezés, nem ügyfélmunka.',
+      en: 'Demo cafe that turns into a wine bar at night: dragging the sun along its arc switches the whole page from day to evening, menu included. Tables for the evening events can be requested with live seat counts. My own initiative, not client work.',
+    },
+    tech: ['Vite', 'JavaScript'],
+    features: [
+      { hu: 'Napszak-tárcsa, ami az egész oldalt átszínezi', en: 'A daypart dial that recolours the whole page' },
+      { hu: 'Kínálat a választott napszakra', en: 'The menu for the chosen time of day' },
+      { hu: 'Esti programok szabad hellyel, asztalkérés', en: 'Evening events with seats left, table requests' },
+    ],
+    featured: false,
+    label: { hu: 'Bemutató projekt', en: 'Demo project' },
+    tone: { from: '--color-card-2', to: '--color-deep', accent: '--color-primary' },
+    image: kavezoCard,
+    imageAlt: {
+      hu: 'Szemközt bemutató: a kávézó világos fotója, a nagy cím és a napszak-tárcsa, a nap az ív elején',
+      en: 'Szemkozt demo: the bright cafe photo, the large headline and the daypart dial with the sun early on its arc',
+    },
+    year: neutral('2026'),
+    role: { hu: 'Tervezés, fejlesztés, deploy', en: 'Design, build, deploy' },
+    problem: {
+      hu: 'Egy kávézó, ami este borbár, valójában két hely: reggel a kávét keresik, este a bort és a programot. Egy átlagos oldal mindkettőt egyszerre mutatja, így egyik sem jön át, és az esti asztalokat telefonon foglalják, ha egyáltalán.',
+      en: 'A cafe that becomes a wine bar at night is really two places: people look for coffee in the morning and for wine and events in the evening. A typical site shows both at once, so neither lands, and evening tables get booked by phone, if at all.',
+    },
+    solution: {
+      hu: 'A nyitóoldal teljes képernyős fotója a választott időponthoz úszik át nappaliból estébe; a tárcsa egy ív, amin a nap (este a hold) halad. A kínálat csak napszakváltáskor rajzolódik újra. A programoknál látszik, hány hely maradt, és a kérés a pult nézetével zárul. A nyitvatartás és a programok tesztelt modulból jönnek.',
+      en: 'The full-screen landing photo fades from day to evening with the chosen time; the dial is an arc the sun (the moon at night) travels along. The menu redraws only when the daypart changes. Events show the seats left, and a request ends on the bar view. Opening hours and events come from a tested module.',
+    },
+    gallery: [
+      {
+        src: kavezo01,
+        alt: { hu: 'Nyitóoldal reggel tízkor: a kávézó fotója, a nap az íven', en: 'Landing at 10 am: the cafe photo, the sun on the arc' },
+        width: 1280,
+        height: 800,
+      },
+      {
+        src: kavezo02,
+        alt: { hu: 'Ugyanez este fél tízkor: a borbár fotója, a hold az íven', en: 'The same at 9:30 pm: the wine bar photo, the moon on the arc' },
+        width: 1280,
+        height: 800,
+      },
+      {
+        src: kavezo03,
+        alt: { hu: 'Esti programok szabad hellyel és az asztalkérő űrlap', en: 'Evening events with seats left and the table request form' },
+        width: 1280,
+        height: 800,
+      },
+    ],
+    github: DEMOS_REPO_READY ? `${DEMOS_REPO}/tree/main/kavezo` : '#',
+    live: 'https://demo-kavezo.vercel.app',
+  },
+  {
+    title: { hu: 'Masni Ajándékbolt: ajándék, amit nem kell kitalálni', en: 'Masni gift shop: gifts you do not have to guess' },
+    text: {
+      hu: 'Bemutató ajándékbolt: a nyitóoldal ajándéka betöltéskor becsomagolja magát, kattintásra kibomlik, és kiugrik belőle három ajánlat a polcról. Az ajándékkereső a készletből ajánl, a csomagolás és a kártya élőben látszik, a bolt félreteszi. Saját kezdeményezés, nem ügyfélmunka.',
+      en: 'Demo gift shop: the landing present wraps itself on load and pops open on a click with three picks from the shelf. The gift finder suggests from stock, the wrap and card show live, and the shop holds the gift. My own initiative, not client work.',
+    },
+    tech: ['Vite', 'JavaScript'],
+    features: [
+      { hu: 'Kibomló ajándék három ajánlattal', en: 'A present that opens with three picks' },
+      { hu: 'Ajándékkereső: kinek, mire, mennyiért', en: 'Gift finder: who for, what for, how much' },
+      { hu: 'Csomagolás, kártya, félretétel kóddal', en: 'Wrapping, card and a hold code' },
+    ],
+    featured: false,
+    label: { hu: 'Bemutató projekt', en: 'Demo project' },
+    tone: { from: '--color-card-3', to: '--color-deep', accent: '--color-primary' },
+    image: ajandekboltCard,
+    imageAlt: {
+      hu: 'Masni bemutató: kraftpapír asztal, a nagy cím és a becsomagolt ajándék két polaroid fotó között',
+      en: 'Masni demo: a kraft paper table, the big headline and the wrapped present between two polaroids',
+    },
+    year: neutral('2026'),
+    role: { hu: 'Tervezés, fejlesztés, deploy', en: 'Design, build, deploy' },
+    problem: {
+      hu: 'Aki ajándékot keres, nem terméket keres, hanem ötletet. Egy kis bolt oldala többnyire csak fotókat és nyitvatartást mutat, így a vásárló nem tudja meg, van-e jó ötletük a keretéhez, és inkább webáruházban rendel.',
+      en: 'Someone buying a gift wants an idea, not a product. A small shop site usually shows photos and opening hours, so the shopper never learns whether there is something for their budget, and orders online instead.',
+    },
+    solution: {
+      hu: 'Három kérdésből (kinek, mire, mennyiért) a valós készletből ajánl, az elfogyottat jelzi. A választott ajándék egy CSS-ből rajzolt csomagon élőben változik a papírral és a kártya szövegével, a végén egy rövid kóddal a következő zárásig félreteszik. Az ajánlás és a félretétel tesztelt modul.',
+      en: 'Three questions (who for, what for, how much) suggest from real stock and flag what sold out. The chosen gift is drawn as a CSS present that changes live with the paper and the card text, and a short code holds it until the next closing. Suggestions and holds are a tested module.',
+    },
+    gallery: [
+      {
+        src: ajandekbolt01,
+        alt: { hu: 'Nyitóoldal: a becsomagolt ajándék a két polaroid között', en: 'Landing: the wrapped present between the two polaroids' },
+        width: 1280,
+        height: 800,
+      },
+      {
+        src: ajandekbolt02,
+        alt: { hu: 'A kibontott ajándék: leugrott a fedél, kiugrott három ajánlat', en: 'The opened present: the lid flies off and three picks pop out' },
+        width: 1280,
+        height: 800,
+      },
+      {
+        src: ajandekbolt03,
+        alt: { hu: 'Becsomagoljuk: a rajzolt csomag a kártyával, a csomagolások és az összeg', en: 'Wrapping: the drawn present with its card, the wrap options and the total' },
+        width: 1280,
+        height: 800,
+      },
+    ],
+    github: DEMOS_REPO_READY ? `${DEMOS_REPO}/tree/main/ajandekbolt` : '#',
+    live: 'https://demo-ajandekbolt.vercel.app',
+  },
+  {
+    title: { hu: 'Csavar Szerviz: mutassa meg, hol fáj neki', en: 'Csavar repair shop: show where it hurts' },
+    text: {
+      hu: 'Bemutató telefon- és számítógép-szerviz: a nyitóoldalon egy szétszedett telefon rétegei a hibák. A rossz részre bökve ott látszik az ár és hogy mikorra kész, a javítás munkalapszámmal követhető, és van nyomtatási kalkulátor. Saját kezdeményezés, nem ügyfélmunka.',
+      en: 'Demo phone and computer repair shop: the landing shows a phone taken apart, and every layer is a fault. Tapping the broken part shows the price and the ready date right there; repairs can be tracked by job number, and there is a print calculator. My own initiative, not client work.',
+    },
+    tech: ['Vite', 'JavaScript'],
+    features: [
+      { hu: 'Szétszerelt telefon, minden réteg egy hiba', en: 'A phone taken apart, each layer a fault' },
+      { hu: 'Árbecslés hőpapír-nyugtán', en: 'An estimate on a thermal receipt' },
+      { hu: 'Munkalap-követés pecsétekkel', en: 'Job tracking with stamps' },
+    ],
+    featured: false,
+    label: { hu: 'Bemutató projekt', en: 'Demo project' },
+    tone: { from: '--color-card-4', to: '--color-deep', accent: '--color-primary' },
+    image: javitoCard,
+    imageAlt: {
+      hu: 'Csavar bemutató: sötét műhelyasztal, a cím és a szétszerelt telefon rétegei',
+      en: 'Csavar demo: a dark workbench, the headline and the phone layers pulled apart',
+    },
+    year: neutral('2026'),
+    role: { hu: 'Tervezés, fejlesztés, deploy', en: 'Design, build, deploy' },
+    problem: {
+      hu: 'A szervizbe telefonálók első két kérdése mindig ugyanaz: mennyi és mikorra. A legtöbb szerviz oldala erre nem felel, ezért a telefon egész nap cseng, és aki nem éri el őket, a következő szervizt hívja.',
+      en: 'The first two questions anyone calls a repair shop with are always the same: how much and by when. Most shop sites do not answer them, so the phone rings all day, and whoever cannot get through calls the next shop.',
+    },
+    solution: {
+      hu: 'CSS-3D-ben szétnyíló telefon: a kijelző, a keret a töltővel, az alaplap, az akkumulátor és a hátlap egy-egy hiba. A választott réteg fiókként kicsúszik, mellette az ársáv és az elkészülés napja. A teljes becslés eszközre és márkára is számol, hőpapír-nyugta formában. A becslés, a munkalap és a nyomtatás tesztelt modul.',
+      en: 'A CSS 3D phone pulls apart: the screen, the frame with the charging port, the board, the battery and the back are one fault each. The chosen layer slides out like a drawer, with the price range and ready date beside it. The full estimate also covers device and brand, printed as a thermal receipt. Estimates, job tracking and printing are a tested module.',
+    },
+    gallery: [
+      {
+        src: javito01,
+        alt: { hu: 'Nyitóoldal: a kijelző kiválasztva, mellette ár és határidő', en: 'Landing: the screen selected, with price and ready date' },
+        width: 1280,
+        height: 800,
+      },
+      {
+        src: javito02,
+        alt: { hu: 'Az akkumulátor fiókként kicsúszott a kötegből, alatta az ára', en: 'The battery slid out of the stack like a drawer, its price below' },
+        width: 1280,
+        height: 800,
+      },
+      {
+        src: javito03,
+        alt: { hu: 'Árbecslés: eszköz, márka és hiba, jobbra a nyugta', en: 'Estimate: device, brand and fault, the receipt on the right' },
+        width: 1280,
+        height: 800,
+      },
+    ],
+    github: DEMOS_REPO_READY ? `${DEMOS_REPO}/tree/main/javito` : '#',
+    live: 'https://demo-javito.vercel.app',
+  },
+  {
+    title: { hu: 'Küllő Kerékpárszerviz: bökjön rá, mi nem jó rajta', en: 'Kullo bike service: point at what is wrong' },
+    text: {
+      hu: 'Bemutató kerékpárszerviz: a bicikli rajzán kell rábökni a rossz részre, abból áll össze a munkalap árral és idővel. A rajz görgetésre forog, a kiválasztott alkatrészre nagyít, a leadásnál csak az a nap választható, ahová a munka belefér. Saját kezdeményezés, nem ügyfélmunka.',
+      en: 'Demo bike service: tap the broken part on the bike drawing and the work order builds itself with price and time. The drawing spins with the scroll and zooms to the chosen part, and drop-off only offers days the job fits into. My own initiative, not client work.',
+    },
+    tech: ['Vite', 'JavaScript'],
+    features: [
+      { hu: 'Kattintható bicikli-rajz alkatrészenként', en: 'A clickable bike drawing, part by part' },
+      { hu: 'Munkalap, ahol a csomag elnyeli a beállításokat', en: 'A work order where packages absorb the adjustments' },
+      { hu: 'Leadás a szabad szerelőidő szerint', en: 'Drop-off by free mechanic time' },
+    ],
+    featured: false,
+    label: { hu: 'Bemutató projekt', en: 'Demo project' },
+    tone: { from: '--color-card-1', to: '--color-deep', accent: '--color-primary' },
+    image: bicikliCard,
+    imageAlt: {
+      hu: 'Küllő bemutató: sötétkék oldal, a nagy cím és a bicikli rajza számozott pontokkal',
+      en: 'Kullo demo: a navy page, the big headline and the bike drawing with numbered points',
+    },
+    year: neutral('2026'),
+    role: { hu: 'Tervezés, fejlesztés, deploy', en: 'Design, build, deploy' },
+    problem: {
+      hu: 'Aki elviszi a biciklijét, többnyire nem tudja, hogy hívják a rossz alkatrészt, és mennyi idő lesz. A szerviz telefonon próbálja kitalálni, a műhelyben pedig egymásra torlódnak a munkák.',
+      en: 'Most people bringing a bike in do not know what the broken part is called or how long it takes. The shop guesses over the phone, and jobs pile up in the workshop.',
+    },
+    solution: {
+      hu: 'Öt pont a rajzon (kerék, fék, lánc, váltó, kormány), mindegyik a saját munkáit kínálja; a kiválasztottakból munkalap lesz árral és szerelőidővel, egy csomag elnyeli a benne lévő beállításokat. A leadási napoknál látszik a szabad szerelőidő, és csak az a nap választható, ahová belefér. A számolás tesztelt modul.',
+      en: 'Five points on the drawing (wheel, brake, chain, gears, bars), each offering its own jobs; the chosen ones make a work order with price and mechanic time, and a package absorbs the adjustments it includes. Drop-off days show free mechanic time and only the ones the job fits into can be picked. The pricing is a tested module.',
+    },
+    gallery: [
+      {
+        src: bicikli01,
+        alt: { hu: 'Nyitóoldal: a kerék kiválasztva, mellette a munkái', en: 'Landing: the wheel selected, its jobs beside it' },
+        width: 1280,
+        height: 800,
+      },
+      {
+        src: bicikli02,
+        alt: { hu: 'A kormány kiválasztva: a rajz rá nagyít, mellette a munkák és árak', en: 'The bars selected: the drawing zooms in, jobs and prices beside it' },
+        width: 1280,
+        height: 800,
+      },
+      {
+        src: bicikli03,
+        alt: { hu: 'Munkalap és a leadási napok szabad szerelőidővel', en: 'The work order and drop-off days with free mechanic time' },
+        width: 1280,
+        height: 800,
+      },
+    ],
+    github: DEMOS_REPO_READY ? `${DEMOS_REPO}/tree/main/bicikli` : '#',
+    live: 'https://demo-bicikli.vercel.app',
+  },
+  {
+    title: { hu: 'Lencse Optika: ha a legalsó sort is el tudta olvasni', en: 'Lencse opticians: if you could read the bottom line' },
+    text: {
+      hu: 'Bemutató optika: a nyitóoldal egy homályos szemtábla, amit egy húzható lencse alatt élesen látni. A recept számait emberi nyelven magyarázza, lencsét ajánl hozzá árral, és arcformához mutat keretet. Saját kezdeményezés, nem ügyfélmunka.',
+      en: 'Demo opticians: the landing is a blurred eye chart that turns sharp under a draggable loupe. It explains the prescription numbers in plain language, recommends a lens with a price, and suggests frames for a face shape. My own initiative, not client work.',
+    },
+    tech: ['Vite', 'JavaScript'],
+    features: [
+      { hu: 'Húzható lencse a homályos táblán', en: 'A draggable loupe on the blurred chart' },
+      { hu: 'Recept emberi nyelven, lencseajánlással', en: 'The prescription in plain words, with a lens pick' },
+      { hu: 'Keretpróba arcformához, 20 perces vizsgálat', en: 'Frames for a face shape, a 20-minute eye exam' },
+    ],
+    featured: false,
+    label: { hu: 'Bemutató projekt', en: 'Demo project' },
+    tone: { from: '--color-card-2', to: '--color-deep', accent: '--color-primary' },
+    image: optikaCard,
+    imageAlt: {
+      hu: 'Lencse bemutató: homályos szemtábla nagyítóval, bal oldalt a cím',
+      en: 'Lencse demo: a blurred eye chart with a loupe, the headline on the left',
+    },
+    year: neutral('2026'),
+    role: { hu: 'Tervezés, fejlesztés, deploy', en: 'Design, build, deploy' },
+    problem: {
+      hu: 'A szemüvegrecept a legtöbb embernek érthetetlen számsor, és fogalma sincs, mennyibe kerül majd a lencse. Az optikák oldala ritkán segít ebben, így az árat csak a pultnál tudja meg.',
+      en: 'To most people a prescription is a meaningless row of numbers, with no idea what the lenses will cost. Optician sites rarely help, so the price is first heard at the counter.',
+    },
+    solution: {
+      hu: 'A tábla két rétegben van: egy elmosott és egy éles másolat, amit a lencse körbe vág; a lencse egérrel, ujjal és nyilakkal is mozgatható. A recept-űrlap negyedes lépésben kér, és soronként elmondja, mit jelent; a dioptria alapján lencseindexet és párárat ajánl. A magyarázat és az ajánlás tesztelt modul.',
+      en: 'The chart has two layers: a blurred one and a sharp copy the loupe cuts a circle out of; it moves by mouse, finger or arrow keys. The prescription form takes quarter steps and explains each line; from the power it recommends a lens index and a pair price. The explanation and the recommendation are a tested module.',
+    },
+    gallery: [
+      {
+        src: optika01,
+        alt: { hu: 'Nyitóoldal: a homályos tábla, a lencse alatt élesen', en: 'Landing: the blurred chart, sharp under the loupe' },
+        width: 1280,
+        height: 800,
+      },
+      {
+        src: optika02,
+        alt: { hu: 'Recept emberi nyelven: OD és OS értékek, magyarázat és lencseajánlás', en: 'The prescription in plain words: OD and OS values, explanation and lens pick' },
+        width: 1280,
+        height: 800,
+      },
+      {
+        src: optika03,
+        alt: { hu: 'Keretpróba: arcforma, keretek és a rajzolt arc szemüveggel', en: 'Frame try-on: face shape, frames and the drawn face wearing them' },
+        width: 1280,
+        height: 800,
+      },
+    ],
+    github: DEMOS_REPO_READY ? `${DEMOS_REPO}/tree/main/optika` : '#',
+    live: 'https://demo-optika.vercel.app',
+  },
+  {
+    title: { hu: 'Mancs Állatorvosi Rendelő: mikor kell a következő oltás?', en: 'Mancs vet clinic: when is the next shot due?' },
+    text: {
+      hu: 'Bemutató állatorvosi rendelő: a nyitóoldalon egy növekedési vonalzó, amin a kölyök az életkorral halad és nő, az oltások pedig mancsként telnek be. A teljes oltási naptár a születési dátumból számol, és SMS-emlékeztetőt lehet kérni. Saját kezdeményezés, nem ügyfélmunka.',
+      en: 'Demo vet clinic: the landing has a growth ruler where the puppy moves and grows with age and the vaccinations fill in as paws. The full schedule is built from the birth date, and an SMS reminder can be requested. My own initiative, not client work.',
+    },
+    tech: ['Vite', 'JavaScript'],
+    features: [
+      { hu: 'Növekedési vonalzó az oltásokkal', en: 'A growth ruler with the vaccinations' },
+      { hu: 'Oltási naptár a születési dátumból', en: 'A vaccination schedule from the birth date' },
+      { hu: 'SMS-emlékeztető és ügyeleti állapot', en: 'SMS reminders and on-call status' },
+    ],
+    featured: false,
+    label: { hu: 'Bemutató projekt', en: 'Demo project' },
+    tone: { from: '--color-card-3', to: '--color-deep', accent: '--color-primary' },
+    image: allatorvosCard,
+    imageAlt: {
+      hu: 'Mancs bemutató: mentazöld oldal, a cím és a növekedési vonalzó a kölyökkel',
+      en: 'Mancs demo: a mint page, the headline and the growth ruler with the puppy',
+    },
+    year: neutral('2026'),
+    role: { hu: 'Tervezés, fejlesztés, deploy', en: 'Design, build, deploy' },
+    problem: {
+      hu: 'A gazdák nagy része nem tudja fejből, mikor esedékes a következő oltás, és a kötelező veszettség elleni oltás könnyen elcsúszik. A rendelő telefonon emlékeztet, ha egyáltalán.',
+      en: 'Most owners do not know offhand when the next shot is due, and the mandatory rabies shot easily slips. The clinic reminds them by phone, if at all.',
+    },
+    solution: {
+      hu: 'A vonalzó négyzetgyökös léptékű, hogy a sűrű első hónapok is olvashatók legyenek; a kép, a csúszka és a mancsok ugyanazon a skálán vannak. Kutya és macska külön tervet kap. A naptár a múltbeli oltásokat elmaradtnak jelzi, amíg nincs bepipálva, az évente ismétlődőknél a következőt mutatja. A terv és az emlékeztető napja tesztelt modul.',
+      en: 'The ruler uses a square-root scale so the busy first months stay readable; the photo, the slider and the paws share that scale. Dogs and cats get their own plans. The schedule marks past shots as missed until ticked and shows the next one for yearly repeats. The plan and the reminder date are a tested module.',
+    },
+    gallery: [
+      {
+        src: allatorvos01,
+        alt: { hu: '8 hetes kölyök a vonalzón: következik a második kombinált oltás', en: 'An 8-week-old puppy on the ruler: the second combined shot is next' },
+        width: 1280,
+        height: 800,
+      },
+      {
+        src: allatorvos02,
+        alt: { hu: '8 hónapos kölyök: nagyobb kép, öt oltás bepecsételve', en: 'An 8-month-old puppy: a bigger photo, five shots stamped' },
+        width: 1280,
+        height: 800,
+      },
+      {
+        src: allatorvos03,
+        alt: { hu: 'Oltási naptár: elmaradt, hamarosan esedékes és későbbi oltások', en: 'The schedule: missed, due soon and later shots' },
+        width: 1280,
+        height: 800,
+      },
+    ],
+    github: DEMOS_REPO_READY ? `${DEMOS_REPO}/tree/main/allatorvos` : '#',
+    live: 'https://demo-allatorvos.vercel.app',
+  },
+  {
+    title: { hu: 'Dr. Halmi Ügyvédi Iroda: előre megmondjuk, mennyi és meddig', en: 'Dr. Halmi law office: cost and time, up front' },
+    text: {
+      hu: 'Bemutató ügyvédi iroda: a nyitóoldalon egy dosszié, ügytípusonként egy füllel. A fül előre hozza az aktát a várható díjjal és időtartammal, alatta kinyomtatható „hozza magával” lista és konzultációfoglalás. Saját kezdeményezés, nem ügyfélmunka.',
+      en: 'Demo law office: the landing is a case file with a tab per case type. A tab brings that file forward with the expected fee and duration, followed by a printable bring-along checklist and consultation booking. My own initiative, not client work.',
+    },
+    tech: ['Vite', 'JavaScript'],
+    features: [
+      { hu: 'Dosszié ügytípusonként fülekkel', en: 'A case file with a tab per case type' },
+      { hu: 'Díj és időtartam előre', en: 'Fee and duration up front' },
+      { hu: '„Hozza magával” lista és konzultáció', en: 'A bring-along checklist and a consultation' },
+    ],
+    featured: false,
+    label: { hu: 'Bemutató projekt', en: 'Demo project' },
+    tone: { from: '--color-card-4', to: '--color-deep', accent: '--color-primary' },
+    image: ugyvedCard,
+    imageAlt: {
+      hu: 'Dr. Halmi bemutató: borvörös asztal, a cím és a dosszié hat füllel',
+      en: 'Dr. Halmi demo: an oxblood desk, the headline and the case file with six tabs',
+    },
+    year: neutral('2026'),
+    role: { hu: 'Tervezés, fejlesztés, deploy', en: 'Design, build, deploy' },
+    problem: {
+      hu: 'Ügyvédhez a legtöbben úgy mennek, hogy nem tudják, mennyibe kerül és meddig tart, és az első találkozóra a fele irat hiányzik. Az irodák oldala többnyire csak szakterületeket sorol.',
+      en: 'Most people go to a lawyer without knowing the cost or how long it takes, and half the papers are missing at the first meeting. Most office sites only list practice areas.',
+    },
+    solution: {
+      hu: 'Hat ügytípus, mindegyiknek saját aktája: mit csinálunk, meddig tart, mennyi a díj (ingatlannál a vételár 0,8%-a, legalább 80 000 Ft). A fülek nyilakkal is válthatók, a választás átkerül a részletekhez és az iratlistához, ami pipálható és nyomtatható. A díjszámítás tesztelt modul.',
+      en: 'Six case types, each with its own file: what we do, how long it takes, what it costs (property: 0.8% of the price, at least 80,000 HUF). Tabs also switch with arrow keys, and the choice carries into the details and the checklist, which can be ticked and printed. The fee logic is a tested module.',
+    },
+    gallery: [
+      {
+        src: ugyved01,
+        alt: { hu: 'Ingatlan adásvétel akta: időtartam, díj és a becslés pecsétje', en: 'Property sale file: duration, fee and the estimate stamp' },
+        width: 1280,
+        height: 800,
+      },
+      {
+        src: ugyved02,
+        alt: { hu: 'A Válás fül előrehozva, saját díjjal és időtartammal', en: 'The divorce tab brought forward, with its own fee and duration' },
+        width: 1280,
+        height: 800,
+      },
+      {
+        src: ugyved03,
+        alt: { hu: 'Hozza magával: a kinyomtatható iratlista', en: 'Bring along: the printable document checklist' },
+        width: 1280,
+        height: 800,
+      },
+    ],
+    github: DEMOS_REPO_READY ? `${DEMOS_REPO}/tree/main/ugyved` : '#',
+    live: 'https://demo-ugyved.vercel.app',
+  },
+  {
+    title: { hu: 'Fekete Tinta: előre megmondjuk, mennyi és mennyire fáj', en: 'Fekete Tinta tattoo studio: cost and pain, up front' },
+    text: {
+      hu: 'Bemutató tetoválószalon: a flash lap mintái stencilként rajzolódnak ki, mindegyiket csak egyszer varrják, a foglalt át van húzva. A becslő a hely, a méret és a stílus alapján ár- és időkeretet, alkalmak számát és fájdalomszintet ad. Saját kezdeményezés, nem ügyfélmunka.',
+      en: 'Demo tattoo studio: the flash designs draw themselves as stencils, each is tattooed only once, and taken ones are struck through. The estimator gives a price and time range, the number of sessions and a pain level from placement, size and style. My own initiative, not client work.',
+    },
+    tech: ['Vite', 'JavaScript'],
+    features: [
+      { hu: 'Kirajzolódó flash minták egyszeri foglalással', en: 'Flash designs that draw themselves, claimed once' },
+      { hu: 'Ár-, alkalom- és fájdalombecslő', en: 'Price, session and pain estimator' },
+      { hu: 'Konzultáció referenciaképpel', en: 'Consultation with a reference image' },
+    ],
+    featured: false,
+    label: { hu: 'Bemutató projekt', en: 'Demo project' },
+    tone: { from: '--color-card-1', to: '--color-deep', accent: '--color-primary' },
+    image: tetovaloCard,
+    imageAlt: {
+      hu: 'Fekete Tinta bemutató: fekete-fehér tetoválásfotó, a nagy cím és egy fecske stencil',
+      en: 'Fekete Tinta demo: a black and white tattoo photo, the big name and a swallow stencil',
+    },
+    year: neutral('2026'),
+    role: { hu: 'Tervezés, fejlesztés, deploy', en: 'Design, build, deploy' },
+    problem: {
+      hu: 'Aki tetoválást szeretne, üzenetben teszi fel a stúdiónak ugyanazokat a kérdéseket: mennyi, hány alkalom, mennyire fáj. A válasz napokig tart, és addig máshol is kérdez.',
+      en: 'Anyone wanting a tattoo messages the studio the same questions: how much, how many sessions, how painful. Answers take days, and meanwhile the client asks elsewhere.',
+    },
+    solution: {
+      hu: 'A minták SVG-vonalrajzok, amik a lap képernyőre érésekor stencilként rajzolódnak ki, hoverre piros tintával újra; egy minta egyszer foglalható, 18 éven aluliaknak nem. A becslő a testrész, a méret és a stílus alapján számol, legfeljebb 4 órás alkalmakra bontva. A becslés tesztelt modul.',
+      en: 'The designs are SVG line art that draws itself as a stencil when the sheet comes into view and redraws in red ink on hover; each can be claimed once, never under 18. The estimator works from body part, size and style, split into sessions of at most 4 hours. The estimate is a tested module.',
+    },
+    gallery: [
+      {
+        src: tetovalo01,
+        alt: { hu: 'Nyitóoldal: fekete-fehér fotó, a cím és a kirajzolódott fecske', en: 'Landing: the black and white photo, the name and the drawn swallow' },
+        width: 1280,
+        height: 800,
+      },
+      {
+        src: tetovalo02,
+        alt: { hu: 'A flash lap: kirajzolt minták, a foglaltak áthúzva', en: 'The flash sheet: drawn designs, taken ones struck through' },
+        width: 1280,
+        height: 800,
+      },
+      {
+        src: tetovalo03,
+        alt: { hu: 'Becslő: hely, méret, stílus, és a kapott ár, alkalom, fájdalom', en: 'Estimator: placement, size, style, and the resulting price, sessions and pain' },
+        width: 1280,
+        height: 800,
+      },
+    ],
+    github: DEMOS_REPO_READY ? `${DEMOS_REPO}/tree/main/tetovalo` : '#',
+    live: 'https://demo-tetovalo.vercel.app',
   },
 ]
 
