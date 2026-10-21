@@ -244,6 +244,9 @@ export const SERVICE_GROUPS = [
           en: 'For anyone with a site who wants to know what is wrong with it before spending money on it.',
         },
         includes: [
+          /* Split from the free review (2026-10-21, Máté): the free one is a
+             quick three-point list; this is the measured, complete version. */
+          { hu: 'Mélyebb, mint az ingyenes átvilágítás: mérés, akadálymentesség, a teljes ügyfélút', en: 'Deeper than the free review: measured speed, accessibility, the whole customer path' },
           { hu: 'Írásban, fontossági sorrendben', en: 'In writing, in order of importance' },
           { hu: 'Akkor is a tiéd, ha nem velem csináltatod meg', en: 'Yours to keep, even if someone else does the fixing' },
           { hu: 'Ha velem, az árát beszámítom a javításba', en: 'If I do it, the fee comes off the price of the work' },
