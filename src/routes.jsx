@@ -3,6 +3,7 @@ import App from './App.jsx'
 import PrivacyPolicy from './pages/PrivacyPolicy.jsx'
 import Terms from './pages/Terms.jsx'
 import Fejleszto from './pages/Fejleszto.jsx'
+import Atvilagitas from './pages/Atvilagitas.jsx'
 import NotFound from './pages/NotFound.jsx'
 import { ROUTE_PATHS } from './routePaths.js'
 import { stripLocale } from './i18n/locales.js'
@@ -28,6 +29,7 @@ const PAGE_FOR = {
   '/adatvedelem': <PrivacyPolicy />,
   '/aszf': <Terms />,
   '/fejleszto': <Fejleszto />,
+  '/ingyenes-atvilagitas': <Atvilagitas />,
 }
 
 export function AppRoutes() {

@@ -25,7 +25,7 @@ export default function PrivacyPolicy() {
           <h2 className="font-display font-semibold text-xl text-ink mt-8">Milyen adatokat gyűjtök</h2>
           <p>
             A kapcsolatfelvételi űrlap kitöltésekor megadott nevet, e-mail címet, valamint az
-            általad opcionálisan megadott cégnevet, projektleírást és mellékelt fájlokat tárolom
+            általad opcionálisan megadott cégnevet, weboldal-címet, projektleírást és mellékelt fájlokat tárolom
             kizárólag a megkeresésed megválaszolása céljából.
           </p>
           <h2 className="font-display font-semibold text-xl text-ink mt-8">Az adatok felhasználása</h2>

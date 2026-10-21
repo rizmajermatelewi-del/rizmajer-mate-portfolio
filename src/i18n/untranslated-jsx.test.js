@@ -27,7 +27,7 @@ const ROOTS = ['src/sections', 'src/pages', 'src/components']
    notice. They have no /en twin, routePaths.js emits no hreflang for them, and
    the English footer links to the Hungarian originals. Scanning them would
    report ninety lines that are all correct. */
-const HUNGARIAN_ONLY = ['src/pages/PrivacyPolicy.jsx', 'src/pages/Terms.jsx']
+const HUNGARIAN_ONLY = ['src/pages/PrivacyPolicy.jsx', 'src/pages/Terms.jsx', 'src/pages/Atvilagitas.jsx']
 
 /* The legal-page link labels keep their Hungarian names inside their own `en`
    values, on purpose: /adatvedelem and /aszf are Hungarian-only documents, and

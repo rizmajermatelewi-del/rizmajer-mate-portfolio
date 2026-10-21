@@ -147,6 +147,7 @@ export const PAGE_CRUMB = {
   '/fejleszto': { hu: 'Fejlesztői profil', en: 'Developer profile' },
   '/adatvedelem': { hu: 'Adatvédelmi tájékoztató', en: 'Privacy notice' },
   '/aszf': { hu: 'Általános szerződési feltételek', en: 'Terms and conditions' },
+  '/ingyenes-atvilagitas': { hu: 'Ingyenes átvilágítás', en: 'Free website review' },
 }
 
 export const OG_LOCALE = { hu: 'hu_HU', en: 'en_GB' }

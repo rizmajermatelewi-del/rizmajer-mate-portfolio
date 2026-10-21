@@ -5,7 +5,7 @@ import { withLocale } from './i18n/locales.js'
    decide which HTML files to write into `dist/`. A route added to one and
    not the other would ship without prerendered HTML, so they read the
    same source. */
-export const HU_ROUTE_PATHS = ['/', '/adatvedelem', '/aszf', '/fejleszto']
+export const HU_ROUTE_PATHS = ['/', '/adatvedelem', '/aszf', '/fejleszto', '/ingyenes-atvilagitas']
 
 /* Deliberately shorter than the Hungarian list: /adatvedelem and /aszf have
    no English twin.
