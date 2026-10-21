@@ -3,6 +3,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Navbar from './sections/Navbar'
 import Hero from './sections/Hero'
+import FreeReview from './sections/FreeReview'
 import Projects from './sections/Projects'
 import About from './sections/About'
 import Protocol from './sections/Protocol'
@@ -77,6 +78,10 @@ export default function App() {
             proof, and the FAQ answers what is left before the form. */}
         <Projects />
         <Services />
+        {/* After the offer and its prices, before the process: the visitor
+            who has seen the work and the prices but is not ready to pick one
+            gets a free, no-commitment first step instead of the full form. */}
+        <FreeReview />
         <Protocol />
         <Faq />
         <ContactForm />

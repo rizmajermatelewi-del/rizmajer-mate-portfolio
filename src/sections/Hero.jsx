@@ -103,6 +103,7 @@ const COPY = {
      action rather than as a section label, which is what it has to do sitting
      beside a primary button that names one. */
   seeWork: { hu: 'Munkáim megtekintése', en: 'See my work' },
+  freeReview: { hu: 'Vagy kérj ingyenes weboldal-átvilágítást', en: 'Or ask for a free website review' },
   /* photoAlt went with the photograph. The backdrop is drawn and carries no
      information, so it is aria-hidden rather than described — alt text for a
      gradient is noise in a screen reader, not access. */
@@ -323,6 +324,14 @@ export default function Hero() {
               <ArrowDown className="h-4 w-4 transition-transform duration-200 group-hover:translate-y-0.5" />
             </a>
           </div>
+
+          {/* The free review, as a quiet third option for the visitor who is not
+              ready to talk about a project yet. A text link, not a third button:
+              two buttons already split the decision, and a third would flatten it. */}
+          <a href="#atvilagitas" className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-primary-dark underline underline-offset-4 hover:no-underline">
+            {t(COPY.freeReview, locale)}
+            <ArrowRight className="h-3.5 w-3.5" />
+          </a>
 
           {/* Below xl the wall is hidden, so the evidence comes here instead,
               after both buttons so it can never push them below the fold. All

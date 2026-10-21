@@ -13,14 +13,17 @@ const AUTOCOMPLETE_MAP = { name: 'name', email: 'email', company: 'organization'
    need to control is how the field sits in the grid around it, not how the
    control itself is drawn — the input's styling is this component's job and
    should stay that way. Defaulted to '' so every existing call is unchanged. */
-export default function Field({ label, name, type = 'text', required, value, onChange, className = '' }) {
+/* `id` exists for a second form on the same page: the home page now carries
+   the free-review form beside the contact form, and both have a name and an
+   email field. The id has to be unique; `name` keeps choosing autocomplete. */
+export default function Field({ label, name, id = name, type = 'text', required, value, onChange, className = '' }) {
   return (
     <div className={className}>
-      <label htmlFor={name} className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink/80 mb-2 block">
+      <label htmlFor={id} className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink/80 mb-2 block">
         {label} {required && <span aria-hidden="true">*</span>}
       </label>
       <input
-        id={name}
+        id={id}
         name={name}
         type={type}
         required={required}

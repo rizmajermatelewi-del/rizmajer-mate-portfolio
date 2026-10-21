@@ -30,6 +30,9 @@ export const NAV_LINKS = [
   { label: { hu: 'Rólam', en: 'About' }, href: '#rolam' },
   { label: { hu: 'Projektek', en: 'Projects' }, href: '#projektek' },
   { label: { hu: 'Szolgáltatások', en: 'Services' }, href: '#szolgaltatasok' },
+  /* Short label on purpose: the full "Ingyenes átvilágítás" wrapped at 1280
+     and pushed the CTA button onto two lines. The section says "ingyenes". */
+  { label: { hu: 'Átvilágítás', en: 'Free review' }, href: '#atvilagitas' },
   { label: { hu: 'Folyamat', en: 'Process' }, href: '#folyamat' },
   { label: { hu: 'GYIK', en: 'FAQ' }, href: '#gyik' },
 ]

@@ -72,7 +72,7 @@ const SOURCES_FOR = {
      field. These two pages render their own text plus one shared label. */
   '/adatvedelem': ['src/pages/PrivacyPolicy.jsx', 'src/i18n/ui.js'],
   '/aszf': ['src/pages/Terms.jsx', 'src/i18n/ui.js'],
-  '/ingyenes-atvilagitas': ['src/pages/Atvilagitas.jsx'],
+  '/ingyenes-atvilagitas': ['src/pages/Atvilagitas.jsx', 'src/sections/FreeReview.jsx', 'src/components/Field.jsx'],
 }
 
 for (const route of ROUTE_PATHS) {
