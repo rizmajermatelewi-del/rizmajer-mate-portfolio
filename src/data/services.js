@@ -152,6 +152,27 @@ export const SERVICE_GROUPS = [
         demo: 'https://demo-napi-menu.vercel.app',
       },
       {
+        id: 'etlap',
+        name: { hu: 'Digitális étlap QR-kóddal', en: 'Digital menu with a QR code' },
+        problem: {
+          hu: 'A teljes étlapod a telefonon: a vendég keres benne, szűr allergénre és diétára, és az asztalon lévő QR-kódról nyitja meg.',
+          en: 'Your whole menu on the phone: guests search it, filter by allergen and diet, and open it from the QR code on the table.',
+        },
+        forWho: {
+          hu: 'Étteremnek, kávézónak, bárnak, ahol a papír étlap elavul, nehezen olvasható, vagy turistáknak más nyelven is kellene.',
+          en: 'For restaurants, cafés and bars where the paper menu goes stale, is hard to read, or tourists need it in another language.',
+        },
+        includes: [
+          { hu: 'Teljes étlap kategóriákkal és kereséssel', en: 'The whole menu, with sections and search' },
+          { hu: 'Allergén- és diétaszűrő (vegetáriánus, gluténmentes)', en: 'Allergen and diet filters (vegetarian, gluten-free)' },
+          { hu: 'Nyomtatható QR-kód asztali kártyára', en: 'A printable QR code for table cards' },
+          { hu: 'Árakat és ételeket te is frissítheted', en: 'Prices and dishes you can update yourself' },
+        ],
+        priceHuf: 290000,
+        timeline: { hu: 'Átadás jellemzően 2-3 hét', en: 'Delivered in 2-3 weeks, typically' },
+        isNew: true,
+      },
+      {
         id: 'rendeles',
         name: { hu: 'Rendelésfelvétel', en: 'Taking orders online' },
         problem: {
@@ -278,6 +299,27 @@ export const SERVICE_GROUPS = [
           en: 'In the demo the gift finder recommends from stock and the shop puts it aside.',
         },
       },
+      {
+        id: 'utalvany',
+        name: { hu: 'Online ajándékutalvány', en: 'Online gift vouchers' },
+        problem: {
+          hu: 'Az ajándékutalványt a vevő este, a kanapéról veszi meg kártyával, és azonnal megkapja e-mailben, te pedig egy kattintással ellenőrzöd beváltáskor.',
+          en: 'Customers buy a gift voucher from the sofa at night by card and get it by e-mail at once, and you check it with one click when it is redeemed.',
+        },
+        forWho: {
+          hu: 'Masszázsszalonnak, kozmetikának, étteremnek, élményszolgáltatónak: ahol az utalvány ma papíron, kézzel vagy sehogy sem megy.',
+          en: 'For massage salons, beauticians, restaurants and experience providers, where vouchers today are paper, handwritten, or not offered at all.',
+        },
+        includes: [
+          { hu: 'Vásárlás online, bankkártyás fizetéssel (Barion vagy Stripe)', en: 'Bought online, paid by card (Barion or Stripe)' },
+          { hu: 'Egyedi kódos utalvány PDF-ben, e-mailben', en: 'A voucher with its own code, as a PDF by e-mail' },
+          { hu: 'Beváltás ellenőrzése, hogy egy kód csak egyszer menjen át', en: 'Redemption checks, so each code goes through only once' },
+          { hu: 'Lista az eladott és beváltott utalványokról', en: 'A list of vouchers sold and redeemed' },
+        ],
+        priceHuf: 450000,
+        timeline: { hu: 'Átadás jellemzően 3-5 hét', en: 'Delivered in 3-5 weeks, typically' },
+        isNew: true,
+      },
     ],
   },
   {
@@ -394,6 +436,27 @@ export const SERVICE_GROUPS = [
         ],
         priceHuf: 150000,
         timeline: { hu: 'Átadás jellemzően 1-2 hét', en: 'Delivered in 1-2 weeks, typically' },
+      },
+      {
+        id: 'koltozes',
+        name: { hu: 'Költözés saját weboldalra', en: 'Moving to a site of your own' },
+        problem: {
+          hu: 'Wixen, Webnode-on vagy hasonló szerkesztőn vagy, havidíjat fizetsz, és az oldal valójában nem a tiéd. Átköltöztetem saját domainre, a tartalmaddal együtt.',
+          en: 'You are on Wix, Webnode or a similar builder, paying monthly, and the site is not really yours. I move it to your own domain, content and all.',
+        },
+        forWho: {
+          hu: 'Annak, aki a platform havidíját sokallja, lassú vagy korlátos az oldala, vagy egyszerűen birtokolni szeretné, amit fizet.',
+          en: 'For anyone who finds the platform fee too much, whose site is slow or boxed in, or who simply wants to own what they pay for.',
+        },
+        includes: [
+          { hu: 'Új, gyors oldal a meglévő tartalmaddal', en: 'A new, fast site with the content you have' },
+          { hu: 'A domain átvitele a nevedre', en: 'The domain moved into your name' },
+          { hu: 'Átirányítások, hogy a Google-helyezésed megmaradjon', en: 'Redirects, so your Google ranking survives the move' },
+          { hu: 'A platform havidíja megszűnik', en: 'The platform fee stops' },
+        ],
+        priceHuf: TIER_FLOORS.intro,
+        timeline: { hu: 'Átadás jellemzően 2-3 hét', en: 'Delivered in 2-3 weeks, typically' },
+        isNew: true,
       },
     ],
   },

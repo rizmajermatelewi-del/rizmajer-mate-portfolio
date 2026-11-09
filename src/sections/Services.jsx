@@ -1,5 +1,5 @@
 import { useLayoutEffect, useRef, useState } from 'react'
-import { Check, ArrowRight, ArrowUpRight } from 'lucide-react'
+import { Check, ArrowRight, ArrowUpRight, ChevronDown } from 'lucide-react'
 import { SERVICE_GROUPS, priceLabel, salePriceLabel, isDiscounted, offerActive, LAUNCH_OFFER, LAUNCH_NOTE } from '../data/services'
 import { useInView } from '../motion/useInView'
 import { BuildOrSubscribe } from './ServicesExtras'
@@ -55,92 +55,100 @@ function requestQuote(name) {
   window.dispatchEvent(new CustomEvent('quote:prefill', { detail: { name } }))
 }
 
-/* The same card as "Amin dolgozom" above, at Máté's request (2026-09-24):
-   dark inverted surface, the lift and tilt on hover, the pill labels, the
-   check list and the ruled footer. What differs is only what a service has
-   and a project does not — a price and a quote button — and what a project
-   has and a service does not: a screenshot. Only three of seventeen offers
-   have a demo to show, and a drawn stand-in on the other fourteen would be
-   the fake product chrome the page rules out.
+function Price({ s, locale }) {
+  return isDiscounted(s) ? (
+    <p className="flex flex-wrap items-baseline justify-end gap-x-2">
+      <span className="sr-only">{t(COPY.listPrice, locale)} </span>
+      <s className="text-[13px] text-muted decoration-muted/70">{t(priceLabel(s), locale)}</s>
+      <span className="sr-only">{t(COPY.salePrice, locale)} </span>
+      <span className="font-display font-semibold text-lg text-ink">{t(salePriceLabel(s), locale)}</span>
+      <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-white bg-primary px-2 py-0.5 rounded-full">−{LAUNCH_OFFER.percent}%</span>
+    </p>
+  ) : (
+    <p className="font-display font-semibold text-lg text-ink whitespace-nowrap">{t(priceLabel(s), locale)}</p>
+  )
+}
+
+/* One offer as a row, not a card (2026-11-09, Máté: the catalogue was a
+   4 000 px wall, seven tall cards in the first tab alone). The row shows what
+   a visitor scans for: the name, the problem, the price and the time. What
+   you get, the demo proof and the quote button open on tap.
+
+   A native <details>, not a JS accordion: no state, keyboard and screen
+   readers work out of the box, and the closed rows still carry their whole
+   text in the prerendered HTML that search engines and the chatbot read.
+
+   The demo label in the summary is plain text on purpose: a link inside a
+   <summary> fights with the toggle. The real demo link sits in the body.
 
    "Kinek való" stayed in the data (the chatbot and llms.txt read it) but
-   left the card: the problem sentence already answers it, and a sixth block
-   is what made the first catalogue too long to scan. */
-function ServiceCard({ s, locale }) {
+   is not shown: the problem sentence already answers it. */
+function ServiceRow({ s, locale }) {
   return (
-    <article className="group h-full card-invert border border-divider rounded-4xl overflow-hidden card-motion shadow-e2 hover:border-primary/60 hover:-translate-y-1.5 hover:shadow-e4">
-      <div className="h-full">
-        <div className="flex h-full flex-col p-6">
-          <div className="mb-3.5 flex flex-wrap items-center gap-1.5 min-h-[1.375rem]">
+    <details className="group border-b border-divider last:border-b-0">
+      <summary className="list-none [&::-webkit-details-marker]:hidden cursor-pointer grid grid-cols-[1fr_auto] gap-x-5 gap-y-2 px-5 sm:px-7 py-5 hover:bg-primary/5 transition-colors">
+        <div className="min-w-0">
+          <h3 className="flex flex-wrap items-center gap-2 font-display font-bold text-lg text-ink leading-snug tracking-tight">
+            {t(s.name, locale)}
             {s.demo && (
-              <a
-                href={s.demo}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`${t(COPY.openDemo, locale)}: ${t(s.name, locale)}`}
-                className="relative inline-flex items-center gap-1 font-mono text-[11px] uppercase tracking-[0.2em] text-white bg-primary px-2.5 py-1 rounded-full after:absolute after:-inset-2.5 after:content-[''] hover:bg-primary-dark transition-colors"
-              >
-                {t(COPY.demo, locale)}
-                <ArrowUpRight className="h-2.5 w-2.5" strokeWidth={2.5} aria-hidden="true" />
-              </a>
+              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white bg-primary px-2 py-0.5 rounded-full">{t(COPY.demo, locale)}</span>
             )}
             {s.isNew && (
-              <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-primary-dark bg-primary/10 px-2.5 py-1 rounded-full">
-                {t(COPY.isNew, locale)}
-              </span>
+              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary-dark bg-primary/10 px-2 py-0.5 rounded-full">{t(COPY.isNew, locale)}</span>
             )}
+          </h3>
+          <p className="text-muted text-sm mt-1.5 leading-relaxed max-w-2xl">{t(s.problem, locale)}</p>
+        </div>
+        <div className="flex items-start gap-3 sm:gap-4">
+          <div className="text-right hidden sm:block">
+            <Price s={s} locale={locale} />
+            {s.timeline && <p className="text-muted text-[13px] mt-0.5 whitespace-nowrap">{t(s.timeline, locale)}</p>}
           </div>
+          <ChevronDown className="h-5 w-5 mt-1 shrink-0 text-muted transition-transform duration-300 group-open:rotate-180 motion-reduce:transition-none" aria-hidden="true" />
+        </div>
+        {/* On a phone the price drops under the text instead of squeezing it. */}
+        <div className="sm:hidden col-span-2 flex flex-wrap items-baseline justify-between gap-x-3">
+          <Price s={s} locale={locale} />
+          {s.timeline && <p className="text-muted text-[13px]">{t(s.timeline, locale)}</p>}
+        </div>
+      </summary>
 
-          <h3 className="font-display font-bold text-lg text-ink leading-snug tracking-tight">{t(s.name, locale)}</h3>
-          <p className="text-muted text-sm mt-2.5 leading-relaxed">{t(s.problem, locale)}</p>
-
-          <div className="mt-5">
-            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-primary-dark">{t(COPY.includes, locale)}</p>
-            <ul className="mt-2 space-y-1.5">
-              {s.includes.map((x, i) => (
-                <li key={i} className="flex gap-2 text-muted text-[13px] leading-relaxed">
-                  <Check className="h-3.5 w-3.5 shrink-0 mt-[3px] text-primary" strokeWidth={2.5} aria-hidden="true" />
-                  <span>{t(x, locale)}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {s.proof && <p className="mt-4 rounded-2xl bg-primary/10 px-3.5 py-2.5 text-[13px] text-ink leading-relaxed">{t(s.proof, locale)}</p>}
-
-          <div className="mt-auto pt-5">
-            <div className="pt-4 border-t border-divider">
-              {isDiscounted(s) ? (
-                <>
-                  <p className="text-[13px] text-muted">
-                    <span className="sr-only">{t(COPY.listPrice, locale)} </span>
-                    <s className="decoration-muted/70">{t(priceLabel(s), locale)}</s>
-                  </p>
-                  <p className="flex flex-wrap items-center gap-2 mt-0.5">
-                    <span className="sr-only">{t(COPY.salePrice, locale)} </span>
-                    <span className="font-display font-semibold text-xl text-ink">{t(salePriceLabel(s), locale)}</span>
-                    <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-white bg-primary px-2 py-0.5 rounded-full">
-                      −{LAUNCH_OFFER.percent}%
-                    </span>
-                  </p>
-                </>
-              ) : (
-                <p className="font-display font-semibold text-xl text-ink">{t(priceLabel(s), locale)}</p>
-              )}
-              {s.timeline && <p className="text-muted text-[13px] mt-0.5">{t(s.timeline, locale)}</p>}
-            </div>
+      <div className="px-5 sm:px-7 pb-6 grid gap-5 lg:grid-cols-[1fr_minmax(0,22rem)]">
+        <div>
+          <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-primary-dark">{t(COPY.includes, locale)}</p>
+          <ul className="mt-2 grid gap-x-6 gap-y-1.5 sm:grid-cols-2">
+            {s.includes.map((x, i) => (
+              <li key={i} className="flex gap-2 text-muted text-[13px] leading-relaxed">
+                <Check className="h-3.5 w-3.5 shrink-0 mt-[3px] text-primary" strokeWidth={2.5} aria-hidden="true" />
+                <span>{t(x, locale)}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="flex flex-col gap-3">
+          {s.proof && <p className="rounded-2xl bg-primary/10 px-3.5 py-2.5 text-[13px] text-ink leading-relaxed">{t(s.proof, locale)}</p>}
+          <a
+            href="#kapcsolat"
+            onClick={() => requestQuote(s.name)}
+            className="flex w-full items-center justify-center gap-2 px-5 py-3 rounded-full font-semibold bg-primary text-white shadow-lg shadow-primary/25 hover:bg-primary-dark transition-colors duration-300"
+          >
+            {t(COPY.cta, locale)}
+            <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </a>
+          {s.demo && (
             <a
-              href="#kapcsolat"
-              onClick={() => requestQuote(s.name)}
-              className="mt-5 flex w-full items-center justify-center gap-2 px-5 py-3 rounded-full font-semibold bg-primary text-white shadow-lg shadow-primary/25 hover:bg-primary-dark transition-colors duration-300"
+              href={s.demo}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex w-full items-center justify-center gap-1.5 px-5 py-2.5 rounded-full font-semibold border border-divider text-ink hover:border-primary/60 hover:text-primary-dark transition-colors duration-300"
             >
-              {t(COPY.cta, locale)}
-              <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              {t(COPY.openDemo, locale)}
+              <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
             </a>
-          </div>
+          )}
         </div>
       </div>
-    </article>
+    </details>
   )
 }
 
@@ -258,27 +266,13 @@ export default function Services() {
 
         {/* Every panel is rendered and the inactive ones are hidden, so the
             prerendered HTML — what search engines read — carries the whole
-            catalogue, not just tab one.
-
-            The cards match Projects on purpose (see ServiceCard). */}
+            catalogue, not just tab one. */}
         {SERVICE_GROUPS.map((g, i) => (
           <div key={g.id} id={`szolg-panel-${g.id}`} role="tabpanel" aria-labelledby={`szolg-tab-${g.id}`} hidden={active !== i} className="mt-7">
             <p className="text-muted leading-relaxed max-w-3xl">{t(g.intro, locale)}</p>
-            {/* Wrapping flex rather than a fixed grid, so a short last row is
-                centred instead of left hanging: the groups hold 3, 4 and 5
-                offers, and a three-column grid turned four of them into
-                3 + 1. Four go four across on wide screens (2 + 2 below),
-                five go 3 + 2, three go 3. */}
-            <div className="mt-6 flex flex-wrap justify-center gap-5">
+            <div className="mt-6 card-invert border border-divider rounded-4xl overflow-hidden shadow-e2">
               {g.items.map((s) => (
-                <div
-                  key={s.id}
-                  className={`w-full sm:w-[calc(50%-0.625rem)] ${
-                    g.items.length === 4 ? 'xl:w-[calc(25%-0.9375rem)]' : 'lg:w-[calc(33.333%-0.834rem)]'
-                  }`}
-                >
-                  <ServiceCard s={s} locale={locale} />
-                </div>
+                <ServiceRow key={s.id} s={s} locale={locale} />
               ))}
             </div>
             {g.items.some((s) => s.isNew) && <p className="text-muted text-sm leading-relaxed max-w-3xl mt-6">{t(COPY.newNote, locale)}</p>}

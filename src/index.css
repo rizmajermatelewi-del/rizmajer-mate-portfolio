@@ -1,17 +1,20 @@
 @import './fonts.css';
 
 /* ---------------------------------------------------------------------
-   One committed palette. Cold near-black base, indigo action colour,
-   violet used sparingly. Previously six switchable themes lived here;
+   One committed palette. Cold near-black base, a vermilion "red pencil"
+   action colour on blue draughting paper (indigo until 2026-11-09, retired
+   because indigo on navy is the stock AI-startup look), red for errors. Previously six switchable themes lived here;
    a shipped site only needs the one it actually uses.
 --------------------------------------------------------------------- */
 :root {
-  /* indigo-600, not 500: white on 500 measures 4.47:1, just under AA. */
-  --color-primary: 79 70 229;
-  --color-primary-dark: 67 56 202;
-  --color-primary-light: 129 140 248;
-  --color-accent: 167 139 250;
-  --color-accent-dark: 139 92 246;
+  /* orange-700, not 600: white on 600 is 3.6:1; on 700 it is 5.2:1 (AA).
+     primary-dark (orange-800) is the text tone on the blue page, ~4.8:1. */
+  --color-primary: 194 65 12;
+  --color-primary-dark: 154 52 18;
+  --color-primary-light: 251 146 60;
+  /* Errors only. Red, so a failed field never reads as a call to action. */
+  --color-accent: 248 113 113;
+  --color-accent-dark: 220 38 38;
 
   /* Light, cool-tinted base. Card mockups and terminal panels stay dark on
      purpose — they depict screens, and a dark screen on a light page is the
@@ -59,8 +62,10 @@
     @apply bg-background text-ink font-body;
     overflow-x: hidden;
     background-image:
-      linear-gradient(rgb(var(--color-primary) / 0.055) 1px, transparent 1px),
-      linear-gradient(90deg, rgb(var(--color-primary) / 0.055) 1px, transparent 1px);
+      /* The grid is ink, not the accent: an orange grid on blue paper reads
+         as a mistake, a navy one as draughting paper. */
+      linear-gradient(rgb(var(--color-ink) / 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(var(--color-ink) / 0.05) 1px, transparent 1px);
     background-size: 40px 40px;
   }
   ::selection { background-color: rgb(var(--color-primary)); color: rgb(var(--color-background)); }
@@ -72,7 +77,7 @@
     outline-offset: 2px;
   }
   /* Inside a dark card the ring is drawn on near-black, so it flips to the
-     light indigo that card-invert already maps primary-dark to. */
+     light orange that card-invert already maps primary-dark to. */
   .card-invert :focus-visible {
     outline-color: rgb(var(--color-primary-dark));
   }
@@ -251,7 +256,7 @@
     /* background must flip too: the tech chips fill with bg-background, and
        leaving it light put light muted text on a light chip at 2.3:1. */
     --color-background: 20 30 46;
-    --color-primary-dark: 165 180 252;
+    --color-primary-dark: 253 186 116;
     background-color: rgb(var(--color-deep));
     /* Set colour too, not just the token. Elements with no colour class
        inherit from body, which resolved dark before this override existed —

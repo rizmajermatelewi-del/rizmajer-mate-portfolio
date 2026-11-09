@@ -13,8 +13,8 @@ import { forint, priceEn } from './fx.js'
    still a floor ("-tól"), and the section says the final price is written
    down after the first call. */
 
-const WEB = ['bemutatkozo', 'cegoldal']
-const SALES = ['idopontfoglalo', 'napi-menu', 'rendeles', 'szallasfoglalo', 'arkalkulator', 'szervizfelvetel', 'termekvalaszto']
+const WEB = ['bemutatkozo', 'cegoldal', 'koltozes']
+const SALES = ['idopontfoglalo', 'napi-menu', 'rendeles', 'szallasfoglalo', 'arkalkulator', 'szervizfelvetel', 'termekvalaszto', 'etlap', 'utalvany']
 
 export const ADDONS = [
   {
@@ -188,7 +188,7 @@ export const CALC_SERVICES = ALL_SERVICES.filter((s) => (s.priceUnit ?? 'from') 
    different main sites, so SITE_KINDS are mutually exclusive: picking one
    replaces the other. The menu and ordering are the same kind for the same
    reason: ordering already includes the menu. */
-export const SITE_KINDS = ['bemutatkozo', 'cegoldal', 'felujitas']
+export const SITE_KINDS = ['bemutatkozo', 'cegoldal', 'felujitas', 'koltozes']
 export const MENU_KINDS = ['napi-menu', 'rendeles']
 const list = (ids) => [].concat(ids)
 

@@ -27,6 +27,7 @@ const COPY = {
     en: 'Every one can be opened, and its code is public. Invented businesses, real problems. I have not handed over client work yet.',
   },
   whatItDoes: { hu: 'Amit tud', en: 'What it does' },
+  swipe: { hu: `${PROJECTS_FULL.length} bemutató · lapozz oldalra →`, en: `${PROJECTS_FULL.length} demos · swipe sideways →` },
 }
 
 /* The modal is the one part of this page that can be deferred without cost to
@@ -95,9 +96,12 @@ export default function Projects() {
           </p>
         </div>
 
-        {/* Full container width. It was capped at max-w-5xl with no centring,
-            which left ~280px empty on the right at 1366px. */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
+        {/* On a phone the cards are a sideways strip, not a stack (2026-11-09:
+            fifteen stacked cards were 10 000 px, twelve screens of scrolling
+            between the visitor and everything below). From sm up it is the
+            grid again, at full container width. */}
+        <p className="sm:hidden -mt-8 mb-4 font-mono text-[11px] uppercase tracking-[0.2em] text-muted">{t(COPY.swipe, locale)}</p>
+        <div className="-mx-6 px-6 flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-px-6 pb-4 sm:mx-0 sm:px-0 sm:pb-0 sm:overflow-visible sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-5 lg:gap-6">
           {PROJECTS_FULL.map((p, i) => (
             <button
               key={t(p.title, locale)}
@@ -113,7 +117,7 @@ export default function Projects() {
               /* A card that would sit alone on the last row spans the row
                  instead, image beside text, so the grid never ends on an
                  orphan (fifteen cards since 2026-10-19). */
-              className={`proj-card group w-full text-left ${wideClass(i)} card-invert border border-divider rounded-4xl overflow-hidden card-motion shadow-e2 hover:border-primary/60 hover:-translate-y-1.5 hover:shadow-e4 ${
+              className={`proj-card group w-[85%] shrink-0 snap-start sm:w-full text-left ${wideClass(i)} card-invert border border-divider rounded-4xl overflow-hidden card-motion shadow-e2 hover:border-primary/60 hover:-translate-y-1.5 hover:shadow-e4 ${
                 visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
               }`}
             >

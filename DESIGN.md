@@ -1,12 +1,12 @@
 ---
 name: Rizmajer Máté Portfolio
-description: A cool draughting-blue page carrying near-black navy screens. Technical, plain-spoken, Geist throughout, one indigo accent and no ornament.
+description: A cool draughting-blue page carrying near-black navy screens. Technical, plain-spoken, Geist throughout, one vermilion "red pencil" accent and no ornament.
 colors:
-  primary: "#4f46e5"
-  primary-dark: "#4338ca"
-  primary-light: "#818cf8"
-  accent: "#a78bfa"
-  accent-dark: "#8b5cf6"
+  primary: "#c2410c"
+  primary-dark: "#9a3412"
+  primary-light: "#fb923c"
+  accent: "#f87171"
+  accent-dark: "#dc2626"
   background: "#c5d3e7"
   surface: "#fcfdff"
   ink: "#0c1623"
@@ -25,7 +25,7 @@ colors:
   divider-inverted: "#2e3a4e"
   surface-inverted: "#1c283a"
   background-inverted: "#141e2e"
-  primary-dark-inverted: "#a5b4fc"
+  primary-dark-inverted: "#fdba74"
 typography:
   display:
     fontFamily: "Geist, ui-sans-serif, system-ui, sans-serif"
@@ -159,31 +159,31 @@ components:
 
 **Creative North Star: "The Blueprint and the Screen"**
 
-The page is draughting paper. Not white, not cream: a cool blue-gray (`{colors.background}` — #c5d3e7) carrying a faint indigo grid at 40px intervals, the surface an engineer marks up before anything gets built. Laid on top of it are screens — near-black navy panels (`{colors.deep}` — #0b1421) that hold the product chrome, the process steps, the contact form. The whole system is those two materials and nothing else. Paper below, screen above.
+The page is draughting paper. Not white, not cream: a cool blue-gray (`{colors.background}` — #c5d3e7) carrying a faint navy grid at 40px intervals, the surface an engineer marks up before anything gets built. Laid on top of it are screens — near-black navy panels (`{colors.deep}` — #0b1421) that hold the product chrome, the process steps, the contact form. The whole system is those two materials and nothing else. Paper below, screen above.
 
 That split is not decoration; it is the argument. This is a developer selling working systems to Hungarian business owners, and the interface says so in materials rather than adjectives: here is the plan, here is the thing running. Everything else has been stripped. One typeface (Geist, with its mono companion for labels), one accent (`{colors.primary}` — #4f46e5), no gradients carrying meaning, no ornament claiming significance it did not earn.
 
 The system explicitly rejects what PRODUCT.md names. It is not a **generic Hungarian agency template**: no stock photography, no interchangeable service cards, no "modern megoldások". It is not an **Awwwards experimental portfolio**: no scroll-hijacking, no cursor effects, no intro animation standing between the visitor and the price. It is not **corporate enterprise SaaS**: no gradient-navy hero, no invented dashboards, no logo wall. And it is not a **Dribbble developer portfolio**: the type is large, but the page is built around evidence, not around type.
 
 **Key Characteristics:**
-- Cool draughting-blue page (`{colors.background}` — #c5d3e7) with a 40px indigo grid at 5.5% opacity. The defining choice: a committed mid-tone page, never off-white, never cream.
+- Cool draughting-blue page (`{colors.background}` — #c5d3e7) with a 40px navy-ink grid at 5% opacity. The defining choice: a committed mid-tone page, never off-white, never cream.
 - Near-black navy screens (`{colors.deep}` — #0b1421) as the second and only other surface, produced by a single `.card-invert` token override rather than per-element classes.
-- One accent, indigo `{colors.primary}` (#4f46e5), chosen at 600 rather than 500 because white on 500 measures 4.47:1 and misses AA.
+- One accent, vermilion `{colors.primary}` (#c2410c, orange-700), chosen at 700 because white on 600 is 3.6:1 and misses AA; on 700 it is 5.2:1. Changed from indigo on 2026-11-09 (Máté's go): indigo on navy is the stock AI-startup look, and a red correction pencil on blue draughting paper says "engineer" without it.
 - One typeface. Geist for everything, Geist Mono for small labels. Hierarchy comes from weight (400/600/700/800) and size, never from a second family.
 - Full-pill CTAs against generous 2–3rem card radii. Two shapes, applied without exception.
 - Self-hosted fonts with latin-ext subsets, so Hungarian ő and ű render natively instead of falling back mid-word.
 
 ## 2. Colors
 
-A cool, desaturated blue field with a single saturated indigo doing all the signalling, and a near-black navy carrying every dark surface.
+A cool, desaturated blue field with a single saturated vermilion doing all the signalling, and a near-black navy carrying every dark surface.
 
 ### Primary
-- **Working Indigo** (#4f46e5): Every primary CTA, every active state, the grid lines on the page, the focus ring. It is indigo-600 rather than indigo-500 for one measured reason: white text on 500 reaches 4.47:1 and fails AA. Used sparingly on the light page and never as a background wash.
-- **Working Indigo Deep** (#4338ca): The accent text tone on light surfaces — headline emphasis, eyebrow labels, inline links.
-- **Working Indigo Pale** (#818cf8): The accent on dark surfaces. Inside a screen card, `primary-dark` re-resolves to #a5b4fc so accent text keeps its contrast when the ground inverts.
+- **Red Pencil** (#c2410c): Every primary CTA, every active state, the focus ring. Orange-700 rather than 600 because white on 600 is 3.6:1 and fails AA. The page grid is navy ink, not this. Used sparingly on the light page and never as a background wash.
+- **Red Pencil Deep** (#9a3412): The accent text tone on light surfaces (~4.8:1 on the page) — headline emphasis, eyebrow labels, inline links.
+- **Red Pencil Pale** (#fb923c): The accent on dark surfaces. Inside a screen card, `primary-dark` re-resolves to #fdba74 so accent text keeps its contrast when the ground inverts.
 
 ### Secondary
-- **Signal Violet** (#a78bfa) and **Signal Violet Deep** (#8b5cf6): Reserved for form error states and the rare non-primary highlight. The palette's only other hue, and it should stay close to invisible in normal use.
+- **Error Red** (#f87171) and **Error Red Deep** (#dc2626): Form error states only. The palette's only other hue, invisible in normal use.
 
 ### Neutral
 - **Draughting Blue** (#c5d3e7): The page floor. A committed mid-tone, not a tint of white. Everything else is calibrated against it.
@@ -203,7 +203,7 @@ A cool, desaturated blue field with a single saturated indigo doing all the sign
 
 **The Control Boundary Rule.** `{colors.divider}` is for hairlines between blocks and is prohibited as the edge of anything a user clicks into. Interactive boundaries use `.input-edge` (ink at 55% on the light page, 38% on a screen card), solved to clear 3:1 under WCAG 2.2 SC 1.4.11. A field edge you have to hunt for is a failure, not a style.
 
-**The One Accent Rule.** Indigo is the only signal color on the page. An emerald status dot, an amber badge or a teal highlight anywhere in the system is a defect — one existed in the footer and it read as a different website.
+**The One Accent Rule.** Vermilion is the only signal color on the page. An emerald status dot, an amber badge or a teal highlight anywhere in the system is a defect — one existed in the footer and it read as a different website.
 
 ## 3. Typography
 
@@ -215,7 +215,7 @@ A cool, desaturated blue field with a single saturated indigo doing all the sign
 
 ### Hierarchy
 - **Display** (800, `clamp(2.25rem, 6vw, 3.75rem)`, 1.05, -0.025em): The hero headline only. Two lines maximum at desktop, and the scale is capped precisely so the second line does not wrap.
-- **Headline** (700–800, `clamp(1.75rem, 4vw, 3rem)`, 1.02, -0.025em): Section headings. Emphasis inside a heading is a color shift to Working Indigo Deep at a lighter weight, never a second typeface.
+- **Headline** (700–800, `clamp(1.75rem, 4vw, 3rem)`, 1.02, -0.025em): Section headings. Emphasis inside a heading is a color shift to Red Pencil Deep at a lighter weight, never a second typeface.
 - **Numeral** (800, `clamp(5rem, 10vw, 7rem)`, 0.85, tabular): Statistics figures and the ghost step numbers in the process section. Tabular figures, so a count-up animation cannot reflow the line.
 - **Title** (600, 1.25rem, 1.3): Card headings, pricing tier names, FAQ questions.
 - **Body Lead** (400, 1.125rem, 1.625): Section introductions and the hero subhead. Capped at 20 words in the hero.
@@ -252,7 +252,7 @@ Precise and unfussy. Everything responds immediately to input, and nothing perfo
 
 ### Buttons
 - **Shape:** Full pill (`{rounded.pill}`), without exception. A square button anywhere in this system is a defect.
-- **Primary:** `{colors.primary}` fill, white label, `1rem 1.75rem` padding, indigo-tinted drop shadow. Carries a subtle bottom-to-top sheen on hover via a `::before` layer.
+- **Primary:** `{colors.primary}` fill, white label, `1rem 1.75rem` padding, vermilion-tinted drop shadow. Carries a subtle bottom-to-top sheen on hover via a `::before` layer.
 - **Hover / Active:** `scale(1.03) translateY(-1px)` on hover, `scale(0.98)` on press. Physical, small, fast.
 - **Secondary on screen:** White at 10% with a `border-white/25` edge and backdrop blur. The hero's second CTA.
 - **Disabled:** 50% opacity with `cursor: not-allowed`. The contact form's submit sits here until consent is given.
@@ -261,12 +261,12 @@ Precise and unfussy. Everything responds immediately to input, and nothing perfo
 - **Corner Style:** `{rounded.4xl}` (2rem) for compact cards, `{rounded.5xl}` (2.5rem) for feature and pricing cards, `{rounded.6xl}` (3rem) for full-width panels and the footer's top edge.
 - **Background:** `{colors.deep}` via `.card-invert` for screens; `{colors.surface}` for the small light tiles.
 - **Shadow Strategy:** `e2` at rest, `e4` on hover with a 1.5px lift. See Elevation.
-- **Border:** 1px `{colors.divider}`, shifting to Working Indigo at 60% on hover.
+- **Border:** 1px `{colors.divider}`, shifting to Red Pencil at 60% on hover.
 - **Internal Padding:** `{spacing.card}` (2.25rem) typical, 4rem on the large process panels.
 
 ### Inputs / Fields
 - **Style:** `.input-edge` boundary over a `{colors.background-inverted}` fill at `{rounded.2xl}`. Labels sit above the field in Geist Mono at 11px, never inside it as a placeholder.
-- **Focus:** Border shifts to `{colors.primary}` with a 4px indigo ring at 15%.
+- **Focus:** Border shifts to `{colors.primary}` with a 4px vermilion ring at 15%.
 - **Placeholder:** Ink at 55%, which clears 4.5:1. Placeholder text is held to the body-text bar, not a muted default.
 - **Consent:** The contact form's submit stays disabled until the GDPR checkbox is ticked; the privacy policy link sits inside the consent label.
 

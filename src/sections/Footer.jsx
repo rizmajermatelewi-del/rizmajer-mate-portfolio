@@ -182,7 +182,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-14 pt-8 border-t border-divider flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-          {/* Indigo, not emerald, and no ping. The site runs one accent colour
+          {/* The accent, not emerald, and no ping. The site runs one accent colour
               start to finish; a green pulsing dot in the footer was the only
               place it broke, and the infinite animation drew the eye to a
               status that never changes. */}

@@ -1,3 +1,4 @@
+import { ChevronDown } from 'lucide-react'
 import { ALL_SERVICES, priceLabel } from '../data/services'
 import { monthlyRange } from '../data/calculator'
 import { forint, priceEn } from '../data/fx'
@@ -45,9 +46,18 @@ export function BuildOrSubscribe({ locale }) {
   ]
 
   return (
-    <div className="mt-10 card-invert border border-divider rounded-4xl p-6 sm:p-8 shadow-e2">
-      <h3 className="font-display font-bold text-xl text-ink tracking-tight">{t(COPY.compareTitle, locale)}</h3>
-      <p className="text-muted text-sm mt-2 leading-relaxed max-w-3xl">{t(COPY.compareIntro, locale)}</p>
+    /* Folded by default (2026-11-09): it answers a question only some
+       visitors have, and open it was 450 px between the offers and the
+       calculator. Native <details>, so the prerendered HTML keeps it all. */
+    <details className="group mt-6 card-invert border border-divider rounded-4xl shadow-e2">
+      <summary className="list-none [&::-webkit-details-marker]:hidden cursor-pointer flex items-start justify-between gap-4 p-6 sm:p-8">
+        <span>
+          <span className="block font-display font-bold text-xl text-ink tracking-tight">{t(COPY.compareTitle, locale)}</span>
+          <span className="block text-muted text-sm mt-2 leading-relaxed max-w-3xl">{t(COPY.compareIntro, locale)}</span>
+        </span>
+        <ChevronDown className="h-5 w-5 mt-1 shrink-0 text-muted transition-transform duration-300 group-open:rotate-180 motion-reduce:transition-none" aria-hidden="true" />
+      </summary>
+      <div className="px-6 sm:px-8 pb-6 sm:pb-8">
       <div className="mt-5 overflow-x-auto">
         <table className="w-full min-w-[34rem] text-sm text-left">
           <thead>
@@ -86,6 +96,7 @@ export function BuildOrSubscribe({ locale }) {
         </table>
       </div>
       <p className="text-sm text-ink/90 mt-5 leading-relaxed max-w-3xl">{t(COPY.honest, locale)}</p>
-    </div>
+      </div>
+    </details>
   )
 }
