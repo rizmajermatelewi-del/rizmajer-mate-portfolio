@@ -3,11 +3,17 @@ import { gsap } from 'gsap'
 import { ArrowRight, ArrowDown } from 'lucide-react'
 import { useReducedMotion } from '../motion/useReducedMotion'
 import phoneSzalka from '../assets/demos/hero-phone-szalka.webp'
+import phoneSzalkaSmall from '../assets/demos/hero-phone-szalka-300.webp'
 import phoneKispipa from '../assets/demos/hero-phone-kispipa.webp'
+import phoneKispipaSmall from '../assets/demos/hero-phone-kispipa-300.webp'
 import phoneKormos from '../assets/demos/hero-phone-kormos.webp'
+import phoneKormosSmall from '../assets/demos/hero-phone-kormos-300.webp'
 import phoneKovacs from '../assets/demos/hero-phone-kovacs.webp'
+import phoneKovacsSmall from '../assets/demos/hero-phone-kovacs-300.webp'
 import phoneVirag from '../assets/demos/hero-phone-virag.webp'
+import phoneViragSmall from '../assets/demos/hero-phone-virag-300.webp'
 import phoneMasszazs from '../assets/demos/hero-phone-masszazs.webp'
+import phoneMasszazsSmall from '../assets/demos/hero-phone-masszazs-300.webp'
 import { useLocale } from '../i18n/useLocale'
 import { t } from '../i18n/t'
 import { UI } from '../i18n/ui'
@@ -19,16 +25,16 @@ import { UI } from '../i18n/ui'
    swipe row below xl takes all six in order. */
 const PHONES = [
   [
-    { src: phoneSzalka, href: 'https://demo-idopontfoglalo.vercel.app', name: { hu: 'Fodrászat', en: 'Hair salon' } },
-    { src: phoneKovacs, href: 'https://demo-bemutatkozo.vercel.app', name: { hu: 'Villanyszerelő', en: 'Electrician' } },
+    { src: phoneSzalka, small: phoneSzalkaSmall, href: 'https://demo-idopontfoglalo.vercel.app', name: { hu: 'Fodrászat', en: 'Hair salon' } },
+    { src: phoneKovacs, small: phoneKovacsSmall, href: 'https://demo-bemutatkozo.vercel.app', name: { hu: 'Villanyszerelő', en: 'Electrician' } },
   ],
   [
-    { src: phoneKispipa, href: 'https://demo-napi-menu.vercel.app', name: { hu: 'Büfé napi menüvel', en: 'Snack bar with a daily menu' } },
-    { src: phoneVirag, href: 'https://demo-viragbolt.vercel.app', name: { hu: 'Virágbolt', en: 'Florist' } },
+    { src: phoneKispipa, small: phoneKispipaSmall, href: 'https://demo-napi-menu.vercel.app', name: { hu: 'Büfé napi menüvel', en: 'Snack bar with a daily menu' } },
+    { src: phoneVirag, small: phoneViragSmall, href: 'https://demo-viragbolt.vercel.app', name: { hu: 'Virágbolt', en: 'Florist' } },
   ],
   [
-    { src: phoneKormos, href: 'https://demo-szerviz.vercel.app', name: { hu: 'Autószerviz', en: 'Car service' } },
-    { src: phoneMasszazs, href: 'https://demo-masszazs.vercel.app', name: { hu: 'Masszázsstúdió', en: 'Massage studio' } },
+    { src: phoneKormos, small: phoneKormosSmall, href: 'https://demo-szerviz.vercel.app', name: { hu: 'Autószerviz', en: 'Car service' } },
+    { src: phoneMasszazs, small: phoneMasszazsSmall, href: 'https://demo-masszazs.vercel.app', name: { hu: 'Masszázsstúdió', en: 'Massage studio' } },
   ],
 ]
 const COLUMN_OFFSET = ['translate-y-3', '-translate-y-5', 'translate-y-6']
@@ -45,11 +51,17 @@ function Phone({ phone, locale, className = '' }) {
       aria-label={`${t(phone.name, locale)} ${t(OPENS, locale)}`}
       className={`block overflow-hidden rounded-[1.5rem] border border-white/15 shadow-e3 transition-colors duration-300 hover:border-white/40 ${className}`}
     >
+      {/* Cropped to the 9:14 that shows (they were 440x952 with the bottom
+          third never on screen), plus a 300w copy for phones (2026-11-09):
+          ~250 KB -> ~100 KB in the mobile strip, where they competed with the
+          hero text for bandwidth. */}
       <img
         src={phone.src}
+        srcSet={`${phone.small} 300w, ${phone.src} 440w`}
+        sizes="(min-width: 1280px) 13rem, min(38vw, 11rem)"
         alt=""
         width={440}
-        height={952}
+        height={684}
         loading="lazy"
         decoding="async"
         className="aspect-[9/14] w-full object-cover object-top"
