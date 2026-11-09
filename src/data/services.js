@@ -458,6 +458,27 @@ export const SERVICE_GROUPS = [
         timeline: { hu: 'Átadás jellemzően 2-3 hét', en: 'Delivered in 2-3 weeks, typically' },
         isNew: true,
       },
+      {
+        id: 'premium-vizual',
+        name: { hu: 'Prémium vizuál, mozgó háttérrel', en: 'Premium visuals, with motion' },
+        problem: {
+          hu: 'Az oldal első képe megfogja a látogatót: finoman mozgó hangulatkép a kezdőoldalon és egy-két szekcióban, ami nem lassítja az oldalt.',
+          en: 'The first thing visitors see holds them: a gently moving mood image on the home page and in a section or two, without slowing the page down.',
+        },
+        forWho: {
+          hu: 'Étteremnek, régiségboltnak, szalonnak, ahol a hangulat is elad. A termékeid, az autód és az üzleted valódi fotón marad: mesterséges képet csak hangulatra használok.',
+          en: 'For restaurants, antique shops and salons where the mood sells too. Your products, your vehicle and your shop stay on real photos: AI imagery is for mood only.',
+        },
+        includes: [
+          { hu: '2-3 mozgó háttér (kezdőoldal és szekciók)', en: '2-3 moving backgrounds (home page and sections)' },
+          { hu: 'Hangulatképek a márkád színeiben', en: 'Mood images in your brand colours' },
+          { hu: 'Betöltés a fotó után, így mobilon sem lassít', en: 'Loaded after the photo, so it does not slow phones down' },
+          { hu: 'Kikapcsol, ha a látogató kevesebb mozgást kér', en: 'Switched off for visitors who ask for less motion' },
+        ],
+        priceHuf: 90000,
+        timeline: { hu: 'Átadás jellemzően 1 hét', en: 'Delivered in about a week, typically' },
+        isNew: true,
+      },
     ],
   },
   {

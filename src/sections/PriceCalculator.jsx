@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import {
   Accessibility, ArrowLeft, ArrowRight, BedDouble, BellRing, Calculator, CalendarCheck, Check, ClipboardList, Files,
   Gift, Globe, Paintbrush, Sparkles, UtensilsCrossed, Wrench,
-  QrCode, Truck,
+  QrCode, Truck, Film,
 } from 'lucide-react'
 import { SERVICE_GROUPS, priceLabel, isDiscounted, saleHuf, LAUNCH_OFFER } from '../data/services'
 import {
@@ -62,6 +62,7 @@ const ICONS = {
   etlap: QrCode,
   utalvany: Gift,
   koltozes: Truck,
+  'premium-vizual': Film,
   szallasfoglalo: BedDouble,
   arkalkulator: Calculator,
   szervizfelvetel: Wrench,
