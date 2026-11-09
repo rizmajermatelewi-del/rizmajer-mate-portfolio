@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import {
-  ArrowLeft, ArrowRight, CalendarCheck, Check, ClipboardList, Globe, Paintbrush, Sparkles, UtensilsCrossed,
+  Accessibility, ArrowLeft, ArrowRight, BedDouble, BellRing, Calculator, CalendarCheck, Check, ClipboardList, Files,
+  Gift, Globe, Paintbrush, Sparkles, UtensilsCrossed, Wrench,
 } from 'lucide-react'
 import { SERVICE_GROUPS, priceLabel, isDiscounted, saleHuf, LAUNCH_OFFER } from '../data/services'
 import {
@@ -57,6 +58,13 @@ const ICONS = {
   rendeles: ClipboardList,
   bemutatkozo: Globe,
   felujitas: Paintbrush,
+  szallasfoglalo: BedDouble,
+  arkalkulator: Calculator,
+  szervizfelvetel: Wrench,
+  termekvalaszto: Gift,
+  cegoldal: Files,
+  akadalymentesites: Accessibility,
+  emlekezteto: BellRing,
 }
 
 const fmt = (huf) => ({ hu: forint(huf), en: priceEn(huf) })

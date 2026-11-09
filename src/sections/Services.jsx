@@ -43,8 +43,8 @@ const COPY = {
      applied to every offer it is true of. Once per group rather than on each
      card, because six copies of it read as a disclaimer, not a statement. */
   newNote: {
-    hu: 'Az „Új” jelölésűek a kínálatom legújabb részei: ilyet fizető ügyfélnek még nem szállítottam, ezért az első projekteknél ezt be is árazom. Ha menet közben kiderül, hogy nem éri meg neked, megmondom.',
-    en: 'The ones marked “New” are the newest part of what I offer: I have not delivered one for a paying client yet, so I price the first few accordingly. If it turns out along the way that it is not worth it for you, I will say so.',
+    hu: 'Az „Új” jelölésűek a kínálatom legújabb részei: ilyet fizető ügyfélnek még nem szállítottam, ezért az első projekteknél ezt be is árazom. Ahol mellette élő demó van, az saját bemutató projektem, nem ügyfélmunka. Ha menet közben kiderül, hogy nem éri meg neked, megmondom.',
+    en: 'The ones marked “New” are the newest part of what I offer: I have not delivered one for a paying client yet, so I price the first few accordingly. Where one has a live demo, that demo is my own project, not client work. If it turns out along the way that it is not worth it for you, I will say so.',
   },
 }
 

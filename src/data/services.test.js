@@ -20,15 +20,13 @@ describe('services catalogue', () => {
   })
 
   /* "Élő demó" is a claim a stranger can check in one click, so it may only
-     point at a demo the portfolio itself lists — and an offer marked new has,
-     by definition, nothing delivered behind it to point at. */
-  it('links a demo only where the portfolio has that live demo, and never on a new item', () => {
+     point at a demo the portfolio itself lists. Since 2026-11-09 a new offer
+     may carry one too: the demo is my own project, and the group note that
+     explains "Új" says so. */
+  it('links a demo only where the portfolio has that live demo', () => {
     const live = PROJECTS_FULL.map((p) => p.live)
-    for (const s of ALL_SERVICES.filter((x) => x.demo)) {
-      expect(live, s.id).toContain(s.demo)
-      expect(s.isNew, `${s.id} cannot be both new and demoed`).toBeFalsy()
-    }
-    expect(ALL_SERVICES.filter((s) => s.demo)).toHaveLength(4)
+    for (const s of ALL_SERVICES.filter((x) => x.demo)) expect(live, s.id).toContain(s.demo)
+    expect(ALL_SERVICES.filter((s) => s.demo)).toHaveLength(10)
   })
 
   it('keeps the tier floors on the matching catalogue items', () => {

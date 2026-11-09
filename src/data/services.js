@@ -23,11 +23,19 @@ import { forint, priceEn } from './fx.js'
    split from ordering the same day, at 350 000, so a buffet that only wants
    the menu board is not quoted the ordering system.
 
+   Widened again on 2026-11-09, at Máté's direction, to sixteen: offers a
+   demo from the 2026-10-20 batch now stands behind (quote builder, direct
+   booking, repair intake, reminders, multi-page site, product picker), plus
+   the Google listing and accessibility work. The webshop, chatbot, voice
+   assistant, automation and custom system stay cut: still nothing behind
+   them. New prices from the same 16 000 Ft/hour.
+
    `isNew` means no paying client has bought this kind of work yet. It is
    shown on the card, and the section states once per group what it means —
    the same honesty the AI section used to carry, applied wherever it is
-   true rather than only where it was first written. `demo` is the opposite
-   claim and services.test.js keeps the two apart. */
+   true rather than only where it was first written. Since 2026-11-09 an
+   offer can be new and demoed at once: the demo is my own project, not
+   client work, and the group note says so. */
 
 /* Floors other files quote in prose (faq.js). Named by role, not position,
    so inserting an offer cannot silently move one. */
@@ -168,6 +176,108 @@ export const SERVICE_GROUPS = [
           en: 'In the demo, pickup times start only as early as the kitchen needs, and the counter view shows the slip.',
         },
       },
+      {
+        id: 'szallasfoglalo',
+        name: { hu: 'Közvetlen szállásfoglalás', en: 'Direct booking for your rooms' },
+        problem: {
+          hu: 'A vendég a saját oldaladon látja a szabad szobákat és a végösszeget, és ott is foglal, nem egy portálon, ami minden foglalásból jutalékot visz.',
+          en: 'Guests see the free rooms and the full price on your own site and book there, not on a portal that takes a commission on every stay.',
+        },
+        forWho: {
+          hu: 'Vendégháznak, panziónak, apartmannak, amelyik a foglalásai nagy részét ma portálon keresztül kapja.',
+          en: 'For a guesthouse, B&B or apartment that gets most of its bookings through a portal today.',
+        },
+        includes: [
+          { hu: 'Szabad szobák a kiválasztott napokra', en: 'Free rooms for the chosen dates' },
+          { hu: 'Végösszeg idegenforgalmi adóval együtt', en: 'The full price, tourist tax included' },
+          { hu: 'Foglalási lista és e-mail értesítés', en: 'A booking list and an e-mail for each booking' },
+          { hu: 'Ha ugyanaz a szoba portálon is fent van, a dupla foglalást kézzel kell kizárni, ezt előre megbeszéljük', en: 'If the same room is also on a portal, double bookings need ruling out by hand, and we agree how up front' },
+        ],
+        priceHuf: TIER_FLOORS.booking,
+        timeline: { hu: 'Átadás jellemzően 3-6 hét', en: 'Delivered in 3-6 weeks, typically' },
+        demo: 'https://demo-szallas.vercel.app',
+        isNew: true,
+        proof: {
+          hu: 'A bemutatóban egymás mellett látszik, mennyivel olcsóbb közvetlenül foglalni, mint portálon.',
+          en: 'The demo shows side by side how much cheaper it is to book direct than through a portal.',
+        },
+      },
+      {
+        id: 'arkalkulator',
+        name: { hu: 'Árkalkulátor, árajánlat-készítő', en: 'Price estimator, quote builder' },
+        problem: {
+          hu: 'A látogató a weboldaladon megtudja, nagyjából mennyibe kerül és meddig tart, mielőtt felhív, te pedig kész igénnyel kapod meg az érdeklődést.',
+          en: 'Visitors find out roughly what it costs and how long it takes on your site before they call, and the enquiry reaches you with the details already filled in.',
+        },
+        forWho: {
+          hu: 'Annak, akit naponta hívnak azzal, hogy „mennyibe kerülne”, és a hívások fele ott el is akad.',
+          en: 'For anyone who gets "how much would it be?" calls every day, half of which go nowhere.',
+        },
+        includes: [
+          { hu: 'Kalkulátor a te áraiddal és szabályaiddal', en: 'A calculator with your prices and your rules' },
+          { hu: 'Árajánlatkérés a kiválasztott tételekkel', en: 'A quote request with the chosen items attached' },
+          { hu: 'Az árakat később te is módosíthatod', en: 'Prices you can change later yourself' },
+        ],
+        priceHuf: 590000,
+        timeline: { hu: 'Átadás jellemzően 2-4 hét', en: 'Delivered in 2-4 weeks, typically' },
+        demo: 'https://demo-ugyved.vercel.app',
+        isNew: true,
+        proof: {
+          hu: 'A bemutató ügyvédi irodában ügytípusonként előre látszik a várható díj és időtartam.',
+          en: 'In the law office demo the expected fee and duration show up front for each case type.',
+        },
+      },
+      {
+        id: 'szervizfelvetel',
+        name: { hu: 'Hibabejelentő és szervizfelvétel', en: 'Fault reports and repair intake' },
+        problem: {
+          hu: 'Az ügyfél a weboldalon megmutatja, mi a baj, látja a várható árat és határidőt, és munkalapszámmal követi a javítást, ahelyett hogy naponta telefonálna.',
+          en: 'Customers show what is wrong on your site, see the likely price and deadline, and follow the repair by job number instead of calling every day.',
+        },
+        forWho: {
+          hu: 'Telefon-, számítógép-, kerékpár- vagy autószerviznek, ahol a „kész már?” hívások viszik el a napot.',
+          en: 'For a phone, computer, bike or car repair shop where "is it ready yet?" calls eat up the day.',
+        },
+        includes: [
+          { hu: 'Hibabejelentés a weboldalon', en: 'Fault reports on your site' },
+          { hu: 'Várható ár és határidő a hiba típusa szerint', en: 'Likely price and deadline by type of fault' },
+          { hu: 'Javítás követése munkalapszámmal', en: 'Repairs tracked by job number' },
+          { hu: 'Munkalista, amit te kezelsz', en: 'A job list you run yourself' },
+        ],
+        priceHuf: 450000,
+        timeline: { hu: 'Átadás jellemzően 3-5 hét', en: 'Delivered in 3-5 weeks, typically' },
+        demo: 'https://demo-javito.vercel.app',
+        isNew: true,
+        proof: {
+          hu: 'A bemutatóban a szétszedett telefon hibás rétegére bökve ott látszik az ár és a határidő.',
+          en: 'In the demo, tapping the faulty layer of a phone taken apart shows the price and the deadline.',
+        },
+      },
+      {
+        id: 'termekvalaszto',
+        name: { hu: 'Termék- és ajándékválasztó', en: 'Product and gift picker' },
+        problem: {
+          hu: 'A vásárló pár kérdés alapján a te készletedből kap ajánlatot, és félreteteti, amit kiválasztott. Nem webshop: a fizetés és az átvétel nálad történik.',
+          en: 'Shoppers answer a few questions, get picks from your own stock, and have them put aside for collection. Not a webshop: payment and pickup happen in your shop.',
+        },
+        forWho: {
+          hu: 'Ajándékboltnak, virágboltnak, kisboltnak, ahol a vásárló tanácsot kér, de a teljes webshop túl nagy falat.',
+          en: 'For a gift shop, florist or small shop where customers ask for advice but a full webshop would be too much.',
+        },
+        includes: [
+          { hu: 'Választó a te termékeiddel', en: 'A picker built on your products' },
+          { hu: 'Félretétel kérése, értesítés neked', en: 'Put-aside requests, with a notification to you' },
+          { hu: 'Készlet, amit te frissítesz', en: 'Stock you keep up to date yourself' },
+        ],
+        priceHuf: 450000,
+        timeline: { hu: 'Átadás jellemzően 3-5 hét', en: 'Delivered in 3-5 weeks, typically' },
+        demo: 'https://demo-ajandekbolt.vercel.app',
+        isNew: true,
+        proof: {
+          hu: 'A bemutatóban az ajándékkereső a készletből ajánl, és a bolt félreteszi.',
+          en: 'In the demo the gift finder recommends from stock and the shop puts it aside.',
+        },
+      },
     ],
   },
   {
@@ -202,6 +312,69 @@ export const SERVICE_GROUPS = [
           hu: 'A bemutató oldal mobilon Lighthouse-ban 99 / 100 / 100 / 100.',
           en: 'The demo page scores 99 / 100 / 100 / 100 in mobile Lighthouse.',
         },
+      },
+      {
+        id: 'cegoldal',
+        name: { hu: 'Többoldalas céges oldal', en: 'Multi-page business site' },
+        problem: {
+          hu: 'Külön oldal minden szolgáltatásodnak, árak, galéria és elérhetőség, úgyhogy aki keres, a konkrét kérdésére talál választ, nem csak egy névjegyre.',
+          en: 'A page for each of your services, prices, a gallery and contact details, so people searching find the answer to their actual question, not just a business card.',
+        },
+        forWho: {
+          hu: 'Annak, akinek több szolgáltatása van, mint amennyi egy oldalra kényelmesen ráfér.',
+          en: 'For anyone with more services than fit comfortably on one page.',
+        },
+        includes: [
+          { hu: 'Több aloldal egyedi megjelenéssel, mobilon is', en: 'Several pages with a design of your own, on a phone too' },
+          { hu: 'Szövegek, árak és képek, amiket te is módosíthatsz', en: 'Text, prices and images you can change yourself' },
+          { hu: 'Keresőoptimalizálás oldalanként', en: 'Search basics on every page' },
+          { hu: 'Élesítés és átadás', en: 'Put live and handed over' },
+        ],
+        priceHuf: 420000,
+        timeline: { hu: 'Átadás jellemzően 2-4 hét', en: 'Delivered in 2-4 weeks, typically' },
+        demo: 'https://demo-szerviz.vercel.app',
+        isNew: true,
+      },
+      {
+        id: 'google',
+        name: { hu: 'Google-cégprofil és helyi keresés', en: 'Google Business Profile and local search' },
+        problem: {
+          hu: 'Ha valaki rákeres a szakmádra a környéken, a térképen te is ott legyél, helyes nyitvatartással, képekkel és egy koppintással hívható számmal.',
+          en: 'When someone searches for your trade nearby, you show up on the map too, with the right opening hours, photos and a number they can call with one tap.',
+        },
+        forWho: {
+          hu: 'Helyi vállalkozásnak, amelyiknek nincs Google-profilja, vagy évek óta nem nyúlt hozzá.',
+          en: 'For a local business with no Google profile, or one nobody has touched in years.',
+        },
+        includes: [
+          { hu: 'Profil létrehozása vagy rendbetétele', en: 'Profile created or put right' },
+          { hu: 'Kategóriák, nyitvatartás, képek, leírás', en: 'Categories, opening hours, photos, description' },
+          { hu: 'Összekötés a weboldaladdal', en: 'Linked to your website' },
+        ],
+        priceHuf: 60000,
+        priceUnit: 'flat',
+        timeline: { hu: 'Jellemzően néhány nap, plusz a Google ellenőrzése', en: 'Usually a few days, plus Google\'s own verification' },
+        isNew: true,
+      },
+      {
+        id: 'akadalymentesites',
+        name: { hu: 'Akadálymentesítés', en: 'Accessibility fixes' },
+        problem: {
+          hu: 'A meglévő oldaladat használhatóvá teszem annak is, aki rosszul lát, csak billentyűzettel vagy felolvasóval böngészik. 2025 óta az európai akadálymentességi szabály több szolgáltatásnál és webshopnál ezt elő is írja.',
+          en: 'I make your existing site usable for people with poor sight, or who browse by keyboard or screen reader only. Since 2025 the European Accessibility Act requires it for several kinds of service and online shop.',
+        },
+        forWho: {
+          hu: 'Annak, aki online értékesít vagy foglaltat, és tudni akarja, megfelel-e. Ha nem tudod, az átvilágítás megmondja.',
+          en: 'For anyone selling or taking bookings online who wants to know whether they comply. If you are unsure, the audit tells you.',
+        },
+        includes: [
+          { hu: 'Ellenőrzés a WCAG 2.2 AA szint szerint', en: 'Checked against WCAG 2.2 level AA' },
+          { hu: 'Kontraszt, billentyűzetes és felolvasós használat javítása', en: 'Contrast, keyboard and screen-reader use fixed' },
+          { hu: 'Akadálymentességi nyilatkozat a weboldalra', en: 'An accessibility statement for the site' },
+        ],
+        priceHuf: 150000,
+        timeline: { hu: 'Átadás jellemzően 1-3 hét', en: 'Delivered in 1-3 weeks, typically' },
+        isNew: true,
       },
       {
         id: 'felujitas',
@@ -254,6 +427,31 @@ export const SERVICE_GROUPS = [
         priceHuf: 45000,
         priceUnit: 'flat',
         timeline: { hu: 'Jellemzően néhány nap', en: 'Usually a few days' },
+      },
+      {
+        id: 'emlekezteto',
+        name: { hu: 'Automatikus emlékeztető', en: 'Automatic reminders' },
+        problem: {
+          hu: 'Az ügyfél magától kap értesítést, amikor esedékes a következő oltás, vizsgálat vagy szerviz, így visszajön, és nem neked kell észben tartanod.',
+          en: 'Clients get a reminder by themselves when the next vaccination, check-up or service is due, so they come back without you having to remember.',
+        },
+        forWho: {
+          hu: 'Állatorvosnak, optikának, autószerviznek, fodrásznak: bárkinek, akihez az ügyfél rendszeresen visszatér.',
+          en: 'For a vet, optician, garage or hairdresser: anyone whose clients come back on a schedule.',
+        },
+        includes: [
+          { hu: 'Esedékesség a te szabályaid szerint', en: 'Due dates by your own rules' },
+          { hu: 'E-mail emlékeztető automatikusan', en: 'E-mail reminders, automatically' },
+          { hu: 'SMS is kérhető; az üzenetek díját a szolgáltató számlázza', en: 'SMS on request; the texts are billed by the provider' },
+        ],
+        priceHuf: 390000,
+        timeline: { hu: 'Átadás jellemzően 2-4 hét', en: 'Delivered in 2-4 weeks, typically' },
+        demo: 'https://demo-allatorvos.vercel.app',
+        isNew: true,
+        proof: {
+          hu: 'A bemutatóban a teljes oltási naptár a születési dátumból számol.',
+          en: 'In the demo the whole vaccination calendar is worked out from the date of birth.',
+        },
       },
       /* Upkeep in two tiers. Three from 2026-09-24, because one tier left the
          owner of a quiet one-pager paying for hours they never use; the
