@@ -173,7 +173,7 @@ export default function Hero() {
      `.card-invert :focus-visible { outline-color: primary-dark }`, and
      primary-dark outside an inverted subtree is #9a3412 — a dark orange ring
      on a near-black hero, which is where keyboard focus on the two most
-     important buttons on the site was landing. Inside, it resolves to #a5b4fc
+     important buttons on the site was landing. Inside, it resolves to #fdba74
      and is plainly visible.
 
      The background-color the class paints is harmless: the backdrop div
