@@ -103,13 +103,13 @@ export default function Navbar() {
     <>
       <nav
         className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 ${
-          scrolled ? 'glass shadow-lg shadow-primary/10' : 'bg-transparent focus-on-deep'
+          scrolled ? 'glass' : 'bg-transparent focus-on-deep'
         } rounded-full px-4 sm:px-6 py-2.5 w-[calc(100%-2rem)] max-w-5xl`}
       >
         <div className="flex items-center justify-between gap-6">
           {/* The mark stands alone here, so the link carries the accessible
               name the removed wordmark used to give it. */}
-          <a href="#kezdolap" className="flex items-center group" aria-label={t(COPY.homeLink, locale)}>
+          <a href="#kezdolap" className="flex min-h-11 items-center group" aria-label={t(COPY.homeLink, locale)}>
             {/* Inverts on scroll: unscrolled the pill is transparent over the
                 dark hero, scrolled it is glass over the light page.
 
@@ -153,7 +153,7 @@ export default function Navbar() {
               <Link
                 to={twin.target}
                 aria-label={t(COPY.switchLanguage, locale)}
-                className={`font-mono text-xs font-semibold tracking-[0.15em] px-2.5 py-1.5 rounded-full border transition-colors duration-300 ${
+                className={`inline-flex items-center justify-center font-mono text-xs font-semibold tracking-[0.15em] min-h-11 min-w-11 px-3 rounded-full border transition-colors duration-300 ${
                   scrolled
                     ? 'border-divider text-ink/60 hover:border-primary/60 hover:text-primary-dark'
                     : 'border-white/25 text-white/80 hover:border-white/60 hover:text-white'
@@ -180,7 +180,7 @@ export default function Navbar() {
             </div>
             <a
               href="#kapcsolat"
-              className="magnetic-btn inline-flex items-center gap-1.5 bg-primary text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg shadow-primary/30"
+              className="magnetic-btn inline-flex items-center gap-1.5 bg-primary text-white px-4 py-2 rounded-full text-sm font-semibold"
             >
               {t(UI.ctaQuote, locale)}
               <ArrowUpRight className="h-4 w-4" strokeWidth={2.5} />
@@ -239,6 +239,7 @@ export default function Navbar() {
             smaller size. `overscroll-contain` stops a flick at the end of the
             list from chaining into the page behind. */}
         <div
+          data-lenis-prevent
           className={`absolute top-0 left-0 right-0 max-h-[100dvh] overflow-y-auto overscroll-contain bg-background rounded-b-5xl px-6 pt-8 pb-12 transition-transform duration-500 ${
             open ? 'translate-y-0' : '-translate-y-full'
           }`}
@@ -275,7 +276,7 @@ export default function Navbar() {
                   to={twin.target}
                   onClick={() => setOpen(false)}
                   aria-label={t(COPY.switchLanguage, locale)}
-                  className="font-mono text-xs font-semibold tracking-[0.15em] px-2.5 py-1.5 rounded-full border border-divider text-ink/60 transition-colors duration-300 hover:border-primary/60 hover:text-primary-dark"
+                  className="inline-flex items-center justify-center font-mono text-xs font-semibold tracking-[0.15em] min-h-11 min-w-11 px-3 rounded-full border border-divider text-ink/60 transition-colors duration-300 hover:border-primary/60 hover:text-primary-dark"
                 >
                   {twin.locale.toUpperCase()}
                 </Link>

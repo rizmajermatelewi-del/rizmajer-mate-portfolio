@@ -69,7 +69,7 @@ export default class ErrorBoundary extends Component {
           <p className="text-muted mt-5 leading-relaxed">{t(COPY.body, locale)}</p>
           <a
             href="mailto:info@rizmajerdev.com"
-            className="mt-8 inline-flex items-center justify-center bg-primary text-white font-semibold px-7 py-4 rounded-full shadow-lg shadow-primary/30"
+            className="mt-8 inline-flex items-center justify-center bg-primary text-white font-semibold px-7 py-4 rounded-full"
           >
             info@rizmajerdev.com
           </a>

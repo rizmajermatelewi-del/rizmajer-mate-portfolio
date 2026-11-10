@@ -1,9 +1,9 @@
 import { useEffect } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import Lenis from 'lenis'
 import Navbar from './sections/Navbar'
 import Hero from './sections/Hero'
-import FreeReview from './sections/FreeReview'
 import Projects from './sections/Projects'
 import About from './sections/About'
 import Protocol from './sections/Protocol'
@@ -20,6 +20,23 @@ gsap.registerPlugin(ScrollTrigger)
 
 export default function App() {
   const locale = useLocale()
+
+  /* Inertia scrolling (2026-11-10, Máté: "butter smooth"). Wheel only: Lenis
+     leaves touch native by default (syncTouch off), so phones scroll exactly as
+     before. Not started at all under prefers-reduced-motion. Driven from the
+     GSAP ticker so the hero parallax and ScrollTrigger stay in step with it. */
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const lenis = new Lenis({ lerp: 0.1, anchors: true })
+    lenis.on('scroll', ScrollTrigger.update)
+    const tick = (time) => lenis.raf(time * 1000)
+    gsap.ticker.add(tick)
+    gsap.ticker.lagSmoothing(0)
+    return () => {
+      gsap.ticker.remove(tick)
+      lenis.destroy()
+    }
+  }, [])
 
   useEffect(() => {
     const refresh = () => ScrollTrigger.refresh()
@@ -69,7 +86,6 @@ export default function App() {
       <main id="fotartalom" tabIndex={-1} className="focus:outline-none">
         <Hero />
         <Testimonial />
-        <About />
         {/* Rebuilt on 2026-09-24 around one services catalogue. Pillars
             (the numbers), Features (three promises), ServicesGrid, AiServices
             and Pricing are gone: the offer and its prices live in Services,
@@ -77,11 +93,10 @@ export default function App() {
             Projects comes before Services so the offer arrives after the
             proof, and the FAQ answers what is left before the form. */}
         <Projects />
+        {/* After the proof, as a short strip (critique, 2026-11-10): the portrait
+            used to stand between the hero and the work. */}
+        <About />
         <Services />
-        {/* After the offer and its prices, before the process: the visitor
-            who has seen the work and the prices but is not ready to pick one
-            gets a free, no-commitment first step instead of the full form. */}
-        <FreeReview />
         <Protocol />
         <Faq />
         <ContactForm />

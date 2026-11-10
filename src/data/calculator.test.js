@@ -15,12 +15,12 @@ describe('price calculator', () => {
   it('adds percentages to the base, not to each other, and rounds up to 10 000', () => {
     // idopontfoglalo 690 000: +30% english = 207 000, +25% rush = 172 500 -> 1 069 500 -> 1 070 000
     expect(estimate('idopontfoglalo', ['english', 'rush'])).toBe(1070000)
-    // bemutatkozo 240 000 + copy 40 000 + payment 90 000 = 370 000
-    expect(estimate('bemutatkozo', ['copy', 'payment'])).toBe(370000)
+    // bemutatkozo 240 000 + copy 40 000 = 280 000
+    expect(estimate('bemutatkozo', ['copy'])).toBe(280000)
   })
 
   it('ignores an add-on that does not apply to the chosen service', () => {
-    expect(estimate('napi-menu', ['payment'])).toBe(estimate('napi-menu'))
+    expect(estimate('napi-menu', ['staff'])).toBe(estimate('napi-menu'))
   })
 
   it('only offers one-off builds, and knows every add-on target', () => {
@@ -63,10 +63,10 @@ describe('combined services', () => {
   it('sums the services, charges a flat extra once and a percentage on what it covers', async () => {
     const { breakdown } = await import('./calculator')
     // bemutatkozo 240 000 + idopontfoglalo 690 000 + napi-menu 350 000 = 1 280 000
-    // payment flat 90 000 once; english 30% of all three = 384 000
-    const b = breakdown(['bemutatkozo', 'idopontfoglalo', 'napi-menu'], ['payment', 'english'])
-    expect(b.lines.reduce((a, l) => a + l.huf, 0)).toBe(1280000 + 90000 + 384000)
-    expect(b.total).toBe(1760000)
+    // copy flat 40 000 once (site only); english 30% of all three = 384 000
+    const b = breakdown(['bemutatkozo', 'idopontfoglalo', 'napi-menu'], ['copy', 'english'])
+    expect(b.lines.reduce((a, l) => a + l.huf, 0)).toBe(1280000 + 40000 + 384000)
+    expect(b.total).toBe(1710000)
     expect(breakdown(['bemutatkozo', 'nincs-ilyen'])).toBeNull()
   })
 })
@@ -84,11 +84,11 @@ describe('running costs and payment', () => {
   it('offers the booking and ordering extras only where they belong', async () => {
     const { addonsFor } = await import('./calculator')
     const ids = (x) => addonsFor(x).map((a) => a.id)
-    expect(ids('idopontfoglalo')).toEqual(expect.arrayContaining(['sms', 'gcal', 'legal']))
-    expect(ids('rendeles')).toEqual(expect.arrayContaining(['invoice', 'legal']))
-    expect(ids('bemutatkozo')).not.toContain('sms')
-    expect(ids('napi-menu')).not.toContain('invoice')
-    expect(ids('idopontfoglalo')).toEqual(expect.arrayContaining(['review', 'staff', 'deposit']))
+    expect(ids('idopontfoglalo')).toEqual(expect.arrayContaining(['review', 'staff', 'legal']))
+    expect(ids('rendeles')).toEqual(expect.arrayContaining(['delivery', 'legal']))
+    expect(ids('bemutatkozo')).not.toContain('staff')
+    expect(ids('napi-menu')).not.toContain('review')
+    expect(ids('idopontfoglalo')).toEqual(expect.arrayContaining(['review', 'staff']))
     expect(ids('napi-menu')).toEqual(expect.arrayContaining(['allergens', 'qr']))
     expect(ids('napi-menu')).not.toContain('delivery')
     expect(ids('rendeles')).toContain('delivery')

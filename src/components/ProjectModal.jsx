@@ -108,6 +108,7 @@ export default function ProjectModal({ project, originRect, onClose }) {
 
       <div
         ref={panelRef}
+        data-lenis-prevent
         className="relative max-h-viewport w-full max-w-2xl overflow-y-auto overscroll-contain rounded-4xl border border-divider card-invert p-6 sm:p-10 shadow-e4"
       >
         <button
@@ -119,7 +120,7 @@ export default function ProjectModal({ project, originRect, onClose }) {
           <X className="h-5 w-5" strokeWidth={2} />
         </button>
 
-        <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-primary-dark">
+        <span className="font-semibold text-[13px] text-primary-dark">
           {t(project.label, locale)}
           {project.year && ` · ${t(project.year, locale)}`}
         </span>
@@ -132,7 +133,7 @@ export default function ProjectModal({ project, originRect, onClose }) {
         </h2>
 
         {project.role && (
-          <p className="font-mono text-xs uppercase tracking-widest text-muted mt-2">{t(project.role, locale)}</p>
+          <p className="font-semibold text-[13px] text-muted mt-2">{t(project.role, locale)}</p>
         )}
 
         <p className="text-muted leading-relaxed mt-5">{t(project.text, locale)}</p>
@@ -172,7 +173,7 @@ export default function ProjectModal({ project, originRect, onClose }) {
           {project.tech.map((techName, i) => (
             <span
               key={i}
-              className="font-mono text-[11px] uppercase tracking-wide text-muted bg-background border border-divider px-2 py-0.5 rounded-full"
+              className="font-mono text-[13px] text-muted bg-background border border-divider px-2 py-0.5 rounded-full"
             >
               {techName}
             </span>
@@ -186,7 +187,7 @@ export default function ProjectModal({ project, originRect, onClose }) {
                 href={project.live}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-widest text-primary-dark hover:text-ink transition-colors duration-200"
+                className="inline-flex items-center gap-1.5 font-semibold text-[13px] text-primary-dark hover:text-ink transition-colors duration-200"
               >
                 {t(COPY.liveSite, locale)} <ArrowUpRight className="h-3.5 w-3.5" strokeWidth={2} />
               </a>
@@ -196,7 +197,7 @@ export default function ProjectModal({ project, originRect, onClose }) {
                 href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-widest text-primary-dark hover:text-ink transition-colors duration-200"
+                className="inline-flex items-center gap-1.5 font-semibold text-[13px] text-primary-dark hover:text-ink transition-colors duration-200"
               >
                 GitHub <ArrowUpRight className="h-3.5 w-3.5" strokeWidth={2} />
               </a>

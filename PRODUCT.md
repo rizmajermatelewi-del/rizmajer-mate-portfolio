@@ -42,7 +42,7 @@ All four were named explicitly by the owner. Each is a live risk for this specif
 
 **Generic Hungarian agency templates.** Stock photography of people at laptops, "Modern megoldások vállalkozásoknak", three identical service cards, no actual work shown. This is what the target customer has already seen five times and learned to distrust. The defense is evidence: real screenshots, real client names, real prices.
 
-**Awwwards-style experimental portfolios.** Scroll-hijacking, custom cursors, WebGL, multi-second intro animations. Impressive to other designers, actively hostile to a 55-year-old salon owner on a mid-range Android. Motion here is always subordinate to reading speed. No cursor followers or pointer-tracked effects, ever.
+**Awwwards-style experimental portfolios.** Scroll-hijacking, custom cursors, WebGL, multi-second intro animations. Impressive to other designers, actively hostile to a 55-year-old salon owner on a mid-range Android. Motion here is always subordinate to reading speed. No cursor followers or pointer-tracked effects, ever. Wheel inertia (Lenis) is allowed since 2026-11-10 because it never moves the page on its own: it smooths the reader's own scroll, stays native on touch, and is off under reduced motion. Scroll that snaps, pins, or drives the page against the reader is still out.
 
 **Corporate enterprise SaaS.** "Unlock", "Seamless", "Elevate", "Next-gen". Gradient-navy hero, invented dashboard screenshots, logo walls of companies that are not customers. Two paying clients is the truth, and the site should say two.
 
@@ -70,7 +70,7 @@ Specific commitments:
 - Body text at least 4.5:1 against its background; large text at least 3:1. Placeholder text is held to the body-text bar, not a muted default.
 - Interactive control boundaries (input borders, focus rings, toggles) at least 3:1 under SC 1.4.11. Field edges that read as voids on a dark card are a failure, not a style.
 - Full keyboard operability with a visible focus indicator on every interactive element, including inside dark inverted cards where the browser default ring disappears.
-- `prefers-reduced-motion: reduce` collapses all scroll-driven, parallax, and infinite animation to static. Already enforced globally in CSS; keep it that way.
+- `prefers-reduced-motion: reduce` collapses all scroll-driven, parallax, and infinite animation to static, and Lenis inertia does not start. Already enforced globally in CSS; keep it that way.
 - Hungarian is the document language (`lang="hu"`); labels, error messages, and consent copy are all Hungarian.
 - Forms collecting personal data carry explicit consent and a link to the privacy policy at the point of submission.
 - Mobile is the primary viewport, not an adaptation. Most of the target audience arrives on a phone.

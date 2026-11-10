@@ -27,12 +27,9 @@ import { neutral } from '../i18n/t.js'
    two ids and that derivation having to choose between them. An anchor is not
    copy — nobody reads #rolam — so the cost would buy a reader nothing. */
 export const NAV_LINKS = [
-  { label: { hu: 'Rólam', en: 'About' }, href: '#rolam' },
   { label: { hu: 'Projektek', en: 'Projects' }, href: '#projektek' },
+  { label: { hu: 'Rólam', en: 'About' }, href: '#rolam' },
   { label: { hu: 'Szolgáltatások', en: 'Services' }, href: '#szolgaltatasok' },
-  /* Short label on purpose: the full "Ingyenes átvilágítás" wrapped at 1280
-     and pushed the CTA button onto two lines. The section says "ingyenes". */
-  { label: { hu: 'Átvilágítás', en: 'Free review' }, href: '#atvilagitas' },
   { label: { hu: 'Folyamat', en: 'Process' }, href: '#folyamat' },
   { label: { hu: 'GYIK', en: 'FAQ' }, href: '#gyik' },
 ]

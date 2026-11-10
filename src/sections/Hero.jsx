@@ -14,9 +14,13 @@ import phoneVirag from '../assets/demos/hero-phone-virag.webp'
 import phoneViragSmall from '../assets/demos/hero-phone-virag-300.webp'
 import phoneMasszazs from '../assets/demos/hero-phone-masszazs.webp'
 import phoneMasszazsSmall from '../assets/demos/hero-phone-masszazs-300.webp'
+import heroBg from '../assets/bg/hero-1600.webp'
 import { useLocale } from '../i18n/useLocale'
 import { t } from '../i18n/t'
 import { UI } from '../i18n/ui'
+import { TIER_FLOORS } from '../data/services'
+import { PROJECTS_FULL } from '../data/projects'
+import { forint, priceEn } from '../data/fx'
 
 /* Six live demos, captured at 390px, each linking to the live site. Six
    trades rather than one, because the buyer is looking for their own. Links are
@@ -116,6 +120,17 @@ const COPY = {
      beside a primary button that names one. */
   seeWork: { hu: 'Munkáim megtekintése', en: 'See my work' },
   freeReview: { hu: 'Vagy kérj ingyenes weboldal-átvilágítást', en: 'Or ask for a free website review' },
+  /* Three checkable facts in the first screen (2026-11-10): "say the number"
+     was true everywhere on the page except where most visitors stop. Price
+     and count are derived, so neither can drift from the catalogue. */
+  facts: [
+    { hu: `Bemutatkozó oldal ${forint(TIER_FLOORS.intro)}-tól`, en: `Introductory site from ${priceEn(TIER_FLOORS.intro)}` },
+    { hu: 'Válasz egy munkanapon belül', en: 'A reply within one working day' },
+    { hu: `${PROJECTS_FULL.length} bemutató, mind kipróbálható`, en: `${PROJECTS_FULL.length} demos, all of them live` },
+  ],
+  /* The phones were marked as demos only in their aria-label, so a sighted
+     visitor could take them for client work. Now the label is on screen. */
+  phonesCaption: { hu: 'Bemutatók: koppints rá, és kipróbálod', en: 'Demos: tap one to try it' },
   /* photoAlt went with the photograph. The backdrop is drawn and carries no
      information, so it is aria-hidden rather than described — alt text for a
      gradient is noise in a screen reader, not access. */
@@ -141,7 +156,9 @@ export default function Hero() {
       /* No entrance (2026-10-13): DESIGN.md rules out intro animation
          between the visitor and the call to action, so the copy is simply
          there. Under reduced motion the scroll depth below is skipped too. */
-      if (reduce) return
+      // No scroll-scrubbed parallax on touch (critique, 2026-11-10): on a phone it faded
+      // the hero copy to 35% while the visitor was still reading it.
+      if (reduce || window.matchMedia('(pointer: coarse)').matches) return
 
       /* Depth on scroll. The photograph drifts slower than the page and the
          copy drifts faster, so the two separate as you leave the hero and
@@ -183,9 +200,9 @@ export default function Hero() {
      The hero had been writing text-white, text-white/80 and border-white/25 by
      hand, which looked identical and was not: the class also carries
      `.card-invert :focus-visible { outline-color: primary-dark }`, and
-     primary-dark outside an inverted subtree is #9a3412 — a dark orange ring
+     primary-dark outside an inverted subtree is #4338ca — a dark indigo ring
      on a near-black hero, which is where keyboard focus on the two most
-     important buttons on the site was landing. Inside, it resolves to #fdba74
+     important buttons on the site was landing. Inside, it resolves to #a5b4fc
      and is plainly visible.
 
      The background-color the class paints is harmless: the backdrop div
@@ -213,7 +230,13 @@ export default function Hero() {
             backgroundImage: [
               'radial-gradient(58% 62% at 72% 34%, rgb(var(--color-primary) / 0.40), transparent 72%)',
               'radial-gradient(60% 50% at 10% 2%, rgb(var(--color-primary-dark) / 0.30), transparent 70%)',
+              /* Abstract indigo light (Higgsfield, 2026-11-10), under the
+                 gradients; 9 KB, self-hosted so img-src stays same-origin. */
+              `url(${heroBg})`,
             ].join(', '),
+            backgroundSize: 'auto, auto, cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
           }}
         >
           <div
@@ -235,6 +258,7 @@ export default function Hero() {
             collides with the headline, and the strip under the buttons takes
             over. z-20 lifts the links above the full-width copy layer. */}
         <div className="absolute right-[5%] top-1/2 z-20 hidden -translate-y-1/2 gap-2.5 xl:flex">
+          <p className="absolute -top-10 left-0 font-semibold text-[13px] text-ink/80">{t(COPY.phonesCaption, locale)}</p>
           {PHONES.map((column, ci) => (
             <div key={ci} className={`${COLUMN_OFFSET[ci]} flex w-[clamp(8.5rem,11vw,13rem)] flex-col gap-2.5`}>
               {column.map((phone) => (
@@ -284,7 +308,7 @@ export default function Hero() {
                 it wrapped, which made the headline three lines tall and
                 pushed the buttons toward the fold. */}
             <span
-              className="hero-line-2 block font-display font-semibold text-primary-light text-4xl sm:text-5xl md:text-6xl mt-2"
+              className="hero-line-2 block font-display font-semibold text-4xl sm:text-5xl md:text-6xl mt-2"
               style={{ lineHeight: '0.95' }}
             >
               {t(COPY.headlineAccent, locale)}
@@ -310,6 +334,12 @@ export default function Hero() {
             <span className="text-ink">{t(COPY.introAccent, locale)}</span>.
           </p>
 
+          <ul className="mt-6 flex flex-col gap-1.5 text-sm font-medium text-ink sm:flex-row sm:flex-wrap sm:gap-x-6">
+            {COPY.facts.map((fact) => (
+              <li key={fact.hu}>{t(fact, locale)}</li>
+            ))}
+          </ul>
+
           {/* Two CTAs, two intents. The secondary used to be the email address
               spelled out in full: a long label pointing at the same "contact
               me" action as the primary button beside it. Sending it to the
@@ -318,7 +348,7 @@ export default function Hero() {
           <div className="hero-cta mt-9 flex flex-col sm:flex-row gap-4">
             <a
               href="#kapcsolat"
-              className="magnetic-btn group inline-flex w-full sm:w-auto items-center justify-center gap-2 bg-primary text-white font-semibold px-7 py-4 rounded-full shadow-2xl shadow-primary/30 transition-shadow duration-300 hover:shadow-primary/50"
+              className="magnetic-btn group inline-flex w-full sm:w-auto items-center justify-center gap-2 bg-primary text-white font-semibold px-7 py-4 rounded-full"
             >
               {t(UI.ctaQuote, locale)}
               <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
@@ -340,7 +370,7 @@ export default function Hero() {
           {/* The free review, as a quiet third option for the visitor who is not
               ready to talk about a project yet. A text link, not a third button:
               two buttons already split the decision, and a third would flatten it. */}
-          <a href="#atvilagitas" className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-primary-dark underline underline-offset-4 hover:no-underline">
+          <a href="#atvilagitas" className="mt-3 inline-flex min-h-11 items-center gap-1.5 text-sm font-medium text-primary-dark underline underline-offset-4 hover:no-underline">
             {t(COPY.freeReview, locale)}
             <ArrowRight className="h-3.5 w-3.5" />
           </a>
@@ -350,7 +380,8 @@ export default function Hero() {
               six, in a row you swipe: native scroll-snap, no script. The row
               bleeds to the screen edge (-mx-6 / px-6) so the cut-off phone on
               the right says there is more. */}
-          <div className="-mx-6 mt-10 flex snap-x snap-mandatory scroll-px-6 gap-2.5 overflow-x-auto px-6 pb-2 [scrollbar-width:none] sm:-mx-10 sm:px-10 lg:-mx-16 lg:px-16 xl:hidden">
+          <p className="mt-10 hidden font-semibold text-[13px] text-ink/80 sm:block xl:hidden">{t(COPY.phonesCaption, locale)}</p>
+          <div className="-mx-6 mt-3 hidden sm:flex snap-x snap-mandatory scroll-px-6 gap-2.5 overflow-x-auto px-6 pb-2 [scrollbar-width:none] sm:-mx-10 sm:px-10 lg:-mx-16 lg:px-16 xl:hidden">
             {PHONES.flat().map((phone) => (
               <Phone key={phone.href} phone={phone} locale={locale} className="w-[38%] max-w-[11rem] shrink-0 snap-start" />
             ))}

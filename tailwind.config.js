@@ -7,6 +7,9 @@ export default {
         primary: 'rgb(var(--color-primary) / <alpha-value>)',
         'primary-dark': 'rgb(var(--color-primary-dark) / <alpha-value>)',
         'primary-light': 'rgb(var(--color-primary-light) / <alpha-value>)',
+        /* Warm second colour (2026-11-10): amber. Dark surfaces and fills only;
+           as small text on the blue page it is ~3.8:1 and fails AA. */
+        warm: 'rgb(var(--color-warm) / <alpha-value>)',
         accent: 'rgb(var(--color-accent) / <alpha-value>)',
         'accent-dark': 'rgb(var(--color-accent-dark) / <alpha-value>)',
         background: 'rgb(var(--color-background) / <alpha-value>)',

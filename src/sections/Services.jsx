@@ -1,13 +1,15 @@
-import { useLayoutEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { Check, ArrowRight, ArrowUpRight, ChevronDown } from 'lucide-react'
-import { SERVICE_GROUPS, priceLabel, salePriceLabel, isDiscounted, offerActive, LAUNCH_OFFER, LAUNCH_NOTE } from '../data/services'
+import { SERVICE_GROUPS, priceLabel, LABELS, salePriceLabel, isDiscounted, offerActive, LAUNCH_OFFER, LAUNCH_NOTE } from '../data/services'
 import { useInView } from '../motion/useInView'
 import { BuildOrSubscribe } from './ServicesExtras'
 import PriceCalculator from './PriceCalculator'
+import servicesBg from '../assets/bg/services-1600.webp'
 import { useLocale } from '../i18n/useLocale'
 import { t } from '../i18n/t'
 
 const COPY = {
+  count: { hu: 'szolgáltatás', en: 'services' },
   headingLead: { hu: 'Mit építhetek', en: 'What I can build' },
   headingAccent: { hu: 'neked.', en: 'for you.' },
   intro: {
@@ -34,7 +36,7 @@ const COPY = {
     { hu: '1 év díjmentes hibajavítás, ha az én hibámból nem működik valami', en: 'A year of free fixes for anything that breaks through my fault' },
     { hu: 'A kód, a domain és a hozzáférések a tiéd', en: 'The code, the domain and the accounts are yours' },
   ],
-  isNew: { hu: 'Új', en: 'New' },
+  newHeading: { hu: 'Újabb ajánlatok', en: 'Newer offers' },
   demo: { hu: 'Élő demó', en: 'Live demo' },
   includes: { hu: 'Amit kapsz', en: 'What you get' },
   openDemo: { hu: 'Megnyitom a demót', en: 'Open the demo' },
@@ -43,8 +45,8 @@ const COPY = {
      applied to every offer it is true of. Once per group rather than on each
      card, because six copies of it read as a disclaimer, not a statement. */
   newNote: {
-    hu: 'Az „Új” jelölésűek a kínálatom legújabb részei: ilyet fizető ügyfélnek még nem szállítottam, ezért az első projekteknél ezt be is árazom. Ahol mellette élő demó van, az saját bemutató projektem, nem ügyfélmunka. Ha menet közben kiderül, hogy nem éri meg neked, megmondom.',
-    en: 'The ones marked “New” are the newest part of what I offer: I have not delivered one for a paying client yet, so I price the first few accordingly. Where one has a live demo, that demo is my own project, not client work. If it turns out along the way that it is not worth it for you, I will say so.',
+    hu: 'Ezek a kínálatom legújabb részei, az első projekteknél ezt be is árazom. Ahol mellette élő demó van, az saját bemutató projektem, nem ügyfélmunka. Ha menet közben kiderül, hogy nem éri meg neked, megmondom.',
+    en: 'These are the newest part of what I offer, and I price the first few accordingly. Where one has a live demo, that demo is my own project, not client work. If it turns out along the way that it is not worth it for you, I will say so.',
   },
 }
 
@@ -61,11 +63,11 @@ function Price({ s, locale }) {
       <span className="sr-only">{t(COPY.listPrice, locale)} </span>
       <s className="text-[13px] text-muted decoration-muted/70">{t(priceLabel(s), locale)}</s>
       <span className="sr-only">{t(COPY.salePrice, locale)} </span>
-      <span className="font-display font-semibold text-lg text-ink">{t(salePriceLabel(s), locale)}</span>
-      <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-white bg-primary px-2 py-0.5 rounded-full">−{LAUNCH_OFFER.percent}%</span>
+      <span className="font-display font-semibold text-lg text-warm">{t(salePriceLabel(s), locale)}</span>
+      <span className="font-semibold text-[13px] text-white bg-primary px-2 py-0.5 rounded-full">−{LAUNCH_OFFER.percent}%</span>
     </p>
   ) : (
-    <p className="font-display font-semibold text-lg text-ink whitespace-nowrap">{t(priceLabel(s), locale)}</p>
+    <p className="font-display font-semibold text-lg text-warm whitespace-nowrap">{t(priceLabel(s), locale)}</p>
   )
 }
 
@@ -91,10 +93,7 @@ function ServiceRow({ s, locale }) {
           <h3 className="flex flex-wrap items-center gap-2 font-display font-bold text-lg text-ink leading-snug tracking-tight">
             {t(s.name, locale)}
             {s.demo && (
-              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white bg-primary px-2 py-0.5 rounded-full">{t(COPY.demo, locale)}</span>
-            )}
-            {s.isNew && (
-              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary-dark bg-primary/10 px-2 py-0.5 rounded-full">{t(COPY.isNew, locale)}</span>
+              <span className="font-semibold text-[13px] text-white bg-primary px-2 py-0.5 rounded-full">{t(COPY.demo, locale)}</span>
             )}
           </h3>
           <p className="text-muted text-sm mt-1.5 leading-relaxed max-w-2xl">{t(s.problem, locale)}</p>
@@ -115,7 +114,7 @@ function ServiceRow({ s, locale }) {
 
       <div className="px-5 sm:px-7 pb-6 grid gap-5 lg:grid-cols-[1fr_minmax(0,22rem)]">
         <div>
-          <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-primary-dark">{t(COPY.includes, locale)}</p>
+          <p className="font-semibold text-[13px] text-primary-dark">{t(COPY.includes, locale)}</p>
           <ul className="mt-2 grid gap-x-6 gap-y-1.5 sm:grid-cols-2">
             {s.includes.map((x, i) => (
               <li key={i} className="flex gap-2 text-muted text-[13px] leading-relaxed">
@@ -130,7 +129,7 @@ function ServiceRow({ s, locale }) {
           <a
             href="#kapcsolat"
             onClick={() => requestQuote(s.name)}
-            className="flex w-full items-center justify-center gap-2 px-5 py-3 rounded-full font-semibold bg-primary text-white shadow-lg shadow-primary/25 hover:bg-primary-dark transition-colors duration-300"
+            className="flex w-full items-center justify-center gap-2 px-5 py-3 rounded-full font-semibold bg-primary text-white hover:bg-primary-dark transition-colors duration-300"
           >
             {t(COPY.cta, locale)}
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -157,20 +156,6 @@ export default function Services() {
   const locale = useLocale()
   const [active, setActive] = useState(0)
   const tabs = useRef([])
-  /* The active tab's dark pill slides to the tab you pick (the animated
-     tab indicator idea from animate-ui.com). Until it has been measured —
-     and in the prerendered HTML — the active button paints its own
-     background, so the selected tab is never unmarked. */
-  const [pill, setPill] = useState(null)
-  useLayoutEffect(() => {
-    const measure = () => {
-      const el = tabs.current[active]
-      if (el) setPill({ x: el.offsetLeft, w: el.offsetWidth })
-    }
-    measure()
-    window.addEventListener('resize', measure)
-    return () => window.removeEventListener('resize', measure)
-  }, [active])
 
   /* The WAI-ARIA tabs pattern: arrows move between tabs and activate them,
      Home/End jump to the ends, and only the selected tab is in the Tab
@@ -185,15 +170,19 @@ export default function Services() {
   }
 
   return (
-    <section id="szolgaltatasok" ref={ref} className="relative py-20 sm:py-28 px-6 sm:px-10 lg:px-16">
+    <section id="szolgaltatasok" ref={ref} className="card-invert relative overflow-hidden py-20 sm:py-28 px-6 sm:px-10 lg:px-16">
+      {/* Abstract light only (Higgsfield, 2026-11-10): no people, no screens,
+          nothing that could pass for evidence. The panels on it stay solid deep
+          navy (DESIGN.md, Two Materials Rule). */}
+      <img src={servicesBg} alt="" aria-hidden="true" width={1600} height={895} loading="lazy" decoding="async" className="pointer-events-none absolute inset-0 h-full w-full object-cover" />
       <div
-        className={`max-w-7xl mx-auto transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+        className={`relative max-w-7xl mx-auto transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
           visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
         }`}
       >
         <div className="max-w-2xl">
           <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink leading-[1.05] tracking-tight [text-wrap:balance]">
-            {t(COPY.headingLead, locale)} <span className="text-primary-dark font-semibold">{t(COPY.headingAccent, locale)}</span>
+            {t(COPY.headingLead, locale)} <span className="font-semibold">{t(COPY.headingAccent, locale)}</span>
           </h2>
           <p className="text-muted text-lg mt-6 leading-relaxed">{t(COPY.intro, locale)}</p>
           {/* Up here rather than under the cards: the visitor who does not
@@ -211,10 +200,7 @@ export default function Services() {
         {/* Same card as Projects and the offers below it, at Máté's request:
             dark inverted surface, pill label, check list, ruled footer. */}
         <div className="mt-10 card-invert border border-divider rounded-4xl p-6 sm:p-8 shadow-e2">
-          <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-primary-dark bg-primary/10 px-2.5 py-1 rounded-full">
-            {t(COPY.includedPill, locale)}
-          </span>
-          <h3 className="font-display font-bold text-xl text-ink tracking-tight mt-4">{t(COPY.includedTitle, locale)}</h3>
+          <h3 className="font-display font-bold text-xl text-ink tracking-tight">{t(COPY.includedTitle, locale)}</h3>
           <ul className="mt-4 grid gap-x-8 gap-y-2.5 sm:grid-cols-2 lg:grid-cols-3">
             {COPY.included.map((x, i) => (
               <li key={i} className="flex items-start gap-2 text-sm text-muted leading-relaxed">
@@ -223,24 +209,23 @@ export default function Services() {
               </li>
             ))}
           </ul>
-          <p className="mt-5 pt-4 border-t border-divider text-sm font-semibold text-ink">{t(COPY.noHidden, locale)}</p>
+          <p className="mt-5 pt-4 border-t border-divider text-sm font-semibold text-ink max-w-prose">{t(COPY.noHidden, locale)}</p>
           {offerActive() && (
             <p className="mt-4 rounded-2xl bg-primary/15 px-4 py-3 text-sm font-semibold text-ink">{t(LAUNCH_NOTE, locale)}</p>
           )}
         </div>
 
-        {/* Scrolls sideways on a phone rather than wrapping: four chips on
-            two ragged rows read as two separate controls. */}
-        <div className="mt-10 sm:mt-12 -mx-6 px-6 sm:mx-0 sm:px-0 overflow-x-auto">
-          <div role="tablist" aria-label={t(COPY.tablist, locale)} className="relative flex gap-2 min-w-max pb-1">
-            {pill && (
-              <span
-                aria-hidden="true"
-                className="absolute top-0 left-0 h-[calc(100%-0.25rem)] rounded-full bg-ink transition-[transform,width] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none"
-                style={{ width: pill.w, transform: `translateX(${pill.x}px)` }}
-              />
-            )}
-            {SERVICE_GROUPS.map((g, i) => (
+        {/* Three doors, named after the problem rather than the product
+            (2026-11-10, Máté): the owner picks what hurts, then sees what fixes
+            it. Still the WAI-ARIA tabs pattern underneath, so arrows, Home and
+            End keep working and only the open door is in the Tab order. */}
+        <div role="tablist" aria-label={t(COPY.tablist, locale)} className="mt-10 sm:mt-12 grid gap-3 sm:grid-cols-3">
+          {SERVICE_GROUPS.map((g, i) => {
+            // Floor over every item, flat ones included: a door reading 150 000 Ft-tól
+            // over a 30 000 Ft item was the critique's trust bug (2026-11-10).
+            // Monthly upkeep is left out: "15 000 Ft-tól" would read as a one-off price.
+            const from = Math.min(...g.items.filter((s) => s.priceUnit !== 'month').map((s) => s.priceHuf))
+            return (
               <button
                 key={g.id}
                 ref={(el) => (tabs.current[i] = el)}
@@ -252,16 +237,18 @@ export default function Services() {
                 tabIndex={active === i ? 0 : -1}
                 onClick={() => setActive(i)}
                 onKeyDown={onKeyDown}
-                className={`relative px-5 py-2.5 rounded-full text-sm font-semibold border transition-colors duration-200 ${
-                  active === i
-                    ? `text-surface border-ink ${pill ? 'bg-transparent' : 'bg-ink'}`
-                    : 'bg-surface/60 border-divider text-ink hover:border-primary/60 hover:text-primary-dark'
+                className={`flex flex-col justify-start text-left rounded-3xl border p-5 sm:p-6 transition-colors duration-200 ${
+                  active === i ? 'bg-primary border-primary-light text-white shadow-e3' : 'bg-deep border-divider text-ink hover:border-primary-light'
                 }`}
               >
-                {t(g.title, locale)}
+                <span className="block font-display font-bold text-xl tracking-tight">{t(g.title, locale)}</span>
+                <span className={`block text-sm leading-relaxed mt-2 ${active === i ? 'text-white/90' : 'text-muted'}`}>{t(g.intro, locale)}</span>
+                <span className={`block font-semibold text-[13px] mt-4 ${active === i ? 'text-white' : 'text-primary-dark'}`}>
+                  {g.items.length} {t(COPY.count, locale)} · {t(LABELS.from(from), locale)}
+                </span>
               </button>
-            ))}
-          </div>
+            )
+          })}
         </div>
 
         {/* Every panel is rendered and the inactive ones are hidden, so the
@@ -269,13 +256,25 @@ export default function Services() {
             catalogue, not just tab one. */}
         {SERVICE_GROUPS.map((g, i) => (
           <div key={g.id} id={`szolg-panel-${g.id}`} role="tabpanel" aria-labelledby={`szolg-tab-${g.id}`} hidden={active !== i} className="mt-7">
-            <p className="text-muted leading-relaxed max-w-3xl">{t(g.intro, locale)}</p>
+            {/* Proven offers first, the new ones once under their own heading
+                with the note said a single time, instead of a badge on every
+                other row at the moment the visitor reads the prices. */}
             <div className="mt-6 card-invert border border-divider rounded-4xl overflow-hidden shadow-e2">
-              {g.items.map((s) => (
+              {g.items.filter((s) => !s.isNew).map((s) => (
                 <ServiceRow key={s.id} s={s} locale={locale} />
               ))}
             </div>
-            {g.items.some((s) => s.isNew) && <p className="text-muted text-sm leading-relaxed max-w-3xl mt-6">{t(COPY.newNote, locale)}</p>}
+            {g.items.some((s) => s.isNew) && (
+              <>
+                <h3 className="mt-10 font-display font-bold text-xl text-ink tracking-tight">{t(COPY.newHeading, locale)}</h3>
+                <p className="text-muted text-sm leading-relaxed max-w-prose mt-2">{t(COPY.newNote, locale)}</p>
+                <div className="mt-5 card-invert border border-divider rounded-4xl overflow-hidden shadow-e2">
+                  {g.items.filter((s) => s.isNew).map((s) => (
+                    <ServiceRow key={s.id} s={s} locale={locale} />
+                  ))}
+                </div>
+              </>
+            )}
             {g.id === 'eladas' && <BuildOrSubscribe locale={locale} />}
           </div>
         ))}

@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import {
   Accessibility, ArrowLeft, ArrowRight, BedDouble, BellRing, Calculator, CalendarCheck, Check, ClipboardList, Files,
-  Gift, Globe, Paintbrush, Sparkles, UtensilsCrossed, Wrench,
-  QrCode, Truck, Film,
+  Gift, Globe, Languages, Paintbrush, Sparkles, Star, UtensilsCrossed, Wrench,
+  ChevronDown,
 } from 'lucide-react'
 import { SERVICE_GROUPS, priceLabel, isDiscounted, saleHuf, LAUNCH_OFFER } from '../data/services'
 import {
@@ -59,10 +59,7 @@ const ICONS = {
   rendeles: ClipboardList,
   bemutatkozo: Globe,
   felujitas: Paintbrush,
-  etlap: QrCode,
   utalvany: Gift,
-  koltozes: Truck,
-  'premium-vizual': Film,
   szallasfoglalo: BedDouble,
   arkalkulator: Calculator,
   szervizfelvetel: Wrench,
@@ -70,6 +67,8 @@ const ICONS = {
   cegoldal: Files,
   akadalymentesites: Accessibility,
   emlekezteto: BellRing,
+  ertekeles: Star,
+  tobbnyelvu: Languages,
 }
 
 const fmt = (huf) => ({ hu: forint(huf), en: priceEn(huf) })
@@ -188,10 +187,19 @@ export default function PriceCalculator({ locale, onQuote }) {
   const stepLabel = (i) => (locale === 'en' ? `${t(COPY.step, locale)} ${i + 1}` : `${i + 1}. ${t(COPY.step, locale)}`)
 
   return (
-    <div className="mt-10 card-invert border border-divider rounded-4xl p-6 sm:p-8 shadow-e2 grid gap-8 lg:grid-cols-[1fr_21rem]">
+    /* Closed by default (critique, 2026-11-10): open, it listed the catalogue a
+       second time right under the catalogue. Native details, so the prerender
+       still carries it and keyboard and screen readers get it for free. */
+    <details className="group/calc mt-10 card-invert border border-divider rounded-4xl shadow-e2">
+      <summary className="flex cursor-pointer list-none items-start justify-between gap-4 p-6 sm:p-8 [&::-webkit-details-marker]:hidden">
+        <span>
+          <span className="block font-display font-bold text-xl text-ink tracking-tight">{t(COPY.title, locale)}</span>
+          <span className="block text-muted text-sm mt-2 leading-relaxed max-w-prose">{t(COPY.intro, locale)}</span>
+        </span>
+        <ChevronDown className="mt-1 h-5 w-5 shrink-0 text-muted transition-transform duration-300 group-open/calc:rotate-180" aria-hidden="true" />
+      </summary>
+      <div className="grid gap-8 lg:grid-cols-[1fr_21rem] px-6 sm:px-8 pb-6 sm:pb-8">
       <div className="min-w-0">
-        <h3 className="font-display font-bold text-xl text-ink tracking-tight">{t(COPY.title, locale)}</h3>
-        <p className="text-muted text-sm mt-2 leading-relaxed max-w-2xl">{t(COPY.intro, locale)}</p>
 
         {/* Progress: each step is a button, so a visitor can go back to
             any step directly; the bar fills to show how far along they are. */}
@@ -201,8 +209,11 @@ export default function PriceCalculator({ locale, onQuote }) {
               <button
                 type="button"
                 onClick={() => setStep(i)}
+                /* No jumping ahead to the price with nothing chosen (critique,
+                   2026-11-10): later steps open once a service is picked. */
+                disabled={empty && i > 0}
                 aria-current={step === i ? 'step' : undefined}
-                className="w-full text-left rounded-lg focus-visible:outline-2 focus-visible:outline-primary"
+                className="w-full min-h-11 text-left rounded-lg focus-visible:outline-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-60"
               >
                 <span className="block h-1.5 rounded-full bg-divider overflow-hidden">
                   <span
@@ -211,7 +222,7 @@ export default function PriceCalculator({ locale, onQuote }) {
                     }`}
                   />
                 </span>
-                <span className={`mt-2 block font-mono text-[11px] uppercase tracking-[0.2em] ${i === step ? 'text-primary-dark' : 'text-muted'}`}>
+                <span className={`mt-2 block font-semibold text-[13px] ${i === step ? 'text-primary-dark' : 'text-muted'}`}>
                   {stepLabel(i)}
                 </span>
                 <span className={`hidden sm:block text-[13px] font-semibold ${i === step ? 'text-ink' : 'text-muted'}`}>{t(s, locale)}</span>
@@ -235,7 +246,7 @@ export default function PriceCalculator({ locale, onQuote }) {
                     type="button"
                     aria-pressed={groupId === g.id}
                     onClick={() => setGroupId(g.id)}
-                    className={`rounded-full border px-3.5 py-1.5 text-[13px] font-semibold transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-primary ${
+                    className={`min-h-11 rounded-full border px-4 text-[13px] font-semibold transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-primary ${
                       groupId === g.id ? 'border-ink bg-ink text-background' : 'border-divider text-muted hover:text-ink hover:border-primary/60'
                     }`}
                   >
@@ -324,7 +335,7 @@ export default function PriceCalculator({ locale, onQuote }) {
             <button
               type="button"
               onClick={() => setStep(step - 1)}
-              className="inline-flex items-center gap-1.5 rounded-full border border-divider px-4 py-2 text-sm font-semibold text-ink hover:border-primary/60 transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-primary"
+              className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-divider px-4 text-sm font-semibold text-ink hover:border-primary/60 transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-primary"
             >
               <ArrowLeft className="h-4 w-4" aria-hidden="true" />
               <span className="sr-only sm:not-sr-only">{t(COPY.back, locale)}</span>
@@ -335,7 +346,7 @@ export default function PriceCalculator({ locale, onQuote }) {
               type="button"
               disabled={empty}
               onClick={() => setStep(step + 1)}
-              className="inline-flex items-center gap-1.5 rounded-full bg-ink px-4 py-2 text-sm font-semibold text-background hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed transition-opacity duration-200 focus-visible:outline-2 focus-visible:outline-primary"
+              className="inline-flex min-h-11 items-center gap-1.5 rounded-full bg-ink px-5 text-sm font-semibold text-background hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed transition-opacity duration-200 focus-visible:outline-2 focus-visible:outline-primary"
             >
               {t(COPY.next, locale)}
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -350,7 +361,6 @@ export default function PriceCalculator({ locale, onQuote }) {
       </div>
 
       <aside className="lg:sticky lg:top-24 self-start flex flex-col rounded-3xl bg-primary/10 p-6">
-        <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-primary-dark">{t(COPY.summary, locale)}</p>
 
         {empty ? (
           <p className="mt-4 text-sm text-muted leading-relaxed">{t(COPY.empty, locale)}</p>
@@ -383,12 +393,15 @@ export default function PriceCalculator({ locale, onQuote }) {
               <s>{t(fmt(total), locale)}</s>
             </p>
           )}
-          <p className="flex flex-wrap items-center gap-2" aria-live="polite">
-            <span className="font-display font-extrabold text-[1.75rem] leading-tight whitespace-nowrap text-ink tabular-nums">
+          {/* The visible figure rolls; screen readers get only the settled
+              total, not every number it passes through on the way. */}
+          <span className="sr-only" aria-live="polite">{t(fmt(finalHuf), locale)}</span>
+          <p className="flex flex-wrap items-center gap-2">
+            <span aria-hidden="true" className="font-display font-extrabold text-[1.75rem] leading-tight whitespace-nowrap text-warm tabular-nums">
               {t(fmt(rolling), locale)}
             </span>
             {discounted && (
-              <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-white bg-primary px-2 py-0.5 rounded-full">
+              <span className="font-semibold text-[13px] text-white bg-primary px-2 py-0.5 rounded-full">
                 −{LAUNCH_OFFER.percent}%
               </span>
             )}
@@ -436,7 +449,7 @@ export default function PriceCalculator({ locale, onQuote }) {
         <a
           href="#kapcsolat"
           onClick={() => onQuote(quoteName())}
-          className="mt-6 flex w-full items-center justify-center gap-2 px-5 py-3 rounded-full font-semibold bg-primary text-white shadow-lg shadow-primary/25 hover:bg-primary-dark transition-colors duration-300"
+          className="mt-6 flex w-full items-center justify-center gap-2 px-5 py-3 rounded-full font-semibold bg-primary text-white hover:bg-primary-dark transition-colors duration-300"
         >
           {t(COPY.cta, locale)}
           <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -444,6 +457,7 @@ export default function PriceCalculator({ locale, onQuote }) {
           </>
         )}
       </aside>
-    </div>
+      </div>
+    </details>
   )
 }

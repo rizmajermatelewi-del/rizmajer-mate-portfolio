@@ -1,3 +1,4 @@
+import { huValidity, clearValidity } from './validity'
 /* projectType is gone from here with the field itself — it asked for what the
    message says. */
 const AUTOCOMPLETE_MAP = { name: 'name', email: 'email', company: 'organization' }
@@ -19,7 +20,7 @@ const AUTOCOMPLETE_MAP = { name: 'name', email: 'email', company: 'organization'
 export default function Field({ label, name, id = name, type = 'text', required, value, onChange, className = '' }) {
   return (
     <div className={className}>
-      <label htmlFor={id} className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink/80 mb-2 block">
+      <label htmlFor={id} className="font-semibold text-[13px] text-ink/80 mb-2 block">
         {label} {required && <span aria-hidden="true">*</span>}
       </label>
       <input
@@ -30,6 +31,8 @@ export default function Field({ label, name, id = name, type = 'text', required,
         autoComplete={AUTOCOMPLETE_MAP[name] || 'on'}
         value={value}
         onChange={(e) => onChange(e.target.value)}
+        onInvalid={huValidity}
+        onInput={clearValidity}
         className="input-edge w-full bg-background rounded-2xl px-4 py-3.5 text-ink focus:border-primary focus:ring-4 focus:ring-primary/15 outline-none transition font-body"
       />
     </div>

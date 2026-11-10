@@ -51,13 +51,17 @@ function roundEur(value) {
 }
 
 /* Space-grouped to match the forint figure beside it — "550 000 Ft
-   (~1 600 EUR)" — rather than switching separator style mid-sentence. */
-const group = (n) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+   (~1 600 EUR)" — rather than switching separator style mid-sentence.
+   The spaces are non-breaking (U+00A0), and so is the one before the unit:
+   with a normal space "690 000 Ft-tól" wrapped mid-number on phones
+   (critique, 2026-11-10). */
+const NBSP = ' '
+const group = (n) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, NBSP)
 
-export const forint = (huf) => `${group(huf)} Ft`
+export const forint = (huf) => `${group(huf)}${NBSP}Ft`
 
 export function approxEur(huf) {
-  return `~${group(roundEur(huf / HUF_PER_EUR))} EUR`
+  return `~${group(roundEur(huf / HUF_PER_EUR))}${NBSP}EUR`
 }
 
 /* The English price string for a forint amount: the forint figure, which is

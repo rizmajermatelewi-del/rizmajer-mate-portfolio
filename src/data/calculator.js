@@ -8,13 +8,13 @@ import { forint, priceEn } from './fx.js'
    calculator can never quote below what the cards say. The add-ons were
    priced on 2026-09-24 from the same 16 000 Ft/hour the floors derive from
    (the market check that day put Hungarian freelancers at 12 500–22 500):
-   copywriting ~2.5 hours, card payment integration ~5.5 hours, and the two
+   copywriting ~2.5 hours and the two
    percentages for work that scales with the whole build. The result is
    still a floor ("-tól"), and the section says the final price is written
    down after the first call. */
 
-const WEB = ['bemutatkozo', 'cegoldal', 'koltozes']
-const SALES = ['idopontfoglalo', 'napi-menu', 'rendeles', 'szallasfoglalo', 'arkalkulator', 'szervizfelvetel', 'termekvalaszto', 'etlap', 'utalvany']
+const WEB = ['bemutatkozo', 'cegoldal']
+const SALES = ['idopontfoglalo', 'napi-menu', 'rendeles', 'szallasfoglalo', 'arkalkulator', 'szervizfelvetel', 'termekvalaszto', 'utalvany']
 
 export const ADDONS = [
   {
@@ -28,12 +28,6 @@ export const ADDONS = [
     label: { hu: 'A szövegeket is én írom', en: 'I write the copy too' },
     flatHuf: 40000,
     appliesTo: WEB,
-  },
-  {
-    id: 'payment',
-    label: { hu: 'Online bankkártyás fizetés', en: 'Card payments online' },
-    flatHuf: 90000,
-    appliesTo: ['bemutatkozo', 'idopontfoglalo', 'rendeles'],
   },
   {
     id: 'rush',
@@ -63,18 +57,6 @@ export const ADDONS = [
     flatHuf: 30000,
     appliesTo: [...WEB, ...SALES],
   },
-  {
-    id: 'newsletter',
-    label: { hu: 'Hírlevél-feliratkozás', en: 'Newsletter signup' },
-    flatHuf: 40000,
-    appliesTo: [...WEB, ...SALES],
-  },
-  {
-    id: 'invoice',
-    label: { hu: 'Automatikus számlázás', en: 'Automatic invoicing' },
-    flatHuf: 70000,
-    appliesTo: ['idopontfoglalo', 'rendeles'],
-  },
   /* Service-specific extras and the legal package, added 2026-09-24 at
      the same hourly rate: a second language as the first, a blog ~5 hours,
      a gallery ~2.5, SMS reminders ~3.75 (the texts themselves are billed by
@@ -85,7 +67,7 @@ export const ADDONS = [
     id: 'german',
     label: { hu: 'Német nyelvű változat is', en: 'A German version too' },
     percent: 30,
-    appliesTo: [...WEB, ...SALES],
+    appliesTo: [...WEB, ...SALES, 'tobbnyelvu'],
   },
   {
     id: 'legal',
@@ -109,19 +91,6 @@ export const ADDONS = [
     flatHuf: 40000,
     appliesTo: WEB,
   },
-  {
-    id: 'sms',
-    label: { hu: 'SMS-emlékeztető a vendégnek', en: 'SMS reminders for clients' },
-    note: { hu: 'Az SMS-ek díját a szolgáltató számlázza, darabonként.', en: 'The texts are billed by the provider, per message.' },
-    flatHuf: 60000,
-    appliesTo: ['idopontfoglalo', 'emlekezteto'],
-  },
-  {
-    id: 'gcal',
-    label: { hu: 'Google Naptár-szinkron', en: 'Google Calendar sync' },
-    flatHuf: 50000,
-    appliesTo: ['idopontfoglalo'],
-  },
   /* Added 2026-10-13 at Máté's direction, at the same hourly rate, so the
      calculator carries the options the trimmed card grid no longer does:
      a review request after the visit ~3 hours, a calendar per staff member
@@ -141,13 +110,6 @@ export const ADDONS = [
     id: 'staff',
     label: { hu: 'Több munkatárs vagy szék, külön naptárral', en: 'Several staff or chairs, each with a calendar' },
     flatHuf: 60000,
-    appliesTo: ['idopontfoglalo'],
-  },
-  {
-    id: 'deposit',
-    label: { hu: 'Foglalási előleg online', en: 'An online booking deposit' },
-    note: { hu: 'Kevesebb vendég marad el szó nélkül.', en: 'Fewer clients fail to turn up.' },
-    flatHuf: 50000,
     appliesTo: ['idopontfoglalo'],
   },
   {
@@ -188,7 +150,7 @@ export const CALC_SERVICES = ALL_SERVICES.filter((s) => (s.priceUnit ?? 'from') 
    different main sites, so SITE_KINDS are mutually exclusive: picking one
    replaces the other. The menu and ordering are the same kind for the same
    reason: ordering already includes the menu. */
-export const SITE_KINDS = ['bemutatkozo', 'cegoldal', 'felujitas', 'koltozes']
+export const SITE_KINDS = ['bemutatkozo', 'cegoldal', 'felujitas', 'tobbnyelvu']
 export const MENU_KINDS = ['napi-menu', 'rendeles']
 const list = (ids) => [].concat(ids)
 

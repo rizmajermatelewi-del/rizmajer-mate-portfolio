@@ -51,7 +51,7 @@ export const RETAINER = {
   en: `Upkeep if you want it: from ${priceEn(RETAINER_HUF)} a month: updates, backups, an hour of small changes each month, and if it goes down I notice rather than you. No minimum term, cancellable monthly.`,
 }
 
-const LABELS = {
+export const LABELS = {
   from: (huf) => ({ hu: `${forint(huf)}-tól`, en: `from ${priceEn(huf)}` }),
   flat: (huf) => ({ hu: forint(huf), en: priceEn(huf) }),
   month: (huf) => ({ hu: `${forint(huf)}/hó-tól`, en: `from ${priceEn(huf)} a month` }),
@@ -99,8 +99,175 @@ export const LAUNCH_NOTE = {
 
 export const SERVICE_GROUPS = [
   {
+    id: 'weboldalak',
+    title: { hu: 'Találjanak meg', en: 'Get found' },
+    intro: {
+      hu: 'Ha az a gond, hogy nem találnak meg, vagy amit találnak, az nem mutat jól.',
+      en: 'When the problem is that people cannot find you, or what they find does not do you justice.',
+    },
+    items: [
+      {
+        id: 'bemutatkozo',
+        name: { hu: 'Bemutatkozó weboldal', en: 'Introductory website' },
+        problem: {
+          hu: 'Egy oldal, ami telefonon azonnal betölt, megmondja, mit csinálsz és hol, és egy koppintással hívható.',
+          en: 'One page that loads instantly on a phone, says what you do and where, and can be called with one tap.',
+        },
+        forWho: {
+          hu: 'Annak, akinek rendes online megjelenés kell, de nincs mögötte bonyolult üzleti logika.',
+          en: 'For anyone who needs a proper presence online, without complicated business logic behind it.',
+        },
+        includes: [
+          { hu: 'Egyedi megjelenés, mobilon is', en: 'A design of your own, on a phone too' },
+          { hu: 'Kapcsolatfelvétel, ami a postafiókodba jön', en: 'An enquiry form that lands in your inbox' },
+          { hu: 'Alap keresőoptimalizálás, hogy megtaláljanak', en: 'The search basics, so people find you' },
+          { hu: 'Élesítés és átadás', en: 'Put live and handed over' },
+        ],
+        priceHuf: TIER_FLOORS.intro,
+        timeline: { hu: 'Átadás jellemzően 1-2 hét', en: 'Delivered in 1-2 weeks, typically' },
+        demo: 'https://demo-bemutatkozo.vercel.app',
+        proof: {
+          hu: 'A bemutató oldal mobilon Lighthouse-ban 99 / 100 / 100 / 100.',
+          en: 'The demo page scores 99 / 100 / 100 / 100 in mobile Lighthouse.',
+        },
+      },
+      {
+        id: 'cegoldal',
+        name: { hu: 'Többoldalas céges oldal', en: 'Multi-page business site' },
+        problem: {
+          hu: 'Külön oldal minden szolgáltatásodnak, árak, galéria és elérhetőség, úgyhogy aki keres, a konkrét kérdésére talál választ, nem csak egy névjegyre.',
+          en: 'A page for each of your services, prices, a gallery and contact details, so people searching find the answer to their actual question, not just a business card.',
+        },
+        forWho: {
+          hu: 'Annak, akinek több szolgáltatása van, mint amennyi egy oldalra kényelmesen ráfér.',
+          en: 'For anyone with more services than fit comfortably on one page.',
+        },
+        includes: [
+          { hu: 'Több aloldal egyedi megjelenéssel, mobilon is', en: 'Several pages with a design of your own, on a phone too' },
+          { hu: 'Szövegek, árak és képek, amiket te is módosíthatsz', en: 'Text, prices and images you can change yourself' },
+          { hu: 'Keresőoptimalizálás oldalanként', en: 'Search basics on every page' },
+          { hu: 'Élesítés és átadás', en: 'Put live and handed over' },
+        ],
+        priceHuf: 420000,
+        timeline: { hu: 'Átadás jellemzően 2-4 hét', en: 'Delivered in 2-4 weeks, typically' },
+        demo: 'https://demo-szerviz.vercel.app',
+        isNew: true,
+      },
+      {
+        id: 'google',
+        name: { hu: 'Google-cégprofil és helyi keresés', en: 'Google Business Profile and local search' },
+        problem: {
+          hu: 'Ha valaki rákeres a szakmádra a környéken, a térképen te is ott legyél, helyes nyitvatartással, képekkel és egy koppintással hívható számmal.',
+          en: 'When someone searches for your trade nearby, you show up on the map too, with the right opening hours, photos and a number they can call with one tap.',
+        },
+        forWho: {
+          hu: 'Helyi vállalkozásnak, amelyiknek nincs Google-profilja, vagy évek óta nem nyúlt hozzá.',
+          en: 'For a local business with no Google profile, or one nobody has touched in years.',
+        },
+        includes: [
+          { hu: 'Profil létrehozása vagy rendbetétele', en: 'Profile created or put right' },
+          { hu: 'Kategóriák, nyitvatartás, képek, leírás', en: 'Categories, opening hours, photos, description' },
+          { hu: 'Összekötés a weboldaladdal', en: 'Linked to your website' },
+        ],
+        priceHuf: 60000,
+        priceUnit: 'flat',
+        timeline: { hu: 'Jellemzően néhány nap, plusz a Google ellenőrzése', en: 'Usually a few days, plus Google\'s own verification' },
+        isNew: true,
+      },
+      {
+        id: 'akadalymentesites',
+        name: { hu: 'Akadálymentesítés', en: 'Accessibility fixes' },
+        problem: {
+          hu: 'A meglévő oldaladat használhatóvá teszem annak is, aki rosszul lát, csak billentyűzettel vagy felolvasóval böngészik. 2025 óta az európai akadálymentességi szabály több szolgáltatásnál és webshopnál ezt elő is írja.',
+          en: 'I make your existing site usable for people with poor sight, or who browse by keyboard or screen reader only. Since 2025 the European Accessibility Act requires it for several kinds of service and online shop.',
+        },
+        forWho: {
+          hu: 'Annak, aki online értékesít vagy foglaltat, és tudni akarja, megfelel-e. Ha nem tudod, az átvilágítás megmondja.',
+          en: 'For anyone selling or taking bookings online who wants to know whether they comply. If you are unsure, the audit tells you.',
+        },
+        includes: [
+          { hu: 'Ellenőrzés a WCAG 2.2 AA szint szerint', en: 'Checked against WCAG 2.2 level AA' },
+          { hu: 'Kontraszt, billentyűzetes és felolvasós használat javítása', en: 'Contrast, keyboard and screen-reader use fixed' },
+          { hu: 'Akadálymentességi nyilatkozat a weboldalra', en: 'An accessibility statement for the site' },
+        ],
+        proof: {
+          hu: 'Ez az oldal, amit most olvasol: billentyűzettel végigjárható, és a Lighthouse akadálymentességi pontszáma 100.',
+          en: 'This page you are reading: fully keyboard operable, with a Lighthouse accessibility score of 100.',
+        },
+        priceHuf: 150000,
+        timeline: { hu: 'Átadás jellemzően 1-3 hét', en: 'Delivered in 1-3 weeks, typically' },
+        isNew: true,
+      },
+      {
+        id: 'tobbnyelvu',
+        name: { hu: 'Többnyelvű weboldal', en: 'Multilingual website' },
+        problem: {
+          hu: 'A külföldi vendég vagy ügyfél a saját nyelvén olvassa az oldaladat, és a Google is az ő nyelvén mutatja meg neki.',
+          en: 'Foreign guests and customers read your site in their own language, and Google shows it to them in that language too.',
+        },
+        forWho: {
+          hu: 'Szállásnak, étteremnek, szolgáltatónak turistás környéken vagy külföldi ügyfelekkel.',
+          en: 'For guesthouses, restaurants and services in tourist areas or with foreign customers.',
+        },
+        includes: [
+          { hu: 'Magyar és angol változat, kérésre német is', en: 'Hungarian and English, German on request' },
+          { hu: 'Nyelvenként külön cím, hogy a Google jól indexelje', en: 'A separate address per language, so Google indexes each one' },
+          { hu: 'Nyelvváltó, ami az aktuális oldalon marad', en: 'A language switch that stays on the page you are on' },
+        ],
+        proof: {
+          hu: 'Ez az oldal is magyarul és angolul fut, nyelvenként külön címen.',
+          en: 'This site runs in Hungarian and English too, each at its own address.',
+        },
+        priceHuf: 320000,
+        timeline: { hu: 'Átadás jellemzően 2-3 hét', en: 'Delivered in 2-3 weeks, typically' },
+        isNew: true,
+      },
+      {
+        id: 'domain-email',
+        name: { hu: 'Domain és céges e-mail', en: 'Domain and company e-mail' },
+        problem: {
+          hu: 'Saját domain a te nevedre, és egy info@ cím gmailes helyett, ami megbízhatóbbnak tűnik a levelek címzettjeinek.',
+          en: 'Your own domain in your name, and an info@ address instead of a Gmail one, which looks more trustworthy to the people you write to.',
+        },
+        forWho: {
+          hu: 'Annak, aki még gmailes címről ír az ügyfeleknek, vagy nem tudja, kinek a nevén van a domainje.',
+          en: 'For anyone still writing to customers from a Gmail address, or unsure whose name their domain is in.',
+        },
+        includes: [
+          { hu: 'Domain regisztrálása vagy átvétele a te nevedre', en: 'The domain registered or moved into your name' },
+          { hu: 'Céges e-mail beállítása telefonra és gépre', en: 'Company e-mail set up on phone and computer' },
+          { hu: 'Beállítások, hogy a leveleid ne a spamben landoljanak', en: 'Settings so your mail does not land in spam' },
+        ],
+        priceHuf: 30000,
+        priceUnit: 'flat',
+        timeline: { hu: 'Jellemzően 1-2 nap', en: 'Usually 1-2 days' },
+        isNew: true,
+      },
+
+      {
+        id: 'felujitas',
+        name: { hu: 'Meglévő weboldal felújítása', en: 'Overhauling the site you have' },
+        problem: {
+          hu: 'A meglévő oldalad marad, csak működni fog: gyorsan betölt, és a fontos gomb ott lesz, ahol keresik.',
+          en: 'You keep the site you have, it just starts working: quick to load, and the button that matters where people look for it.',
+        },
+        forWho: {
+          hu: 'Akkor éri meg, ha a tartalom és a megjelenés alapvetően jó. Ha nem, azt az átvilágításban megmondom, és inkább újat javaslok.',
+          en: 'Worth doing when the content and the look are basically sound. If they are not, I say so in the audit and suggest building new instead.',
+        },
+        includes: [
+          { hu: 'Gyorsítás, mobilos javítások', en: 'Speed and phone fixes' },
+          { hu: 'A fontos gombok és űrlapok rendbetétele', en: 'The buttons and forms that matter, put right' },
+          { hu: 'Az átvilágításban talált hibák javítása', en: 'The problems the audit found, fixed' },
+        ],
+        priceHuf: 150000,
+        timeline: { hu: 'Átadás jellemzően 1-2 hét', en: 'Delivered in 1-2 weeks, typically' },
+      },
+    ],
+  },
+  {
     id: 'eladas',
-    title: { hu: 'Foglalás, rendelés, eladás', en: 'Bookings, orders, sales' },
+    title: { hu: 'Kevesebb telefon', en: 'Fewer phone calls' },
     intro: {
       hu: 'Ha a foglalás, a rendelés vagy a fizetés ma telefonon, üzenetben és kézzel megy.',
       en: 'When bookings, orders or payments run by phone, by message and by hand today.',
@@ -150,27 +317,6 @@ export const SERVICE_GROUPS = [
         priceHuf: 350000,
         timeline: { hu: 'Átadás jellemzően 1-2 hét', en: 'Delivered in 1-2 weeks, typically' },
         demo: 'https://demo-napi-menu.vercel.app',
-      },
-      {
-        id: 'etlap',
-        name: { hu: 'Digitális étlap QR-kóddal', en: 'Digital menu with a QR code' },
-        problem: {
-          hu: 'A teljes étlapod a telefonon: a vendég keres benne, szűr allergénre és diétára, és az asztalon lévő QR-kódról nyitja meg.',
-          en: 'Your whole menu on the phone: guests search it, filter by allergen and diet, and open it from the QR code on the table.',
-        },
-        forWho: {
-          hu: 'Étteremnek, kávézónak, bárnak, ahol a papír étlap elavul, nehezen olvasható, vagy turistáknak más nyelven is kellene.',
-          en: 'For restaurants, cafés and bars where the paper menu goes stale, is hard to read, or tourists need it in another language.',
-        },
-        includes: [
-          { hu: 'Teljes étlap kategóriákkal és kereséssel', en: 'The whole menu, with sections and search' },
-          { hu: 'Allergén- és diétaszűrő (vegetáriánus, gluténmentes)', en: 'Allergen and diet filters (vegetarian, gluten-free)' },
-          { hu: 'Nyomtatható QR-kód asztali kártyára', en: 'A printable QR code for table cards' },
-          { hu: 'Árakat és ételeket te is frissítheted', en: 'Prices and dishes you can update yourself' },
-        ],
-        priceHuf: 290000,
-        timeline: { hu: 'Átadás jellemzően 2-3 hét', en: 'Delivered in 2-3 weeks, typically' },
-        isNew: true,
       },
       {
         id: 'rendeles',
@@ -316,6 +462,11 @@ export const SERVICE_GROUPS = [
           { hu: 'Beváltás ellenőrzése, hogy egy kód csak egyszer menjen át', en: 'Redemption checks, so each code goes through only once' },
           { hu: 'Lista az eladott és beváltott utalványokról', en: 'A list of vouchers sold and redeemed' },
         ],
+        proof: {
+          hu: 'A masszázs-bemutatóban az utalvány percre szól, és a beírt név és üzenet azonnal megjelenik a kártyán.',
+          en: 'In the massage demo the voucher is for minutes, and the name and note appear on the card as you type.',
+        },
+        demo: 'https://demo-masszazs.vercel.app',
         priceHuf: 450000,
         timeline: { hu: 'Átadás jellemzően 3-5 hét', en: 'Delivered in 3-5 weeks, typically' },
         isNew: true,
@@ -323,170 +474,11 @@ export const SERVICE_GROUPS = [
     ],
   },
   {
-    id: 'weboldalak',
-    title: { hu: 'Weboldalak', en: 'Websites' },
-    intro: {
-      hu: 'Ha az a gond, hogy nem találnak meg, vagy amit találnak, az nem mutat jól.',
-      en: 'When the problem is that people cannot find you, or what they find does not do you justice.',
-    },
-    items: [
-      {
-        id: 'bemutatkozo',
-        name: { hu: 'Bemutatkozó weboldal', en: 'Introductory website' },
-        problem: {
-          hu: 'Egy oldal, ami telefonon azonnal betölt, megmondja, mit csinálsz és hol, és egy koppintással hívható.',
-          en: 'One page that loads instantly on a phone, says what you do and where, and can be called with one tap.',
-        },
-        forWho: {
-          hu: 'Annak, akinek rendes online megjelenés kell, de nincs mögötte bonyolult üzleti logika.',
-          en: 'For anyone who needs a proper presence online, without complicated business logic behind it.',
-        },
-        includes: [
-          { hu: 'Egyedi megjelenés, mobilon is', en: 'A design of your own, on a phone too' },
-          { hu: 'Kapcsolatfelvétel, ami a postafiókodba jön', en: 'An enquiry form that lands in your inbox' },
-          { hu: 'Alap keresőoptimalizálás, hogy megtaláljanak', en: 'The search basics, so people find you' },
-          { hu: 'Élesítés és átadás', en: 'Put live and handed over' },
-        ],
-        priceHuf: TIER_FLOORS.intro,
-        timeline: { hu: 'Átadás jellemzően 1-2 hét', en: 'Delivered in 1-2 weeks, typically' },
-        demo: 'https://demo-bemutatkozo.vercel.app',
-        proof: {
-          hu: 'A bemutató oldal mobilon Lighthouse-ban 99 / 100 / 100 / 100.',
-          en: 'The demo page scores 99 / 100 / 100 / 100 in mobile Lighthouse.',
-        },
-      },
-      {
-        id: 'cegoldal',
-        name: { hu: 'Többoldalas céges oldal', en: 'Multi-page business site' },
-        problem: {
-          hu: 'Külön oldal minden szolgáltatásodnak, árak, galéria és elérhetőség, úgyhogy aki keres, a konkrét kérdésére talál választ, nem csak egy névjegyre.',
-          en: 'A page for each of your services, prices, a gallery and contact details, so people searching find the answer to their actual question, not just a business card.',
-        },
-        forWho: {
-          hu: 'Annak, akinek több szolgáltatása van, mint amennyi egy oldalra kényelmesen ráfér.',
-          en: 'For anyone with more services than fit comfortably on one page.',
-        },
-        includes: [
-          { hu: 'Több aloldal egyedi megjelenéssel, mobilon is', en: 'Several pages with a design of your own, on a phone too' },
-          { hu: 'Szövegek, árak és képek, amiket te is módosíthatsz', en: 'Text, prices and images you can change yourself' },
-          { hu: 'Keresőoptimalizálás oldalanként', en: 'Search basics on every page' },
-          { hu: 'Élesítés és átadás', en: 'Put live and handed over' },
-        ],
-        priceHuf: 420000,
-        timeline: { hu: 'Átadás jellemzően 2-4 hét', en: 'Delivered in 2-4 weeks, typically' },
-        demo: 'https://demo-szerviz.vercel.app',
-        isNew: true,
-      },
-      {
-        id: 'google',
-        name: { hu: 'Google-cégprofil és helyi keresés', en: 'Google Business Profile and local search' },
-        problem: {
-          hu: 'Ha valaki rákeres a szakmádra a környéken, a térképen te is ott legyél, helyes nyitvatartással, képekkel és egy koppintással hívható számmal.',
-          en: 'When someone searches for your trade nearby, you show up on the map too, with the right opening hours, photos and a number they can call with one tap.',
-        },
-        forWho: {
-          hu: 'Helyi vállalkozásnak, amelyiknek nincs Google-profilja, vagy évek óta nem nyúlt hozzá.',
-          en: 'For a local business with no Google profile, or one nobody has touched in years.',
-        },
-        includes: [
-          { hu: 'Profil létrehozása vagy rendbetétele', en: 'Profile created or put right' },
-          { hu: 'Kategóriák, nyitvatartás, képek, leírás', en: 'Categories, opening hours, photos, description' },
-          { hu: 'Összekötés a weboldaladdal', en: 'Linked to your website' },
-        ],
-        priceHuf: 60000,
-        priceUnit: 'flat',
-        timeline: { hu: 'Jellemzően néhány nap, plusz a Google ellenőrzése', en: 'Usually a few days, plus Google\'s own verification' },
-        isNew: true,
-      },
-      {
-        id: 'akadalymentesites',
-        name: { hu: 'Akadálymentesítés', en: 'Accessibility fixes' },
-        problem: {
-          hu: 'A meglévő oldaladat használhatóvá teszem annak is, aki rosszul lát, csak billentyűzettel vagy felolvasóval böngészik. 2025 óta az európai akadálymentességi szabály több szolgáltatásnál és webshopnál ezt elő is írja.',
-          en: 'I make your existing site usable for people with poor sight, or who browse by keyboard or screen reader only. Since 2025 the European Accessibility Act requires it for several kinds of service and online shop.',
-        },
-        forWho: {
-          hu: 'Annak, aki online értékesít vagy foglaltat, és tudni akarja, megfelel-e. Ha nem tudod, az átvilágítás megmondja.',
-          en: 'For anyone selling or taking bookings online who wants to know whether they comply. If you are unsure, the audit tells you.',
-        },
-        includes: [
-          { hu: 'Ellenőrzés a WCAG 2.2 AA szint szerint', en: 'Checked against WCAG 2.2 level AA' },
-          { hu: 'Kontraszt, billentyűzetes és felolvasós használat javítása', en: 'Contrast, keyboard and screen-reader use fixed' },
-          { hu: 'Akadálymentességi nyilatkozat a weboldalra', en: 'An accessibility statement for the site' },
-        ],
-        priceHuf: 150000,
-        timeline: { hu: 'Átadás jellemzően 1-3 hét', en: 'Delivered in 1-3 weeks, typically' },
-        isNew: true,
-      },
-      {
-        id: 'felujitas',
-        name: { hu: 'Meglévő weboldal felújítása', en: 'Overhauling the site you have' },
-        problem: {
-          hu: 'A meglévő oldalad marad, csak működni fog: gyorsan betölt, és a fontos gomb ott lesz, ahol keresik.',
-          en: 'You keep the site you have, it just starts working: quick to load, and the button that matters where people look for it.',
-        },
-        forWho: {
-          hu: 'Akkor éri meg, ha a tartalom és a megjelenés alapvetően jó. Ha nem, azt az átvilágításban megmondom, és inkább újat javaslok.',
-          en: 'Worth doing when the content and the look are basically sound. If they are not, I say so in the audit and suggest building new instead.',
-        },
-        includes: [
-          { hu: 'Gyorsítás, mobilos javítások', en: 'Speed and phone fixes' },
-          { hu: 'A fontos gombok és űrlapok rendbetétele', en: 'The buttons and forms that matter, put right' },
-          { hu: 'Az átvilágításban talált hibák javítása', en: 'The problems the audit found, fixed' },
-        ],
-        priceHuf: 150000,
-        timeline: { hu: 'Átadás jellemzően 1-2 hét', en: 'Delivered in 1-2 weeks, typically' },
-      },
-      {
-        id: 'koltozes',
-        name: { hu: 'Költözés saját weboldalra', en: 'Moving to a site of your own' },
-        problem: {
-          hu: 'Wixen, Webnode-on vagy hasonló szerkesztőn vagy, havidíjat fizetsz, és az oldal valójában nem a tiéd. Átköltöztetem saját domainre, a tartalmaddal együtt.',
-          en: 'You are on Wix, Webnode or a similar builder, paying monthly, and the site is not really yours. I move it to your own domain, content and all.',
-        },
-        forWho: {
-          hu: 'Annak, aki a platform havidíját sokallja, lassú vagy korlátos az oldala, vagy egyszerűen birtokolni szeretné, amit fizet.',
-          en: 'For anyone who finds the platform fee too much, whose site is slow or boxed in, or who simply wants to own what they pay for.',
-        },
-        includes: [
-          { hu: 'Új, gyors oldal a meglévő tartalmaddal', en: 'A new, fast site with the content you have' },
-          { hu: 'A domain átvitele a nevedre', en: 'The domain moved into your name' },
-          { hu: 'Átirányítások, hogy a Google-helyezésed megmaradjon', en: 'Redirects, so your Google ranking survives the move' },
-          { hu: 'A platform havidíja megszűnik', en: 'The platform fee stops' },
-        ],
-        priceHuf: TIER_FLOORS.intro,
-        timeline: { hu: 'Átadás jellemzően 2-3 hét', en: 'Delivered in 2-3 weeks, typically' },
-        isNew: true,
-      },
-      {
-        id: 'premium-vizual',
-        name: { hu: 'Prémium vizuál, mozgó háttérrel', en: 'Premium visuals, with motion' },
-        problem: {
-          hu: 'Az oldal első képe megfogja a látogatót: finoman mozgó hangulatkép a kezdőoldalon és egy-két szekcióban, ami nem lassítja az oldalt.',
-          en: 'The first thing visitors see holds them: a gently moving mood image on the home page and in a section or two, without slowing the page down.',
-        },
-        forWho: {
-          hu: 'Étteremnek, régiségboltnak, szalonnak, ahol a hangulat is elad. A termékeid, az autód és az üzleted valódi fotón marad: mesterséges képet csak hangulatra használok.',
-          en: 'For restaurants, antique shops and salons where the mood sells too. Your products, your vehicle and your shop stay on real photos: AI imagery is for mood only.',
-        },
-        includes: [
-          { hu: '2-3 mozgó háttér (kezdőoldal és szekciók)', en: '2-3 moving backgrounds (home page and sections)' },
-          { hu: 'Hangulatképek a márkád színeiben', en: 'Mood images in your brand colours' },
-          { hu: 'Betöltés a fotó után, így mobilon sem lassít', en: 'Loaded after the photo, so it does not slow phones down' },
-          { hu: 'Kikapcsol, ha a látogató kevesebb mozgást kér', en: 'Switched off for visitors who ask for less motion' },
-        ],
-        priceHuf: 90000,
-        timeline: { hu: 'Átadás jellemzően 1 hét', en: 'Delivered in about a week, typically' },
-        isNew: true,
-      },
-    ],
-  },
-  {
     id: 'folyamatos',
-    title: { hu: 'Folyamatos munka', en: 'Ongoing work' },
+    title: { hu: 'Rend a háttérben', en: 'Order behind the scenes' },
     intro: {
-      hu: 'Ha már van oldalad, vagy azt szeretnéd, hogy az átadás után is legyen, aki figyel rá.',
-      en: 'When you already have a site, or want someone still looking after it once it is handed over.',
+      hu: 'Ha az emlékeztetés, az értékelések és a karbantartás ma fejben vagy füzetben van, vagy azt szeretnéd, hogy az átadás után is legyen, aki figyel az oldalra.',
+      en: 'When reminders, reviews and upkeep live in your head or a notebook today, or you want someone still looking after the site once it is handed over.',
     },
     items: [
       {
@@ -544,6 +536,27 @@ export const SERVICE_GROUPS = [
          Standard is the old single offer, unchanged, which is why it keeps
          RETAINER_HUF and the FAQ keeps quoting it. `timeline` carries the
          reply time for a fault, the thing the tiers differ in besides hours. */
+      {
+        id: 'ertekeles',
+        name: { hu: 'Google-értékelés gyűjtő', en: 'Google review collector' },
+        problem: {
+          hu: 'A látogatás után a vendég egy rövid üzenetet kap egy linkkel, ami egyenesen a Google-értékelésedhez visz. Több értékelés, jobb helyezés a térképen.',
+          en: 'After the visit the customer gets a short message with a link straight to your Google review page. More reviews, a better spot on the map.',
+        },
+        forWho: {
+          hu: 'Szalonnak, szerviznek, rendelőnek: ahol a vendég elégedett, csak senki nem kéri meg, hogy írja le.',
+          en: 'For salons, garages and clinics, where customers are happy but nobody asks them to say so.',
+        },
+        includes: [
+          { hu: 'Értékeléskérő e-mail a látogatás után', en: 'A review request e-mail after the visit' },
+          { hu: 'Közvetlen link a Google-értékelő ablakhoz', en: 'A direct link to the Google review box' },
+          { hu: 'Egy vendég csak egyszer kap kérést', en: 'Each customer is asked only once' },
+        ],
+        priceHuf: 120000,
+        timeline: { hu: 'Átadás jellemzően 1-2 hét', en: 'Delivered in 1-2 weeks, typically' },
+        isNew: true,
+      },
+
       {
         id: 'uzemeltetes-alap',
         name: { hu: 'Alap karbantartás', en: 'Basic upkeep' },

@@ -1,16 +1,18 @@
 import { Link } from 'react-router-dom'
-import { ArrowRight } from 'lucide-react'
+import { Phone } from 'lucide-react'
 import { LogoMark } from '../components/Logo'
 import { NAV_LINKS, SOCIAL_LINKS } from '../data/nav'
 import { t } from '../i18n/t'
 import { useLocale } from '../i18n/useLocale'
 import { withLocale } from '../i18n/locales'
-import { UI } from '../i18n/ui'
 import { SERVICE_GROUPS } from '../data/services'
 import { useInView } from '../motion/useInView'
 import { ScrambleText } from '../motion/ScrambleText'
+import footerBg from '../assets/bg/footer-1600.webp'
+import { CONTACT_PHONE } from '../data/nav'
 
 const COPY = {
+  callCta: { hu: 'Hívj fel:', en: 'Call me:' },
   headlineLead: { hu: 'Mondd el, mi', en: 'Tell me what' },
   headlineAccent: { hu: 'viszi el', en: 'eats the most' },
   headlineTail: { hu: 'a legtöbb időd.', en: 'of your time.' },
@@ -79,6 +81,8 @@ export default function Footer() {
 
   return (
     <footer ref={ref} className="card-invert relative rounded-t-6xl mt-12 overflow-hidden">
+      {/* Abstract light (Higgsfield, 2026-11-10). Decoration only, so empty alt. */}
+      <img src={footerBg} alt="" aria-hidden="true" width={1600} height={895} loading="lazy" decoding="async" className="pointer-events-none absolute inset-0 h-full w-full object-cover" />
       {/* Bookends the hero: the page opens and closes dark, with the light
           body between. The top gradient dissolves the boundary.
 
@@ -87,13 +91,7 @@ export default function Footer() {
           still costing a full-size JPEG on the longest section of the page.
           The gradient alone gives the identical result. */}
       <div className="absolute inset-0" aria-hidden="true">
-        <div className="absolute inset-0 bg-gradient-to-b from-deep/95 via-deep/90 to-deep" />
-        {/* paper, not background. This element sits inside .card-invert, which
-            redeclares --color-background to the dark card value — so this fade
-            ran from the footer's own colour to transparent and had been doing
-            nothing at all since the invert landed. It is supposed to carry the
-            light page down into the dark footer. */}
-        <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-paper to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-deep/90 via-deep/50 to-deep/55" />
       </div>
       <div aria-hidden="true" className="section-glow" />
 
@@ -111,14 +109,16 @@ export default function Footer() {
               parses several ways and lands on none of them cleanly. */}
           <h2 className="font-display font-extrabold text-5xl sm:text-7xl md:text-8xl leading-[0.92] tracking-tight">
             {t(COPY.headlineLead, locale)}{' '}
-            <span className="text-primary-dark font-bold whitespace-nowrap">{t(COPY.headlineAccent, locale)}</span>{' '}
+            <span className="font-bold whitespace-nowrap">{t(COPY.headlineAccent, locale)}</span>{' '}
             {t(COPY.headlineTail, locale)}
           </h2>
           <div className="flex flex-col sm:flex-row sm:items-end justify-between mt-8 gap-6">
             <p className="text-muted max-w-md">{t(COPY.strapline, locale)}</p>
-            <a href="#kapcsolat" className="magnetic-btn inline-flex items-center gap-2 bg-primary text-white font-semibold px-7 py-3.5 rounded-full self-start sm:self-auto">
-              {t(UI.ctaQuote, locale)}
-              <ArrowRight className="h-4 w-4" />
+            {/* The page ends on a person, not on a button back up to the form the
+                visitor just scrolled past (critique, 2026-11-10). */}
+            <a href={`tel:${CONTACT_PHONE.replace(/\s/g, '')}`} className="magnetic-btn inline-flex min-h-11 items-center gap-2 bg-primary text-white font-semibold px-7 py-3.5 rounded-full self-start sm:self-auto">
+              <Phone className="h-4 w-4" aria-hidden="true" />
+              {t(COPY.callCta, locale)} {CONTACT_PHONE}
             </a>
           </div>
         </div>
@@ -139,13 +139,13 @@ export default function Footer() {
           </div>
 
           <div>
-            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-primary-dark mb-4">{t(COPY.servicesHeading, locale)}</p>
+            <p className="font-semibold text-[13px] text-primary-dark mb-4">{t(COPY.servicesHeading, locale)}</p>
             <ul className="space-y-2.5">
               {/* The catalogue's own groups, in its own order, so the two
                   lists cannot disagree about what is on offer. */}
               {SERVICE_GROUPS.map((g) => (
                 <li key={g.id}>
-                  <a href="#szolgaltatasok" className="inline-block py-1 text-muted hover:text-primary-dark transition text-sm">
+                  <a href="#szolgaltatasok" className="inline-flex min-h-11 items-center text-muted hover:text-primary-dark transition text-sm">
                     <ScrambleText text={t(g.title, locale)} trigger="hover" />
                   </a>
                 </li>
@@ -156,11 +156,11 @@ export default function Footer() {
           <div>
             {/* "Oldalak", not "Rólam". The group used to be named after one of
                 its own five items, which made the label useless as a heading. */}
-            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-primary-dark mb-4">{t(COPY.pagesHeading, locale)}</p>
+            <p className="font-semibold text-[13px] text-primary-dark mb-4">{t(COPY.pagesHeading, locale)}</p>
             <ul className="space-y-2.5">
               {PAGE_LINKS.map(({ href, label }) => (
                 <li key={href}>
-                  <a href={href} className="inline-block py-1 text-muted hover:text-primary-dark transition text-sm">
+                  <a href={href} className="inline-flex min-h-11 items-center text-muted hover:text-primary-dark transition text-sm">
                     {t(label, locale)}
                   </a>
                 </li>
@@ -169,13 +169,20 @@ export default function Footer() {
           </div>
 
           <div>
-            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-primary-dark mb-4">{t(COPY.contactHeading, locale)}</p>
+            <p className="font-semibold text-[13px] text-primary-dark mb-4">{t(COPY.contactHeading, locale)}</p>
             <ul className="space-y-2.5">
               <li>
-                <a href="mailto:info@rizmajerdev.com" className="inline-block py-1 text-muted hover:text-primary-dark transition text-sm">
+                <a href="mailto:info@rizmajerdev.com" className="inline-flex min-h-11 items-center text-muted hover:text-primary-dark transition text-sm">
                   info@rizmajerdev.com
                 </a>
               </li>
+              {CONTACT_PHONE && (
+                <li>
+                  <a href={`tel:${CONTACT_PHONE.replace(/\s/g, '')}`} className="inline-flex min-h-11 items-center text-muted hover:text-primary-dark transition text-sm">
+                    {CONTACT_PHONE}
+                  </a>
+                </li>
+              )}
               <li className="text-muted text-sm">{t(COPY.country, locale)}</li>
             </ul>
           </div>
@@ -187,7 +194,7 @@ export default function Footer() {
               place it broke, and the infinite animation drew the eye to a
               status that never changes. */}
           <div className="flex items-center gap-2.5">
-            <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-muted">
+            <span className="font-semibold text-[13px] text-ink">
               {t(COPY.available, locale)}
             </span>
           </div>
@@ -200,17 +207,17 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={t(label)}
-                className="p-2 rounded-full text-muted hover:text-primary-dark hover:scale-110 transition-all duration-300"
+                className="p-3.5 rounded-full text-ink hover:text-primary-dark hover:scale-110 transition-all duration-300"
               >
                 <Icon className="h-4 w-4" strokeWidth={2} />
               </a>
             ))}
           </div>
 
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-muted text-xs font-mono">
-            <Link to={withLocale('/fejleszto', locale)} className="inline-block py-3 hover:text-primary-dark transition">{t(COPY.devProfile, locale)}</Link>
-            <Link to="/adatvedelem" className="inline-block py-3 hover:text-primary-dark transition">{t(COPY.privacy, locale)}</Link>
-            <Link to="/aszf" className="inline-block py-3 hover:text-primary-dark transition">ÁSZF</Link>
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-ink text-xs font-mono">
+            <Link to={withLocale('/fejleszto', locale)} className="inline-flex min-h-11 items-center hover:text-primary-dark transition">{t(COPY.devProfile, locale)}</Link>
+            <Link to="/adatvedelem" className="inline-flex min-h-11 items-center hover:text-primary-dark transition">{t(COPY.privacy, locale)}</Link>
+            <Link to="/aszf" className="inline-flex min-h-11 items-center hover:text-primary-dark transition">ÁSZF</Link>
             <span>© 2026 Rizmajer Máté Levente</span>
           </div>
         </div>

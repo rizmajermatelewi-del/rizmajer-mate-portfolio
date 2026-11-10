@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, AlertCircle, CheckCircle2, Upload, Mail, MapPin, Clock, Phone } from 'lucide-react'
 import Field from '../components/Field'
+import { huValidity, clearValidity } from '../components/validity'
 import { CONTACT_PHONE } from '../data/nav'
 import { useInView } from '../motion/useInView'
 import { useLocale } from '../i18n/useLocale'
@@ -11,6 +12,15 @@ import { t } from '../i18n/t'
    here: they are Formspree's field keys, so renaming one would quietly change
    what arrives in his inbox rather than change what a visitor reads. */
 const COPY = {
+  kindLegend: { hu: 'Miben segíthetek?', en: 'What can I help with?' },
+  kindProject: { hu: 'Projektről beszélnék', en: 'I want to talk about a project' },
+  kindProjectNote: { hu: 'Weboldal, foglalás, rendelés vagy valami, ami ma kézzel megy.', en: 'A website, bookings, orders or something done by hand today.' },
+  kindReview: { hu: 'Ingyenes weboldal-átvilágítást kérek', en: 'I want a free website review' },
+  kindReviewNote: { hu: 'Két munkanapon belül leírom e-mailben, mi veszít ma vevőt neked. Kötelezettség nélkül.', en: 'Within two working days I e-mail you what is losing you customers today. No strings attached.' },
+  fieldWebsite: { hu: 'A weboldalad címe (ha van)', en: 'Your website address (if you have one)' },
+  optional: { hu: '(nem kötelező)', en: '(optional)' },
+  reviewPlaceholder: { hu: 'Pl. fodrászat Dabason, a vendégek telefonon foglalnak', en: 'E.g. a hair salon in Dabas, customers book by phone' },
+  consentError: { hu: 'Pipáld be a hozzájárulást, különben nem tudom elküldeni.', en: 'Please tick the consent box, otherwise I cannot send it.' },
   headingLead: { hu: 'Hogyan segíthetek a', en: 'How can I help your' },
   headingAccent: { hu: 'vállalkozásodnak', en: 'business' },
   intro: {
@@ -134,11 +144,24 @@ const isAllowedType = (file) => file.type.startsWith('image/') || ALLOWED_TYPES.
 export default function ContactForm() {
   const [sectionRef, visible] = useInView(0.1)
   const locale = useLocale()
-  const [form, setForm] = useState({ name: '', email: '', company: '', message: '' })
+  const [form, setForm] = useState({ name: '', email: '', company: '', website: '', message: '' })
+  /* One form, two doors (critique, 2026-11-10): the free review used to be a
+     second full form four sections up. Links to #atvilagitas land here with
+     the review already picked. */
+  const [kind, setKind] = useState('project')
+  useEffect(() => {
+    if (window.location.hash === '#atvilagitas') setKind('review')
+    const onClick = (e) => {
+      if (e.target.closest?.('a[href$="#atvilagitas"]')) setKind('review')
+    }
+    document.addEventListener('click', onClick)
+    return () => document.removeEventListener('click', onClick)
+  }, [])
   const [files, setFiles] = useState([])
   const [status, setStatus] = useState('idle')
   const [dragging, setDragging] = useState(false)
   const [consent, setConsent] = useState(false)
+  const [consentError, setConsentError] = useState(false)
   const [fileNotice, setFileNotice] = useState('')
   const honeypotRef = useRef(null)
 
@@ -161,11 +184,26 @@ export default function ContactForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if (!form.name || !form.email || !form.message || !consent) return
+    /* The button stays enabled (critique, 2026-11-10): a greyed-out button
+       with no reason was the salon owner tapping "send" and nothing happening.
+       Missing consent now says so, in Hungarian, next to the checkbox. */
+    if (!consent) {
+      setConsentError(true)
+      document.getElementById('consent')?.focus()
+      return
+    }
+    if (!form.name || !form.email || (kind === 'project' && !form.message)) return
     if (honeypotRef.current?.value) return // bot trap — silently drop
     setStatus('sending')
     try {
       const data = new FormData()
+      if (kind === 'review') {
+        // Same subject and type as the old standalone review form, so inbox
+        // filters keep working. Unaccented: never shown to the visitor.
+        data.append('_subject', `Ingyenes atvilagitas: ${form.website || 'nincs weboldala'}`)
+        data.append('tipus', 'ingyenes-atvilagitas')
+        data.append('website', form.website)
+      }
       data.append('name', form.name)
       data.append('email', form.email)
       data.append('company', form.company)
@@ -209,8 +247,8 @@ export default function ContactForm() {
   }
 
   return (
-    <section id="kapcsolat" ref={sectionRef} className="relative py-20 sm:py-28 px-6 sm:px-10 lg:px-16">
-      <div className="max-w-7xl mx-auto">
+    <section id="kapcsolat" ref={sectionRef} className="overflow-hidden relative py-20 sm:py-28 px-6 sm:px-10 lg:px-16">
+      <div className="relative max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-12 gap-10 lg:gap-16">
           <div
             className={`lg:col-span-5 transition-all duration-1000 ease-out ${
@@ -229,7 +267,7 @@ export default function ContactForm() {
                 393 and 414 are untouched. */}
             <h2 className="font-display font-extrabold text-4xl max-[380px]:text-3xl sm:text-5xl md:text-6xl text-ink leading-[1.05] tracking-tight">
               {t(COPY.headingLead, locale)}{' '}
-              <span className="text-primary-dark font-semibold">{t(COPY.headingAccent, locale)}</span>?
+              <span className="font-semibold">{t(COPY.headingAccent, locale)}</span>?
             </h2>
             {/* The response-time promise is stated once, in the contact tile
                 below. It used to run here, in that tile, and again under the
@@ -249,7 +287,7 @@ export default function ContactForm() {
                     <Phone className="h-5 w-5 text-primary group-hover:text-white" />
                   </span>
                   <span>
-                    <span className="block font-mono text-[11px] uppercase tracking-widest text-muted">{t(COPY.callMe, locale)}</span>
+                    <span className="block font-semibold text-[13px] text-muted">{t(COPY.callMe, locale)}</span>
                     <span className="font-display font-semibold text-ink text-lg">{CONTACT_PHONE}</span>
                   </span>
                 </a>
@@ -269,7 +307,7 @@ export default function ContactForm() {
                   <Mail className="h-5 w-5 text-primary group-hover:text-white" />
                 </span>
                 <span className="min-w-0">
-                  <span className="block font-mono text-[11px] uppercase tracking-widest text-muted">{t(COPY.emailMe, locale)}</span>
+                  <span className="block font-semibold text-[13px] text-muted">{t(COPY.emailMe, locale)}</span>
                   <span className="font-display font-semibold text-ink text-base sm:text-lg break-all">info@rizmajerdev.com</span>
                 </span>
               </a>
@@ -279,7 +317,7 @@ export default function ContactForm() {
                   <MapPin className="h-5 w-5 text-primary" />
                 </span>
                 <span>
-                  <span className="block font-mono text-[11px] uppercase tracking-widest text-muted">{t(COPY.based, locale)}</span>
+                  <span className="block font-semibold text-[13px] text-muted">{t(COPY.based, locale)}</span>
                   <span className="font-display font-semibold text-ink text-lg">{t(COPY.country, locale)}</span>
                 </span>
               </div>
@@ -289,14 +327,14 @@ export default function ContactForm() {
                   <Clock className="h-5 w-5 text-primary" />
                 </span>
                 <span>
-                  <span className="block font-mono text-[11px] uppercase tracking-widest text-muted">{t(COPY.responseTime, locale)}</span>
+                  <span className="block font-semibold text-[13px] text-muted">{t(COPY.responseTime, locale)}</span>
                   <span className="font-display font-semibold text-ink text-lg">{t(COPY.within24, locale)}</span>
                 </span>
               </div>
             </div>
 
             <div className="mt-10 p-5 rounded-3xl bg-primary/5 border border-primary/15">
-              <p className="font-mono text-[11px] uppercase tracking-widest text-primary-dark mb-2">{t(COPY.dataHeading, locale)}</p>
+              <p className="font-semibold text-[13px] text-primary-dark mb-2">{t(COPY.dataHeading, locale)}</p>
               <p className="text-sm text-muted leading-relaxed">
                 {t(COPY.dataBody, locale)}
               </p>
@@ -336,6 +374,32 @@ export default function ContactForm() {
               )}
               {status !== 'sent' ? (
                 <>
+                  <fieldset id="atvilagitas" className="mb-7 scroll-mt-28">
+                    <legend className="font-display font-bold text-lg text-ink">{t(COPY.kindLegend, locale)}</legend>
+                    <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                      {['project', 'review'].map((k) => (
+                        <label
+                          key={k}
+                          className={`flex min-h-11 cursor-pointer items-start gap-3 rounded-2xl border p-4 transition-colors ${
+                            kind === k ? 'border-primary-light bg-primary/15' : 'border-divider hover:border-primary-light'
+                          }`}
+                        >
+                          <input
+                            type="radio"
+                            name="kind"
+                            value={k}
+                            checked={kind === k}
+                            onChange={() => setKind(k)}
+                            className="mt-1 h-4 w-4 shrink-0 accent-primary"
+                          />
+                          <span>
+                            <span className="block font-semibold text-ink">{t(k === 'project' ? COPY.kindProject : COPY.kindReview, locale)}</span>
+                            <span className="mt-1 block text-sm text-muted leading-relaxed">{t(k === 'project' ? COPY.kindProjectNote : COPY.kindReviewNote, locale)}</span>
+                          </span>
+                        </label>
+                      ))}
+                    </div>
+                  </fieldset>
                   <div className="grid sm:grid-cols-2 gap-5">
                     <Field name="name" label={t(COPY.fieldName, locale)} required value={form.name} onChange={(v) => setForm({ ...form, name: v })} />
                     <Field name="email" label={t(COPY.fieldEmail, locale)} type="email" required value={form.email} onChange={(v) => setForm({ ...form, email: v })} />
@@ -345,18 +409,28 @@ export default function ContactForm() {
                         to close the tab. Four inputs became three; the one that
                         went is the one whose answer the message already
                         contains. Full width now that it is alone on its row. */}
-                    <Field
-                      name="company"
-                      label={t(COPY.fieldCompany, locale)}
-                      value={form.company}
-                      onChange={(v) => setForm({ ...form, company: v })}
-                      className="sm:col-span-2"
-                    />
+                    {kind === 'review' ? (
+                      <Field
+                        name="website"
+                        label={t(COPY.fieldWebsite, locale)}
+                        value={form.website}
+                        onChange={(v) => setForm({ ...form, website: v })}
+                        className="sm:col-span-2"
+                      />
+                    ) : (
+                      <Field
+                        name="company"
+                        label={t(COPY.fieldCompany, locale)}
+                        value={form.company}
+                        onChange={(v) => setForm({ ...form, company: v })}
+                        className="sm:col-span-2"
+                      />
+                    )}
                   </div>
 
                   <div className="mt-5">
-                    <label htmlFor="message" className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink/80 mb-2 block">
-                      {t(COPY.fieldMessage, locale)} <span aria-hidden="true">*</span>
+                    <label htmlFor="message" className="font-semibold text-[13px] text-ink/80 mb-2 block">
+                      {t(COPY.fieldMessage, locale)} {kind === 'project' ? <span aria-hidden="true">*</span> : <span className="font-normal text-muted">{t(COPY.optional, locale)}</span>}
                     </label>
                     <textarea
                       id="message"
@@ -364,9 +438,11 @@ export default function ContactForm() {
                       autoComplete="off"
                       value={form.message}
                       onChange={(e) => setForm({ ...form, message: e.target.value })}
-                      required
+                      required={kind === 'project'}
+                      onInvalid={huValidity}
+                      onInput={clearValidity}
                       rows={5}
-                      placeholder={t(COPY.messagePlaceholder, locale)}
+                      placeholder={t(kind === 'review' ? COPY.reviewPlaceholder : COPY.messagePlaceholder, locale)}
                       className="input-edge w-full bg-background rounded-2xl px-4 py-3.5 text-ink placeholder-ink/55 focus:border-primary focus:ring-4 focus:ring-primary/15 outline-none transition resize-none font-body"
                     />
                   </div>
@@ -449,10 +525,11 @@ export default function ContactForm() {
                   <div className="mt-6 flex items-start gap-3">
                     <input
                       id="consent"
+                      aria-invalid={consentError || undefined}
+                      aria-describedby={consentError ? "consent-error" : undefined}
                       type="checkbox"
                       checked={consent}
-                      onChange={(e) => setConsent(e.target.checked)}
-                      required
+                      onChange={(e) => { setConsent(e.target.checked); setConsentError(false) }}
                       className="input-edge mt-0.5 h-5 w-5 shrink-0 rounded-md bg-background accent-primary focus:ring-4 focus:ring-primary/15 outline-none"
                     />
                     <label htmlFor="consent" className="text-sm text-muted leading-relaxed">
@@ -462,13 +539,16 @@ export default function ContactForm() {
                       </Link>
                     </label>
                   </div>
+                  {consentError && (
+                  <p id="consent-error" role="alert" className="mt-2 text-sm font-medium text-accent">{t(COPY.consentError, locale)}</p>
+                )}
 
                   <div className="mt-7 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                     <p className="text-xs text-muted">{t(COPY.requiredNote, locale)}</p>
                     <button
                       type="submit"
-                      disabled={status === 'sending' || !consent}
-                      className="magnetic-btn inline-flex items-center gap-2 bg-primary text-white font-semibold px-7 py-3.5 rounded-full shadow-lg shadow-primary/30 disabled:opacity-50 disabled:cursor-not-allowed"
+                      disabled={status === 'sending'}
+                      className="magnetic-btn inline-flex items-center gap-2 bg-primary text-white font-semibold px-7 py-3.5 rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {status === 'sending' ? t(COPY.sending, locale) : t(COPY.submit, locale)}
                       <ArrowRight className="h-4 w-4" />
@@ -495,27 +575,6 @@ export default function ContactForm() {
           </div>
         </div>
 
-        {/* Closing line, under both columns rather than beside one, so it reads
-            as the page signing off instead of as another form label. "Amazing"
-            from the brief's English version is the one word this site's voice
-            never uses: every other claim on the page is checkable and that one
-            is not. It echoes the hero's "helyetted dolgozik" instead, closing
-            the loop the first screen opened.
-
-            Full-stack, so not "frontend fejlesztőt" — the visitor who reaches
-            this line has just read a page about booking and ordering systems. */}
-        <div
-          className={`mt-16 sm:mt-20 pt-10 border-t border-divider text-center transition-all duration-1000 ease-out delay-300 ${
-            visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
-          }`}
-        >
-          <p className="font-display font-extrabold text-2xl sm:text-3xl text-ink tracking-tight">
-            {t(COPY.closingQuestion, locale)}
-          </p>
-          <p className="font-display font-semibold text-2xl sm:text-3xl text-primary-dark tracking-tight mt-1">
-            {t(COPY.closingLine, locale)}
-          </p>
-        </div>
       </div>
     </section>
   )

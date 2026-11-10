@@ -31,11 +31,11 @@ export default function Protocol() {
   const locale = useLocale()
 
   return (
-    <section id="folyamat" ref={ref} className="relative py-20 sm:py-28 px-6 sm:px-10 lg:px-16">
-      <div className="max-w-7xl mx-auto">
+    <section id="folyamat" ref={ref} className="overflow-hidden relative py-20 sm:py-28 px-6 sm:px-10 lg:px-16">
+      <div className="relative max-w-7xl mx-auto">
         <div className="max-w-2xl">
           <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink leading-[1.05] tracking-tight">
-            {t(COPY.headingLead, locale)} <span className="text-primary-dark font-semibold">{t(COPY.headingAccent, locale)}</span>.
+            {t(COPY.headingLead, locale)} <span className="font-semibold">{t(COPY.headingAccent, locale)}</span>.
           </h2>
           <p className="text-muted text-lg mt-6 leading-relaxed">{t(COPY.intro, locale)}</p>
         </div>
@@ -52,7 +52,7 @@ export default function Protocol() {
               <div className="h-full">
                 <div className="flex h-full flex-col p-6">
                   <div>
-                    <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-primary-dark bg-primary/10 px-2.5 py-1 rounded-full">
+                    <span className="font-semibold text-[13px] text-primary-dark bg-primary/10 px-2.5 py-1 rounded-full">
                       {locale === 'hu' ? `${i + 1}. ${t(COPY.step, locale)}` : `${t(COPY.step, locale)} ${i + 1}`}
                     </span>
                   </div>

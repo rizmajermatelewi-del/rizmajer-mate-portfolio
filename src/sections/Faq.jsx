@@ -29,8 +29,8 @@ export default function Faq() {
   // stands between the AI section and the prices, so it needs a full break on
   // both sides like every other band.
   return (
-    <section id="gyik" ref={ref} className="relative py-20 sm:py-28 px-6 sm:px-10 lg:px-16">
-      <div className="max-w-3xl mx-auto">
+    <section id="gyik" ref={ref} className="overflow-hidden relative py-20 sm:py-28 px-6 sm:px-10 lg:px-16">
+      <div className="relative max-w-3xl mx-auto">
         <div
           className={`mb-14 transition-all duration-700 ease-out ${
             visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
@@ -40,7 +40,7 @@ export default function Faq() {
               kérdezni" is the same sentence twice in two registers. */}
           <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink leading-[1.05] tracking-tight">
             {t(COPY.headingLead, locale)}{' '}
-            <span className="text-primary-dark font-semibold">{t(COPY.headingAccent, locale)}</span>.
+            <span className="font-semibold">{t(COPY.headingAccent, locale)}</span>.
           </h2>
         </div>
 
@@ -57,6 +57,7 @@ export default function Faq() {
                 type="button"
                 onClick={() => setOpen(open === i ? null : i)}
                 aria-expanded={open === i}
+                aria-controls={`gyik-valasz-${i}`}
                 className="group flex w-full items-center justify-between gap-5 px-6 sm:px-8 py-5 text-left"
               >
                 <span className="font-display font-semibold text-base sm:text-lg text-ink">{t(item.q, locale)}</span>
@@ -77,8 +78,8 @@ export default function Faq() {
                   open === i ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
                 }`}
               >
-                <div className="overflow-hidden">
-                  <p className="text-muted text-sm sm:text-base leading-relaxed px-6 sm:px-8 pb-6">{t(item.a, locale)}</p>
+                <div id={`gyik-valasz-${i}`} className="overflow-hidden">
+                  <p className="text-muted text-sm sm:text-base leading-relaxed max-w-prose [text-wrap:pretty] px-6 sm:px-8 pb-6">{t(item.a, locale)}</p>
                 </div>
               </div>
             </div>

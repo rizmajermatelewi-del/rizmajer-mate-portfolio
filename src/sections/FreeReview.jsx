@@ -32,6 +32,7 @@ function adSource() {
 }
 
 const COPY = {
+  consentError: { hu: 'Pipáld be a hozzájárulást, különben nem tudom elküldeni.', en: 'Please tick the consent box, otherwise I cannot send it.' },
   titleLead: { hu: 'Ingyenes', en: 'A free' },
   titleAccent: { hu: 'weboldal-átvilágítás', en: 'website review' },
   lead: {
@@ -109,6 +110,7 @@ export default function FreeReview({ standalone = false }) {
   const locale = useLocale()
   const [form, setForm] = useState({ name: '', email: '', website: '', message: '' })
   const [consent, setConsent] = useState(false)
+  const [consentError, setConsentError] = useState(false)
   const [status, setStatus] = useState('idle')
   const honeypotRef = useRef(null)
   const Heading = standalone ? 'h1' : 'h2'
@@ -116,6 +118,14 @@ export default function FreeReview({ standalone = false }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    /* The button stays enabled (critique, 2026-11-10): a greyed-out button
+       with no reason was the salon owner tapping "send" and nothing happening.
+       Missing consent now says so, in Hungarian, next to the checkbox. */
+    if (!consent) {
+      setConsentError(true)
+      document.getElementById('rv-consent')?.focus()
+      return
+    }
     if (!form.name || !form.email || !consent) return
     if (honeypotRef.current?.value) return // bot trap — silently drop
     setStatus('sending')
@@ -158,7 +168,7 @@ export default function FreeReview({ standalone = false }) {
         <div className="max-w-2xl">
           <Heading className="font-display font-extrabold text-4xl max-[380px]:text-3xl sm:text-5xl md:text-6xl text-ink leading-[1.05] tracking-tight [text-wrap:balance]">
             {t(COPY.titleLead, locale)}{' '}
-            <span className="text-primary-dark font-semibold">{t(COPY.titleAccent, locale)}</span>
+            <span className="font-semibold">{t(COPY.titleAccent, locale)}</span>
           </Heading>
           <p className="text-muted text-lg mt-6 leading-relaxed">{t(COPY.lead, locale)}</p>
         </div>
@@ -228,7 +238,7 @@ export default function FreeReview({ standalone = false }) {
                   />
                 </div>
                 <div className="mt-5">
-                  <label htmlFor="rv-message" className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink/80 mb-2 block">
+                  <label htmlFor="rv-message" className="font-semibold text-[13px] text-ink/80 mb-2 block">
                     {t(COPY.fieldMessage, locale)}
                   </label>
                   <textarea
@@ -245,10 +255,11 @@ export default function FreeReview({ standalone = false }) {
                 <div className="mt-6 flex items-start gap-3">
                   <input
                     id="rv-consent"
+                    aria-invalid={consentError || undefined}
+                    aria-describedby={consentError ? "rv-consent-error" : undefined}
                     type="checkbox"
                     checked={consent}
-                    onChange={(e) => setConsent(e.target.checked)}
-                    required
+                    onChange={(e) => { setConsent(e.target.checked); setConsentError(false) }}
                     className="input-edge mt-0.5 h-5 w-5 shrink-0 rounded-md bg-background accent-primary focus:ring-4 focus:ring-primary/15 outline-none"
                   />
                   <label htmlFor="rv-consent" className="text-sm text-muted leading-relaxed">
@@ -258,12 +269,15 @@ export default function FreeReview({ standalone = false }) {
                     </Link>
                   </label>
                 </div>
+                {consentError && (
+                  <p id="rv-consent-error" role="alert" className="mt-2 text-sm font-medium text-accent">{t(COPY.consentError, locale)}</p>
+                )}
                 <div className="mt-7 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                   <p className="text-xs text-muted">{t(COPY.requiredNote, locale)}</p>
                   <button
                     type="submit"
-                    disabled={status === 'sending' || !consent}
-                    className="magnetic-btn inline-flex items-center gap-2 bg-primary text-white font-semibold px-7 py-3.5 rounded-full shadow-lg shadow-primary/30 disabled:opacity-50 disabled:cursor-not-allowed"
+                    disabled={status === 'sending'}
+                    className="magnetic-btn inline-flex items-center gap-2 bg-primary text-white font-semibold px-7 py-3.5 rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {status === 'sending' ? t(COPY.sending, locale) : t(COPY.submit, locale)}
                     <ArrowRight className="h-4 w-4" />

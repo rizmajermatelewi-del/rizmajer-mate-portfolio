@@ -11,7 +11,10 @@ const AMOUNTS = [180000, 550000, 1200000, 45000, 60000, 90000, 120000, 25000, 15
    expects to pay it. */
 const STRONGEST_2026 = 349.37
 
-const eurIn = (text) => Number(text.match(/~([\d ]+) EUR/)[1].replace(/ /g, ''))
+// Prices group with non-breaking spaces since 2026-11-10, so a figure never
+// wraps mid-number. nb() writes the expected strings the same way.
+const nb = (text) => text.replace(/ /g, ' ')
+const eurIn = (text) => Number(text.match(/~([\d ]+) EUR/)[1].replace(/ /g, ''))
 
 describe('euro approximations', () => {
   /* This is the whole reason the rate is 350 rather than the spot rate.
@@ -48,14 +51,15 @@ describe('euro approximations', () => {
   })
 
   it('leads with the forint, because that is what gets invoiced', () => {
-    expect(priceEn(550000)).toBe('550 000 Ft (~1 600 EUR)')
-    expect(forint(1200000)).toBe('1 200 000 Ft')
+    // A normal space between the two figures on purpose: the line may break there.
+    expect(priceEn(550000)).toBe(`${nb('550 000 Ft')} (${nb('~1 600 EUR')})`)
+    expect(forint(1200000)).toBe(nb('1 200 000 Ft'))
   })
 
   it('groups thousands with spaces, matching the Hungarian figures beside it', () => {
-    expect(forint(180000)).toBe('180 000 Ft')
-    expect(forint(45000)).toBe('45 000 Ft')
-    expect(forint(900)).toBe('900 Ft')
+    expect(forint(180000)).toBe(nb('180 000 Ft'))
+    expect(forint(45000)).toBe(nb('45 000 Ft'))
+    expect(forint(900)).toBe(nb('900 Ft'))
   })
 
   /* Not a staleness alarm — a wrong-units guard. A rate typed as 3.5 or 3500

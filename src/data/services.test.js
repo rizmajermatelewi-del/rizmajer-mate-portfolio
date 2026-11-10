@@ -5,7 +5,7 @@ import { t, untranslatedIn } from '../i18n/t'
 
 describe('services catalogue', () => {
   it('has three groups and every string in both languages', () => {
-    expect(SERVICE_GROUPS.map((g) => g.id)).toEqual(['eladas', 'weboldalak', 'folyamatos'])
+    expect(SERVICE_GROUPS.map((g) => g.id)).toEqual(['weboldalak', 'eladas', 'folyamatos'])
     expect(untranslatedIn(SERVICE_GROUPS)).toEqual([])
   })
 
@@ -26,7 +26,7 @@ describe('services catalogue', () => {
   it('links a demo only where the portfolio has that live demo', () => {
     const live = PROJECTS_FULL.map((p) => p.live)
     for (const s of ALL_SERVICES.filter((x) => x.demo)) expect(live, s.id).toContain(s.demo)
-    expect(ALL_SERVICES.filter((s) => s.demo)).toHaveLength(10)
+    expect(ALL_SERVICES.filter((s) => s.demo)).toHaveLength(11)
   })
 
   it('keeps the tier floors on the matching catalogue items', () => {

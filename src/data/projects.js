@@ -70,6 +70,15 @@ import tetovalo03 from '../assets/demos/tetovalo-03.webp'
 const DEMOS_REPO = 'https://github.com/rizmajermatelewi-del/DEMOS'
 const DEMOS_REPO_READY = true
 
+/* Four trade groups for the filter on the Projects section, so an owner
+   finds their own kind of business instead of scrolling fifteen cards. */
+export const TRADES = [
+  { id: 'szepseg', label: { hu: 'Szépség, egészség', en: 'Beauty and health' } },
+  { id: 'vendeglatas', label: { hu: 'Vendéglátás, szállás', en: 'Food and stays' } },
+  { id: 'bolt', label: { hu: 'Bolt', en: 'Shops' } },
+  { id: 'szerviz', label: { hu: 'Szerviz, szakember, iroda', en: 'Repairs, trades, offices' } },
+]
+
 export const PROJECTS_FULL = [
   {
     title: {
@@ -138,6 +147,7 @@ export const PROJECTS_FULL = [
     ],
     github: DEMOS_REPO_READY ? `${DEMOS_REPO}/tree/main/idopontfoglalo` : '#',
     live: 'https://demo-idopontfoglalo.vercel.app',
+    trade: 'szepseg',
   },
   {
     title: {
@@ -206,6 +216,7 @@ export const PROJECTS_FULL = [
     ],
     github: DEMOS_REPO_READY ? `${DEMOS_REPO}/tree/main/napi-menu` : '#',
     live: 'https://demo-napi-menu.vercel.app',
+    trade: 'vendeglatas',
   },
   {
     title: {
@@ -274,6 +285,7 @@ export const PROJECTS_FULL = [
     ],
     github: DEMOS_REPO_READY ? `${DEMOS_REPO}/tree/main/bemutatkozo` : '#',
     live: 'https://demo-bemutatkozo.vercel.app',
+    trade: 'szerviz',
   },
   {
     title: {
@@ -342,6 +354,7 @@ export const PROJECTS_FULL = [
     ],
     github: DEMOS_REPO_READY ? `${DEMOS_REPO}/tree/main/autoszerviz` : '#',
     live: 'https://demo-szerviz.vercel.app',
+    trade: 'szerviz',
   },
   {
     title: { hu: "Pipacs Virágkötészet: csokorkötő", en: "Pipacs Florist: bouquet builder" },
@@ -395,6 +408,7 @@ export const PROJECTS_FULL = [
     ],
     github: DEMOS_REPO_READY ? `${DEMOS_REPO}/tree/main/viragbolt` : '#',
     live: 'https://demo-viragbolt.vercel.app',
+    trade: 'bolt',
   },
   {
     title: { hu: "Oldó Masszázsstúdió: „Mennyi időd van?”", en: "Oldo Massage Studio: how much time do you have?" },
@@ -448,6 +462,7 @@ export const PROJECTS_FULL = [
     ],
     github: DEMOS_REPO_READY ? `${DEMOS_REPO}/tree/main/masszazs` : '#',
     live: 'https://demo-masszazs.vercel.app',
+    trade: 'szepseg',
   },
   {
     title: { hu: 'Diófa Vendégház: kulcstábla és közvetlen foglalás', en: 'Diofa Guesthouse: a key rack and direct booking' },
@@ -501,6 +516,7 @@ export const PROJECTS_FULL = [
     ],
     github: DEMOS_REPO_READY ? `${DEMOS_REPO}/tree/main/szallas` : '#',
     live: 'https://demo-szallas.vercel.app',
+    trade: 'vendeglatas',
   },
   {
     title: { hu: 'Szemközt kávézó és borbár: nappal kávé, este bor', en: 'Szemkozt cafe and wine bar: coffee by day, wine at night' },
@@ -554,6 +570,7 @@ export const PROJECTS_FULL = [
     ],
     github: DEMOS_REPO_READY ? `${DEMOS_REPO}/tree/main/kavezo` : '#',
     live: 'https://demo-kavezo.vercel.app',
+    trade: 'vendeglatas',
   },
   {
     title: { hu: 'Masni Ajándékbolt: ajándék, amit nem kell kitalálni', en: 'Masni gift shop: gifts you do not have to guess' },
@@ -607,6 +624,7 @@ export const PROJECTS_FULL = [
     ],
     github: DEMOS_REPO_READY ? `${DEMOS_REPO}/tree/main/ajandekbolt` : '#',
     live: 'https://demo-ajandekbolt.vercel.app',
+    trade: 'bolt',
   },
   {
     title: { hu: 'Csavar Szerviz: mutassa meg, hol fáj neki', en: 'Csavar repair shop: show where it hurts' },
@@ -660,6 +678,7 @@ export const PROJECTS_FULL = [
     ],
     github: DEMOS_REPO_READY ? `${DEMOS_REPO}/tree/main/javito` : '#',
     live: 'https://demo-javito.vercel.app',
+    trade: 'szerviz',
   },
   {
     title: { hu: 'Küllő Kerékpárszerviz: bökjön rá, mi nem jó rajta', en: 'Kullo bike service: point at what is wrong' },
@@ -713,6 +732,7 @@ export const PROJECTS_FULL = [
     ],
     github: DEMOS_REPO_READY ? `${DEMOS_REPO}/tree/main/bicikli` : '#',
     live: 'https://demo-bicikli.vercel.app',
+    trade: 'szerviz',
   },
   {
     title: { hu: 'Lencse Optika: ha a legalsó sort is el tudta olvasni', en: 'Lencse opticians: if you could read the bottom line' },
@@ -766,6 +786,7 @@ export const PROJECTS_FULL = [
     ],
     github: DEMOS_REPO_READY ? `${DEMOS_REPO}/tree/main/optika` : '#',
     live: 'https://demo-optika.vercel.app',
+    trade: 'szepseg',
   },
   {
     title: { hu: 'Mancs Állatorvosi Rendelő: mikor kell a következő oltás?', en: 'Mancs vet clinic: when is the next shot due?' },
@@ -819,6 +840,7 @@ export const PROJECTS_FULL = [
     ],
     github: DEMOS_REPO_READY ? `${DEMOS_REPO}/tree/main/allatorvos` : '#',
     live: 'https://demo-allatorvos.vercel.app',
+    trade: 'szepseg',
   },
   {
     title: { hu: 'Dr. Halmi Ügyvédi Iroda: előre megmondjuk, mennyi és meddig', en: 'Dr. Halmi law office: cost and time, up front' },
@@ -872,6 +894,7 @@ export const PROJECTS_FULL = [
     ],
     github: DEMOS_REPO_READY ? `${DEMOS_REPO}/tree/main/ugyved` : '#',
     live: 'https://demo-ugyved.vercel.app',
+    trade: 'szerviz',
   },
   {
     title: { hu: 'Fekete Tinta: előre megmondjuk, mennyi és mennyire fáj', en: 'Fekete Tinta tattoo studio: cost and pain, up front' },
@@ -925,6 +948,7 @@ export const PROJECTS_FULL = [
     ],
     github: DEMOS_REPO_READY ? `${DEMOS_REPO}/tree/main/tetovalo` : '#',
     live: 'https://demo-tetovalo.vercel.app',
+    trade: 'szepseg',
   },
 ]
 

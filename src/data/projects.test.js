@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { LIVE_COUNT, PROJECT_COUNT, PROJECTS_FULL, REPO_COUNT } from './projects'
+import { LIVE_COUNT, PROJECT_COUNT, PROJECTS_FULL, REPO_COUNT, TRADES } from './projects'
 
 const CASE_FIELDS = ['year', 'role', 'problem', 'solution', 'gallery', 'github', 'live']
 
@@ -118,5 +118,13 @@ describe('PROJECTS_FULL', () => {
       expect(typeof p.featured, `${p.title} featured must be a boolean`).toBe('boolean')
     }
     expect(PROJECTS_FULL.filter((p) => p.featured).length).toBeLessThanOrEqual(1)
+  })
+})
+
+describe('trade groups', () => {
+  it('puts every project in a known trade, and every trade is used', () => {
+    const ids = TRADES.map((tr) => tr.id)
+    for (const p of PROJECTS_FULL) expect(ids).toContain(p.trade)
+    for (const id of ids) expect(PROJECTS_FULL.some((p) => p.trade === id)).toBe(true)
   })
 })

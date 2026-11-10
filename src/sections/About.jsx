@@ -1,4 +1,3 @@
-import { useMemo } from 'react'
 import portraitSunset from '../assets/portrait-sunset.webp'
 import { SOCIAL_LINKS } from '../data/nav'
 import { t } from '../i18n/t'
@@ -8,13 +7,8 @@ import { useInView } from '../motion/useInView'
 /* ----------------------------------------------------------------
    About
 ---------------------------------------------------------------- */
-/* Split out of the JSX so the word-stagger below can map over it without the
-   paragraphs being retyped. Word index runs across both, so the fade reads as
-   one continuous sentence rather than two separate reveals. */
-/* Tightened from two long paragraphs to two shorter ones. The word-stagger
-   below animates one span per word, so length here is not free: every word
-   added pushes the last one further behind the reveal, and the old version ran
-   long enough that its closing promise arrived after the reader had moved on. */
+/* Two short paragraphs, rendered plain since 2026-11-10 (the word-by-word
+   reveal it was sized for is gone). */
 const BIO_PARAGRAPHS = [
   {
     hu: 'Rizmajer Máté Levente vagyok, full-stack fejlesztő. Szoftverfejlesztő végzettséget szereztem, de a gyakorlatot éles projekteken gyűjtöttem: a kód akkor állt össze a fejemben, amikor egy valódi problémát kellett megoldanom vele, nem amikor egy feladatlapon szerepelt.',
@@ -41,26 +35,10 @@ const COPY = {
   factAvailabilityValue: { hu: 'Nyitott új projektekre', en: 'Open to new projects' },
 }
 
-/* The running word index used to be produced by an IIFE with a mutable counter
-   inside the JSX, which recomputed the same split on every render and put the
-   counter somewhere a reader has to unpick it.
-   ---------------------------------------------------------------------
-   It depended only on BIO_PARAGRAPHS, so it was derived once at module level.
-   It depends on the locale now — the two languages do not split into the same
-   number of words — so it moves into a useMemo keyed on the locale. That
-   keeps the original point: derived once per language, not once per render. */
 export default function About() {
   const [ref, visible] = useInView(0.2)
   const locale = useLocale()
 
-  const bioWords = useMemo(() => {
-    let index = 0
-    return BIO_PARAGRAPHS.map((para) =>
-      t(para, locale)
-        .split(' ')
-        .map((word) => ({ word, index: index++ })),
-    )
-  }, [locale])
 
   const facts = [
     { label: t(COPY.factBase, locale), value: t(COPY.factBaseValue, locale) },
@@ -71,13 +49,13 @@ export default function About() {
   return (
     <section id="rolam" ref={ref} className="relative py-20 sm:py-28 px-6 sm:px-10 lg:px-16 overflow-hidden">
       <div className="relative max-w-7xl mx-auto">
-        <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           <div
-            className={`lg:col-span-5 transition-all duration-1000 ease-out ${
+            className={`lg:col-span-3 transition-all duration-1000 ease-out ${
               visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
-            <div className="group relative aspect-[3/4] rounded-6xl overflow-hidden border border-divider">
+            <div className="group relative aspect-square w-40 sm:w-48 lg:w-full rounded-4xl overflow-hidden border border-divider">
               <img
                 src={portraitSunset}
                 alt={t(COPY.photoAlt, locale)}
@@ -89,7 +67,7 @@ export default function About() {
           </div>
 
           <div
-            className={`lg:col-span-7 transition-all duration-1000 ease-out delay-150 ${
+            className={`lg:col-span-9 transition-all duration-1000 ease-out delay-150 ${
               visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
@@ -97,33 +75,21 @@ export default function About() {
                 in the word "rólam", announcing the section twice. */}
             <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink leading-[1.05] tracking-tight">
               {t(COPY.headingLead, locale)}{' '}
-              <span className="text-primary-dark font-semibold">{t(COPY.headingAccent, locale)}</span>.
+              <span className="font-semibold">{t(COPY.headingAccent, locale)}</span>.
             </h2>
 
-            <div className="mt-6 space-y-4 text-muted text-base sm:text-lg leading-relaxed max-w-xl">
-              {bioWords.map((words, pi) => (
-                <p key={pi}>
-                  {words.map(({ word, index }) => (
-                    <span
-                      key={index}
-                      className="inline-block transition-all duration-500 ease-out motion-reduce:transition-none"
-                      style={{
-                        transitionDelay: visible ? `${index * 18}ms` : '0ms',
-                        opacity: visible ? 1 : 0,
-                        transform: visible ? 'translateY(0)' : 'translateY(6px)',
-                      }}
-                    >
-                      {word}&nbsp;
-                    </span>
-                  ))}
-                </p>
+            <div className="mt-6 space-y-4 text-muted text-base sm:text-lg leading-relaxed max-w-prose">
+              {/* Plain paragraphs (critique, 2026-11-10): the word-by-word reveal
+                  held the last words back for ~2.5 s between the hero and the proof. */}
+              {BIO_PARAGRAPHS.map((para, pi) => (
+                <p key={pi}>{t(para, locale)}</p>
               ))}
             </div>
 
             <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4">
               {facts.map((f, i) => (
                 <div key={i} className="rounded-2xl border border-divider bg-surface p-4">
-                  <p className="font-mono text-[11px] uppercase tracking-widest text-primary-dark">{f.label}</p>
+                  <p className="font-semibold text-[13px] text-primary-dark">{f.label}</p>
                   <p className="font-display font-semibold text-ink text-sm mt-1">{f.value}</p>
                 </div>
               ))}
