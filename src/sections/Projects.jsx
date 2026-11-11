@@ -6,6 +6,7 @@ import { t } from '../i18n/t'
 
 import ProjectMock from '../components/ProjectMock'
 import { useInView } from '../motion/useInView'
+import Hl from '../components/Hl'
 
 /* This section's own strings, as opposed to the project data.
    ---------------------------------------------------------------------
@@ -23,14 +24,15 @@ const COPY = {
   headingLead: { hu: 'Bemutatók,', en: 'Demos' },
   headingAccent: { hu: 'amiket kipróbálhatsz.', en: 'you can try for yourself.' },
   intro: {
-    hu: 'Mindegyik megnyitható, és a kódja nyilvános. Kitalált vállalkozások, valós problémákkal. Az első fizető ügyfelem oldala most készül az átadásra; amint él, itt lesz az első helyen.',
-    en: 'Every one can be opened, and its code is public. Invented businesses, real problems. My first paying client’s site is being prepared for handover; once it is live, it goes first here.',
+    hu: '==Mindegyik megnyitható==, és a kódja nyilvános. Kitalált vállalkozások, valós problémákkal. Az első fizető ügyfelem oldala most készül az átadásra; amint él, itt lesz az első helyen.',
+    en: '==Every one can be opened==, and its code is public. Invented businesses, real problems. My first paying client’s site is being prepared for handover; once it is live, it goes first here.',
   },
   whatItDoes: { hu: 'Amit tud', en: 'What it does' },
   all: { hu: 'Mind', en: 'All' },
   filterLabel: { hu: 'Szűrés szakma szerint', en: 'Filter by trade' },
   problem: { hu: 'A gond', en: 'The problem' },
   swipe: (n) => ({ hu: `${n} bemutató · lapozz oldalra →`, en: `${n} demos · swipe sideways →` }),
+  showAll: (n) => ({ hu: `Mind a ${n} bemutató`, en: `All ${n} demos` }),
 }
 
 /* The modal is the one part of this page that can be deferred without cost to
@@ -58,7 +60,11 @@ export default function Projects() {
   const [openIndex, setOpenIndex] = useState(null)
   const [originRect, setOriginRect] = useState(null)
   const [trade, setTrade] = useState(null)
-  const shown = trade ? PROJECTS_FULL.filter((p) => p.trade === trade) : PROJECTS_FULL
+  const [all, setAll] = useState(false)
+  /* Three featured demos, one per trade group, until the visitor asks for the
+     rest (2026-11-11 critique: fifteen equal cards were a 3 600 px wall). A
+     trade filter always shows every demo of that trade. */
+  const shown = trade ? PROJECTS_FULL.filter((p) => p.trade === trade) : all ? PROJECTS_FULL : PROJECTS_FULL.filter((p) => p.featured)
   const n = shown.length
 
   const openProject = (i, e) => {
@@ -97,7 +103,7 @@ export default function Projects() {
           </h2>
           </div>
           <p className="text-muted text-lg mt-6 lg:mt-0 leading-relaxed max-w-xl">
-            {t(COPY.intro, locale)}
+            <Hl text={t(COPY.intro, locale)} />
           </p>
         </div>
 
@@ -177,24 +183,22 @@ export default function Projects() {
                     </div>
                   )}
 
-                  {/* Hairline above the stack chips separates what the project
-                      does from what it is built with, which are two different
-                      questions asked by two different readers. */}
-                  <div className="flex flex-wrap gap-1.5 mt-5 pt-4 border-t border-divider">
-                    {p.tech.map((techName) => (
-                      <span
-                        key={techName}
-                        className="font-mono text-[13px] text-muted bg-background border border-divider px-2 py-0.5 rounded-full"
-                      >
-                        {techName}
-                      </span>
-                    ))}
-                  </div>
                 </div>
               </div>
             </button>
           ))}
         </div>
+
+        {!trade && !all && (
+          <button
+            type="button"
+            onClick={() => setAll(true)}
+            className="mt-8 inline-flex min-h-11 items-center gap-2 rounded-full border border-ink/30 px-5 text-sm font-semibold text-ink transition-colors duration-200 hover:border-ink/60"
+          >
+            {t(COPY.showAll(PROJECTS_FULL.length), locale)}
+            <span aria-hidden="true">↓</span>
+          </button>
+        )}
       </div>
 
       {/* Mounted only while open. ProjectModal already returns null without a

@@ -7,6 +7,7 @@ import { CONTACT_PHONE } from '../data/nav'
 import { useInView } from '../motion/useInView'
 import { useLocale } from '../i18n/useLocale'
 import { t } from '../i18n/t'
+import Hl from '../components/Hl'
 
 /* The form's own copy. The `name` attributes below are deliberately NOT in
    here: they are Formspree's field keys, so renaming one would quietly change
@@ -24,8 +25,8 @@ const COPY = {
   headingLead: { hu: 'Hogyan segíthetek a', en: 'How can I help your' },
   headingAccent: { hu: 'vállalkozásodnak', en: 'business' },
   intro: {
-    hu: 'Nem kell kész tervvel érkezned. Elég, ha leírod, mi az, ami ma nehézkesen megy, a többit kitaláljuk. Akkor is válaszolok, ha végül nem én leszek a jó választás.',
-    en: 'You do not need to arrive with a finished plan. Just describe what is awkward today and we will work out the rest. I answer even when I turn out not to be the right choice.',
+    hu: 'Nem kell kész tervvel érkezned. Elég, ha leírod, mi az, ami ma nehézkesen megy, a többit kitaláljuk. ==Akkor is válaszolok==, ha végül nem én leszek a jó választás.',
+    en: 'You do not need to arrive with a finished plan. Just describe what is awkward today and we will work out the rest. ==I answer== even when I turn out not to be the right choice.',
   },
   callMe: { hu: 'Hívj fel', en: 'Call me' },
   emailMe: { hu: 'Írj emailt', en: 'Email me' },
@@ -274,7 +275,7 @@ export default function ContactForm() {
                 submit button: the same sentence three times inside one
                 viewport. */}
             <p className="text-muted text-lg mt-6 leading-relaxed max-w-md">
-              {t(COPY.intro, locale)}
+              <Hl text={t(COPY.intro, locale)} />
             </p>
 
             <div className="mt-10 space-y-4">

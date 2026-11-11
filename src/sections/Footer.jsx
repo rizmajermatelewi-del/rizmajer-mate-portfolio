@@ -138,7 +138,8 @@ export default function Footer() {
             <p className="text-muted text-sm leading-relaxed max-w-xs">{t(COPY.blurb, locale)}</p>
           </div>
 
-          <div>
+          {/* Phones: the menu already lists these; after the form they were 1 400 px of repeats (2026-11-11). */}
+          <div className="hidden sm:block">
             <p className="font-semibold text-[13px] text-primary-dark mb-4">{t(COPY.servicesHeading, locale)}</p>
             <ul className="space-y-2.5">
               {/* The catalogue's own groups, in its own order, so the two
@@ -153,7 +154,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div>
+          <div className="hidden sm:block">
             {/* "Oldalak", not "Rólam". The group used to be named after one of
                 its own five items, which made the label useless as a heading. */}
             <p className="font-semibold text-[13px] text-primary-dark mb-4">{t(COPY.pagesHeading, locale)}</p>
@@ -168,7 +169,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div>
+          <div className="col-span-2 sm:col-span-1">
             <p className="font-semibold text-[13px] text-primary-dark mb-4">{t(COPY.contactHeading, locale)}</p>
             <ul className="space-y-2.5">
               <li>

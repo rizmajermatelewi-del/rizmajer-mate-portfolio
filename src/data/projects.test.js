@@ -113,11 +113,14 @@ describe('PROJECTS_FULL', () => {
     }
   })
 
-  it('never marks more than one project as featured', () => {
+  // The Projects section opens on the featured demos: one per trade group.
+  it('features exactly three projects, each from a different trade', () => {
     for (const p of PROJECTS_FULL) {
       expect(typeof p.featured, `${p.title} featured must be a boolean`).toBe('boolean')
     }
-    expect(PROJECTS_FULL.filter((p) => p.featured).length).toBeLessThanOrEqual(1)
+    const featured = PROJECTS_FULL.filter((p) => p.featured)
+    expect(featured).toHaveLength(3)
+    expect(new Set(featured.map((p) => p.trade)).size).toBe(3)
   })
 })
 

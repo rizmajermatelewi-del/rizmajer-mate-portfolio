@@ -4,17 +4,17 @@ import { SERVICE_GROUPS, priceLabel, LABELS, salePriceLabel, isDiscounted, offer
 import { useInView } from '../motion/useInView'
 import { BuildOrSubscribe } from './ServicesExtras'
 import PriceCalculator from './PriceCalculator'
-import servicesBg from '../assets/bg/services-1600.webp'
 import { useLocale } from '../i18n/useLocale'
 import { t } from '../i18n/t'
+import Hl from '../components/Hl'
 
 const COPY = {
   count: { hu: 'szolgáltatás', en: 'services' },
   headingLead: { hu: 'Mit építhetek', en: 'What I can build' },
   headingAccent: { hu: 'neked.', en: 'for you.' },
   intro: {
-    hu: 'Válaszd ki, mi a gond, és megmutatom, mivel oldanám meg. Az árak indulóárak: a végleges árat a munka megkezdése előtt rögzítjük, írásban és tételesen. Utólag nem jön hozzá semmi.',
-    en: 'Pick what the problem is and I will show you how I would solve it. These are starting prices: the final one is fixed before any work begins, in writing and itemised. Nothing gets added afterwards.',
+    hu: 'Válaszd ki, mi a gond, és megmutatom, mivel oldanám meg. Az árak indulóárak: a végleges árat ==a munka megkezdése előtt rögzítjük, írásban és tételesen==. Utólag nem jön hozzá semmi.',
+    en: 'Pick what the problem is and I will show you how I would solve it. These are starting prices: ==the final one is fixed before any work begins, in writing and itemised==. Nothing gets added afterwards.',
   },
   unsure: { hu: 'Nem tudod, melyik kell, vagy nagyobb, egyedi rendszer kellene? Írd le a gondot, és megmondom, megéri-e.', en: 'Not sure which one you need, or need a bigger system of your own? Describe the problem and I will tell you whether it pays off.' },
   tablist: { hu: 'Szolgáltatáscsoportok', en: 'Service groups' },
@@ -170,11 +170,14 @@ export default function Services() {
   }
 
   return (
-    <section id="szolgaltatasok" ref={ref} className="card-invert relative overflow-hidden py-20 sm:py-28 px-6 sm:px-10 lg:px-16">
-      {/* Abstract light only (Higgsfield, 2026-11-10): no people, no screens,
-          nothing that could pass for evidence. The panels on it stay solid deep
-          navy (DESIGN.md, Two Materials Rule). */}
-      <img src={servicesBg} alt="" aria-hidden="true" width={1600} height={895} loading="lazy" decoding="async" className="pointer-events-none absolute inset-0 h-full w-full object-cover" />
+    <section id="szolgaltatasok" ref={ref} className="card-invert relative overflow-hidden mx-3 sm:mx-6 rounded-[2rem] sm:rounded-[3rem] py-20 sm:py-28 px-6 sm:px-10 lg:px-16">
+      {/* A screen set on the paper (2026-11-11, Máté: the full-bleed band with
+          its orange glow clashed with the blue page). Indigo light only, so the
+          band speaks the page's one accent; amber stays on the prices. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 bg-deep [background-image:radial-gradient(55%_45%_at_0%_100%,rgb(79_70_229/0.38),transparent),radial-gradient(45%_40%_at_100%_0%,rgb(129_140_248/0.2),transparent)]"
+      />
       <div
         className={`relative max-w-7xl mx-auto transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
           visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
@@ -184,7 +187,7 @@ export default function Services() {
           <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink leading-[1.05] tracking-tight [text-wrap:balance]">
             {t(COPY.headingLead, locale)} <span className="font-semibold">{t(COPY.headingAccent, locale)}</span>
           </h2>
-          <p className="text-muted text-lg mt-6 leading-relaxed">{t(COPY.intro, locale)}</p>
+          <p className="text-muted text-lg mt-6 leading-relaxed"><Hl text={t(COPY.intro, locale)} /></p>
           {/* Up here rather than under the cards: the visitor who does not
               know which offer is theirs needs this before seventeen of them,
               not after. */}
@@ -195,24 +198,6 @@ export default function Services() {
             {t(COPY.unsure, locale)}
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </a>
-        </div>
-
-        {/* Same card as Projects and the offers below it, at Máté's request:
-            dark inverted surface, pill label, check list, ruled footer. */}
-        <div className="mt-10 card-invert border border-divider rounded-4xl p-6 sm:p-8 shadow-e2">
-          <h3 className="font-display font-bold text-xl text-ink tracking-tight">{t(COPY.includedTitle, locale)}</h3>
-          <ul className="mt-4 grid gap-x-8 gap-y-2.5 sm:grid-cols-2 lg:grid-cols-3">
-            {COPY.included.map((x, i) => (
-              <li key={i} className="flex items-start gap-2 text-sm text-muted leading-relaxed">
-                <Check className="h-4 w-4 shrink-0 mt-0.5 text-primary" strokeWidth={2.5} aria-hidden="true" />
-                {t(x, locale)}
-              </li>
-            ))}
-          </ul>
-          <p className="mt-5 pt-4 border-t border-divider text-sm font-semibold text-ink max-w-prose">{t(COPY.noHidden, locale)}</p>
-          {offerActive() && (
-            <p className="mt-4 rounded-2xl bg-primary/15 px-4 py-3 text-sm font-semibold text-ink">{t(LAUNCH_NOTE, locale)}</p>
-          )}
         </div>
 
         {/* Three doors, named after the problem rather than the product
@@ -278,6 +263,24 @@ export default function Services() {
             {g.id === 'eladas' && <BuildOrSubscribe locale={locale} />}
           </div>
         ))}
+
+        {/* After the offers, not before (2026-11-11 critique): the fine print
+            reads as reassurance once the visitor has seen a price. */}
+        <div className="mt-10 card-invert border border-divider rounded-4xl p-6 sm:p-8 shadow-e2">
+          <h3 className="font-display font-bold text-xl text-ink tracking-tight">{t(COPY.includedTitle, locale)}</h3>
+          <ul className="mt-4 grid gap-x-8 gap-y-2.5 sm:grid-cols-2 lg:grid-cols-3">
+            {COPY.included.map((x, i) => (
+              <li key={i} className="flex items-start gap-2 text-sm text-muted leading-relaxed">
+                <Check className="h-4 w-4 shrink-0 mt-0.5 text-primary" strokeWidth={2.5} aria-hidden="true" />
+                {t(x, locale)}
+              </li>
+            ))}
+          </ul>
+          <p className="mt-5 pt-4 border-t border-divider text-sm font-semibold text-ink max-w-prose">{t(COPY.noHidden, locale)}</p>
+          {offerActive() && (
+            <p className="mt-4 rounded-2xl bg-primary/15 px-4 py-3 text-sm font-semibold text-ink">{t(LAUNCH_NOTE, locale)}</p>
+          )}
+        </div>
 
         <PriceCalculator locale={locale} onQuote={requestQuote} />
       </div>
