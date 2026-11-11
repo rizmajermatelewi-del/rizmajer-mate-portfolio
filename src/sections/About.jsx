@@ -1,4 +1,4 @@
-import { Phone, Mail, PhoneOff, ReceiptText, UserX, HelpCircle } from 'lucide-react'
+import { Phone, Mail, PhoneCall, ReceiptText, Handshake, BookOpen } from 'lucide-react'
 import portraitSunset from '../assets/portrait-sunset.webp'
 import { SOCIAL_LINKS } from '../data/nav'
 import { CONTACT_PHONE, CONTACT_EMAIL } from '../data/contact'
@@ -8,12 +8,12 @@ import Hl from '../components/Hl'
 
 /* ----------------------------------------------------------------
    About: who you will talk to (2026-11-11, Máté). Longer since the same
-   day, and the cards name the client's own bad experience as the title,
-   with my answer under it, rather than listing my qualities.
+   day; titles invite rather than provoke (Máté: respectful, marketing),
+   each card a benefit the client gets, with the detail under it.
 ---------------------------------------------------------------- */
 const COPY = {
-  headingLead: { hu: 'Nem ügynökség.', en: 'Not an agency.' },
-  headingAccent: { hu: 'Egy ember, aki felveszi a telefont', en: 'One person who picks up the phone' },
+  headingLead: { hu: 'Személyesen,', en: 'In person,' },
+  headingAccent: { hu: 'az első hívástól az átadásig', en: 'from the first call to handover' },
   paragraphs: [
     {
       hu: 'Rizmajer Máté vagyok, Inárcsról. Weboldalakat és foglalási, rendelési rendszereket építek kis- és középvállalkozásoknak Pest megyében és Budapesten. Nincs alvállalkozó, nincs projektmenedzser: ==akitől kérdezel, az építi meg==, és fél év múlva is ugyanő veszi fel a telefont.',
@@ -28,27 +28,27 @@ const COPY = {
       en: 'I trained as a software developer, but I learned the trade on real projects. That is why ==you can try everything first==: my demos are live, their code is public, and at the first meeting I tell you if there is something you do not need.',
     },
   ],
-  /* The visitor's own bad experience as the title, the answer underneath. */
+  /* A benefit as the title, the concrete promise underneath. */
   cards: [
     {
-      Icon: PhoneOff,
-      title: { hu: 'Senki nem veszi fel?', en: 'Nobody picks up?' },
+      Icon: PhoneCall,
+      title: { hu: 'Mindig elérsz', en: 'You can always reach me' },
       text: { hu: 'Nálam egy munkanapon belül válasz jön, akkor is, ha végül nem én leszek a jó választás.', en: 'You get an answer within one working day, even when I turn out not to be the right choice.' },
     },
     {
       Icon: ReceiptText,
-      title: { hu: 'Félsz a rejtett költségtől?', en: 'Worried about hidden costs?' },
+      title: { hu: 'Előre tudod az árat', en: 'You know the price up front' },
       text: { hu: 'Az árat írásban, tételesen kapod meg, mielőtt bármit elkezdek. Utólag nem jön hozzá semmi.', en: 'You get the price in writing and itemised before I start anything. Nothing gets added later.' },
     },
     {
-      Icon: UserX,
-      title: { hu: 'Eltűnt az előző fejlesztő?', en: 'Did the last developer vanish?' },
+      Icon: Handshake,
+      title: { hu: 'Az átadás után is számíthatsz rám', en: 'You can count on me after handover' },
       text: { hu: 'A leadás után is elérsz, a kód és a domain pedig a tiéd marad, nem vagy hozzám kötve.', en: 'You can still reach me after handover, and the code and the domain stay yours, so you are not tied to me.' },
     },
     {
-      Icon: HelpCircle,
-      title: { hu: 'Nem értesz a technikához?', en: 'Not a tech person?' },
-      text: { hu: 'Nem is kell. Átadáskor megmutatom, hogyan kezeled, és írásban is megkapod a lépéseket.', en: 'You do not need to be. At handover I show you how to run it, and you get the steps in writing too.' },
+      Icon: BookOpen,
+      title: { hu: 'Nem kell értened a technikához', en: 'No technical knowledge needed' },
+      text: { hu: 'Átadáskor megmutatom, hogyan kezeled, és írásban is megkapod a lépéseket.', en: 'At handover I show you how to run it, and you get the steps in writing too.' },
     },
   ],
   photoAlt: {

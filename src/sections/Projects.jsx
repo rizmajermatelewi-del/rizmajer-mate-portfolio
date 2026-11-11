@@ -20,8 +20,8 @@ const COPY = {
   /* PROJECTS_FULL holds Bemutató projekt demos, each with a live URL and a
      folder in the public DEMOS repo. Do not restate a count here that can
      drift from PROJECTS_FULL — projects.test.js pins the array length. */
-  headingLead: { hu: 'Próbáld ki,', en: 'Try it' },
-  headingAccent: { hu: 'mielőtt bármit fizetnél.', en: 'before you pay for anything.' },
+  headingLead: { hu: 'Próbáld ki nyugodtan,', en: 'Take your time and try it' },
+  headingAccent: { hu: 'mielőtt döntesz.', en: 'before you decide.' },
   intro: {
     hu: '==Mindegyik megnyitható==, és a kódja nyilvános. Kitalált vállalkozások, valós problémákkal. Az első fizető ügyfelem oldala most készül az átadásra; amint él, itt lesz az első helyen.',
     en: '==Every one can be opened==, and its code is public. Invented businesses, real problems. My first paying client’s site is being prepared for handover; once it is live, it goes first here.',
