@@ -37,6 +37,8 @@ const COPY = {
     { hu: 'A kód, a domain és a hozzáférések a tiéd', en: 'The code, the domain and the accounts are yours' },
   ],
   newHeading: { hu: 'Újabb ajánlatok', en: 'Newer offers' },
+  moreOffers: (n) => ({ hu: `További ${n} ajánlat`, en: `${n} more offers` }),
+  fewerOffers: { hu: 'Kevesebb', en: 'Fewer' },
   demo: { hu: 'Élő demó', en: 'Live demo' },
   includes: { hu: 'Amit kapsz', en: 'What you get' },
   openDemo: { hu: 'Megnyitom a demót', en: 'Open the demo' },
@@ -155,6 +157,7 @@ export default function Services() {
   const [ref, visible] = useInView(0.05)
   const locale = useLocale()
   const [active, setActive] = useState(0)
+  const [more, setMore] = useState({})
   const tabs = useRef([])
 
   /* The WAI-ARIA tabs pattern: arrows move between tabs and activate them,
@@ -241,26 +244,57 @@ export default function Services() {
             catalogue, not just tab one. */}
         {SERVICE_GROUPS.map((g, i) => (
           <div key={g.id} id={`szolg-panel-${g.id}`} role="tabpanel" aria-labelledby={`szolg-tab-${g.id}`} hidden={active !== i} className="mt-7">
-            {/* Proven offers first, the new ones once under their own heading
-                with the note said a single time, instead of a badge on every
-                other row at the moment the visitor reads the prices. */}
-            <div className="mt-6 card-invert border border-divider rounded-4xl overflow-hidden shadow-e2">
-              {g.items.filter((s) => !s.isNew).map((s) => (
-                <ServiceRow key={s.id} s={s} locale={locale} />
-              ))}
-            </div>
-            {g.items.some((s) => s.isNew) && (
-              <>
-                <h3 className="mt-10 font-display font-bold text-xl text-ink tracking-tight">{t(COPY.newHeading, locale)}</h3>
-                <p className="text-muted text-sm leading-relaxed max-w-prose mt-2">{t(COPY.newNote, locale)}</p>
-                <div className="mt-5 card-invert border border-divider rounded-4xl overflow-hidden shadow-e2">
-                  {g.items.filter((s) => s.isNew).map((s) => (
-                    <ServiceRow key={s.id} s={s} locale={locale} />
-                  ))}
-                </div>
-              </>
-            )}
-            {g.id === 'eladas' && <BuildOrSubscribe locale={locale} />}
+            {/* Three headline offers per door, the rest one tap away (2026-11-11,
+                Máté: too much to read). The rest stays in the DOM, only hidden,
+                so the prerendered HTML still carries the whole catalogue. */}
+            {(() => {
+              const proven = g.items.filter((s) => !s.isNew)
+              const fresh = g.items.filter((s) => s.isNew)
+              const hiddenCount = Math.max(proven.length - 3, 0) + fresh.length
+              const isOpen = Boolean(more[g.id])
+              return (
+                <>
+                  <div className="mt-6 card-invert border border-divider rounded-4xl overflow-hidden shadow-e2">
+                    {proven.slice(0, 3).map((s) => (
+                      <ServiceRow key={s.id} s={s} locale={locale} />
+                    ))}
+                  </div>
+                  <div id={`szolg-more-${g.id}`} hidden={!isOpen}>
+                    {proven.length > 3 && (
+                      <div className="mt-4 card-invert border border-divider rounded-4xl overflow-hidden shadow-e2">
+                        {proven.slice(3).map((s) => (
+                          <ServiceRow key={s.id} s={s} locale={locale} />
+                        ))}
+                      </div>
+                    )}
+                    {fresh.length > 0 && (
+                      <>
+                        <h3 className="mt-10 font-display font-bold text-xl text-ink tracking-tight">{t(COPY.newHeading, locale)}</h3>
+                        <p className="text-muted text-sm leading-relaxed max-w-prose mt-2">{t(COPY.newNote, locale)}</p>
+                        <div className="mt-5 card-invert border border-divider rounded-4xl overflow-hidden shadow-e2">
+                          {fresh.map((s) => (
+                            <ServiceRow key={s.id} s={s} locale={locale} />
+                          ))}
+                        </div>
+                      </>
+                    )}
+                    {g.id === 'eladas' && <BuildOrSubscribe locale={locale} />}
+                  </div>
+                  {hiddenCount > 0 && (
+                    <button
+                      type="button"
+                      aria-expanded={isOpen}
+                      aria-controls={`szolg-more-${g.id}`}
+                      onClick={() => setMore((m) => ({ ...m, [g.id]: !isOpen }))}
+                      className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-full border border-divider px-5 text-sm font-semibold text-ink transition-colors hover:border-primary-light"
+                    >
+                      {isOpen ? t(COPY.fewerOffers, locale) : t(COPY.moreOffers(hiddenCount), locale)}
+                      <span aria-hidden="true">{isOpen ? '↑' : '↓'}</span>
+                    </button>
+                  )}
+                </>
+              )
+            })()}
           </div>
         ))}
 

@@ -55,7 +55,8 @@ const COPY = {
   },
   sendErrorTail: { hu: 'címre.', en: '.' },
   fieldName: { hu: 'Neved', en: 'Your name' },
-  fieldEmail: { hu: 'E-mail címed', en: 'Your email address' },
+  fieldEmail: { hu: 'E-mail vagy telefonszám', en: 'Email or phone number' },
+  moreFields: { hu: 'Többet írnék: cégnév, fájl', en: 'I have more: company, a file' },
   fieldCompany: { hu: 'Cégnév', en: 'Company' },
   fieldMessage: { hu: 'Üzeneted', en: 'Your message' },
   messagePlaceholder: {
@@ -206,7 +207,7 @@ export default function ContactForm() {
         data.append('website', form.website)
       }
       data.append('name', form.name)
-      data.append('email', form.email)
+      data.append(form.email.includes('@') ? 'email' : 'telefon', form.email)
       data.append('company', form.company)
       data.append('message', form.message)
       files.forEach((f) => data.append('attachments', f))
@@ -403,27 +404,21 @@ export default function ContactForm() {
                   </fieldset>
                   <div className="grid sm:grid-cols-2 gap-5">
                     <Field name="name" label={t(COPY.fieldName, locale)} required value={form.name} onChange={(v) => setForm({ ...form, name: v })} />
-                    <Field name="email" label={t(COPY.fieldEmail, locale)} type="email" required value={form.email} onChange={(v) => setForm({ ...form, email: v })} />
+                    {/* One reply channel, whichever the visitor prefers (2026-11-11,
+                        Máté: shorter form). An "@" makes it the reply-to address. */}
+                    <Field name="email" label={t(COPY.fieldEmail, locale)} required value={form.email} onChange={(v) => setForm({ ...form, email: v })} />
                     {/* "Milyen projekt?" is gone. It was a free-text box asking
                         for the same thing as the message directly below it, and
                         every optional field on a contact form is another reason
                         to close the tab. Four inputs became three; the one that
                         went is the one whose answer the message already
                         contains. Full width now that it is alone on its row. */}
-                    {kind === 'review' ? (
+                    {kind === 'review' && (
                       <Field
                         name="website"
                         label={t(COPY.fieldWebsite, locale)}
                         value={form.website}
                         onChange={(v) => setForm({ ...form, website: v })}
-                        className="sm:col-span-2"
-                      />
-                    ) : (
-                      <Field
-                        name="company"
-                        label={t(COPY.fieldCompany, locale)}
-                        value={form.company}
-                        onChange={(v) => setForm({ ...form, company: v })}
                         className="sm:col-span-2"
                       />
                     )}
@@ -448,6 +443,21 @@ export default function ContactForm() {
                     />
                   </div>
 
+                  {/* Optional extras folded away, so the form reads as three fields. */}
+                  <details className="group/more mt-5">
+                    <summary className="inline-flex min-h-11 cursor-pointer list-none items-center gap-2 text-sm font-semibold text-primary-dark [&::-webkit-details-marker]:hidden">
+                      <span aria-hidden="true" className="transition-transform group-open/more:rotate-45">+</span>
+                      {t(COPY.moreFields, locale)}
+                    </summary>
+                    {kind === 'project' && (
+                      <Field
+                        name="company"
+                        label={t(COPY.fieldCompany, locale)}
+                        value={form.company}
+                        onChange={(v) => setForm({ ...form, company: v })}
+                        className="mt-3"
+                      />
+                    )}
                   <div
                     onDragOver={(e) => {
                       e.preventDefault()
@@ -516,6 +526,8 @@ export default function ContactForm() {
                       )}
                     </label>
                   </div>
+
+                  </details>
 
                   {/* Explicit consent, not an assurance box off to one side.
                       The form collects a name and an email address from

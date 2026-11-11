@@ -1,6 +1,6 @@
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import { gsap } from 'gsap'
-import { ArrowRight, ArrowDown } from 'lucide-react'
+import { ArrowRight, ArrowDown, ArrowUpRight, Play } from 'lucide-react'
 import { useReducedMotion } from '../motion/useReducedMotion'
 import phoneSzalka from '../assets/demos/hero-phone-szalka.webp'
 import phoneSzalkaSmall from '../assets/demos/hero-phone-szalka-300.webp'
@@ -28,20 +28,88 @@ import { forint, priceEn } from '../data/fx'
    in column pairs: the wall lays them out as three staggered columns, and the
    swipe row below xl takes all six in order. */
 const PHONES = [
-  [
-    { src: phoneSzalka, small: phoneSzalkaSmall, href: 'https://demo-idopontfoglalo.vercel.app', name: { hu: 'Fodrászat', en: 'Hair salon' } },
-    { src: phoneKovacs, small: phoneKovacsSmall, href: 'https://demo-bemutatkozo.vercel.app', name: { hu: 'Villanyszerelő', en: 'Electrician' } },
-  ],
-  [
-    { src: phoneKispipa, small: phoneKispipaSmall, href: 'https://demo-napi-menu.vercel.app', name: { hu: 'Büfé napi menüvel', en: 'Snack bar with a daily menu' } },
-    { src: phoneVirag, small: phoneViragSmall, href: 'https://demo-viragbolt.vercel.app', name: { hu: 'Virágbolt', en: 'Florist' } },
-  ],
-  [
-    { src: phoneKormos, small: phoneKormosSmall, href: 'https://demo-szerviz.vercel.app', name: { hu: 'Autószerviz', en: 'Car service' } },
-    { src: phoneMasszazs, small: phoneMasszazsSmall, href: 'https://demo-masszazs.vercel.app', name: { hu: 'Masszázsstúdió', en: 'Massage studio' } },
-  ],
+  { src: phoneSzalka, small: phoneSzalkaSmall, href: 'https://demo-idopontfoglalo.vercel.app', name: { hu: 'Fodrászat', en: 'Hair salon' } },
+  { src: phoneKispipa, small: phoneKispipaSmall, href: 'https://demo-napi-menu.vercel.app', name: { hu: 'Büfé', en: 'Snack bar' } },
+  { src: phoneKormos, small: phoneKormosSmall, href: 'https://demo-szerviz.vercel.app', name: { hu: 'Autószerviz', en: 'Car service' } },
+  { src: phoneMasszazs, small: phoneMasszazsSmall, href: 'https://demo-masszazs.vercel.app', name: { hu: 'Masszázs', en: 'Massage' } },
+  { src: phoneVirag, small: phoneViragSmall, href: 'https://demo-viragbolt.vercel.app', name: { hu: 'Virágbolt', en: 'Florist' } },
+  { src: phoneKovacs, small: phoneKovacsSmall, href: 'https://demo-bemutatkozo.vercel.app', name: { hu: 'Villanyszerelő', en: 'Electrician' } },
 ]
-const COLUMN_OFFSET = ['translate-y-3', '-translate-y-5', 'translate-y-6']
+const TRY = {
+  label: { hu: 'Válassz szakmát, és próbáld ki itt:', en: 'Pick a trade and try it here:' },
+  play: { hu: 'Kipróbálom itt', en: 'Try it here' },
+  newTab: { hu: 'új lapon', en: 'new tab' },
+  frame: { hu: 'bemutató, élőben', en: 'demo, live' },
+}
+
+/* The real demo, live, in a phone frame (2026-11-11, Máté: a demo you can
+   try in the hero). The screenshot is the poster; the iframe loads only on
+   request, so first paint and LCP stay the same. Wide screens only: on a
+   phone a scrollable page inside the page traps the thumb, so below xl the
+   strip links out instead. The iframe renders at a real 390px phone width
+   and is scaled into the frame. */
+const FRAME_W = 300
+const FRAME_H = 470
+const VIEW_W = 390
+function DemoPhone({ locale }) {
+  const [i, setI] = useState(0)
+  const [live, setLive] = useState(false)
+  const demo = PHONES[i]
+  return (
+    <div className="absolute right-[5%] top-1/2 z-20 hidden -translate-y-1/2 xl:block" style={{ width: FRAME_W + 24 }}>
+      <p className="mb-3 font-semibold text-[13px] text-ink/80">{t(TRY.label, locale)}</p>
+      <div className="mb-4 flex flex-wrap gap-1.5">
+        {PHONES.map((p, pi) => (
+          <button
+            key={p.href}
+            type="button"
+            aria-pressed={pi === i}
+            onClick={() => setI(pi)}
+            className={`min-h-9 rounded-full border px-3 text-[13px] font-medium transition-colors duration-200 ${pi === i ? 'border-primary-light bg-primary text-white' : 'border-white/20 text-ink/85 hover:border-white/45'}`}
+          >
+            {t(p.name, locale)}
+          </button>
+        ))}
+      </div>
+      <div className="rounded-[2.4rem] border border-white/20 bg-black/40 p-3 shadow-e4">
+        <div className="relative overflow-hidden rounded-[1.8rem] bg-deep" style={{ width: FRAME_W, height: FRAME_H }}>
+          {live ? (
+            <iframe
+              key={demo.href}
+              src={demo.href}
+              title={`${t(demo.name, locale)} ${t(TRY.frame, locale)}`}
+              sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+              referrerPolicy="strict-origin-when-cross-origin"
+              className="absolute left-0 top-0 origin-top-left border-0"
+              style={{ width: VIEW_W, height: (FRAME_H * VIEW_W) / FRAME_W, transform: `scale(${FRAME_W / VIEW_W})` }}
+            />
+          ) : (
+            <>
+              <img src={demo.src} alt="" width={440} height={684} decoding="async" className="h-full w-full object-cover object-top" />
+              <button
+                type="button"
+                onClick={() => setLive(true)}
+                className="absolute inset-x-4 bottom-4 inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-primary px-5 font-semibold text-white shadow-e3 transition-colors hover:bg-primary-dark"
+              >
+                <Play className="h-4 w-4" aria-hidden="true" />
+                {t(TRY.play, locale)}
+              </button>
+            </>
+          )}
+        </div>
+      </div>
+      <a
+        href={demo.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-3 inline-flex min-h-11 items-center gap-1.5 text-[13px] font-medium text-ink/80 underline underline-offset-4 hover:text-ink"
+      >
+        {t(demo.name, locale)}, {t(TRY.newTab, locale)}
+        <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+      </a>
+    </div>
+  )
+}
 const OPENS = { hu: 'bemutató, új lapon nyílik', en: 'demo, opens in a new tab' }
 
 /* One phone screenshot as a link to the live demo. Cropped to the top of the
@@ -88,8 +156,10 @@ const COPY = {
      "that does the work for you." is also the nearer reading of "helyetted
      dolgozik": in your stead, rather than merely so-that-you-need-not. The
      stiff uncontracted "do not" goes with it. */
-  headlineLead: { hu: 'Weboldal és rendszer,', en: 'A website and a system' },
-  headlineAccent: { hu: 'ami helyetted dolgozik.', en: 'that does the work for you.' },
+  /* Problem-led (2026-11-11, Máté): the line names what the owner wants gone.
+     "Weboldal" stays in the h1 for search. */
+  headlineLead: { hu: 'Weboldal és foglalási rendszer,', en: 'A website and a booking system,' },
+  headlineAccent: { hu: 'hogy ne a telefon vigye el a napod.', en: 'so the phone stops eating your day.' },
   /* Halved, and pointed at a different question.
      ---------------------------------------------------------------------
      Was: "Kis- és középvállalkozásoknak építek weboldalakat és foglalási
@@ -111,10 +181,10 @@ const COPY = {
      capability, because the emphasis should land on what the buyer gets rid
      of, not on what I am good at. */
   introLead: {
-    hu: 'Weboldalak, foglalási, rendelési és belső rendszerek kis- és középvállalkozásoknak Pest megyében és Budapesten,',
-    en: 'Websites, booking, ordering and internal systems for small and medium businesses in Pest County and Budapest,',
+    hu: 'Kis- és középvállalkozásoknak Pest megyében és Budapesten: az ügyfél online foglal, rendel vagy kérdez,',
+    en: 'For small and medium businesses in Pest County and Budapest: customers book, order or ask online,',
   },
-  introAccent: { hu: 'kevesebb kézi adminisztrációval', en: 'with less done by hand' },
+  introAccent: { hu: 'te közben dolgozol', en: 'while you get on with the work' },
   /* "Munkáim" -> "Munkáim megtekintése". The secondary CTA now reads as an
      action rather than as a section label, which is what it has to do sitting
      beside a primary button that names one. */
@@ -250,23 +320,7 @@ export default function Hero() {
             }}
           />
         </div>
-        {/* Real work, not drawn chrome (DESIGN.md): six live demos at phone
-            size, because the buyer arrives on a phone. Static on purpose:
-            PRODUCT.md rules out decorative loops, so no marquee. Outside the
-            parallax layer, whose 1.12 pre-scale pushed the old screenshot off
-            the right edge. Wide screens only (xl): below 1280px the wall
-            collides with the headline, and the strip under the buttons takes
-            over. z-20 lifts the links above the full-width copy layer. */}
-        <div className="absolute right-[5%] top-1/2 z-20 hidden -translate-y-1/2 gap-2.5 xl:flex">
-          <p className="absolute -top-10 left-0 font-semibold text-[13px] text-ink/80">{t(COPY.phonesCaption, locale)}</p>
-          {PHONES.map((column, ci) => (
-            <div key={ci} className={`${COLUMN_OFFSET[ci]} flex w-[clamp(8.5rem,11vw,13rem)] flex-col gap-2.5`}>
-              {column.map((phone) => (
-                <Phone key={phone.href} phone={phone} locale={locale} />
-              ))}
-            </div>
-          ))}
-        </div>
+        <DemoPhone locale={locale} />
         {/* Scrim weighted left, where the headline sits, so the panels keep the
             right of the frame instead of being flattened everywhere. */}
         <div className="absolute inset-0 bg-gradient-to-r from-deep via-deep/60 to-transparent" />
@@ -282,7 +336,7 @@ export default function Hero() {
           copy sits where it is most legible and the photograph keeps the
           right half of the frame. */}
       <div className="relative z-10 flex min-h-viewport flex-col justify-center px-6 pb-36 pt-28 sm:px-10 lg:px-16 xl:py-0">
-        <div className="hero-copy w-full max-w-4xl will-change-transform">
+        <div className="hero-copy w-full max-w-4xl xl:max-w-[44rem] will-change-transform">
           {/* One sentence across two lines, not two separate promises. It used
               to read "Weboldal, amit megtalálnak." / "Rendszer, ami dolgozik."
               — two claims competing for the same glance, neither finishing the
@@ -382,7 +436,7 @@ export default function Hero() {
               the right says there is more. */}
           <p className="mt-10 hidden font-semibold text-[13px] text-ink/80 sm:block xl:hidden">{t(COPY.phonesCaption, locale)}</p>
           <div className="-mx-6 mt-3 hidden sm:flex snap-x snap-mandatory scroll-px-6 gap-2.5 overflow-x-auto px-6 pb-2 [scrollbar-width:none] sm:-mx-10 sm:px-10 lg:-mx-16 lg:px-16 xl:hidden">
-            {PHONES.flat().map((phone) => (
+            {PHONES.map((phone) => (
               <Phone key={phone.href} phone={phone} locale={locale} className="w-[38%] max-w-[11rem] shrink-0 snap-start" />
             ))}
           </div>

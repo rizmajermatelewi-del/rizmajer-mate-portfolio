@@ -1,11 +1,10 @@
 import { useState, lazy, Suspense } from 'react'
-import { Check } from 'lucide-react'
+import { Check, ArrowUpRight } from 'lucide-react'
 import { PROJECTS_FULL, TRADES } from '../data/projects'
 import { useLocale } from '../i18n/useLocale'
 import { t } from '../i18n/t'
 
 import ProjectMock from '../components/ProjectMock'
-import { useInView } from '../motion/useInView'
 import Hl from '../components/Hl'
 
 /* This section's own strings, as opposed to the project data.
@@ -31,8 +30,11 @@ const COPY = {
   all: { hu: 'Mind', en: 'All' },
   filterLabel: { hu: 'Szűrés szakma szerint', en: 'Filter by trade' },
   problem: { hu: 'A gond', en: 'The problem' },
-  swipe: (n) => ({ hu: `${n} bemutató · lapozz oldalra →`, en: `${n} demos · swipe sideways →` }),
-  showAll: (n) => ({ hu: `Mind a ${n} bemutató`, en: `All ${n} demos` }),
+  showAll: (n) => ({ hu: `További ${n} bemutató`, en: `${n} more demos` }),
+  tryIt: { hu: 'Kipróbálom', en: 'Try it' },
+  code: { hu: 'Kód', en: 'Code' },
+  more: { hu: 'Részletek', en: 'Details' },
+  restHeading: { hu: 'A többi bemutató', en: 'The other demos' },
 }
 
 /* The modal is the one part of this page that can be deferred without cost to
@@ -47,38 +49,34 @@ const COPY = {
 const ProjectModal = lazy(() => import('../components/ProjectModal'))
 const preloadModal = () => import('../components/ProjectModal')
 
-// Last card alone on its row: 2 columns from sm, 3 from lg (the grid below).
-// Takes the count, because the trade filter changes how many cards there are.
-const lone2 = (i, n) => i === n - 1 && n % 2 === 1
-const lone3 = (i, n) => i === n - 1 && n % 3 === 1
-const wideClass = (i, n) => [lone2(i, n) && 'sm:col-span-2', lone3(i, n) ? 'lg:col-span-3' : lone2(i, n) && 'lg:col-span-1'].filter(Boolean).join(' ')
-const wideInner = (i, n) => [lone2(i, n) && 'sm:grid sm:grid-cols-2 sm:items-center', !lone3(i, n) && lone2(i, n) && 'lg:block'].filter(Boolean).join(' ')
 
 export default function Projects() {
   const locale = useLocale()
-  const [sectionRef, visible] = useInView(0.1)
-  const [openIndex, setOpenIndex] = useState(null)
+  const [open, setOpen] = useState(null)
   const [originRect, setOriginRect] = useState(null)
   const [trade, setTrade] = useState(null)
   const [all, setAll] = useState(false)
-  /* Three featured demos, one per trade group, until the visitor asks for the
-     rest (2026-11-11 critique: fifteen equal cards were a 3 600 px wall). A
-     trade filter always shows every demo of that trade. */
-  const shown = trade ? PROJECTS_FULL.filter((p) => p.trade === trade) : all ? PROJECTS_FULL : PROJECTS_FULL.filter((p) => p.featured)
-  const n = shown.length
+  /* Three featured demos as wide case-study rows, one per trade group, and
+     the rest as a compact list behind a button (2026-11-11, Máté). A trade
+     filter applies to both and always shows that trade's whole list. */
+  const inTrade = (p) => !trade || p.trade === trade
+  const featured = PROJECTS_FULL.filter((p) => p.featured && inTrade(p))
+  const rest = PROJECTS_FULL.filter((p) => !p.featured && inTrade(p))
+  const showRest = Boolean(trade) || all
+  const tradeLabel = (id) => t(TRADES.find((x) => x.id === id).label, locale)
 
-  const openProject = (i, e) => {
+  const openProject = (p, e) => {
     setOriginRect(e.currentTarget.getBoundingClientRect())
-    setOpenIndex(i)
+    setOpen(p)
   }
 
   const closeProject = () => {
-    setOpenIndex(null)
+    setOpen(null)
     setOriginRect(null)
   }
 
   return (
-    <section id="projektek" ref={sectionRef} className="relative py-20 sm:py-28 px-6 sm:px-10 lg:px-16">
+    <section id="projektek" className="relative py-20 sm:py-28 px-6 sm:px-10 lg:px-16">
       <div className="max-w-7xl mx-auto">
         {/* Heading left, intro right on wide screens, so the header spans the
             same width as the grid under it instead of leaving the right third
@@ -129,73 +127,98 @@ export default function Projects() {
           ))}
         </div>
 
-        <p className="sm:hidden -mt-2 mb-4 font-semibold text-[13px] text-muted">{t(COPY.swipe(n), locale)}</p>
-        <div className="-mx-6 px-6 flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-px-6 pb-4 sm:mx-0 sm:px-0 sm:pb-0 sm:overflow-visible sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-5 lg:gap-6">
-          {shown.map((p, i) => (
-            <button
+        {/* Case-study rows: the screenshot does the convincing, the owner's
+            problem leads the text, and the live demo is one tap away. */}
+        <div className="space-y-6 sm:space-y-8">
+          {featured.map((p, i) => (
+            <article
               key={t(p.title, locale)}
-              type="button"
-              onClick={(e) => openProject(i, e)}
-              /* Fetches the modal chunk on intent rather than on click, so the
-                 panel still opens instantly despite being a separate chunk.
-                 Focus counts as intent too — keyboard users never hover. */
-              onPointerEnter={preloadModal}
-              onFocus={preloadModal}
-              aria-label={`${t(p.title, locale)}, ${t(COPY.details, locale)}`}
-              style={{ transitionDelay: visible ? `${Math.min(i, 5) * 120}ms` : '0ms' }}
-              /* A card that would sit alone on the last row spans the row
-                 instead, image beside text, so the grid never ends on an
-                 orphan (fifteen cards since 2026-10-19). */
-              className={`proj-card group w-[85%] shrink-0 snap-start sm:w-full text-left ${wideClass(i, n)} card-invert border border-divider rounded-4xl overflow-hidden card-motion shadow-e2 hover:border-primary/60 hover:-translate-y-1.5 hover:shadow-e4 ${
-                visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-              }`}
+              className="card-invert overflow-hidden rounded-4xl border border-divider shadow-e2 lg:grid lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]"
             >
-              <div className={`h-full ${wideInner(i, n)}`}>
-                <ProjectMock
-                  tone={p.tone}
-                  image={p.image}
-                  alt={p.imageAlt ? t(p.imageAlt, locale) : ''}
-                />
-                <div className="p-6">
-                  <h3 className="font-display font-bold text-lg text-ink leading-snug tracking-tight">{t(p.title, locale)}</h3>
-                  {/* 13px of muted grey is below where this stays comfortable
-                      on a phone, and the phone is the primary viewport. 14px at
-                      the same line height costs one wrapped line at most. */}
-                  {/* Leads with the owner's problem, not with the interface idea that
-                      solves it: the bakery owner recognises the ringing phone,
-                      not the comb-shaped time picker. The pitch stays in the modal. */}
-                  <p className="text-muted text-sm mt-2.5 leading-relaxed">{t(p.problem, locale)}</p>
-
-                  {/* Renders only when filled, like every other case-study
-                      field. An "Amit tud" heading standing over nothing would
-                      be the same empty-proof problem this section already had
-                      once. */}
-                  {p.features.length > 0 && (
-                    <div className="mt-5">
-                      <ul className="mt-2 space-y-1.5">
-                        {p.features.map((f, fi) => (
-                          <li key={fi} className="flex gap-2 text-muted text-[13px] leading-relaxed">
-                            <Check className="h-3.5 w-3.5 shrink-0 mt-[3px] text-primary" strokeWidth={2.5} />
-                            <span>{t(f, locale)}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+              <div className={i % 2 ? 'lg:order-2' : ''}>
+                <ProjectMock tone={p.tone} image={p.image} alt={p.imageAlt ? t(p.imageAlt, locale) : ''} />
+              </div>
+              <div className="flex flex-col p-6 sm:p-8 lg:p-10">
+                <p className="font-semibold text-[13px] text-primary-dark">{tradeLabel(p.trade)}</p>
+                <h3 className="mt-2 font-display font-bold text-2xl sm:text-3xl text-ink leading-tight tracking-tight [text-wrap:balance]">{t(p.title, locale)}</h3>
+                <p className="mt-4 text-muted leading-relaxed max-w-prose">{t(p.problem, locale)}</p>
+                {p.features.length > 0 && (
+                  <ul className="mt-5 space-y-2">
+                    {p.features.map((ft, fi) => (
+                      <li key={fi} className="flex gap-2 text-sm text-ink leading-relaxed">
+                        <Check className="h-4 w-4 shrink-0 mt-0.5 text-primary" strokeWidth={2.5} aria-hidden="true" />
+                        <span>{t(ft, locale)}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                <div className="mt-auto flex flex-wrap items-center gap-3 pt-8">
+                  {p.live && (
+                    <a href={p.live} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-2 rounded-full bg-primary px-5 font-semibold text-white transition-colors hover:bg-primary-dark">
+                      {t(COPY.tryIt, locale)}
+                      <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                    </a>
                   )}
-
+                  <button
+                    type="button"
+                    onClick={(e) => openProject(p, e)}
+                    onPointerEnter={preloadModal}
+                    onFocus={preloadModal}
+                    className="inline-flex min-h-11 items-center rounded-full border border-divider px-5 font-medium text-ink transition-colors hover:border-primary-light"
+                  >
+                    {t(COPY.more, locale)}
+                  </button>
+                  {p.github && p.github !== '#' && (
+                    <a href={p.github} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-1.5 px-2 text-sm font-medium text-muted underline underline-offset-4 hover:text-ink">
+                      {t(COPY.code, locale)}
+                    </a>
+                  )}
                 </div>
               </div>
-            </button>
+            </article>
           ))}
         </div>
+
+        {showRest && rest.length > 0 && (
+          <div className="mt-14">
+            <h3 className="font-display font-bold text-xl text-ink tracking-tight">{t(COPY.restHeading, locale)}</h3>
+            {/* A list to scan, not twelve more cards: name, trade, the problem
+                in one line, and the live link. */}
+            <ul className="mt-5 border-t border-ink/15">
+              {rest.map((p) => (
+                <li key={t(p.title, locale)} className="grid gap-x-6 gap-y-1 border-b border-ink/15 py-5 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center">
+                  <div className="min-w-0">
+                    <p className="font-semibold text-[13px] text-primary-dark">{tradeLabel(p.trade)}</p>
+                    <button
+                      type="button"
+                      onClick={(e) => openProject(p, e)}
+                      onPointerEnter={preloadModal}
+                      onFocus={preloadModal}
+                      className="mt-0.5 text-left font-display font-semibold text-lg text-ink hover:text-primary-dark"
+                    >
+                      {t(p.title, locale)}
+                    </button>
+                    <p className="mt-1 text-sm text-muted leading-relaxed line-clamp-2 max-w-3xl">{t(p.problem, locale)}</p>
+                  </div>
+                  {p.live && (
+                    <a href={p.live} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-1.5 justify-self-start font-semibold text-primary-dark hover:text-ink sm:justify-self-end">
+                      {t(COPY.tryIt, locale)}
+                      <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                    </a>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
 
         {!trade && !all && (
           <button
             type="button"
             onClick={() => setAll(true)}
-            className="mt-8 inline-flex min-h-11 items-center gap-2 rounded-full border border-ink/30 px-5 text-sm font-semibold text-ink transition-colors duration-200 hover:border-ink/60"
+            className="mt-10 inline-flex min-h-11 items-center gap-2 rounded-full border border-ink/30 px-5 text-sm font-semibold text-ink transition-colors duration-200 hover:border-ink/60"
           >
-            {t(COPY.showAll(PROJECTS_FULL.length), locale)}
+            {t(COPY.showAll(rest.length), locale)}
             <span aria-hidden="true">↓</span>
           </button>
         )}
@@ -205,9 +228,9 @@ export default function Projects() {
           project, so this changes nothing visually — it just keeps the lazy
           import from resolving during the prerender, where a suspended
           component would render its fallback instead. */}
-      {openIndex !== null && (
+      {open && (
         <Suspense fallback={null}>
-          <ProjectModal project={shown[openIndex]} originRect={originRect} onClose={closeProject} />
+          <ProjectModal project={open} originRect={originRect} onClose={closeProject} />
         </Suspense>
       )}
     </section>

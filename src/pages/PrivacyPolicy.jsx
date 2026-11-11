@@ -24,7 +24,7 @@ export default function PrivacyPolicy() {
           </p>
           <h2 className="font-display font-semibold text-xl text-ink mt-8">Milyen adatokat gyűjtök</h2>
           <p>
-            A kapcsolatfelvételi űrlap kitöltésekor megadott nevet, e-mail címet, valamint az
+            A kapcsolatfelvételi űrlap kitöltésekor megadott nevet, e-mail címet vagy telefonszámot, valamint az
             általad opcionálisan megadott cégnevet, weboldal-címet, projektleírást és mellékelt fájlokat tárolom
             kizárólag a megkeresésed megválaszolása céljából.
           </p>
@@ -77,7 +77,7 @@ export default function PrivacyPolicy() {
           </h2>
           <p>
             A kapcsolatfelvételi űrlapot a Formspree nevű szolgáltatás továbbítja az e-mail
-            címemre, ezért a beküldött adatok — a név, az e-mail cím, az üzenet és a csatolt
+            címemre, ezért a beküldött adatok — a név, az e-mail cím vagy telefonszám, az üzenet és a csatolt
             fájlok — áthaladnak a rendszerén. Az űrlap használata nélkül is elérsz közvetlen
             e-mailben a fenti címen, ilyenkor a Formspree nem kap semmit.
           </p>
