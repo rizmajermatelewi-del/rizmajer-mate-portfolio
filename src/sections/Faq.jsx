@@ -10,8 +10,8 @@ import { t } from '../i18n/t'
    where an embedded <span> in a string would force the accent onto whatever
    word happened to sit in the same position. */
 const COPY = {
-  headingLead: { hu: 'Amit meg szoktak', en: 'What people usually' },
-  headingAccent: { hu: 'kérdezni', en: 'ask' },
+  headingLead: { hu: 'Kérdésed van?', en: 'Got a question?' },
+  headingAccent: { hu: 'Ezeket kérdezik a legtöbben', en: 'These come up most' },
 }
 
 /* ----------------------------------------------------------------

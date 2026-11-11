@@ -22,8 +22,8 @@ const COPY = {
   optional: { hu: '(nem kötelező)', en: '(optional)' },
   reviewPlaceholder: { hu: 'Pl. fodrászat Dabason, a vendégek telefonon foglalnak', en: 'E.g. a hair salon in Dabas, customers book by phone' },
   consentError: { hu: 'Pipáld be a hozzájárulást, különben nem tudom elküldeni.', en: 'Please tick the consent box, otherwise I cannot send it.' },
-  headingLead: { hu: 'Hogyan segíthetek a', en: 'How can I help your' },
-  headingAccent: { hu: 'vállalkozásodnak', en: 'business' },
+  headingLead: { hu: 'Mi akad el', en: 'What is stuck' },
+  headingAccent: { hu: 'a vállalkozásodban', en: 'in your business' },
   intro: {
     hu: 'Nem kell kész tervvel érkezned. Elég, ha leírod, mi az, ami ma nehézkesen megy, a többit kitaláljuk. ==Akkor is válaszolok==, ha végül nem én leszek a jó választás.',
     en: 'You do not need to arrive with a finished plan. Just describe what is awkward today and we will work out the rest. ==I answer== even when I turn out not to be the right choice.',

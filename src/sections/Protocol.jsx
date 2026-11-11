@@ -6,11 +6,11 @@ import { t } from '../i18n/t'
 import Hl from '../components/Hl'
 
 const COPY = {
-  headingLead: { hu: 'Így', en: 'How I' },
-  headingAccent: { hu: 'dolgozom', en: 'work' },
+  headingLead: { hu: 'Nincs meglepetés:', en: 'No surprises:' },
+  headingAccent: { hu: 'négy lépés, fix ár', en: 'four steps, a fixed price' },
   intro: {
-    hu: 'Négy lépés, és mindegyik végén ==tudod, mit kapsz==. Nincs olyan pont, ahol meglepetés érne.',
-    en: 'Four steps, and ==you know what you get== at the end of each one. There is no point where a surprise is waiting.',
+    hu: 'Mindegyik lépés végén ==tudod, mit kapsz==, és az ár az első egyeztetés után már nem változik.',
+    en: 'At the end of each step ==you know what you get==, and the price no longer changes after the first meeting.',
   },
   step: { hu: 'lépés', en: 'Step' },
 }

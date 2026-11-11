@@ -10,8 +10,8 @@ import Hl from '../components/Hl'
 
 const COPY = {
   count: { hu: 'szolgáltatás', en: 'services' },
-  headingLead: { hu: 'Mit építhetek', en: 'What I can build' },
-  headingAccent: { hu: 'neked.', en: 'for you.' },
+  headingLead: { hu: 'Ami ma órákat visz el,', en: 'Whatever eats your hours today,' },
+  headingAccent: { hu: 'arra van megoldásom.', en: 'I have a fix for it.' },
   intro: {
     hu: 'Válaszd ki, mi a gond, és megmutatom, mivel oldanám meg. Az árak indulóárak: a végleges árat ==a munka megkezdése előtt rögzítjük, írásban és tételesen==. Utólag nem jön hozzá semmi.',
     en: 'Pick what the problem is and I will show you how I would solve it. These are starting prices: ==the final one is fixed before any work begins, in writing and itemised==. Nothing gets added afterwards.',

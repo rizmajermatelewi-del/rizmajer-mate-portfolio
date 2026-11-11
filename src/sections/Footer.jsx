@@ -12,9 +12,9 @@ import { CONTACT_PHONE } from '../data/nav'
 
 const COPY = {
   callCta: { hu: 'Hívj fel:', en: 'Call me:' },
-  headlineLead: { hu: 'Mondd el, mi', en: 'Tell me what' },
-  headlineAccent: { hu: 'viszi el', en: 'eats the most' },
-  headlineTail: { hu: 'a legtöbb időd.', en: 'of your time.' },
+  headlineLead: { hu: 'Mondd el,', en: 'Tell me' },
+  headlineAccent: { hu: 'mi viszi el', en: 'what eats' },
+  headlineTail: { hu: 'a legtöbb időd.', en: 'most of your time.' },
   strapline: {
     hu: 'Rizmajer Máté Levente, webfejlesztő Inárcsról, Pest vármegyéből, elérhető távoli és helyi projektekre egyaránt.',
     en: 'Rizmajer Máté Levente, web developer from Inárcs, Pest County, available for remote and local projects alike.',

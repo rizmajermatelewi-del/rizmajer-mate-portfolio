@@ -1,4 +1,4 @@
-import { Phone, Mail } from 'lucide-react'
+import { Phone, Mail, PhoneOff, ReceiptText, UserX, HelpCircle } from 'lucide-react'
 import portraitSunset from '../assets/portrait-sunset.webp'
 import { SOCIAL_LINKS } from '../data/nav'
 import { CONTACT_PHONE, CONTACT_EMAIL } from '../data/contact'
@@ -7,29 +7,48 @@ import { useLocale } from '../i18n/useLocale'
 import Hl from '../components/Hl'
 
 /* ----------------------------------------------------------------
-   About: who you will talk to (2026-11-11, Máté). Not a CV: one short
-   introduction, three promises the reader can hold me to, and the direct
-   line. The training and stack live on /fejleszto for the recruiter.
+   About: who you will talk to (2026-11-11, Máté). Longer since the same
+   day, and the cards name the client's own bad experience as the title,
+   with my answer under it, rather than listing my qualities.
 ---------------------------------------------------------------- */
 const COPY = {
-  headingLead: { hu: 'Akivel', en: 'The person' },
-  headingAccent: { hu: 'beszélni fogsz', en: 'you will talk to' },
-  intro: {
-    hu: 'Rizmajer Máté vagyok, Inárcsról. Weboldalakat és foglalási, rendelési rendszereket építek kis- és középvállalkozásoknak. Nincs alvállalkozó, nincs projektmenedzser: ==akitől kérdezel, az építi meg==, és fél év múlva is ugyanő veszi fel a telefont.',
-    en: 'I am Máté Rizmajer, from Inárcs. I build websites and booking and ordering systems for small and medium businesses. No subcontractor, no project manager: ==the person you ask is the person who builds it==, and the same person picks up the phone six months later.',
-  },
-  promises: [
+  headingLead: { hu: 'Nem ügynökség.', en: 'Not an agency.' },
+  headingAccent: { hu: 'Egy ember, aki felveszi a telefont', en: 'One person who picks up the phone' },
+  paragraphs: [
     {
-      title: { hu: 'Válaszolok', en: 'I answer' },
-      text: { hu: 'Egy munkanapon belül, akkor is, ha végül nem én leszek a jó választás.', en: 'Within one working day, even when I turn out not to be the right choice.' },
+      hu: 'Rizmajer Máté vagyok, Inárcsról. Weboldalakat és foglalási, rendelési rendszereket építek kis- és középvállalkozásoknak Pest megyében és Budapesten. Nincs alvállalkozó, nincs projektmenedzser: ==akitől kérdezel, az építi meg==, és fél év múlva is ugyanő veszi fel a telefont.',
+      en: 'I am Rizmajer Máté, from Inárcs. I build websites and booking and ordering systems for small and medium businesses in Pest County and Budapest. No subcontractor, no project manager: ==the person you ask is the person who builds it==, and the same person picks up the phone six months later.',
     },
     {
-      title: { hu: 'Megmondom az árat', en: 'I name the price' },
-      text: { hu: 'Írásban és tételesen, mielőtt bármit elkezdek. Utólag nem jön hozzá semmi.', en: 'In writing and itemised, before I start anything. Nothing gets added later.' },
+      hu: 'A legtöbb megkeresés ugyanúgy kezdődik: a foglalás, a rendelés vagy az ügyfelek nyilvántartása telefonon, füzetben és táblázatban megy, és ez ==minden nap elvisz egy órát==. Ilyenkor nem szebb weboldal kell, hanem egy folyamat, ami magától működik, mobilon is kényelmes, és utána te is tudod kezelni.',
+      en: 'Most enquiries start the same way: bookings, orders or customer records live on the phone, in a notebook and in a spreadsheet, and that ==costs an hour every day==. What helps then is not a prettier website but a process that runs on its own, works well on a phone, and that you can handle yourself afterwards.',
     },
     {
-      title: { hu: 'Nem tűnök el', en: 'I do not disappear' },
-      text: { hu: 'A leadás után is elérsz, a kód és a domain pedig a tiéd marad.', en: 'You can still reach me after handover, and the code and the domain stay yours.' },
+      hu: 'Szoftverfejlesztőnek tanultam, de a szakmát éles projekteken tanultam meg. Ezért mindent ==előbb kipróbálhatsz==: a bemutatóim élnek, a kódjuk nyilvános, és az első egyeztetésen megmondom, ha valamire nincs szükséged.',
+      en: 'I trained as a software developer, but I learned the trade on real projects. That is why ==you can try everything first==: my demos are live, their code is public, and at the first meeting I tell you if there is something you do not need.',
+    },
+  ],
+  /* The visitor's own bad experience as the title, the answer underneath. */
+  cards: [
+    {
+      Icon: PhoneOff,
+      title: { hu: 'Senki nem veszi fel?', en: 'Nobody picks up?' },
+      text: { hu: 'Nálam egy munkanapon belül válasz jön, akkor is, ha végül nem én leszek a jó választás.', en: 'You get an answer within one working day, even when I turn out not to be the right choice.' },
+    },
+    {
+      Icon: ReceiptText,
+      title: { hu: 'Félsz a rejtett költségtől?', en: 'Worried about hidden costs?' },
+      text: { hu: 'Az árat írásban, tételesen kapod meg, mielőtt bármit elkezdek. Utólag nem jön hozzá semmi.', en: 'You get the price in writing and itemised before I start anything. Nothing gets added later.' },
+    },
+    {
+      Icon: UserX,
+      title: { hu: 'Eltűnt az előző fejlesztő?', en: 'Did the last developer vanish?' },
+      text: { hu: 'A leadás után is elérsz, a kód és a domain pedig a tiéd marad, nem vagy hozzám kötve.', en: 'You can still reach me after handover, and the code and the domain stay yours, so you are not tied to me.' },
+    },
+    {
+      Icon: HelpCircle,
+      title: { hu: 'Nem értesz a technikához?', en: 'Not a tech person?' },
+      text: { hu: 'Nem is kell. Átadáskor megmutatom, hogyan kezeled, és írásban is megkapod a lépéseket.', en: 'You do not need to be. At handover I show you how to run it, and you get the steps in writing too.' },
     },
   ],
   photoAlt: {
@@ -43,56 +62,66 @@ export default function About() {
 
   return (
     <section id="rolam" className="relative py-20 sm:py-28 px-6 sm:px-10 lg:px-16">
-      <div className="max-w-7xl mx-auto grid gap-10 lg:grid-cols-12 lg:gap-16 lg:items-center">
-        {/* Full colour and bigger: the grey filter made the one personal
-            image on the page look like stock. */}
-        <div className="lg:col-span-5">
-          <div className="relative aspect-[4/5] w-full max-w-sm overflow-hidden rounded-4xl border border-divider shadow-e3 lg:max-w-none">
-            <img src={portraitSunset} alt={t(COPY.photoAlt, locale)} loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover" />
+      <div className="max-w-7xl mx-auto">
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-16 lg:items-start">
+          {/* Full colour and bigger: the grey filter made the one personal
+              image on the page look like stock. */}
+          <div className="lg:col-span-5 lg:sticky lg:top-28">
+            <div className="relative aspect-[4/5] w-full max-w-sm overflow-hidden rounded-4xl border border-divider shadow-e3 lg:max-w-none">
+              <img src={portraitSunset} alt={t(COPY.photoAlt, locale)} loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover" />
+            </div>
           </div>
-        </div>
 
-        <div className="lg:col-span-7">
-          <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink leading-[1.05] tracking-tight">
-            <span className="text-primary-dark">{t(COPY.headingLead, locale)}</span> <span className="font-semibold">{t(COPY.headingAccent, locale)}</span>.
-          </h2>
-          <p className="mt-6 max-w-prose text-muted text-lg leading-relaxed">
-            <Hl text={t(COPY.intro, locale)} />
-          </p>
+          <div className="lg:col-span-7">
+            <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink leading-[1.05] tracking-tight [text-wrap:balance]">
+              <span className="text-primary-dark">{t(COPY.headingLead, locale)}</span>{' '}
+              <span className="font-semibold">{t(COPY.headingAccent, locale)}</span>.
+            </h2>
+            <div className="mt-6 space-y-4 max-w-prose text-muted text-lg leading-relaxed">
+              {COPY.paragraphs.map((p) => (
+                <p key={p.hu.slice(0, 24)}>
+                  <Hl text={t(p, locale)} />
+                </p>
+              ))}
+            </div>
 
-          <ul className="mt-10 grid gap-4 sm:grid-cols-3">
-            {COPY.promises.map((p) => (
-              <li key={p.title.hu} className="rounded-2xl border border-divider bg-surface p-5">
-                <p className="font-display font-bold text-lg text-primary-dark">{t(p.title, locale)}</p>
-                <p className="mt-2 text-sm text-ink/80 leading-relaxed">{t(p.text, locale)}</p>
-              </li>
-            ))}
-          </ul>
+            <ul className="mt-10 grid gap-4 sm:grid-cols-2">
+              {COPY.cards.map(({ Icon, title, text }) => (
+                <li key={title.hu} className="rounded-2xl border border-divider bg-surface p-5">
+                  <span className="grid h-10 w-10 place-items-center rounded-full bg-primary/10 text-primary-dark">
+                    <Icon className="h-5 w-5" aria-hidden="true" />
+                  </span>
+                  <p className="mt-4 font-display font-bold text-lg text-primary-dark">{t(title, locale)}</p>
+                  <p className="mt-2 text-sm text-ink/80 leading-relaxed">{t(text, locale)}</p>
+                </li>
+              ))}
+            </ul>
 
-          {/* The direct line, right where the promise to answer is made. */}
-          <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3">
-            <a href={`tel:${CONTACT_PHONE.replace(/\s/g, '')}`} className="inline-flex min-h-11 items-center gap-2.5 font-display font-semibold text-xl text-ink hover:text-primary-dark">
-              <Phone className="h-5 w-5 text-primary" aria-hidden="true" />
-              {CONTACT_PHONE}
-            </a>
-            <a href={`mailto:${CONTACT_EMAIL}`} className="inline-flex min-h-11 items-center gap-2.5 font-display font-semibold text-xl text-ink hover:text-primary-dark">
-              <Mail className="h-5 w-5 text-primary" aria-hidden="true" />
-              {CONTACT_EMAIL}
-            </a>
-          </div>
-          <div className="mt-6 flex flex-wrap gap-3">
-            {SOCIAL_LINKS.map(({ Icon, href, label }) => (
-              <a
-                key={t(label)}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="lift-on-hover inline-flex min-h-11 items-center gap-2 rounded-full border border-divider bg-surface px-5 text-sm font-medium text-ink transition-colors duration-300 hover:border-primary/60 hover:text-primary-dark"
-              >
-                <Icon className="h-4 w-4" strokeWidth={2} aria-hidden="true" />
-                {t(label)}
+            {/* The direct line, right under the promise to answer. */}
+            <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3">
+              <a href={`tel:${CONTACT_PHONE.replace(/\s/g, '')}`} className="inline-flex min-h-11 items-center gap-2.5 font-display font-semibold text-xl text-ink hover:text-primary-dark">
+                <Phone className="h-5 w-5 text-primary" aria-hidden="true" />
+                {CONTACT_PHONE}
               </a>
-            ))}
+              <a href={`mailto:${CONTACT_EMAIL}`} className="inline-flex min-h-11 items-center gap-2.5 font-display font-semibold text-xl text-ink hover:text-primary-dark">
+                <Mail className="h-5 w-5 text-primary" aria-hidden="true" />
+                {CONTACT_EMAIL}
+              </a>
+            </div>
+            <div className="mt-6 flex flex-wrap gap-3">
+              {SOCIAL_LINKS.map(({ Icon, href, label }) => (
+                <a
+                  key={t(label)}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="lift-on-hover inline-flex min-h-11 items-center gap-2 rounded-full border border-divider bg-surface px-5 text-sm font-medium text-ink transition-colors duration-300 hover:border-primary/60 hover:text-primary-dark"
+                >
+                  <Icon className="h-4 w-4" strokeWidth={2} aria-hidden="true" />
+                  {t(label)}
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       </div>
