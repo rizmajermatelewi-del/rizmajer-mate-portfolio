@@ -54,16 +54,16 @@ export default function About() {
 
         <div className="lg:col-span-7">
           <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink leading-[1.05] tracking-tight">
-            {t(COPY.headingLead, locale)} <span className="font-semibold">{t(COPY.headingAccent, locale)}</span>.
+            <span className="text-primary-dark">{t(COPY.headingLead, locale)}</span> <span className="font-semibold">{t(COPY.headingAccent, locale)}</span>.
           </h2>
           <p className="mt-6 max-w-prose text-muted text-lg leading-relaxed">
             <Hl text={t(COPY.intro, locale)} />
           </p>
 
-          <ul className="mt-10 grid gap-8 sm:grid-cols-3 sm:gap-6">
+          <ul className="mt-10 grid gap-4 sm:grid-cols-3">
             {COPY.promises.map((p) => (
-              <li key={p.title.hu} className="border-t-2 border-primary pt-4">
-                <p className="font-display font-bold text-lg text-ink">{t(p.title, locale)}</p>
+              <li key={p.title.hu} className="rounded-2xl border border-divider bg-surface p-5">
+                <p className="font-display font-bold text-lg text-primary-dark">{t(p.title, locale)}</p>
                 <p className="mt-2 text-sm text-ink/80 leading-relaxed">{t(p.text, locale)}</p>
               </li>
             ))}
@@ -80,13 +80,20 @@ export default function About() {
               {CONTACT_EMAIL}
             </a>
           </div>
-          <p className="mt-4 flex flex-wrap gap-x-5 text-sm text-muted">
-            {SOCIAL_LINKS.map(({ href, label }) => (
-              <a key={t(label)} href={href} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center underline underline-offset-4 hover:text-ink">
+          <div className="mt-6 flex flex-wrap gap-3">
+            {SOCIAL_LINKS.map(({ Icon, href, label }) => (
+              <a
+                key={t(label)}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="lift-on-hover inline-flex min-h-11 items-center gap-2 rounded-full border border-divider bg-surface px-5 text-sm font-medium text-ink transition-colors duration-300 hover:border-primary/60 hover:text-primary-dark"
+              >
+                <Icon className="h-4 w-4" strokeWidth={2} aria-hidden="true" />
                 {t(label)}
               </a>
             ))}
-          </p>
+          </div>
         </div>
       </div>
     </section>

@@ -350,7 +350,7 @@ export default function Hero() {
               also no Next.js in this project. */}
           <h1 className="font-display font-extrabold text-ink leading-[0.95] tracking-tight">
             <span className="hero-line-1 block text-3xl sm:text-4xl">
-              {t(COPY.headlineLead, locale)}
+              <span className="text-primary-dark">{t(COPY.headlineLead, locale)}</span>
             </span>
             {/* This space is not decorative. The two spans are one sentence
                 split across two lines, and without it the h1's accessible

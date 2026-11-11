@@ -36,33 +36,34 @@ export default function Protocol() {
       <div className="relative max-w-7xl mx-auto">
         <div className="max-w-2xl">
           <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink leading-[1.05] tracking-tight">
-            {t(COPY.headingLead, locale)} <span className="font-semibold">{t(COPY.headingAccent, locale)}</span>.
+            <span className="text-primary-dark">{t(COPY.headingLead, locale)}</span> <span className="font-semibold">{t(COPY.headingAccent, locale)}</span>.
           </h2>
           <p className="text-muted text-lg mt-6 leading-relaxed"><Hl text={t(COPY.intro, locale)} /></p>
         </div>
 
-        {/* A real sequence, so a numbered timeline instead of four card shells
-            (2026-11-11 critique). The indigo rule and numeral carry the order. */}
-        <ol className="mt-12 sm:mt-14 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-x-8 gap-y-12">
+        <ol className="mt-12 sm:mt-14 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
           {PROTOCOL_STEPS.map((step, i) => (
             <li
               key={i}
               style={{ transitionDelay: visible ? `${i * 120}ms` : '0ms' }}
-              className={`border-t-2 border-primary pt-6 transition-[opacity,transform] duration-700 ease-out ${
+              className={`group card-invert border border-divider rounded-4xl overflow-hidden card-motion shadow-e2 hover:border-primary/60 hover:-translate-y-1.5 hover:shadow-e4 ${
                 visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
               }`}
             >
               <div className="h-full">
-                <div className="flex h-full flex-col">
-                  <span className="font-display font-extrabold text-5xl leading-none text-primary tabular-nums" aria-hidden="true">{i + 1}</span>
-                  <span className="sr-only">{locale === 'hu' ? `${i + 1}. ${t(COPY.step, locale)}` : `${t(COPY.step, locale)} ${i + 1}`}</span>
+                <div className="flex h-full flex-col p-6">
+                  <div>
+                    <span className="font-semibold text-[13px] text-primary-dark bg-primary/10 px-2.5 py-1 rounded-full">
+                      {locale === 'hu' ? `${i + 1}. ${t(COPY.step, locale)}` : `${t(COPY.step, locale)} ${i + 1}`}
+                    </span>
+                  </div>
 
                   <h3 className="font-display font-bold text-xl text-ink leading-snug tracking-tight mt-5">{t(step.title, locale)}</h3>
                   <p className="font-display font-semibold text-primary-dark mt-1.5">{t(step.tagline, locale)}</p>
-                  <p className="text-ink/80 text-sm mt-3 leading-relaxed">{t(step.text, locale)}</p>
+                  <p className="text-muted text-sm mt-3 leading-relaxed">{t(step.text, locale)}</p>
 
                   <div className="mt-auto pt-5">
-                    <p className="flex items-start gap-2 pt-4 border-t border-ink/15 text-sm font-semibold text-ink">
+                    <p className="flex items-start gap-2 pt-4 border-t border-divider text-sm font-semibold text-ink">
                       <Check className="h-4 w-4 shrink-0 mt-0.5 text-primary" strokeWidth={2.5} aria-hidden="true" />
                       {t(step.promise, locale)}
                     </p>

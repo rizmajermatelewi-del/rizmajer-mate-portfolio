@@ -268,7 +268,7 @@ export default function ContactForm() {
                 arbitrary variant confines the change to below 380px, so 390,
                 393 and 414 are untouched. */}
             <h2 className="font-display font-extrabold text-4xl max-[380px]:text-3xl sm:text-5xl md:text-6xl text-ink leading-[1.05] tracking-tight">
-              {t(COPY.headingLead, locale)}{' '}
+              <span className="text-primary-dark">{t(COPY.headingLead, locale)}</span>{' '}
               <span className="font-semibold">{t(COPY.headingAccent, locale)}</span>?
             </h2>
             {/* The response-time promise is stated once, in the contact tile

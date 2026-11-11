@@ -88,7 +88,7 @@ export default function Projects() {
                 "Mockup" is a designer's term; a rétesház owner reads past it.
                 The split of client work versus own work is the actual point
                 and needs no jargon to say. */}
-            {t(COPY.headingLead, locale)}
+            <span className="text-primary-dark">{t(COPY.headingLead, locale)}</span>
             {/* Same missing space as the hero h1 had, from the same cause:
                 a `block` span reads as its own line, so whoever wrote the
                 markup never saw the two sentences run together — but the

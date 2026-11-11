@@ -173,14 +173,7 @@ export default function Services() {
   }
 
   return (
-    <section id="szolgaltatasok" ref={ref} className="card-invert relative overflow-hidden mx-3 sm:mx-6 rounded-[2rem] sm:rounded-[3rem] py-20 sm:py-28 px-6 sm:px-10 lg:px-16">
-      {/* A screen set on the paper (2026-11-11, Máté: the full-bleed band with
-          its orange glow clashed with the blue page). Indigo light only, so the
-          band speaks the page's one accent; amber stays on the prices. */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-deep [background-image:radial-gradient(55%_45%_at_0%_100%,rgb(79_70_229/0.38),transparent),radial-gradient(45%_40%_at_100%_0%,rgb(129_140_248/0.2),transparent)]"
-      />
+    <section id="szolgaltatasok" ref={ref} className="relative py-20 sm:py-28 px-6 sm:px-10 lg:px-16">
       <div
         className={`relative max-w-7xl mx-auto transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
           visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
@@ -188,7 +181,7 @@ export default function Services() {
       >
         <div className="max-w-2xl">
           <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink leading-[1.05] tracking-tight [text-wrap:balance]">
-            {t(COPY.headingLead, locale)} <span className="font-semibold">{t(COPY.headingAccent, locale)}</span>
+            <span className="text-primary-dark">{t(COPY.headingLead, locale)}</span> <span className="font-semibold">{t(COPY.headingAccent, locale)}</span>
           </h2>
           <p className="text-muted text-lg mt-6 leading-relaxed"><Hl text={t(COPY.intro, locale)} /></p>
           {/* Up here rather than under the cards: the visitor who does not
@@ -225,11 +218,11 @@ export default function Services() {
                 tabIndex={active === i ? 0 : -1}
                 onClick={() => setActive(i)}
                 onKeyDown={onKeyDown}
-                className={`flex flex-col justify-start text-left rounded-3xl border p-5 sm:p-6 transition-colors duration-200 ${
-                  active === i ? 'bg-primary border-primary-light text-white shadow-e3' : 'bg-deep border-divider text-ink hover:border-primary-light'
+                className={`flex flex-col justify-start text-left rounded-3xl border p-4 sm:p-5 transition-colors duration-200 ${
+                  active === i ? 'bg-primary border-primary-light text-white shadow-e3' : 'card-invert border-divider text-ink shadow-e2 hover:border-primary-light'
                 }`}
               >
-                <span className="block font-display font-bold text-xl tracking-tight">{t(g.title, locale)}</span>
+                <span className="block font-display font-bold text-lg tracking-tight">{t(g.title, locale)}</span>
                 <span className={`block text-sm leading-relaxed mt-2 ${active === i ? 'text-white/90' : 'text-muted'}`}>{t(g.intro, locale)}</span>
                 <span className={`block font-semibold text-[13px] mt-4 ${active === i ? 'text-white' : 'text-primary-dark'}`}>
                   {g.items.length} {t(COPY.count, locale)} · {t(LABELS.from(from), locale)}

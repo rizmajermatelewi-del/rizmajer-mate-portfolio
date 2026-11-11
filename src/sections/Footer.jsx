@@ -8,7 +8,6 @@ import { withLocale } from '../i18n/locales'
 import { SERVICE_GROUPS } from '../data/services'
 import { useInView } from '../motion/useInView'
 import { ScrambleText } from '../motion/ScrambleText'
-import footerBg from '../assets/bg/footer-1600.webp'
 import { CONTACT_PHONE } from '../data/nav'
 
 const COPY = {
@@ -81,8 +80,8 @@ export default function Footer() {
 
   return (
     <footer ref={ref} className="card-invert relative rounded-t-6xl mt-12 overflow-hidden">
-      {/* Abstract light (Higgsfield, 2026-11-10). Decoration only, so empty alt. */}
-      <img src={footerBg} alt="" aria-hidden="true" width={1600} height={895} loading="lazy" decoding="async" className="pointer-events-none absolute inset-0 h-full w-full object-cover" />
+      {/* Indigo light only (2026-11-11, Máté: the amber glow goes); same recipe as Services. */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-deep [background-image:radial-gradient(60%_55%_at_100%_100%,rgb(79_70_229/0.35),transparent),radial-gradient(50%_45%_at_0%_0%,rgb(129_140_248/0.16),transparent)]" />
       {/* Bookends the hero: the page opens and closes dark, with the light
           body between. The top gradient dissolves the boundary.
 
@@ -91,7 +90,7 @@ export default function Footer() {
           still costing a full-size JPEG on the longest section of the page.
           The gradient alone gives the identical result. */}
       <div className="absolute inset-0" aria-hidden="true">
-        <div className="absolute inset-0 bg-gradient-to-b from-deep/90 via-deep/50 to-deep/55" />
+        <div className="absolute inset-0 bg-gradient-to-b from-deep/80 via-transparent to-transparent" />
       </div>
       <div aria-hidden="true" className="section-glow" />
 
@@ -108,7 +107,7 @@ export default function Footer() {
               The old line read "Beszéljük meg, mi vinné el a munkát", which
               parses several ways and lands on none of them cleanly. */}
           <h2 className="font-display font-extrabold text-5xl sm:text-7xl md:text-8xl leading-[0.92] tracking-tight">
-            {t(COPY.headlineLead, locale)}{' '}
+            <span className="text-primary-dark">{t(COPY.headlineLead, locale)}</span>{' '}
             <span className="font-bold whitespace-nowrap">{t(COPY.headlineAccent, locale)}</span>{' '}
             {t(COPY.headlineTail, locale)}
           </h2>

@@ -39,19 +39,17 @@ export default function Faq() {
           {/* No eyebrow: "╱ Gyakori kérdések" sitting above "Amit meg szoktak
               kérdezni" is the same sentence twice in two registers. */}
           <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink leading-[1.05] tracking-tight">
-            {t(COPY.headingLead, locale)}{' '}
+            <span className="text-primary-dark">{t(COPY.headingLead, locale)}</span>{' '}
             <span className="font-semibold">{t(COPY.headingAccent, locale)}</span>.
           </h2>
         </div>
 
-        {/* A plain divided list on the light page (2026-11-11 critique): eight
-            dark capsules read as eight buttons, not as questions to scan. */}
-        <div className="border-t border-ink/15">
+        <div className="space-y-3">
           {FAQ_QUESTIONS.map((item, i) => (
             <div
               key={i}
               style={{ transitionDelay: visible ? `${i * 70}ms` : '0ms' }}
-              className={`border-b border-ink/15 transition-[opacity,transform] duration-500 ease-out ${
+              className={`card-invert border border-divider rounded-4xl overflow-hidden card-motion shadow-e2 hover:border-primary/60 ${
                 visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
               }`}
             >
@@ -60,12 +58,12 @@ export default function Faq() {
                 onClick={() => setOpen(open === i ? null : i)}
                 aria-expanded={open === i}
                 aria-controls={`gyik-valasz-${i}`}
-                className="group flex w-full items-center justify-between gap-5 py-5 sm:py-6 text-left"
+                className="group flex w-full items-center justify-between gap-5 px-6 sm:px-8 py-5 text-left"
               >
-                <span className={`font-display font-semibold text-base sm:text-lg transition-colors ${open === i ? 'text-primary-dark' : 'text-ink group-hover:text-primary-dark'}`}>{t(item.q, locale)}</span>
+                <span className="font-display font-semibold text-base sm:text-lg text-ink">{t(item.q, locale)}</span>
                 <span
                   aria-hidden="true"
-                  className={`grid h-9 w-9 shrink-0 place-items-center rounded-full font-mono text-lg leading-none transition-[transform,background-color,color] duration-300 ease-out ${open === i ? 'bg-primary text-white' : 'bg-primary/10 text-primary-dark group-hover:bg-primary/20'} ${
+                  className={`shrink-0 font-mono text-lg leading-none text-muted transition-transform duration-300 ease-out group-hover:text-primary-dark ${
                     open === i ? 'rotate-45' : ''
                   }`}
                 >
@@ -81,7 +79,7 @@ export default function Faq() {
                 }`}
               >
                 <div id={`gyik-valasz-${i}`} className="overflow-hidden">
-                  <p className="text-muted text-sm sm:text-base leading-relaxed max-w-prose [text-wrap:pretty] pb-6 pr-12">{t(item.a, locale)}</p>
+                  <p className="text-muted text-sm sm:text-base leading-relaxed max-w-prose [text-wrap:pretty] px-6 sm:px-8 pb-6">{t(item.a, locale)}</p>
                 </div>
               </div>
             </div>
