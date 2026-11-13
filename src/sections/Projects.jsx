@@ -33,7 +33,6 @@ const COPY = {
   showAll: (n) => ({ hu: `További ${n} bemutató`, en: `${n} more demos` }),
   tryIt: { hu: 'Kipróbálom', en: 'Try it' },
   code: { hu: 'Kód', en: 'Code' },
-  more: { hu: 'Részletek', en: 'Details' },
   restHeading: { hu: 'A többi bemutató', en: 'The other demos' },
 }
 
@@ -140,7 +139,18 @@ export default function Projects() {
               </div>
               <div className="flex flex-col p-6 sm:p-8 lg:p-10">
                 <p className="font-semibold text-[13px] text-primary-dark">{tradeLabel(p.trade)}</p>
-                <h3 className="mt-2 font-display font-bold text-2xl sm:text-3xl text-ink leading-tight tracking-tight [text-wrap:balance]">{t(p.title, locale)}</h3>
+                <h3 className="mt-2 font-display font-bold text-2xl sm:text-3xl text-ink leading-tight tracking-tight [text-wrap:balance]">
+                  {/* The title opens the details, so the card needs only one button: the live demo. */}
+                  <button
+                    type="button"
+                    onClick={(e) => openProject(p, e)}
+                    onPointerEnter={preloadModal}
+                    onFocus={preloadModal}
+                    className="text-left underline-offset-4 decoration-2 hover:underline hover:text-primary-dark"
+                  >
+                    {t(p.title, locale)}
+                  </button>
+                </h3>
                 <p className="mt-4 text-muted leading-relaxed max-w-prose">{t(p.problem, locale)}</p>
                 {p.features.length > 0 && (
                   <ul className="mt-5 space-y-2">
@@ -159,15 +169,6 @@ export default function Projects() {
                       <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
                     </a>
                   )}
-                  <button
-                    type="button"
-                    onClick={(e) => openProject(p, e)}
-                    onPointerEnter={preloadModal}
-                    onFocus={preloadModal}
-                    className="inline-flex min-h-11 items-center rounded-full border border-divider px-5 font-medium text-ink transition-colors hover:border-primary-light"
-                  >
-                    {t(COPY.more, locale)}
-                  </button>
                   {p.github && p.github !== '#' && (
                     <a href={p.github} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-1.5 px-2 text-sm font-medium text-muted underline underline-offset-4 hover:text-ink">
                       {t(COPY.code, locale)}
